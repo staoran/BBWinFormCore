@@ -7,7 +7,6 @@ using BB.Tools.Const;
 using BB.Tools.Extension;
 using BB.Tools.Format;
 using Microsoft.Extensions.DependencyInjection;
-using StackExchange.Profiling.Internal;
 
 namespace BB.Core.DbContext;
 
@@ -219,7 +218,7 @@ public static class SqlSugarDb
                 //方法名
                 var firstMethodName = db.Ado.SqlStackTrace.FirstMethodName;
                 //db.Ado.SqlStackTrace.MyStackTraceList[1].xxx 获取上层方法的信息
-                $"执行时间：{db.Ado.SqlExecutionTime.TotalSeconds}秒，执行SQL：{sql}，参数：{pars.ToJson()}，执行位置：{fileName}:{fileLine}，方法：{firstMethodName}".LogError();
+                $"执行时间：{db.Ado.SqlExecutionTime.TotalSeconds}秒，执行SQL：{sql}，参数：{JSON.Serialize(pars)}，执行位置：{fileName}:{fileLine}，方法：{firstMethodName}".LogError();
             }
             //相当于EF的 PrintToMiniProfiler
 #if DEBUG
