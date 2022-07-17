@@ -4,17 +4,22 @@
         <TargetFramework>net6.0</TargetFramework>
         <NoWarn>1701;1702;1591</NoWarn>
         <DocumentationFile>BB.Core.xml</DocumentationFile>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="BB.Core.xml"/>
+        <None Remove="BB.Core.xml" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="3.8.3"/>
-        <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="3.8.3"/>
-        <PackageReference Include="Furion.Pure" Version="3.8.3"/>
-        <PackageReference Include="SqlSugarCore" Version="5.0.9.4"/>
+        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="3.8.3" />
+        <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="3.8.3" />
+        <PackageReference Include="Furion.Pure" Version="3.8.3" />
+        <PackageReference Include="SqlSugarCore" Version="5.0.9.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
     </ItemGroup>
 
 </Project>

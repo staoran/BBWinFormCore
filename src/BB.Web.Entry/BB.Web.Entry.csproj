@@ -3,25 +3,26 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+        <SatelliteResourceLanguages>zh-CN</SatelliteResourceLanguages>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Controllers\**"/>
-        <Compile Remove="wwwroot\**"/>
-        <Content Remove="Controllers\**"/>
-        <Content Remove="wwwroot\**"/>
-        <EmbeddedResource Remove="Controllers\**"/>
-        <EmbeddedResource Remove="wwwroot\**"/>
-        <None Remove="Controllers\**"/>
-        <None Remove="wwwroot\**"/>
+        <Compile Remove="Controllers\**" />
+        <Compile Remove="wwwroot\**" />
+        <Content Remove="Controllers\**" />
+        <Content Remove="wwwroot\**" />
+        <EmbeddedResource Remove="Controllers\**" />
+        <EmbeddedResource Remove="wwwroot\**" />
+        <None Remove="Controllers\**" />
+        <None Remove="wwwroot\**" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\BB.Web.Core\BB.Web.Core.csproj"/>
+        <ProjectReference Include="..\BB.Web.Core\BB.Web.Core.csproj" />
     </ItemGroup>
     <ProjectExtensions>
         <VisualStudio>
-            <UserProperties properties_4launchsettings_1json__JsonSchema=""/>
+            <UserProperties properties_4launchsettings_1json__JsonSchema="" />
         </VisualStudio>
     </ProjectExtensions>
 

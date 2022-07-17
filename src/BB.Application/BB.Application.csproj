@@ -5,11 +5,12 @@
         <NoWarn>1701;1702;1591</NoWarn>
         <DocumentationFile>BB.Application.xml</DocumentationFile>
         <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="applicationsettings.json"/>
-        <None Remove="BB.Application.xml"/>
+        <None Remove="applicationsettings.json" />
+        <None Remove="BB.Application.xml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,11 +20,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BB.Core\BB.Core.csproj"/>
+        <ProjectReference Include="..\BB.Core\BB.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="System\Services\"/>
+        <Folder Include="System\Services\" />
     </ItemGroup>
 
 </Project>
