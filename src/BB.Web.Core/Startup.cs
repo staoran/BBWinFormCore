@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace BB.Web.Core;
 
@@ -26,6 +27,9 @@ public class Startup : AppStartup
         }
 
         app.UseHttpsRedirection();
+
+        if(env.IsDevelopment())
+            app.UseSerilogRequestLogging();    // 必须在 UseStaticFiles 和 UseRouting 之间
 
         app.UseRouting();
 
