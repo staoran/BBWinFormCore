@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BB.Core.DbContext;
+﻿namespace BB.Entity.Base;
 
 /// <summary>
 /// 主键

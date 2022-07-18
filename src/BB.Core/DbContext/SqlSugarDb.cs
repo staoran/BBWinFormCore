@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using BB.Entity.Base;
 using BB.Tools.Const;
 using BB.Tools.Extension;
 using BB.Tools.Format;
