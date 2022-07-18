@@ -1,7 +1,9 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using BB.Core.Filter;
+using FastExpressionCompiler;
 using Furion;
+using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -15,6 +17,11 @@ public class Startup : AppStartup
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        // 指定使用 FastExpressionCompiler 作为 Mapster 的表达式树编译器
+        TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();
+        // 开启目标类型映射继承
+        TypeAdapterConfig.GlobalSettings.AllowImplicitDestinationInheritance = true;
+
         // 启用jwt认证, 并启用全局授权验证
         services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
 
