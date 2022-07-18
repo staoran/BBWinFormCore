@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using BB.Core.Filter;
 using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +32,8 @@ public class Startup : AppStartup
                 // 忽略循环引用
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             })
-            .AddInjectWithUnifyResult();
+            // 自定义规范化返回结果
+            .AddInjectWithUnifyResult<RestfulResultProvider>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,6 +51,9 @@ public class Startup : AppStartup
 
         // 配置多语言，必须在 路由注册之前
         app.UseAppLocalization();
+
+        // 添加对状态码规范化结果的处理
+        app.UseUnifyResultStatusCodes();
 
         app.UseHttpsRedirection();
 
