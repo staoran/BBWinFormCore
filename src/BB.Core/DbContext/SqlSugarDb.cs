@@ -7,6 +7,7 @@ using BB.Entity.Base;
 using BB.Tools.Const;
 using BB.Tools.Extension;
 using BB.Tools.Format;
+using BB.Tools.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BB.Core.DbContext;
@@ -188,22 +189,24 @@ public static class SqlSugarDb
             //if(properyDate!=null)
             //properyDate.SetValue(entityInfo.EntityValue,1);
         };
-        // db.Aop.OnExecutingChangeSql = (sql, pars) => //SQL执行前 可以修改SQL
+
+        // // SQL 执行前 修改SQL
+        // db.Aop.OnExecutingChangeSql = (sql, pars) =>
         // {
-        //     if (sql.StartsWith("UPDATE", StringComparison.CurrentCultureIgnoreCase))
-        //     {
-        //         // sql = sql.Replace("0001-01-01 00:00:00", "1900-01-01 00:00:00");
-        //         pars.Where(x => x.TypeName is "@EditTime" or "@LastUpdateDate")
-        //             .ForEach(x =>
-        //             {
-        //                 if (x.Value is DateTime)
-        //                 {
-        //                     x.Value = DateTime.Now;
-        //                 }
-        //             });
-        //     }
-        //     
-        //     return new KeyValuePair<string, SugarParameter[]>(sql, pars);
+            // if (sql.StartsWith("UPDATE", StringComparison.CurrentCultureIgnoreCase))
+            // {
+            //     sql = sql.Replace("0001-01-01 00:00:00", "1900-01-01 00:00:00");
+            //     pars.Where(x => x.TypeName is "@EditTime" or "@LastUpdateDate")
+            //         .ForEach(x =>
+            //         {
+            //             if (x.Value is DateTime)
+            //             {
+            //                 x.Value = DateTime.Now;
+            //             }
+            //         });
+            // }
+            
+            // return new KeyValuePair<string, SugarParameter[]>(sql, pars);
         // };
 
         // SQL 执行完事件
@@ -229,9 +232,17 @@ public static class SqlSugarDb
 #endif
         };
 
-        // db.Aop.OnLogExecuting = (sql, pars) => //SQL执行前事件
-        // {
-        // };
+        // SQL 执行前事件
+        db.Aop.OnLogExecuting = (sql, pars) =>
+        {
+            if (sql.StartsWith("SELECT", StringComparison.CurrentCultureIgnoreCase))
+            {
+                if (ValidateUtil.HasInjectionData(sql))
+                {
+                    throw Oops.Oh("SQL注入攻击：" + sql);
+                }
+            }
+        };
 
         // 执行 SQL 错误事件
         db.Aop.OnError = (exp) =>
