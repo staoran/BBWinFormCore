@@ -8,6 +8,8 @@ namespace BB.Tools.Extension;
 /// </summary>
 public static class DistributedCacheExtensions
 {
+    #region 异步方法
+
     /// <summary>
     /// 写缓存
     /// </summary>
@@ -107,6 +109,110 @@ public static class DistributedCacheExtensions
 
         return value;
     }
+
+    #endregion
+
+    #region 同步方法
+
+    /// <summary>
+    /// 写缓存
+    /// </summary>
+    /// <param name="cache">分布式缓存</param>
+    /// <param name="key">缓存名称</param>
+    /// <param name="value">缓存对象</param>
+    /// <param name="expireTimeSpan">滑动过期时长</param>
+    /// <param name="absoluteTimeSpan">绝对过期时长</param>
+    /// <param name="absoluteExpiry">绝对过期时间，absoluteTimeSpan 和 absoluteExpiry 都不为空时以 absoluteExpiry 为主</param>
+    /// <typeparam name="T"></typeparam>
+    public static void Set<T>(this IDistributedCache cache, string key, T value, TimeSpan? expireTimeSpan = null,
+        TimeSpan? absoluteTimeSpan = null, DateTimeOffset? absoluteExpiry = null)
+    {
+        Set(cache, key, value, CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
+    }
+
+    /// <summary>
+    /// 写缓存
+    /// </summary>
+    /// <param name="cache">分布式缓存</param>
+    /// <param name="key">缓存名称</param>
+    /// <param name="value">缓存对象</param>
+    /// <param name="options">缓存配置</param>
+    /// <typeparam name="T"></typeparam>
+    public static void Set<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions options)
+    {
+        var json = JsonSerializer.Serialize(value);
+        cache.SetString(key, json, options);
+    }
+
+    /// <summary>
+    /// 获取缓存
+    /// </summary>
+    /// <param name="cache">分布式缓存</param>
+    /// <param name="key">缓存名称</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? Get<T>(this IDistributedCache cache, string key)
+    {
+        var value = cache.GetString(key);
+
+        if (value is null)
+            return default;
+
+        try
+        {
+            var deserializedValue = JsonSerializer.Deserialize<T>(value);
+            return deserializedValue;
+        }
+        catch
+        {
+            return default;
+        }
+    }
+
+    /// <summary>
+    /// 获取或新增缓存
+    /// </summary>
+    /// <param name="cache">分布式缓存</param>
+    /// <param name="key">缓存名称</param>
+    /// <param name="factory">缓存对象委托</param>
+    /// <param name="expireTimeSpan">滑动过期时长</param>
+    /// <param name="absoluteTimeSpan">绝对过期时长</param>
+    /// <param name="absoluteExpiry">绝对过期时间，absoluteTimeSpan 和 absoluteExpiry 都不为空时以 absoluteExpiry 为主</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? GetOrCreate<T>(this IDistributedCache cache, string key, Func<T> factory,
+        TimeSpan? expireTimeSpan = null, TimeSpan? absoluteTimeSpan = null, DateTimeOffset? absoluteExpiry = null)
+    {
+        return cache.GetOrCreate(key, factory, CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
+    }
+
+    /// <summary>
+    /// 获取或新增缓存
+    /// </summary>
+    /// <param name="cache">分布式缓存</param>
+    /// <param name="key">缓存名称</param>
+    /// <param name="factory">缓存对象委托</param>
+    /// <param name="options">缓存配置</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? GetOrCreate<T>(this IDistributedCache cache, string key, Func<T> factory,
+        DistributedCacheEntryOptions options)
+    {
+        var value = cache.Get<T>(key);
+        if (value is not null)
+            return value;
+
+        value = factory();
+
+        if (value is null)
+            return value;
+
+        cache.Set(key, value, options);
+
+        return value;
+    }
+
+    #endregion
 
     /// <summary>
     /// 创建缓存过期配置
