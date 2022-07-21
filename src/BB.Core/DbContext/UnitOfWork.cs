@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace BB.Core.DbContext;
 
@@ -46,6 +47,19 @@ public class UnitOfWork : IUnitOfWork
     }
 
     /// <summary>
+    /// 开启事务
+    /// </summary>
+    /// <param name="level">事务隔离级别</param>
+    public void BeginTran(IsolationLevel level)
+    {
+        lock (this)
+        {
+            TranCount++;
+            GetDbClient().Ado.BeginTran(level);
+        }
+    }
+
+    /// <summary>
     /// 提交事务
     /// </summary>
     public void CommitTran()
@@ -57,6 +71,7 @@ public class UnitOfWork : IUnitOfWork
             {
                 try
                 {
+                    // 注意 多租户（多库） 不能用 db.Ado.CommitTran，单库可以用 db.Ado.CommitTran
                     GetDbClient().CommitTran();
                 }
                 catch (Exception ex)

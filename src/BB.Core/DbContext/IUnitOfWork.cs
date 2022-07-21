@@ -1,4 +1,6 @@
-﻿namespace BB.Core.DbContext;
+﻿using System.Data;
+
+namespace BB.Core.DbContext;
 
 /// <summary>
 /// 单例的 SqlSugar 工作单元
@@ -15,6 +17,12 @@ public interface IUnitOfWork
     /// 开启事务
     /// </summary>
     void BeginTran();
+
+    /// <summary>
+    /// 开启事务
+    /// </summary>
+    /// <param name="level">事务隔离级别</param>
+    void BeginTran(IsolationLevel level);
 
     /// <summary>
     /// 提交事务
