@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using BB.Core.DbContext;
 using BB.Core.Filter;
 using FastExpressionCompiler;
 using Furion;
@@ -21,6 +22,9 @@ public class Startup : AppStartup
         TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();
         // 开启目标类型映射继承
         TypeAdapterConfig.GlobalSettings.AllowImplicitDestinationInheritance = true;
+
+        // DB
+        services.AddSqlSugarDb();
 
         // 启用jwt认证, 并启用全局授权验证
         services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
