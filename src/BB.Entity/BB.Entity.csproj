@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
-      <PackageReference Include="SqlSugarCore" Version="5.0.9.6" />
+      <PackageReference Include="SqlSugarCore" Version="5.0.9.7" />
     </ItemGroup>
 
 </Project>
