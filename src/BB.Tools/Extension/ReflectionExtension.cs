@@ -7,10 +7,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
 using System.Text;
-using BB.Tools.Extension;
 using BB.Tools.Format;
 
-namespace BB.Tools.Others;
+namespace BB.Tools.Extension;
 
 #region 反射操作辅助类，如获取或设置字段、属性的值等反射信息。
 
@@ -33,11 +32,11 @@ public static class ReflectionExtension
     /// <param name="methodName">方法名称</param>
     /// <param name="args">参数</param>
     /// <returns></returns>
-    public static object InvokeMethod(this object obj, string methodName, object[] args)
+    public static object? InvokeMethod(this object obj, string methodName, object[] args)
     {
         Type type = obj.GetType();
-        MethodInfo method = type.GetMethod(methodName);
-        return method.Invoke(obj, args);
+        MethodInfo? method = type.GetMethod(methodName);
+        return method?.Invoke(obj, args);
     }
 
     /// <summary>
@@ -48,7 +47,7 @@ public static class ReflectionExtension
     /// <param name="value">字段值</param>
     public static void SetField(this object obj, string name, object value)
     {
-        FieldInfo fi = obj.GetType().GetField(name, bf);
+        FieldInfo? fi = obj.GetType().GetField(name, bf);
         if (fi != null)
         {
             fi.SetValue(obj, value);
@@ -61,10 +60,10 @@ public static class ReflectionExtension
     /// <param name="obj">对象实例</param>
     /// <param name="name">字段名称</param>
     /// <returns></returns>
-    public static object GetField(this object obj, string name)
+    public static object? GetField(this object obj, string name)
     {
-        object result = null;
-        FieldInfo fi = obj.GetType().GetField(name, bf);
+        object? result = null;
+        FieldInfo? fi = obj.GetType().GetField(name, bf);
         if (fi != null)
         {
             result = fi.GetValue(obj);
@@ -78,10 +77,10 @@ public static class ReflectionExtension
     /// <param name="type">对象类型</param>
     /// <param name="name">字段名称</param>
     /// <returns></returns>
-    public static object GetField(Type type, string name)
+    public static object? GetField(this Type type, string name)
     {
-        object result = null;
-        FieldInfo fi = type.GetField(name, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+        object? result = null;
+        FieldInfo? fi = type.GetField(name, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
         if (fi != null)
         {
             result = fi.GetValue(null);
@@ -129,14 +128,14 @@ public static class ReflectionExtension
     /// <param name="obj">对象实例</param>
     /// <param name="name">属性名称</param>
     /// <returns></returns>
-    public static object GetProperty(this object obj, string name)
+    public static object? GetProperty(this object obj, string name)
     {
         //这个无法获取基类
         //PropertyInfo fieldInfo = obj.GetType().GetProperty(name, bf);
         //return fieldInfo.GetValue(obj, null);
 
         //下面方法可以获取基类属性
-        object result = null;
+        object? result = null;
         foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(obj))
         {
             if(prop.Name == name)
@@ -153,7 +152,7 @@ public static class ReflectionExtension
     /// <param name="obj">对象实例</param>
     /// <param name="constName">常量属性名称</param>
     /// <returns></returns>
-    public static object GetValue(this object obj, string constName)
+    public static object? GetValue(this object obj, string constName)
     {
         string constValue = GetField(obj, constName).ObjToStr();
         if (constValue.IsNullOrEmpty())
@@ -167,7 +166,7 @@ public static class ReflectionExtension
     /// </summary>
     /// <param name="obj">对象实例</param>
     /// <returns></returns>
-    public static object GetPrimaryKeyValue(this object obj)
+    public static object? GetPrimaryKeyValue(this object obj)
     {
         return obj.GetValue("PrimaryKey");
     }
@@ -177,7 +176,7 @@ public static class ReflectionExtension
     /// </summary>
     /// <param name="obj">对象实例</param>
     /// <returns></returns>
-    public static object GetForeignKeyValue(this object obj)
+    public static object? GetForeignKeyValue(this object obj)
     {
         return obj.GetValue("ForeignKey");
     }
@@ -239,7 +238,6 @@ public static class ReflectionExtension
     /// <summary>
     /// 获取指定类型的属性名称列表
     /// </summary>
-    /// <param name="obj">object对象</param>
     /// <returns></returns>
     public static List<string> GetPropertyNames<T>() where T : class
     {
@@ -258,12 +256,12 @@ public static class ReflectionExtension
     /// </summary>
     /// <param name="obj">object对象</param>
     /// <returns></returns>
-    public static Dictionary<string, object> GetPropertyDict(this object obj)
+    public static Dictionary<string, object?> GetPropertyDict(this object obj)
     {
-        Dictionary<string, object> dict = new Dictionary<string, object>();
+        Dictionary<string, object?> dict = new Dictionary<string, object?>();
         foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(obj))
         {
-            object propValue = prop.GetValue(obj);
+            object? propValue = prop.GetValue(obj);
             if (!dict.ContainsKey(prop.Name))
             {
                 dict.Add(prop.Name, propValue);
@@ -282,8 +280,8 @@ public static class ReflectionExtension
         Dictionary<string, string> dict = new Dictionary<string, string>();
         foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(obj))
         {
-            object propValue = prop.GetValue(obj);
-            string value = (propValue != null) ? propValue.ToString() : "";
+            object? propValue = prop.GetValue(obj);
+            string value = (propValue != null) ? propValue.ObjToStr() : "";
             if (!dict.ContainsKey(prop.Name))
             {
                 dict.Add(prop.Name, value);
@@ -395,7 +393,7 @@ public static class ReflectionExtension
     /// <param name="value">Enum For Which description is required.</param>
     /// <param name="args">An Object array containing zero or more objects to format.</param>
     /// <returns>return null if DescriptionAttribute is not found or return type description</returns>
-    public static string GetDescription(Enum value, params object[] args)
+    public static string GetDescription(Enum value, params object[]? args)
     {
         if (value == null)
         {
@@ -404,14 +402,14 @@ public static class ReflectionExtension
 
         string text1;
 
-        FieldInfo fi = value.GetType().GetField(value.ToString());
+        FieldInfo? fi = value.GetType().GetField(value.ToString());
 
         DescriptionAttribute[] attributes =
             (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
         text1 = (attributes.Length > 0) ? attributes[0].Description : value.ToString();
 
-        if ((args != null) && (args.Length > 0))
+        if (args is { Length: > 0 })
         {
             return string.Format(null, text1, args);
         }

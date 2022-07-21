@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Furion.UnifyResult;
-using Furion.UnifyResult.Internal;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BB.Core.Filter;

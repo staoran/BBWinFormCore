@@ -203,7 +203,7 @@ public static class ConvertHelper
     /// <param name="data">数据</param>
     /// <param name="defValue">默认值</param>
     /// <returns></returns>
-    public static int ToInt32(this object data, int defValue = 0)
+    public static int ToInt32(this object? data, int defValue = 0)
     {
         //如果为空则返回默认值
         if (data == null || Convert.IsDBNull(data))
@@ -281,7 +281,7 @@ public static class ConvertHelper
     /// <param name="data">数据</param>
     /// <param name="defValue">默认值</param>
     /// <returns></returns>
-    public static bool ToBoolean(this object data, bool defValue)
+    public static bool ToBoolean(this object? data, bool defValue)
     {
         //如果为空则返回默认值
         if (data == null || Convert.IsDBNull(data))
@@ -336,7 +336,7 @@ public static class ConvertHelper
     /// <param name="data">数据</param>
     /// <param name="defValue">默认值</param>
     /// <returns></returns>
-    public static float ToFloat(this object data, float defValue = 0)
+    public static float ToFloat(this object? data, float defValue = 0)
     {
         //如果为空则返回默认值
         if (data == null || Convert.IsDBNull(data))
@@ -441,7 +441,7 @@ public static class ConvertHelper
     /// <param name="data">要转换的数据</param>
     /// <param name="defValue">默认值</param>
     /// <returns></returns>
-    public static double ToDouble(this object data, double defValue = 0)
+    public static double ToDouble(this object? data, double defValue = 0)
     {
         //如果为空则返回默认值
         if (data == null || Convert.IsDBNull(data))
@@ -492,7 +492,7 @@ public static class ConvertHelper
     /// <param name="decimals">小数的位数</param>
     /// <param name="defValue">默认值</param>
     /// <returns></returns>
-    public static double ToDouble(this object data, int decimals, double defValue = 0)
+    public static double ToDouble(this object? data, int decimals, double defValue = 0)
     {
         //如果为空则返回默认值
         if (data == null || Convert.IsDBNull(data))
@@ -544,7 +544,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="data">转换的数据</param>
     /// <param name="targetType">转换的目标类型</param>
-    public static object ConvertTo(this object data, Type targetType)
+    public static object ConvertTo(this object? data, Type targetType)
     {
         if (data == null || Convert.IsDBNull(data))
         {
@@ -590,7 +590,7 @@ public static class ConvertHelper
     /// </summary>
     /// <typeparam name="T">转换的目标类型</typeparam>
     /// <param name="data">转换的数据</param>
-    public static T ConvertTo<T>(object data)
+    public static T ConvertTo<T>(object? data)
     {
         if (data == null || Convert.IsDBNull(data))
             return default(T);
@@ -638,7 +638,7 @@ public static class ConvertHelper
     /// <param name="data">数据</param>
     /// <param name="defValue">默认值</param>
     /// <returns></returns>
-    public static Decimal ToDecimal(this object data, Decimal defValue = Decimal.Zero)
+    public static Decimal ToDecimal(this object? data, Decimal defValue = Decimal.Zero)
     {
         //如果为空则返回默认值
         if (data == null || Convert.IsDBNull(data))
@@ -715,7 +715,7 @@ public static class ConvertHelper
     /// <param name="data">数据</param>
     /// <param name="defValue">默认值</param>
     /// <returns></returns>
-    public static DateTime ToDateTime(this object data, DateTime defValue)
+    public static DateTime ToDateTime(this object? data, DateTime defValue)
     {
         //如果为空则返回默认值
         if (data == null || Convert.IsDBNull(data))
@@ -833,7 +833,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static bool ObjToBool(this object obj)
+    public static bool ObjToBool(this object? obj)
     {
         if (obj == null)
         {
@@ -878,7 +878,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static DateTime? ObjToDateNull(this object obj)
+    public static DateTime? ObjToDateNull(this object? obj)
     {
         if (obj == null)
         {
@@ -900,7 +900,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static byte ObjToByte(this object obj)
+    public static byte ObjToByte(this object? obj)
     {
         if (obj != null)
         {
@@ -923,7 +923,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static int ObjToInt(this object obj)
+    public static int ObjToInt(this object? obj)
     {
         if (obj != null)
         {
@@ -946,7 +946,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static long ObjToLong(this object obj)
+    public static long ObjToLong(this object? obj)
     {
         if (obj != null)
         {
@@ -969,7 +969,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static int? ObjToIntNull(this object obj)
+    public static int? ObjToIntNull(this object? obj)
     {
         if (obj == null)
         {
@@ -989,7 +989,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static long? ObjToLongNull(this object obj)
+    public static long? ObjToLongNull(this object? obj)
     {
         if (obj == null)
         {
@@ -1009,7 +1009,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static string ObjToStr(this object obj)
+    public static string ObjToStr(this object? obj)
     {
         if (obj == null || obj.Equals(DBNull.Value))
         {
@@ -1029,7 +1029,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static double ObjToDouble(this object obj)
+    public static double ObjToDouble(this object? obj)
     {
         if (obj != null)
         {
@@ -1052,7 +1052,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static decimal ObjToDecimal(this object obj)
+    public static decimal ObjToDecimal(this object? obj)
     {
         if (obj == null)
         {
@@ -1079,7 +1079,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static decimal? ObjToDecimalNull(this object obj)
+    public static decimal? ObjToDecimalNull(this object? obj)
     {
         if (obj == null)
         {
@@ -1099,7 +1099,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static short ObjToShort(this object obj)
+    public static short ObjToShort(this object? obj)
     {
         if (obj == null)
         {
@@ -1126,7 +1126,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static short? ObjToShortNull(this object obj)
+    public static short? ObjToShortNull(this object? obj)
     {
         if (obj == null)
         {
@@ -1146,7 +1146,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static Guid ObjToGuid(this object obj)
+    public static Guid ObjToGuid(this object? obj)
     {
         if (obj == null)
         {
@@ -1172,7 +1172,7 @@ public static class ConvertHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static Guid? ObjToGuidNull(this object obj)
+    public static Guid? ObjToGuidNull(this object? obj)
     {
         if (obj == null)
         {
