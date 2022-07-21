@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace BB.Core.DbContext;
 
@@ -93,5 +94,131 @@ public class UnitOfWork : IUnitOfWork
             TranCount--;
             GetDbClient().RollbackTran();
         }
+    }
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    public DbResult<bool> UseTran(Action action, Action<Exception> errorCallBack = null)
+    {
+        DbResult<bool> dbResult = new();
+        try
+        {
+            BeginTran();
+            action?.Invoke();
+            CommitTran();
+            dbResult.Data = dbResult.IsSuccess = true;
+        }
+        catch (Exception ex)
+        {
+            dbResult.ErrorException = ex;
+            dbResult.ErrorMessage = ex.Message;
+            dbResult.IsSuccess = false;
+            RollbackTran();
+            errorCallBack?.Invoke(ex);
+        }
+
+        return dbResult;
+    }
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    public async Task<DbResult<bool>> UseTranAsync(Func<Task> action, Action<Exception> errorCallBack = null)
+    {
+        DbResult<bool> result = new();
+        try
+        {
+            BeginTran();
+
+            if (action != null) await action();
+
+            CommitTran();
+            result.Data = result.IsSuccess = true;
+        }
+        catch (Exception ex)
+        {
+            result.ErrorException = ex;
+            result.ErrorMessage = ex.Message;
+            result.IsSuccess = false;
+            RollbackTran();
+            errorCallBack?.Invoke(ex);
+        }
+
+        DbResult<bool> dbResult = result;
+        result = null;
+        return dbResult;
+    }
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    public DbResult<T> UseTran<T>(Func<T> action, Action<Exception> errorCallBack = null)
+    {
+        DbResult<T> dbResult = new DbResult<T>();
+        try
+        {
+            BeginTran();
+            if (action != null) dbResult.Data = action();
+            CommitTran();
+            dbResult.IsSuccess = true;
+        }
+        catch (Exception ex)
+        {
+            dbResult.ErrorException = ex;
+            dbResult.ErrorMessage = ex.Message;
+            dbResult.IsSuccess = false;
+            RollbackTran();
+            errorCallBack?.Invoke(ex);
+        }
+
+        return dbResult;
+    }
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    public async Task<DbResult<T>> UseTranAsync<T>(Func<Task<T>> action, Action<Exception> errorCallBack = null)
+    {
+        DbResult<T> result = new();
+        try
+        {
+            BeginTran();
+            if (action != null)
+            {
+                DbResult<T> dbResult = result;
+                T obj = await action();
+                dbResult.Data = obj;
+                dbResult = null;
+                obj = default(T);
+            }
+
+            CommitTran();
+            result.IsSuccess = true;
+        }
+        catch (Exception ex)
+        {
+            result.ErrorException = ex;
+            result.ErrorMessage = ex.Message;
+            result.IsSuccess = false;
+            RollbackTran();
+            errorCallBack?.Invoke(ex);
+        }
+
+        DbResult<T> dbResult1 = result;
+        result = null;
+        return dbResult1;
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace BB.Core.DbContext;
 
@@ -33,4 +35,36 @@ public interface IUnitOfWork
     /// 回滚事务
     /// </summary>
     void RollbackTran();
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    DbResult<bool> UseTran(Action action, Action<Exception> errorCallBack = null);
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    DbResult<T> UseTran<T>(Func<T> action, Action<Exception> errorCallBack = null);
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    Task<DbResult<bool>> UseTranAsync(Func<Task> action, Action<Exception> errorCallBack = null);
+
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    /// <returns></returns>
+    Task<DbResult<T>> UseTranAsync<T>(Func<Task<T>> action, Action<Exception> errorCallBack = null);
 }
