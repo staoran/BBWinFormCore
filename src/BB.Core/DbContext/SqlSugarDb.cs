@@ -123,8 +123,11 @@ public static class SqlSugarDb
             // 在循环中通过 ConfigId 获取作用域的 SqlSugar 实例，配置实例的 AOP 动作
             ConfigAction(s.GetConnectionScope(c.ConfigId)));
 
-        // 单例注入
+        // 单例注入 SqlSugar 和 工作单元
         services.AddSingleton<ISqlSugarClient>(new SqlSugarScope(connectionConfig, Action));
+        services.AddSingleton<IUnitOfWork, UnitOfWork>();
+        // 作用域注入仓储
+        services.AddScoped(typeof(BaseRepository<>));
     }
 
     /// <summary>
