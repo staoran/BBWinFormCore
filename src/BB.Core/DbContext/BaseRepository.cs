@@ -717,38 +717,29 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<PageResult<T>> FindWithPagerAsync(string condition, PageInput info)
     {
-        return await FindWithPagerAsync(condition, info, SortField, IsDescending);
-    }
-
-    /// <summary>
-    /// 根据条件查询数据库,并返回对象集合(用于分页数据显示)
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="info">分页参数</param>
-    /// <param name="fieldToSort">排序字段</param>
-    /// <returns>指定对象的集合</returns>
-    public virtual async Task<PageResult<T>> FindWithPagerAsync(string condition, PageInput info, string fieldToSort)
-    {
-        return await FindWithPagerAsync(condition, info, fieldToSort, IsDescending);
-    }
-
-    /// <summary>
-    /// 根据条件查询数据库,并返回对象集合(用于分页数据显示)
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="info">分页参数</param>
-    /// <param name="fieldToSort">排序字段</param>
-    /// <param name="desc">是否降序</param>
-    /// <returns>指定对象的集合</returns>
-    public virtual async Task<PageResult<T>> FindWithPagerAsync(string condition, PageInput info, string fieldToSort,
-        bool desc)
-    {
         //如果不指定排序字段，用默认的
-        fieldToSort = !string.IsNullOrEmpty(fieldToSort) ? fieldToSort : SortField;
+        string fieldToSort = !string.IsNullOrEmpty(info.SortField) ? info.SortField : SortField;
 
         return await _db.Queryable<T>()
             .Where(condition)
-            .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {(desc ? "desc" : "asc")}")
+            .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {info.SortOrder}")
+            .ToPagedListAsync(info.PageNo, info.PageSize);
+    }
+
+    /// <summary>
+    /// 根据条件查询数据库,并返回对象集合(用于分页数据显示)
+    /// </summary>
+    /// <param name="whereExpression">查询的条件</param>
+    /// <param name="info">分页参数</param>
+    /// <returns>指定对象的集合</returns>
+    public virtual async Task<PageResult<T>> FindWithPagerAsync(Expression<Func<T, bool>> whereExpression, PageInput info)
+    {
+        //如果不指定排序字段，用默认的
+        string fieldToSort = !string.IsNullOrEmpty(info.SortField) ? info.SortField : SortField;
+
+        return await _db.Queryable<T>()
+            .Where(whereExpression)
+            .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {info.SortOrder}")
             .ToPagedListAsync(info.PageNo, info.PageSize);
     }
 
@@ -808,19 +799,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<PageResult<T>> GetAllAsync(PageInput info)
     {
-        return await FindWithPagerAsync("", info, SortField, IsDescending);
-    }
-
-    /// <summary>
-    /// 返回数据库所有的对象集合(用于分页数据显示)
-    /// </summary>
-    /// <param name="info">分页参数信息</param>
-    /// <param name="fieldToSort">排序字段</param>
-    /// <param name="desc">是否降序</param>
-    /// <returns>指定对象的集合</returns>
-    public virtual async Task<PageResult<T>> GetAllAsync(PageInput info, string fieldToSort, bool desc)
-    {
-        return await FindWithPagerAsync("", info, fieldToSort, desc);
+        return await FindWithPagerAsync("", info);
     }
 
     /// <summary>
@@ -902,7 +881,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
             query = query.Where(condition);
         }
 
-        return await query.OrderBy($"{fieldToSort} {info.SortOrder}")
+        return await query.OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {info.SortOrder}")
             .ToDataTablePageAsync(info.PageNo, info.PageSize);
     }
 
