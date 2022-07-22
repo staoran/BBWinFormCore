@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using BB.Entity.Base;
@@ -1556,6 +1557,90 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         }
 
         return result;
+    }
+
+    #endregion
+
+    #region 多表查询
+
+    /// <summary> 
+    ///查询-多表查询
+    /// </summary> 
+    /// <typeparam name="T1">实体1</typeparam> 
+    /// <typeparam name="T2">实体2</typeparam> 
+    /// <typeparam name="T3">实体3</typeparam>
+    /// <typeparam name="TResult">返回对象</typeparam>
+    /// <param name="joinExpression">关联表达式 (join1,join2) => new object[] {JoinType.Left,join1.UserNo==join2.UserNo}</param> 
+    /// <param name="selectExpression">返回表达式 (s1, s2) => new { Id =s1.UserNo, Id1 = s2.UserNo}</param>
+    /// <param name="whereLambda">查询表达式 (w1, w2) =>w1.UserNo == "")</param> 
+    /// <returns>值</returns>
+    public async Task<List<TResult>> QueryMuch<T1, T2, T3, TResult>(
+        Expression<Func<T1, T2, T3, object[]>> joinExpression,
+        Expression<Func<T1, T2, T3, TResult>> selectExpression,
+        Expression<Func<T1, T2, T3, bool>> whereLambda = null) where T1 : class, new()
+    {
+        if (whereLambda == null)
+        {
+            return await _db.Queryable(joinExpression).Select(selectExpression).ToListAsync();
+        }
+
+        return await _db.Queryable(joinExpression).Where(whereLambda).Select(selectExpression).ToListAsync();
+    }
+
+    /// <summary>
+    /// 两表联合查询-分页
+    /// </summary>
+    /// <typeparam name="T1">实体1</typeparam>
+    /// <typeparam name="T2">实体1</typeparam>
+    /// <typeparam name="TResult">返回对象</typeparam>
+    /// <param name="joinExpression">关联表达式</param>
+    /// <param name="selectExpression">返回表达式</param>
+    /// <param name="whereExpression">查询表达式</param>
+    /// <param name="pageInput">分页参数</param>
+    /// <returns></returns>
+    public async Task<PageResult<TResult>> QueryTabsPage<T1, T2, TResult>(
+        Expression<Func<T1, T2, object[]>> joinExpression,
+        Expression<Func<T1, T2, TResult>> selectExpression,
+        Expression<Func<TResult, bool>> whereExpression,
+        PageInput pageInput) where TResult : new()
+    {
+        //如果不指定排序字段，用默认的
+        string fieldToSort = !string.IsNullOrEmpty(pageInput.SortField) ? pageInput.SortField : SortField;
+
+        return await _db.Queryable(joinExpression)
+            .Select(selectExpression)
+            .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {pageInput.SortOrder}")
+            .WhereIF(whereExpression != null, whereExpression)
+            .ToPagedListAsync(pageInput.PageNo, pageInput.PageSize);
+    }
+
+    /// <summary>
+    /// 两表联合查询-分页-分组
+    /// </summary>
+    /// <typeparam name="T1">实体1</typeparam>
+    /// <typeparam name="T2">实体1</typeparam>
+    /// <typeparam name="TResult">返回对象</typeparam>
+    /// <param name="joinExpression">关联表达式</param>
+    /// <param name="selectExpression">返回表达式</param>
+    /// <param name="whereExpression">查询表达式</param>
+    /// <param name="groupExpression">group表达式</param>
+    /// <param name="pageInput">分页参数</param>
+    /// <returns></returns>
+    public async Task<PageResult<TResult>> QueryTabsPage<T1, T2, TResult>(
+        Expression<Func<T1, T2, object[]>> joinExpression,
+        Expression<Func<T1, T2, TResult>> selectExpression,
+        Expression<Func<TResult, bool>> whereExpression,
+        Expression<Func<T1, object>> groupExpression,
+        PageInput pageInput) where TResult : new()
+    {
+        //如果不指定排序字段，用默认的
+        string fieldToSort = !string.IsNullOrEmpty(pageInput.SortField) ? pageInput.SortField : SortField;
+
+        return await _db.Queryable(joinExpression).GroupBy(groupExpression)
+            .Select(selectExpression)
+            .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {pageInput.SortOrder}")
+            .WhereIF(whereExpression != null, whereExpression)
+            .ToPagedListAsync(pageInput.PageNo, pageInput.PageSize);
     }
 
     #endregion
