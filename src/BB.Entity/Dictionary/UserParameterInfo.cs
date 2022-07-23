@@ -16,7 +16,7 @@ public class UserParameterInfo : BaseEntity
     public UserParameterInfo()
     {
         ID = Guid.NewGuid().ToString();
-        CreateTime = DateTime.Now;
+        CreationDate = DateTime.Now;
     }
 
     #region Property Members
@@ -55,8 +55,8 @@ public class UserParameterInfo : BaseEntity
     /// </summary>
     [DataMember]
     [Sort(IsDesc)]
-    [Column(FieldCreateTime)]
-    public virtual DateTime CreateTime { get; set; }
+    [Column(FieldCreationDate)]
+    public virtual DateTime CreationDate { get; set; }
 
     #endregion
 
@@ -78,7 +78,7 @@ public class UserParameterInfo : BaseEntity
     /// 排序字段
     /// </summary>
     [NonSerialized]
-    public new const string SortKey = FieldCreateTime;
+    public new const string SortKey = FieldCreationDate;
 
     /// <summary>
     /// 排序方式
@@ -111,7 +111,7 @@ public class UserParameterInfo : BaseEntity
     /// 创建时间
     /// </summary>
     [NonSerialized]
-    public const string FieldCreateTime = "CreateTime";
+    public const string FieldCreationDate = "CreationDate";
 
     #endregion
 }

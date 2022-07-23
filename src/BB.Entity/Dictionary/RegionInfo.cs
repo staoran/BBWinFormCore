@@ -61,16 +61,16 @@ public class RegionInfo : BaseEntity
     /// 创建时间
     /// </summary>
     [DataMember]
-    [Column(FieldCreatedTime)]
-    public virtual DateTime CreatedTime { get; set; }
+    [Column(FieldCreationDate)]
+    public virtual DateTime CreationDate { get; set; }
 
     /// <summary>
     /// 修改时间
     /// </summary>
     [DataMember]
     [OptimisticLock]
-    [Column(FieldEditTime)]
-    public virtual DateTime EditTime { get; set; }
+    [Column(FieldLastUpdateDate)]
+    public virtual DateTime LastUpdateDate { get; set; }
 
     /// <summary>
     /// 区域类型
@@ -125,7 +125,7 @@ public class RegionInfo : BaseEntity
     /// 乐观锁字段
     /// </summary>
     [NonSerialized]
-    public new const string OptimisticLockKey = FieldEditTime;
+    public new const string OptimisticLockKey = FieldLastUpdateDate;
 
     /// <summary>
     /// 区域编码
@@ -161,13 +161,13 @@ public class RegionInfo : BaseEntity
     /// 创建时间
     /// </summary>
     [NonSerialized]
-    public const string FieldCreatedTime = "CreatedTime";
+    public const string FieldCreationDate = "CreationDate";
 
     /// <summary>
     /// 修改时间
     /// </summary>
     [NonSerialized]
-    public const string FieldEditTime = "EditTime";
+    public const string FieldLastUpdateDate = "LastUpdateDate";
 
     /// <summary>
     /// 区域类型

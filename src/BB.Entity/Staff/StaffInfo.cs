@@ -42,10 +42,10 @@ public class StaffInfo : BaseEntity
     private byte[] m_Portraint; //个人照片          
     private string m_AttachGUID; //个人资料          
     private string m_CheckUser; //资料核对          
-    private string m_Creator; //创建人          
-    private DateTime m_CreateTime; //创建时间          
-    private string m_Editor; //编辑人          
-    private DateTime m_EditTime; //编辑时间          
+    private string m_CreatedBy; //创建人          
+    private DateTime m_CreationDate; //创建时间          
+    private string m_LastUpdatedBy; //编辑人          
+    private DateTime m_LastUpdateDate; //编辑时间          
     private string m_Dept_ID; //所属部门
     private string m_Company_ID; //所属公司        
 
@@ -550,15 +550,15 @@ public class StaffInfo : BaseEntity
     /// 创建人
     /// </summary>
     [DataMember]
-    public virtual string Creator
+    public virtual string CreatedBy
     {
         get
         {
-            return m_Creator;
+            return m_CreatedBy;
         }
         set
         {
-            m_Creator = value;
+            m_CreatedBy = value;
         }
     }
 
@@ -566,15 +566,15 @@ public class StaffInfo : BaseEntity
     /// 创建时间
     /// </summary>
     [DataMember]
-    public virtual DateTime CreateTime
+    public virtual DateTime CreationDate
     {
         get
         {
-            return m_CreateTime;
+            return m_CreationDate;
         }
         set
         {
-            m_CreateTime = value;
+            m_CreationDate = value;
         }
     }
 
@@ -582,15 +582,15 @@ public class StaffInfo : BaseEntity
     /// 编辑人
     /// </summary>
     [DataMember]
-    public virtual string Editor
+    public virtual string LastUpdatedBy
     {
         get
         {
-            return m_Editor;
+            return m_LastUpdatedBy;
         }
         set
         {
-            m_Editor = value;
+            m_LastUpdatedBy = value;
         }
     }
 
@@ -598,15 +598,15 @@ public class StaffInfo : BaseEntity
     /// 编辑时间
     /// </summary>
     [DataMember]
-    public virtual DateTime EditTime
+    public virtual DateTime LastUpdateDate
     {
         get
         {
-            return m_EditTime;
+            return m_LastUpdateDate;
         }
         set
         {
-            m_EditTime = value;
+            m_LastUpdateDate = value;
         }
     }
 

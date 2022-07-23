@@ -19,8 +19,8 @@ public class OUInfo : BaseEntity
 	{
 		ID = 0;
 		PID = "-1";
-		CreateTime = DateTime.Now;
-		EditTime = DateTime.Now;
+		CreationDate = DateTime.Now;
+		LastUpdateDate = DateTime.Now;
 		Deleted = false; //是否已删除
 		Enabled = true; //有效标志
 
@@ -112,15 +112,15 @@ public class OUInfo : BaseEntity
     /// 创建人ID
     /// </summary>
     [DataMember]
-    [Column(FieldCreatorId, DisCreatorId)]
-    public virtual string CreatorId { get; set; }
+    [Column(FieldCreatedBy, DisCreatedBy)]
+    public virtual string CreatedBy { get; set; }
 
     /// <summary>
     /// 创建时间
     /// </summary>
     [DataMember]
-    [Column(FieldCreateTime, DisCreateTime)]
-    public virtual DateTime CreateTime { get; set; }
+    [Column(FieldCreationDate, DisCreationDate)]
+    public virtual DateTime CreationDate { get; set; }
 
     /// <summary>
     /// 编辑人
@@ -133,16 +133,16 @@ public class OUInfo : BaseEntity
     /// 编辑人ID
     /// </summary>
     [DataMember]
-    [Column(FieldEditorId, DisEditorId)]
-    public virtual string EditorId { get; set; }
+    [Column(FieldLastUpdatedBy, DisLastUpdatedBy)]
+    public virtual string LastUpdatedBy { get; set; }
 
     /// <summary>
     /// 编辑时间
     /// </summary>
     [DataMember]
     [OptimisticLock]
-    [Column(FieldEditTime, DisEditTime)]
-    public virtual DateTime EditTime { get; set; }
+    [Column(FieldLastUpdateDate, DisLastUpdateDate)]
+    public virtual DateTime LastUpdateDate { get; set; }
 
     /// <summary>
     /// 是否已删除
@@ -216,7 +216,7 @@ public class OUInfo : BaseEntity
     /// 乐观锁字段
     /// </summary>
     [NonSerialized]
-    public new const string OptimisticLockKey = FieldEditTime;
+    public new const string OptimisticLockKey = FieldLastUpdateDate;
 
     #region 列名
 
@@ -287,13 +287,13 @@ public class OUInfo : BaseEntity
     /// 创建人ID
     /// </summary>
     [NonSerialized]
-    public const string FieldCreatorId = "Creator_ID";
+    public const string FieldCreatedBy = "CreatedBy";
 
     /// <summary>
     /// 创建时间
     /// </summary>
     [NonSerialized]
-    public const string FieldCreateTime = "CreateTime";
+    public const string FieldCreationDate = "CreationDate";
 
     /// <summary>
     /// 编辑人
@@ -305,13 +305,13 @@ public class OUInfo : BaseEntity
     /// 编辑人ID
     /// </summary>
     [NonSerialized]
-    public const string FieldEditorId = "Editor_ID";
+    public const string FieldLastUpdatedBy = "LastUpdatedBy";
 
     /// <summary>
     /// 编辑时间
     /// </summary>
     [NonSerialized]
-    public const string FieldEditTime = "EditTime";
+    public const string FieldLastUpdateDate = "LastUpdateDate";
 
     /// <summary>
     /// 是否已删除
@@ -408,13 +408,13 @@ public class OUInfo : BaseEntity
     /// 创建人ID
     /// </summary>
     [NonSerialized]
-    public const string DisCreatorId = "创建人ID";
+    public const string DisCreatedBy = "创建人ID";
 
     /// <summary>
     /// 创建时间
     /// </summary>
     [NonSerialized]
-    public const string DisCreateTime = "创建时间";
+    public const string DisCreationDate = "创建时间";
 
     /// <summary>
     /// 编辑人
@@ -426,13 +426,13 @@ public class OUInfo : BaseEntity
     /// 编辑人ID
     /// </summary>
     [NonSerialized]
-    public const string DisEditorId = "编辑人ID";
+    public const string DisLastUpdatedBy = "编辑人ID";
 
     /// <summary>
     /// 编辑时间
     /// </summary>
     [NonSerialized]
-    public const string DisEditTime = "编辑时间";
+    public const string DisLastUpdateDate = "编辑时间";
 
     /// <summary>
     /// 是否已删除
@@ -507,11 +507,11 @@ public class OUNodeInfo : OUInfo
 		base.InnerPhone = info.InnerPhone;
 		base.Note = info.Note;
 		base.Creator = info.Creator;
-		base.CreatorId = info.CreatorId;
-		base.CreateTime = info.CreateTime;
+		base.CreatedBy = info.CreatedBy;
+		base.CreationDate = info.CreationDate;
 		base.Editor = info.Editor;
-		base.EditorId = info.EditorId;
-		base.EditTime = info.EditTime;
+		base.LastUpdatedBy = info.LastUpdatedBy;
+		base.LastUpdateDate = info.LastUpdateDate;
 		base.Deleted = info.Deleted;
 		base.Enabled = info.Enabled;
 		base.CompanyId = info.CompanyId;

@@ -29,8 +29,8 @@ public class RoleInfo : BaseEntity
     {
         ID = 0;
         PID = -1;
-        CreateTime = DateTime.Now;
-        EditTime = DateTime.Now;
+        CreationDate = DateTime.Now;
+        LastUpdateDate = DateTime.Now;
         Deleted = false; //是否已删除
         Enabled = true; //有效标志
 
@@ -115,15 +115,15 @@ public class RoleInfo : BaseEntity
     /// 创建人ID
     /// </summary>
     [DataMember]
-    [Column(FieldCreatorId)]
-    public virtual string CreatorId { get; set; }
+    [Column(FieldCreatedBy)]
+    public virtual string CreatedBy { get; set; }
 
     /// <summary>
     /// 创建时间
     /// </summary>
     [DataMember]
-    [Column(FieldCreateTime)]
-    public virtual DateTime CreateTime { get; set; }
+    [Column(FieldCreationDate)]
+    public virtual DateTime CreationDate { get; set; }
 
     /// <summary>
     /// 编辑人
@@ -136,16 +136,16 @@ public class RoleInfo : BaseEntity
     /// 编辑人ID
     /// </summary>
     [DataMember]
-    [Column(FieldEditorId)]
-    public virtual string EditorId { get; set; }
+    [Column(FieldLastUpdatedBy)]
+    public virtual string LastUpdatedBy { get; set; }
 
     /// <summary>
     /// 编辑时间
     /// </summary>
     [DataMember]
     [OptimisticLock]
-    [Column(FieldEditTime)]
-    public virtual DateTime EditTime { get; set; }
+    [Column(FieldLastUpdateDate)]
+    public virtual DateTime LastUpdateDate { get; set; }
 
     /// <summary>
     /// 是否已删除
@@ -194,7 +194,7 @@ public class RoleInfo : BaseEntity
     /// 乐观锁字段
     /// </summary>
     [NonSerialized]
-    public new const string OptimisticLockKey = FieldEditTime;
+    public new const string OptimisticLockKey = FieldLastUpdateDate;
 
     [NonSerialized]
     public const string FieldID = "ID";
@@ -257,13 +257,13 @@ public class RoleInfo : BaseEntity
     /// 创建人ID
     /// </summary>
     [NonSerialized]
-    public const string FieldCreatorId = "Creator_ID";
+    public const string FieldCreatedBy = "CreatedBy";
 
     /// <summary>
     /// 创建时间
     /// </summary>
     [NonSerialized]
-    public const string FieldCreateTime = "CreateTime";
+    public const string FieldCreationDate = "CreationDate";
 
     /// <summary>
     /// 编辑人
@@ -275,13 +275,13 @@ public class RoleInfo : BaseEntity
     /// 编辑人ID
     /// </summary>
     [NonSerialized]
-    public const string FieldEditorId = "Editor_ID";
+    public const string FieldLastUpdatedBy = "LastUpdatedBy";
 
     /// <summary>
     /// 编辑时间
     /// </summary>
     [NonSerialized]
-    public const string FieldEditTime = "EditTime";
+    public const string FieldLastUpdateDate = "LastUpdateDate";
 
     /// <summary>
     /// 是否已删除
