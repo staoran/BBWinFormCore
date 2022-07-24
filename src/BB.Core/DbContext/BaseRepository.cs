@@ -1096,7 +1096,6 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="fieldName">指定的属性名</param>
     /// <param name="key">指定的值</param>
     /// <returns>存在则返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Obsolete]
     public virtual async Task<bool> IsExistKeyAsync(string fieldName, object key)
     {
         return await base.AsQueryable()
@@ -1147,23 +1146,6 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 如果字段存在，则获取对应的值，否则返回默认空
-    /// </summary>
-    /// <param name="row">DataRow对象</param>
-    /// <param name="columnName">字段列名</param>
-    /// <returns></returns>
-    private string GetRowData(DataRow row, string columnName)
-    {
-        string result = "";
-        if (row.Table.Columns.Contains(columnName))
-        {
-            result = row[columnName].ToString();
-        }
-
-        return result;
-    }
-
-    /// <summary>
     /// 根据指定对象的ID,从数据库中删除指定对象
     /// </summary>
     /// <param name="key">指定对象的ID</param>
@@ -1205,15 +1187,6 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     #endregion
 
     #region 辅助类方法
-
-    /// <summary>
-    /// 初始化数据库表名
-    /// </summary>
-    /// <param name="tableName">数据库表名</param>
-    public virtual void InitTableName(string tableName)
-    {
-        _tableName = tableName;
-    }
 
     /// <summary>
     /// 获取数据库的全部表名称
