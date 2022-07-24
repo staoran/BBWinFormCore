@@ -1286,6 +1286,34 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
+    /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NotSupportedException"></exception>
+    public virtual Dictionary<string, int> GetPermitDict()
+    {
+        return _cache.GetOrCreate($"{typeof(T).Name}PermitDict", () =>
+        {
+            Dictionary<string, int> dic = new();
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            foreach (PropertyInfo prop in properties)
+            {
+                object attribute = prop.GetCustomAttribute(typeof(ColumnAttribute), false);
+                if (attribute != null)
+                {
+                    var attr = (ColumnAttribute)attribute;
+                    if (attr.Permit != 0)
+                    {
+                        dic.Add(attr.Name, attr.Permit);
+                    }
+                }
+            }
+
+            return dic;
+        });
+    }
+
+    /// <summary>
     /// 获取字段中文别名（用于界面显示）的字典集合
     /// </summary>
     /// <returns></returns>

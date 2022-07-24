@@ -96,11 +96,13 @@ public class ColumnAttribute : Attribute
     /// <param name="name">列名</param>
     /// <param name="display">列显示名</param>
     /// <param name="hide">是否隐藏</param>
-    public ColumnAttribute(string name, string display = null, bool hide = false)
+    /// <param name="permit">表单操作权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑</param>
+    public ColumnAttribute(string name, string display = "", bool hide = false, int permit = 0)
     {
         Name = name;
         Display = display;
         Hide = hide;
+        Permit = permit;
     }
 
     /// <summary>
@@ -117,4 +119,9 @@ public class ColumnAttribute : Attribute
     /// 是否隐藏
     /// </summary>
     public bool Hide { get; }
+    
+    /// <summary>
+    /// 表单操作权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
+    /// </summary>
+    public int Permit { get; }
 }
