@@ -222,7 +222,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation InValueLengthRange(this Validation validation, bool checkNull, int max, int min = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         if (checkNull && max < 1)
             return validation.NotNullOrEmpty();
@@ -257,7 +257,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsUserName(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsValidUserName(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是用户名格式");
@@ -272,7 +272,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsChinese(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsChinese(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}中不包含中文字符");
@@ -287,7 +287,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsEmail(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsEmail(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的邮箱地址");
@@ -302,7 +302,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsFilePath(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         string data = validation.Value.ObjToStr();
         return Check(validation, () => ValidateUtil.IsFilePath(data),
@@ -333,7 +333,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsIdCard(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsIdCard(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的身份证号码");
@@ -378,7 +378,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsNumber(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsNumberSign(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是正整数");
@@ -393,7 +393,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsNumeric(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsNumeric(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是数字");
@@ -408,7 +408,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsDecimal(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsDecimal(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是小数");
@@ -423,7 +423,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsPhone(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsPhone(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的固定电话");
@@ -438,7 +438,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsPhoneAndMobile(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsPhoneAndMobile(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的手机或电话号码");
@@ -453,7 +453,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsLetter(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsLetter(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的字母");
@@ -468,7 +468,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsMobile(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsMobile(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的手机号码");
@@ -544,7 +544,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsUrl(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsUrl(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的URL");
@@ -624,7 +624,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns></returns>
     public static Validation CheckEntityValue(ValidateType validateType, object value, string argumentName,
-        bool checkNull = false, int max = 0, int min = 0, string errorText = null)
+        bool checkNull = false, int max = 0, int min = 0, string? errorText = null)
     {
         Validation validation = Begin(value, argumentName);
         return validateType switch
