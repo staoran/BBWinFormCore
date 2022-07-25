@@ -21,12 +21,12 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <summary>
     /// 数据仓储
     /// </summary>
-    private readonly BaseRepository<T> _repository;
+    protected readonly BaseRepository<T> Repository;
 
     /// <summary>
     /// 登陆用户基础信息（泛型类继承的父类中的静态对象是共享的）
     /// </summary>
-    private LoginUserInfo _loginUserInfo;
+    protected readonly LoginUserInfo LoginUserInfo;
 
     /// <summary>
     /// 构造函数
@@ -34,9 +34,9 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="repository">数据仓储</param>
     public BaseService(BaseRepository<T> repository)
     {
-        _repository = repository;
+        Repository = repository;
         
-        _loginUserInfo = App.User.Adapt<LoginUserInfo>();
+        LoginUserInfo = App.User.Adapt<LoginUserInfo>();
     }
 
     #endregion
@@ -52,7 +52,7 @@ public class BaseService<T> where T : BaseEntity, new()
     {
         CheckEntity(OperationType.Add, obj);
 
-        return await _repository.InsertAsync(obj);
+        return await Repository.InsertAsync(obj);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> InsertRangeAsync(List<T> list)
     {
         list.ForEach(x => CheckEntity(OperationType.Add, x));
-        return await _repository.InsertRangeAsync(list);
+        return await Repository.InsertRangeAsync(list);
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> UpdateAsync(T obj)
     {
         CheckEntity(OperationType.Edit, obj);
-        return await _repository.UpdateAsync(obj);
+        return await Repository.UpdateAsync(obj);
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> UpdateFieldsAsync(Hashtable recordField)
     {
         CheckEntity(OperationType.Edit, recordField);
-        return await _repository.UpdateFieldsAsync(recordField);
+        return await Repository.UpdateFieldsAsync(recordField);
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="condition">查询的条件</param>
     public virtual async Task<bool> UpdateFieldsByConditionAsync(Hashtable recordField, string condition)
     {
-        return await _repository.UpdateFieldsByConditionAsync(recordField, condition);
+        return await Repository.UpdateFieldsByConditionAsync(recordField, condition);
     }
 
     /// <summary>
@@ -105,7 +105,7 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> UpdateAsync(Hashtable recordField)
     {
         CheckEntity(OperationType.Edit, recordField);
-        return await _repository.UpdateAsync(recordField);
+        return await Repository.UpdateAsync(recordField);
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public virtual async Task<bool> InsertUpdateAsync(T obj)
     {
-        return await _repository.InsertUpdateAsync(obj);
+        return await Repository.InsertUpdateAsync(obj);
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>执行插入成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public virtual async Task<bool> InsertIfNewAsync(T obj)
     {
-        return await _repository.InsertIfNewAsync(obj);
+        return await Repository.InsertIfNewAsync(obj);
     }
 
     /// <summary>
@@ -137,7 +137,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </returns>
     public virtual async Task<string> SqlValueListAsync(string sql)
     {
-        return await _repository.SqlValueListAsync(sql);
+        return await Repository.SqlValueListAsync(sql);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> SqlTableAsync(string sql)
     {
-        return await _repository.SqlTableAsync(sql);
+        return await Repository.SqlTableAsync(sql);
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> SqlTableAsync(string sql, DbParameter[] parameters)
     {
-        return await _repository.SqlTableAsync(sql, parameters);
+        return await Repository.SqlTableAsync(sql, parameters);
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定DataTable的集合</returns>
     public virtual async Task<DataTable> SqlTableWithPagerAsync(string sql, PageInput info)
     {
-        return await _repository.SqlTableWithPagerAsync(sql, info);
+        return await Repository.SqlTableWithPagerAsync(sql, info);
     }
 
     /// <summary>
@@ -179,7 +179,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>存在则返回指定的对象,否则返回Null</returns>
     public virtual async Task<T> FindByIdAsync(object key)
     {
-        return await _repository.FindByIdAsync(key);
+        return await Repository.FindByIdAsync(key);
     }
 
     /// <summary>
@@ -189,7 +189,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定的对象</returns>
     public virtual async Task<T> FindSingleAsync(string condition)
     {
-        return await _repository.FindSingleAsync(condition);
+        return await Repository.FindSingleAsync(condition);
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定的对象</returns>
     public virtual async Task<T> FindSingleAsync(string condition, string orderBy)
     {
-        return await _repository.FindSingleAsync(condition, orderBy);
+        return await Repository.FindSingleAsync(condition, orderBy);
     }
 
     /// <summary>
@@ -209,7 +209,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<T> FindFirstAsync()
     {
-        return await _repository.FindFirstAsync();
+        return await Repository.FindFirstAsync();
     }
 
     /// <summary>
@@ -219,7 +219,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<T> FindFirstAsync(string condition)
     {
-        return await _repository.FindFirstAsync(condition);
+        return await Repository.FindFirstAsync(condition);
     }
 
     /// <summary>
@@ -230,7 +230,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<T> FindFirstAsync(string condition, string orderBy)
     {
-        return await _repository.FindFirstAsync(condition, orderBy);
+        return await Repository.FindFirstAsync(condition, orderBy);
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<T> FindLastAsync()
     {
-        return await _repository.FindLastAsync();
+        return await Repository.FindLastAsync();
     }
 
     /// <summary>
@@ -249,7 +249,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<T> FindLastAsync(string condition)
     {
-        return await _repository.FindLastAsync(condition);
+        return await Repository.FindLastAsync(condition);
     }
 
     /// <summary>
@@ -260,7 +260,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<T> FindLastAsync(string condition, string orderBy)
     {
-        return await _repository.FindLastAsync(condition, orderBy);
+        return await Repository.FindLastAsync(condition, orderBy);
     }
 
     /// <summary>
@@ -272,7 +272,7 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<T> FindTopAsync(string condition, string orderBy
         )
     {
-        return await _repository.FindTopAsync(condition, orderBy);
+        return await Repository.FindTopAsync(condition, orderBy);
     }
 
     /// <summary>
@@ -283,7 +283,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>数据列表</returns>
     public virtual async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
     {
-        return await _repository.FindByForeignKeyAsync(foreignKeyId, foreignKeyName);
+        return await Repository.FindByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
 
     /// <summary>
@@ -294,7 +294,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>ID列表</returns>
     public virtual async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
     {
-        return await _repository.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName);
+        return await Repository.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
 
     #endregion
@@ -308,7 +308,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>符合条件的对象列表</returns>
     public virtual async Task<List<T>> FindByIDsAsync(string idString)
     {
-        return await _repository.FindByIDsAsync(idString);
+        return await Repository.FindByIDsAsync(idString);
     }
 
     /// <summary>
@@ -318,7 +318,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<List<T>> FindAsync(string condition)
     {
-        return await _repository.FindAsync(condition);
+        return await Repository.FindAsync(condition);
     }
 
     /// <summary>
@@ -329,7 +329,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<List<T>> FindAsync(string condition, string orderBy)
     {
-        return await _repository.FindAsync(condition, orderBy);
+        return await Repository.FindAsync(condition, orderBy);
     }
 
     /// <summary>
@@ -340,7 +340,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<PageResult<T>> FindWithPagerAsync(string condition, PageInput info)
     {
-        return await _repository.FindWithPagerAsync(condition, info);
+        return await Repository.FindWithPagerAsync(condition, info);
     }
 
     /// <summary>
@@ -349,7 +349,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<List<T>> GetAllAsync()
     {
-        return await _repository.GetAllAsync();
+        return await Repository.GetAllAsync();
     }
 
     /// <summary>
@@ -359,7 +359,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<List<T>> GetAllAsync(string orderBy)
     {
-        return await _repository.GetAllAsync(orderBy);
+        return await Repository.GetAllAsync(orderBy);
     }
 
     /// <summary>
@@ -369,7 +369,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     public virtual async Task<PageResult<T>> GetAllAsync(PageInput info)
     {
-        return await _repository.GetAllAsync(info);
+        return await Repository.GetAllAsync(info);
     }
 
     /// <summary>
@@ -378,7 +378,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> GetAllToDataTableAsync()
     {
-        return await _repository.GetAllToDataTableAsync();
+        return await Repository.GetAllToDataTableAsync();
     }
 
     /// <summary>
@@ -388,7 +388,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> GetAllToDataTableAsync(string orderBy)
     {
-        return await _repository.GetAllToDataTableAsync(orderBy);
+        return await Repository.GetAllToDataTableAsync(orderBy);
     }
 
     /// <summary>
@@ -398,7 +398,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> GetAllToDataTableAsync(PageInput info)
     {
-        return await _repository.GetAllToDataTableAsync(info);
+        return await Repository.GetAllToDataTableAsync(info);
     }
 
     /// <summary>
@@ -408,7 +408,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> FindToDataTableAsync(string condition)
     {
-        return await _repository.FindToDataTableAsync(condition);
+        return await Repository.FindToDataTableAsync(condition);
     }
 
     /// <summary>
@@ -430,7 +430,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> FindToDataTableAsync(string condition, PageInput pagerInfo)
     {
-        return await _repository.FindToDataTableAsync(condition, pagerInfo);
+        return await Repository.FindToDataTableAsync(condition, pagerInfo);
     }
 
     /// <summary>
@@ -440,7 +440,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<List<string>> GetFieldListAsync(string fieldName)
     {
-        return await _repository.GetFieldListAsync(fieldName);
+        return await Repository.GetFieldListAsync(fieldName);
     }
 
     /// <summary>
@@ -451,7 +451,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<List<string>> GetFieldListByConditionAsync(string fieldName, string condition)
     {
-        return await _repository.GetFieldListByConditionAsync(fieldName, condition);
+        return await Repository.GetFieldListByConditionAsync(fieldName, condition);
     }
 
     /// <summary>
@@ -462,7 +462,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition)
     {
-        return await _repository.FindByViewAsync(viewName, condition);
+        return await Repository.FindByViewAsync(viewName, condition);
     }
 
     /// <summary>
@@ -475,7 +475,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition, string sortField, bool isDescending)
     {
-        return await _repository.FindByViewAsync(viewName, condition, sortField, isDescending);
+        return await Repository.FindByViewAsync(viewName, condition, sortField, isDescending);
     }
 
     /// <summary>
@@ -487,7 +487,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> FindByViewWithPagerAsync(string viewName, string condition, PageInput info)
     {
-        return await _repository.FindByViewWithPagerAsync(viewName, condition, info);
+        return await Repository.FindByViewWithPagerAsync(viewName, condition, info);
     }
 
     #endregion
@@ -500,7 +500,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<int> GetRecordCountAsync()
     {
-        return await _repository.GetRecordCountAsync();
+        return await Repository.GetRecordCountAsync();
     }
 
     /// <summary>
@@ -510,7 +510,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<int> GetRecordCountAsync(string condition)
     {
-        return await _repository.GetRecordCountAsync(condition);
+        return await Repository.GetRecordCountAsync(condition);
     }
 
     /// <summary>
@@ -520,7 +520,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>如果存在返回True，否则False</returns>
     public virtual async Task<bool> IsExistRecordAsync(string condition)
     {
-        return await _repository.IsExistRecordAsync(condition);
+        return await Repository.IsExistRecordAsync(condition);
     }
 
     /// <summary>
@@ -531,7 +531,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>存在则返回<c>true</c>，否则为<c>false</c>。</returns>
     public virtual async Task<bool> IsExistKeyAsync(string fieldName, object key)
     {
-        return await _repository.IsExistKeyAsync(fieldName, key);
+        return await Repository.IsExistKeyAsync(fieldName, key);
     }
 
     /// <summary>
@@ -542,7 +542,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<string> GetFieldValueAsync(object key, string fieldName)
     {
-        return await _repository.GetFieldValueAsync(key, fieldName);
+        return await Repository.GetFieldValueAsync(key, fieldName);
     }
 
     /// <summary>
@@ -553,7 +553,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<Dictionary<string, string>> GetFieldValueListAsync(string key, List<string> fieldNameList)
     {
-        return await _repository.GetFieldValueListAsync(key, fieldNameList);
+        return await Repository.GetFieldValueListAsync(key, fieldNameList);
     }
 
     /// <summary>
@@ -563,7 +563,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public virtual async Task<bool> DeleteAsync(T entity)
     {
-        return await _repository.DeleteAsync(entity);
+        return await Repository.DeleteAsync(entity);
     }
 
     /// <summary>
@@ -573,7 +573,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public virtual async Task<bool> DeleteAsync(object key)
     {
-        return await _repository.DeleteAsync(key);
+        return await Repository.DeleteAsync(key);
     }
 
     /// <summary>
@@ -583,7 +583,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public virtual async Task<bool> DeleteByConditionAsync(string condition)
     {
-        return await _repository.DeleteByConditionAsync(condition);
+        return await Repository.DeleteByConditionAsync(condition);
     }
 
     /// <summary>
@@ -591,7 +591,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     public virtual DbTransaction CreateTransaction()
     {
-        return _repository.CreateTransaction();
+        return Repository.CreateTransaction();
     }
 
     /// <summary>
@@ -600,7 +600,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="level">事务级别</param>
     public virtual DbTransaction CreateTransaction(IsolationLevel level)
     {
-        return _repository.CreateTransaction(level);
+        return Repository.CreateTransaction(level);
     }
 
     #endregion
@@ -667,9 +667,9 @@ public class BaseService<T> where T : BaseEntity, new()
         {
             { info.GetValue("PrimaryKey").ObjToStr(), key },
             { info.GetValue("FieldFlagApp").ObjToStr(), info.GetProperty("FlagApp").ObjToBool() ? 0 : 1 },
-            { info.GetValue("FieldAppUser").ObjToStr(), _loginUserInfo.ID },
+            { info.GetValue("FieldAppUser").ObjToStr(), LoginUserInfo.ID },
             { info.GetValue("FieldAppDate").ObjToStr(), DateTime.Now},
-            { info.GetValue("FieldLastUpdatedBy").ObjToStr(), _loginUserInfo.ID },
+            { info.GetValue("FieldLastUpdatedBy").ObjToStr(), LoginUserInfo.ID },
             { info.GetValue("LastUpdateDate").ObjToStr(), info.GetProperty("LastUpdateDate")}
         };
         return await UpdateFieldsAsync(hashTable);
@@ -681,7 +681,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<T> NewEntityAsync()
     {
-        return await _repository.NewEntityAsync();
+        return await Repository.NewEntityAsync();
     }
 
     /// <summary>
@@ -782,7 +782,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <exception cref="NotSupportedException"></exception>
     public virtual async Task<Dictionary<string, int>> GetPermitDictAsync()
     {
-        return await Task.FromResult(_repository.GetPermitDict());
+        return await Task.FromResult(Repository.GetPermitDict());
 
         // 字段权限表控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
@@ -799,7 +799,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> GetFieldTypeListAsync()
     {
-        return await Task.FromResult(_repository.GetFieldTypeList());
+        return await Task.FromResult(Repository.GetFieldTypeList());
     }
 
     /// <summary>
@@ -808,7 +808,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<Dictionary<string, string>> GetColumnNameAliasAsync()
     {
-        return await Task.FromResult(_repository.GetColumnNameAlias());
+        return await Task.FromResult(Repository.GetColumnNameAlias());
     }
 
     /// <summary>
@@ -817,7 +817,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<string> GetDisplayColumnsAsync()
     {
-        return await Task.FromResult(_repository.GetDisplayColumns());
+        return await Task.FromResult(Repository.GetDisplayColumns());
     }
 
     /// <summary>
@@ -828,7 +828,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<DataTable> GetReportDataAsync(string fieldName, string condition)
     {
-        return await _repository.GetReportDataAsync(fieldName, condition);
+        return await Repository.GetReportDataAsync(fieldName, condition);
     }
 
     #endregion
