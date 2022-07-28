@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using BB.Core.DbContext;
+using BB.Core.Event;
 using BB.Core.Filter;
 using FastExpressionCompiler;
 using Furion;
@@ -45,6 +46,13 @@ public class Startup : AppStartup
             })
             // 自定义规范化返回结果
             .AddInjectWithUnifyResult<RestfulResultProvider>();
+        
+        // 事件总线
+        services.AddEventBus(builder =>
+        {
+            // 注册事件订阅者
+            builder.AddSubscriber<LogEventSubscriber>();
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
