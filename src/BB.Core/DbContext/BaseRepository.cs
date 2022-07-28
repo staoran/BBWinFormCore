@@ -444,6 +444,18 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
+    /// 更新某个表的记录(根据条件更新)
+    /// </summary>
+    /// <param name="recordField">Hashtable:键[key]为字段名;值[value]为字段对应的值</param>
+    /// <param name="expression">查询的条件</param>
+    public virtual async Task<bool> UpdateFieldsByConditionAsync(Hashtable recordField, Expression<Func<T,bool>> expression)
+    {
+        return await _db.Updateable<T>(recordField.ToDictionary() as Dictionary<string, object>)
+            .Where(expression)
+            .ExecuteCommandHasChangeAsync();
+    }
+
+    /// <summary>
     /// 插入或更新对象属性到数据库中
     /// </summary>
     /// <param name="obj">指定的对象</param>
@@ -481,34 +493,13 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 根据条件查询数据库,如果存在返回第一个对象
+    /// 根据条件查询数据库,返回仅有的一个对象，如有多个则抛出异常
     /// </summary>
     /// <param name="condition">查询的条件</param>
+    /// <param name="orderBy">自定义排序语句，如Name desc；如不指定，则使用默认排序</param>
+    /// <param name="paramList">排序类型</param>
     /// <returns>指定的对象</returns>
-    public virtual async Task<T> FindSingleAsync(string condition)
-    {
-        return await FindSingleAsync(condition, null, null);
-    }
-
-    /// <summary>
-    /// 根据条件查询数据库,如果存在返回第一个对象
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">自定义排序语句，如Order By Name Desc；如不指定，则使用默认排序</param>
-    /// <returns>指定的对象</returns>
-    public virtual async Task<T> FindSingleAsync(string condition, string orderBy)
-    {
-        return await FindSingleAsync(condition, orderBy, null);
-    }
-
-    /// <summary>
-    /// 根据条件查询数据库,如果存在返回第一个对象
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">自定义排序语句，如Order By Name Desc；如不指定，则使用默认排序</param>
-    /// <param name="paramList">参数列表</param>
-    /// <returns>指定的对象</returns>
-    public virtual async Task<T> FindSingleAsync(string condition, string orderBy, IDbDataParameter[] paramList)
+    public virtual async Task<T> FindSingleAsync(string condition, string orderBy = "", IDbDataParameter[] paramList = null)
     {
         if (orderBy.IsNullOrEmpty())
             orderBy = SortField.IsNullOrEmpty() ? string.Empty : $"{SortField} {(IsDescending ? "desc" : "asc")}";
@@ -519,69 +510,65 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
             .WhereIF(!string.IsNullOrEmpty(condition), condition)
             .OrderByIF(!string.IsNullOrEmpty(orderBy), orderBy)
             .AddParameters(paramList as SugarParameter[])
-            .FirstAsync();
+            .SingleAsync();
 
         #endregion
     }
 
     /// <summary>
-    /// 查找记录表中最旧的一条记录
+    /// 根据条件查询数据库,返回仅有的一个对象，如有多个则抛出异常
     /// </summary>
-    /// <returns></returns>
-    public virtual async Task<T> FindFirstAsync()
+    /// <param name="expression">查询的条件</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序类型</param>
+    /// <returns>指定的对象</returns>
+    public virtual async Task<T> FindSingleAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc)
     {
-        return await FindTopAsync(null, null);
+        var query = _db.Queryable<T>().Where(expression);
+
+        var orderBy = string.Empty;
+        if (orderByExp == null && !SortField.IsNullOrEmpty())
+            orderBy = $"{SortField} {(IsDescending ? "desc" : "asc")}";
+        
+        query.OrderByIF(orderByExp != null, orderByExp, orderByType);
+
+        return await query
+            .OrderByIF(orderByExp != null, orderByExp, orderByType)
+            .OrderByIF(orderByExp == null && !string.IsNullOrEmpty(orderBy), orderBy)
+            .SingleAsync();
     }
 
     /// <summary>
     /// 查找记录表中最旧的一条记录
     /// </summary>
     /// <param name="condition">查询的条件</param>
+    /// <param name="orderByField">自定义排序字段</param>
     /// <returns></returns>
-    public virtual async Task<T> FindFirstAsync(string condition)
+    public virtual async Task<T> FindFirstAsync(string condition = "", string orderByField = "")
     {
-        return await FindTopAsync(condition, null);
-    }
-
-    /// <summary>
-    /// 查找记录表中最旧的一条记录
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排序</param>
-    /// <returns></returns>
-    public virtual async Task<T> FindFirstAsync(string condition, string orderBy)
-    {
-        return await FindTopAsync(condition, orderBy);
-    }
-
-    /// <summary>
-    /// 查找记录表中最新的一条记录
-    /// </summary>
-    /// <returns></returns>
-    public virtual async Task<T> FindLastAsync()
-    {
-        return await FindTopAsync(null, null);
+        if (orderByField.IsNullOrEmpty())
+            orderByField = SortField.IsNullOrEmpty() ? string.Empty : SortField;
+        if (orderByField.IsNullOrEmpty())
+            orderByField = $"{orderByField} asc";
+        
+        return await FindTopAsync(condition, orderByField);
     }
 
     /// <summary>
     /// 查找记录表中最新的一条记录
     /// </summary>
     /// <param name="condition">查询的条件</param>
+    /// <param name="orderByField">自定义排序字段</param>
     /// <returns></returns>
-    public virtual async Task<T> FindLastAsync(string condition)
+    public virtual async Task<T> FindLastAsync(string condition = "", string orderByField = "")
     {
-        return await FindTopAsync(condition, null);
-    }
-
-    /// <summary>
-    /// 查找记录表中最新的一条记录
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排序</param>
-    /// <returns></returns>
-    public virtual async Task<T> FindLastAsync(string condition, string orderBy)
-    {
-        return await FindTopAsync(condition, orderBy);
+        if (orderByField.IsNullOrEmpty())
+            orderByField = SortField.IsNullOrEmpty() ? string.Empty : SortField;
+        if (orderByField.IsNullOrEmpty())
+            orderByField = $"{orderByField} desc";
+        
+        return await FindTopAsync(condition, orderByField);
     }
 
     /// <summary>
@@ -611,7 +598,31 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 根据条件获取指定的记录(子类根据不同数据库实现)
+    /// 根据条件获取第一条记录
+    /// </summary>
+    /// <param name="expression">查询语句</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns></returns>
+    public virtual async Task<T> FindTopAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc)
+    {
+        var query = _db.Queryable<T>().Where(expression);
+
+        var orderBy = string.Empty;
+        if (orderByExp == null && !SortField.IsNullOrEmpty())
+            orderBy = $"{SortField} {(IsDescending ? "desc" : "asc")}";
+        
+        query.OrderByIF(orderByExp != null, orderByExp, orderByType);
+
+        return await query
+            .OrderByIF(orderByExp != null, orderByExp, orderByType)
+            .OrderByIF(orderByExp == null && !string.IsNullOrEmpty(orderBy), orderBy)
+            .FirstAsync();
+    }
+
+    /// <summary>
+    /// 根据条件获取指定的记录
     /// </summary>
     /// <param name="count">指定数量</param>
     /// <param name="condition">查询语句</param>
@@ -629,49 +640,53 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
             .ToListAsync();
     }
 
+    /// <summary>
+    /// 根据条件获取指定的记录
+    /// </summary>
+    /// <param name="count">指定数量</param>
+    /// <param name="expression">查询语句</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns></returns>
+    public virtual async Task<List<T>> FindTopListAsync(int count, Expression<Func<T,bool>> expression,
+        Expression<Func<T, object>> orderByExp = null, OrderByType orderByType = OrderByType.Desc)
+    {
+        var query = _db.Queryable<T>().Take(count).Where(expression);
+
+        var orderBy = string.Empty;
+        if (orderByExp == null && !SortField.IsNullOrEmpty())
+            orderBy = $"{SortField} {(IsDescending ? "desc" : "asc")}";
+        
+        query.OrderByIF(orderByExp != null, orderByExp, orderByType);
+
+        return await query
+            .OrderByIF(orderByExp != null, orderByExp, orderByType)
+            .OrderByIF(orderByExp == null && !string.IsNullOrEmpty(orderBy), orderBy)
+            .ToListAsync();
+    }
+
     #endregion
 
     #region 返回集合的接口
 
     /// <summary>
-    /// 根据ID字符串(逗号分隔)获取对象列表
+    /// 根据多个主键获取对象列表
     /// </summary>
-    /// <param name="idString">ID字符串(逗号分隔)</param>
+    /// <param name="ids">主键数组</param>
     /// <returns>符合条件的对象列表</returns>
-    public virtual async Task<List<T>> FindByIDsAsync(string idString)
+    public virtual async Task<List<T>> FindByIDsAsync(object[] ids)
     {
-        return await FindAsync($"{_primaryKey} in({idString})");
+        return await FindAsync(x=>ids.Contains(x.GetType().GetProperty(_primaryKey).GetValue(x)));
     }
 
     /// <summary>
     /// 根据条件查询数据库,并返回对象集合
     /// </summary>
     /// <param name="condition">查询的条件</param>
-    /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> FindAsync(string condition)
-    {
-        return await FindAsync(condition, null, null);
-    }
-
-    /// <summary>
-    /// 根据条件查询数据库,并返回对象集合
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">排序条件</param>
-    /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> FindAsync(string condition, string orderBy)
-    {
-        return await FindAsync(condition, orderBy, null);
-    }
-
-    /// <summary>
-    /// 根据条件查询数据库,并返回对象集合
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">自定义排序语句，如Order By Name Desc；如不指定，则使用默认排序</param>
+    /// <param name="orderBy">自定义排序语句，如Name desc；如不指定，则使用默认排序</param>
     /// <param name="paramList">参数列表</param>
     /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> FindAsync(string condition, string orderBy, IDbDataParameter[] paramList)
+    public virtual async Task<List<T>> FindAsync(string condition, string orderBy = "", IDbDataParameter[] paramList = null)
     {
         if (orderBy.IsNullOrEmpty())
             orderBy = SortField.IsNullOrEmpty() ? string.Empty : $"{SortField} {(IsDescending ? "desc" : "asc")}";
@@ -679,6 +694,30 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         return await base.AsQueryable()
             .Where(condition)
             .OrderByIF(!orderBy.IsNullOrEmpty(), orderBy)
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// 根据条件查询数据库,并返回对象集合
+    /// </summary>
+    /// <param name="expression">查询的条件</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns>指定对象的集合</returns>
+    public virtual async Task<List<T>> FindAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc )
+    {
+        var query = _db.Queryable<T>().Where(expression);
+
+        var orderBy = string.Empty;
+        if (orderByExp == null && !SortField.IsNullOrEmpty())
+            orderBy = $"{SortField} {(IsDescending ? "desc" : "asc")}";
+        
+        query.OrderByIF(orderByExp != null, orderByExp, orderByType);
+
+        return await query
+            .OrderByIF(orderByExp != null, orderByExp, orderByType)
+            .OrderByIF(orderByExp == null && !string.IsNullOrEmpty(orderBy), orderBy)
             .ToListAsync();
     }
 
@@ -776,20 +815,13 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <summary>
     /// 返回数据库所有的对象集合
     /// </summary>
-    /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> GetAllAsync()
-    {
-        return await GetAllAsync("");
-    }
-
-    /// <summary>
-    /// 返回数据库所有的对象集合
-    /// </summary>
     /// <param name="orderBy">不可用，返回结果后自行排序</param>
     /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> GetAllAsync(string orderBy)
+    public virtual async Task<List<T>> GetAllAsync(string orderBy = "")
     {
-        return await base.GetListAsync();
+        if (orderBy.IsNullOrEmpty())
+            orderBy = SortField.IsNullOrEmpty() ? string.Empty : $"{SortField} {(IsDescending ? "desc" : "asc")}";
+        return await _db.Queryable<T>().OrderByIF(!orderBy.IsNullOrEmpty(), orderBy).ToListAsync();
     }
 
     /// <summary>
@@ -813,22 +845,12 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         return await _db.SqlQueryable<dynamic>(sql).AddParameters(paramList as SugarParameter[]).ToListAsync();
     }
 
-
     /// <summary>
     /// 返回所有记录到DataTable集合中
     /// </summary>
+    /// <param name="orderBy">自定义排序语句，如Name desc；如不指定，则使用默认排序</param>
     /// <returns></returns>
-    public virtual async Task<DataTable> GetAllToDataTableAsync()
-    {
-        return await GetAllToDataTableAsync("");
-    }
-
-    /// <summary>
-    /// 返回所有记录到DataTable集合中
-    /// </summary>
-    /// <param name="orderBy">自定义排序语句，如Order By Name Desc；如不指定，则使用默认排序</param>
-    /// <returns></returns>
-    public virtual async Task<DataTable> GetAllToDataTableAsync(string orderBy)
+    public virtual async Task<DataTable> GetAllToDataTableAsync(string orderBy = "")
     {
         ISugarQueryable<T> query = base.AsQueryable();
         query = !string.IsNullOrEmpty(orderBy)
@@ -838,61 +860,57 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 根据分页条件，返回DataTable对象
-    /// </summary>
-    /// <param name="info">分页条件</param>
-    /// <returns></returns>
-    public virtual async Task<DataTable> GetAllToDataTableAsync(PageInput info)
-    {
-        return await FindToDataTableAsync("", info);
-    }
-
-    /// <summary>
-    /// 根据查询条件，返回记录到DataTable集合中
-    /// </summary>
-    /// <param name="condition">查询条件</param>
-    /// <returns></returns>
-    public virtual async Task<DataTable> FindToDataTableAsync(string condition)
-    {
-        ISugarQueryable<T> query = base.AsQueryable();
-        if (!string.IsNullOrEmpty(condition))
-        {
-            query = query.Where(condition);
-        }
-
-        return await query.OrderByIF(!SortField.IsNullOrEmpty(), $"{SortField} {(IsDescending ? "desc" : "asc")}")
-            .ToDataTableAsync();
-    }
-
-    /// <summary>
     /// 根据条件查询数据库,并返回DataTable集合(用于分页数据显示)
     /// </summary>
     /// <param name="condition">查询的条件</param>
     /// <param name="info">分页参数</param>
     /// <returns>指定DataTable的集合</returns>
-    public virtual async Task<DataTable> FindToDataTableAsync(string condition, PageInput info)
+    public virtual async Task<DataTable> FindToDataTableAsync(string condition = "", PageInput info = null)
     {
-        //如果不指定排序字段，用默认的
-        string fieldToSort = !string.IsNullOrEmpty(info.SortField) ? info.SortField : SortField;
+        ISugarQueryable<T> query = AsQueryable();
 
-        ISugarQueryable<T> query = base.AsQueryable();
         if (!string.IsNullOrEmpty(condition))
         {
             query = query.Where(condition);
         }
 
-        return await query.OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {info.SortOrder}")
-            .ToDataTablePageAsync(info.PageNo, info.PageSize);
+        //如果不指定排序字段，用默认的
+        string fieldToSort = info != null && !string.IsNullOrEmpty(info.SortField)
+            ? $"{info.SortField} {info.SortOrder}"
+            : SortField.IsNullOrEmpty() ? string.Empty : $"{SortField} {(IsDescending ? "desc" : "asc")}";
+
+        query = query.OrderByIF(!fieldToSort.IsNullOrEmpty(), fieldToSort);
+        
+        if (info == null)
+        {
+            return await query.ToDataTableAsync();
+        }
+    
+        return await query.ToDataTablePageAsync(info.PageNo, info.PageSize);
     }
 
     /// <summary>
-    /// 获取某字段数据字典列表
+    /// 根据条件查询数据库,并返回DataTable集合
     /// </summary>
-    /// <param name="fieldName">字段名称</param>
-    /// <returns></returns>
-    public virtual async Task<List<string>> GetFieldListAsync(string fieldName)
+    /// <param name="expression">查询的条件</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns>指定DataTable的集合</returns>
+    public virtual async Task<DataTable> FindToDataTableAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc)
     {
-        return await GetFieldListByConditionAsync(fieldName, null);
+        var query = _db.Queryable<T>().Where(expression);
+
+        var orderBy = string.Empty;
+        if (orderByExp == null && !SortField.IsNullOrEmpty())
+            orderBy = $"{SortField} {(IsDescending ? "desc" : "asc")}";
+        
+        query.OrderByIF(orderByExp != null, orderByExp, orderByType);
+
+        return await query
+            .OrderByIF(orderByExp != null, orderByExp, orderByType)
+            .OrderByIF(orderByExp == null && !string.IsNullOrEmpty(orderBy), orderBy)
+            .ToDataTableAsync();
     }
 
     /// <summary>
@@ -901,31 +919,31 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="fieldName">字段名称</param>
     /// <param name="condition">查询的条件</param>
     /// <returns></returns>
-    public virtual async Task<List<string>> GetFieldListByConditionAsync(string fieldName, string condition)
+    public virtual async Task<List<string>> GetFieldListByConditionAsync(string fieldName, string condition = null)
     {
-        ISugarQueryable<T> query = base.AsQueryable();
+        ISugarQueryable<T> query = AsQueryable();
         if (!string.IsNullOrEmpty(condition))
         {
             query = query.Where(condition);
         }
 
-        return await query.Select<string>(fieldName).OrderBy($"{fieldName} {(IsDescending ? "desc" : "asc")}")
+        return await query.Select<string>(fieldName)
+            .OrderBy($"{fieldName} {(IsDescending ? "desc" : "asc")}")
             .ToListAsync();
     }
 
     /// <summary>
-    /// 根据条件，从视图里面获取记录
+    /// 根据条件，获取某字段数据字典列表
     /// </summary>
-    /// <param name="viewName">视图名称</param>
-    /// <param name="condition">查询条件</param>
+    /// <param name="fieldName">字段名称</param>
+    /// <param name="expression">查询的条件</param>
     /// <returns></returns>
-    public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition)
+    public virtual async Task<List<string>> GetFieldListByConditionAsync(string fieldName, Expression<Func<T,bool>> expression)
     {
-        //串连条件语句为一个完整的Sql语句
-        string sql = $"Select * From {viewName} Where {condition}";
-        //sql += string.Format(" Order by {0} {1}", SortField, IsDescending ? "DESC" : "ASC");
-
-        return await _db.Ado.GetDataTableAsync(sql);
+        var query = AsQueryable().Where(expression);
+        return await query.Select<string>(fieldName)
+            .OrderBy($"{fieldName} {(IsDescending ? "desc" : "asc")}")
+            .ToListAsync();
     }
 
     /// <summary>
@@ -936,12 +954,15 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="sortField">排序字段</param>
     /// <param name="isDescending">是否为降序</param>
     /// <returns></returns>
-    public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition, string sortField,
-        bool isDescending)
+    public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition, string sortField = "",
+        bool isDescending = default)
     {
         //串连条件语句为一个完整的Sql语句
         string sql = $"Select * From {viewName} Where {condition}";
-        sql += $" Order by {sortField} {(isDescending ? "DESC" : "ASC")}";
+        if (!sortField.IsNullOrEmpty())
+        {
+            sql += $" Order by {sortField} {(isDescending ? "DESC" : "ASC")}";
+        }
 
         return await _db.Ado.GetDataTableAsync(sql);
     }
@@ -949,14 +970,45 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <summary>
     /// 获取前面记录指定数量的记录
     /// </summary>
-    /// <param name="sql">查询语句</param>
     /// <param name="count">指定数量</param>
+    /// <param name="condition">查询语句</param>
     /// <param name="orderBy">排序条件，例如order by id</param>
     /// <returns></returns>
-    public virtual async Task<DataTable> GetTopResultAsync(string sql, int count, string orderBy)
+    public virtual async Task<DataTable> GetTopResultAsync(int count, string condition, string orderBy)
     {
-        string resultSql = $"select top {count} * from ({sql} {orderBy}) ";
-        return await SqlTableAsync(resultSql);
+        if (orderBy.IsNullOrEmpty())
+            orderBy = SortField.IsNullOrEmpty() ? string.Empty : $"{SortField} {(IsDescending ? "desc" : "asc")}";
+
+        return await base.AsQueryable()
+            .Take(count)
+            .Where(condition)
+            .OrderByIF(!orderBy.IsNullOrEmpty(), orderBy)
+            .ToDataTableAsync();
+    }
+
+    /// <summary>
+    /// 获取前面记录指定数量的记录
+    /// </summary>
+    /// <param name="count">指定数量</param>
+    /// <param name="expression">查询的条件</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns></returns>
+    public virtual async Task<DataTable> GetTopResultAsync(int count, Expression<Func<T,bool>> expression,
+        Expression<Func<T, object>> orderByExp = null, OrderByType orderByType = OrderByType.Desc)
+    {
+        var query = _db.Queryable<T>().Take(count).Where(expression);
+
+        var orderBy = string.Empty;
+        if (orderByExp == null && !SortField.IsNullOrEmpty())
+            orderBy = $"{SortField} {(IsDescending ? "desc" : "asc")}";
+        
+        query.OrderByIF(orderByExp != null, orderByExp, orderByType);
+
+        return await query
+            .OrderByIF(orderByExp != null, orderByExp, orderByType)
+            .OrderByIF(orderByExp == null && !string.IsNullOrEmpty(orderBy), orderBy)
+            .ToDataTableAsync();
     }
 
     /// <summary>
@@ -1045,21 +1097,21 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <summary>
     /// 获取表的所有记录数量
     /// </summary>
+    /// <param name="condition">查询条件</param>
     /// <returns></returns>
-    public virtual async Task<int> GetRecordCountAsync()
+    public virtual async Task<int> GetRecordCountAsync(string condition = "")
     {
-        return await base.AsQueryable().CountAsync();
-        // return base.Count(x => true);
+        return await base.AsQueryable().WhereIF(!condition.IsNullOrEmpty(), condition).CountAsync();
     }
 
     /// <summary>
     /// 获取表的所有记录数量
     /// </summary>
-    /// <param name="condition">查询条件</param>
+    /// <param name="expression">查询条件</param>
     /// <returns></returns>
-    public virtual async Task<int> GetRecordCountAsync(string condition)
+    public virtual async Task<int> GetRecordCountAsync(Expression<Func<T,bool>> expression)
     {
-        return await base.AsQueryable().Where(condition).CountAsync();
+        return await base.AsQueryable().Where(expression).CountAsync();
     }
 
     /// <summary>
@@ -1070,6 +1122,16 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     public virtual async Task<bool> IsExistRecordAsync(string condition)
     {
         return await base.AsQueryable().Where(condition).AnyAsync();
+    }
+
+    /// <summary>
+    /// 根据 expression 条件，判断是否存在记录
+    /// </summary>
+    /// <param name="expression">查询的条件</param>
+    /// <returns>如果存在返回True，否则False</returns>
+    public virtual async Task<bool> IsExistRecordAsync(Expression<Func<T,bool>> expression)
+    {
+        return await base.AsQueryable().Where(expression).AnyAsync();
     }
 
     /// <summary>
