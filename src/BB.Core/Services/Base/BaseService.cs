@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Entity.Base;
 using BB.Tools.Entity;
+using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.Validation;
-using BB.Tools.Extension;
 
-namespace BB.Core.Service.Base;
+namespace BB.Core.Services.Base;
 
 public class BaseService<T> where T : BaseEntity, new()
 {
@@ -96,6 +97,16 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> UpdateFieldsByConditionAsync(Hashtable recordField, string condition)
     {
         return await Repository.UpdateFieldsByConditionAsync(recordField, condition);
+    }
+
+    /// <summary>
+    /// 更新某个表的记录(根据条件更新)
+    /// </summary>
+    /// <param name="recordField">Hashtable:键[key]为字段名;值[value]为字段对应的值</param>
+    /// <param name="expression">查询的条件</param>
+    public virtual async Task<bool> UpdateFieldsByConditionAsync(Hashtable recordField, Expression<Func<T,bool>> expression)
+    {
+        return await Repository.UpdateFieldsByConditionAsync(recordField, expression);
     }
 
     /// <summary>
@@ -183,84 +194,50 @@ public class BaseService<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 根据条件查询数据库,如果存在返回第一个对象
+    /// 根据条件查询数据库,返回仅有的一个对象，如有多个则抛出异常
     /// </summary>
     /// <param name="condition">查询的条件</param>
+    /// <param name="orderBy">自定义排序语句，如Name desc；如不指定，则使用默认排序</param>
+    /// <param name="paramList">排序类型</param>
     /// <returns>指定的对象</returns>
-    public virtual async Task<T> FindSingleAsync(string condition)
+    public virtual async Task<T> FindSingleAsync(string condition, string orderBy = "", IDbDataParameter[] paramList = null)
     {
-        return await Repository.FindSingleAsync(condition);
+        return await Repository.FindSingleAsync(condition, orderBy, paramList);
     }
 
     /// <summary>
-    /// 根据条件查询数据库,如果存在返回第一个对象
+    /// 根据条件查询数据库,返回仅有的一个对象，如有多个则抛出异常
     /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">排序条件</param>
+    /// <param name="expression">查询的条件</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序类型</param>
     /// <returns>指定的对象</returns>
-    public virtual async Task<T> FindSingleAsync(string condition, string orderBy)
+    public virtual async Task<T> FindSingleAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc)
     {
-        return await Repository.FindSingleAsync(condition, orderBy);
-    }
-
-    /// <summary>
-    /// 查找记录表中最旧的一条记录
-    /// </summary>
-    /// <returns></returns>
-    public virtual async Task<T> FindFirstAsync()
-    {
-        return await Repository.FindFirstAsync();
+        return await Repository.FindSingleAsync(expression, orderByExp, orderByType);
     }
 
     /// <summary>
     /// 查找记录表中最旧的一条记录
     /// </summary>
     /// <param name="condition">查询的条件</param>
+    /// <param name="orderByField">自定义排序字段</param>
     /// <returns></returns>
-    public virtual async Task<T> FindFirstAsync(string condition)
+    public virtual async Task<T> FindFirstAsync(string condition = "", string orderByField = "")
     {
-        return await Repository.FindFirstAsync(condition);
-    }
-
-    /// <summary>
-    /// 查找记录表中最旧的一条记录
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
-    /// <returns></returns>
-    public virtual async Task<T> FindFirstAsync(string condition, string orderBy)
-    {
-        return await Repository.FindFirstAsync(condition, orderBy);
-    }
-
-    /// <summary>
-    /// 查找记录表中最新的一条记录
-    /// </summary>
-    /// <returns></returns>
-    public virtual async Task<T> FindLastAsync()
-    {
-        return await Repository.FindLastAsync();
+        return await Repository.FindFirstAsync(condition, orderByField);
     }
 
     /// <summary>
     /// 查找记录表中最新的一条记录
     /// </summary>
     /// <param name="condition">查询的条件</param>
+    /// <param name="orderByField">自定义排序字段</param>
     /// <returns></returns>
-    public virtual async Task<T> FindLastAsync(string condition)
+    public virtual async Task<T> FindLastAsync(string condition = "", string orderByField = "")
     {
-        return await Repository.FindLastAsync(condition);
-    }
-
-    /// <summary>
-    /// 查找记录表中最新的一条记录
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
-    /// <returns></returns>
-    public virtual async Task<T> FindLastAsync(string condition, string orderBy)
-    {
-        return await Repository.FindLastAsync(condition, orderBy);
+        return await Repository.FindLastAsync(condition, orderByField);
     }
 
     /// <summary>
@@ -269,10 +246,48 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="condition">查询语句</param>
     /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
     /// <returns></returns>
-    public virtual async Task<T> FindTopAsync(string condition, string orderBy
-        )
+    public virtual async Task<T> FindTopAsync(string condition, string orderBy)
     {
         return await Repository.FindTopAsync(condition, orderBy);
+    }
+
+    /// <summary>
+    /// 根据条件获取第一条记录
+    /// </summary>
+    /// <param name="expression">查询语句</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns></returns>
+    public virtual async Task<T> FindTopAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc)
+    {
+        return await Repository.FindTopAsync(expression, orderByExp, orderByType);
+    }
+
+    /// <summary>
+    /// 根据条件获取指定的记录
+    /// </summary>
+    /// <param name="count">指定数量</param>
+    /// <param name="condition">查询语句</param>
+    /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排序</param>
+    /// <returns></returns>
+    public virtual async Task<List<T>> FindTopListAsync(int count, string condition, string orderBy)
+    {
+        return await Repository.FindTopListAsync(count, condition, orderBy);
+    }
+
+    /// <summary>
+    /// 根据条件获取指定的记录
+    /// </summary>
+    /// <param name="count">指定数量</param>
+    /// <param name="expression">查询语句</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns></returns>
+    public virtual async Task<List<T>> FindTopListAsync(int count, Expression<Func<T,bool>> expression,
+        Expression<Func<T, object>> orderByExp = null, OrderByType orderByType = OrderByType.Desc)
+    {
+        return await Repository.FindTopListAsync(count, expression, orderByExp, orderByType);
     }
 
     /// <summary>
@@ -302,23 +317,13 @@ public class BaseService<T> where T : BaseEntity, new()
     #region 返回集合的接口
 
     /// <summary>
-    /// 根据ID字符串(逗号分隔)获取对象列表
+    /// 根据多个主键获取对象列表
     /// </summary>
-    /// <param name="idString">ID字符串(逗号分隔)</param>
+    /// <param name="ids">主键数组</param>
     /// <returns>符合条件的对象列表</returns>
-    public virtual async Task<List<T>> FindByIDsAsync(string idString)
+    public virtual async Task<List<T>> FindByIDsAsync(object[] ids)
     {
-        return await Repository.FindByIDsAsync(idString);
-    }
-
-    /// <summary>
-    /// 根据条件查询数据库,并返回对象集合
-    /// </summary>
-    /// <param name="condition">查询的条件</param>
-    /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> FindAsync(string condition)
-    {
-        return await Repository.FindAsync(condition);
+        return await Repository.FindByIDsAsync(ids);
     }
 
     /// <summary>
@@ -326,10 +331,24 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="condition">查询的条件</param>
     /// <param name="orderBy">排序条件</param>
+    /// <param name="paramList">参数列表</param>
     /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> FindAsync(string condition, string orderBy)
+    public virtual async Task<List<T>> FindAsync(string condition, string orderBy = "", IDbDataParameter[] paramList = null)
     {
-        return await Repository.FindAsync(condition, orderBy);
+        return await Repository.FindAsync(condition, orderBy, paramList);
+    }
+
+    /// <summary>
+    /// 根据条件查询数据库,并返回对象集合
+    /// </summary>
+    /// <param name="expression">查询的条件</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns>指定对象的集合</returns>
+    public virtual async Task<List<T>> FindAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc )
+    {
+        return await Repository.FindAsync(expression, orderByExp, orderByType);
     }
 
     /// <summary>
@@ -344,12 +363,14 @@ public class BaseService<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 返回数据库所有的对象集合
+    /// 根据条件查询数据库,并返回对象集合(用于分页数据显示)
     /// </summary>
+    /// <param name="whereExpression">查询的条件</param>
+    /// <param name="info">分页参数</param>
     /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> GetAllAsync()
+    public virtual async Task<PageResult<T>> FindWithPagerAsync(Expression<Func<T, bool>> whereExpression, PageInput info)
     {
-        return await Repository.GetAllAsync();
+        return await Repository.FindWithPagerAsync(whereExpression, info);
     }
 
     /// <summary>
@@ -357,7 +378,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
     /// <returns>指定对象的集合</returns>
-    public virtual async Task<List<T>> GetAllAsync(string orderBy)
+    public virtual async Task<List<T>> GetAllAsync(string orderBy = "")
     {
         return await Repository.GetAllAsync(orderBy);
     }
@@ -375,40 +396,11 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <summary>
     /// 返回所有记录到DataTable集合中
     /// </summary>
-    /// <returns></returns>
-    public virtual async Task<DataTable> GetAllToDataTableAsync()
-    {
-        return await Repository.GetAllToDataTableAsync();
-    }
-
-    /// <summary>
-    /// 返回所有记录到DataTable集合中
-    /// </summary>
     /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
     /// <returns></returns>
-    public virtual async Task<DataTable> GetAllToDataTableAsync(string orderBy)
+    public virtual async Task<DataTable> GetAllToDataTableAsync(string orderBy = "")
     {
         return await Repository.GetAllToDataTableAsync(orderBy);
-    }
-
-    /// <summary>
-    /// 根据分页条件，返回DataSet对象
-    /// </summary>
-    /// <param name="info">分页条件</param>
-    /// <returns></returns>
-    public virtual async Task<DataTable> GetAllToDataTableAsync(PageInput info)
-    {
-        return await Repository.GetAllToDataTableAsync(info);
-    }
-
-    /// <summary>
-    /// 根据查询条件，返回记录到DataTable集合中
-    /// </summary>
-    /// <param name="condition">查询条件</param>
-    /// <returns></returns>
-    public virtual async Task<DataTable> FindToDataTableAsync(string condition)
-    {
-        return await Repository.FindToDataTableAsync(condition);
     }
 
     /// <summary>
@@ -428,41 +420,33 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="condition">查询条件</param>
     /// <param name="pagerInfo">分页条件</param>
     /// <returns></returns>
-    public virtual async Task<DataTable> FindToDataTableAsync(string condition, PageInput pagerInfo)
+    public virtual async Task<DataTable> FindToDataTableAsync(string condition = "", PageInput pagerInfo = null)
     {
         return await Repository.FindToDataTableAsync(condition, pagerInfo);
+    }
+
+    /// <summary>
+    /// 根据条件查询数据库,并返回DataTable集合
+    /// </summary>
+    /// <param name="expression">查询的条件</param>
+    /// <param name="orderByExp">自定义排序语句</param>
+    /// <param name="orderByType">排序方式</param>
+    /// <returns>指定DataTable的集合</returns>
+    public virtual async Task<DataTable> FindToDataTableAsync(Expression<Func<T,bool>> expression, Expression<Func<T, object>> orderByExp = null,
+        OrderByType orderByType = OrderByType.Desc)
+    {
+        return await Repository.FindToDataTableAsync(expression, orderByExp, orderByType);
     }
 
     /// <summary>
     /// 获取字段列表
     /// </summary>
     /// <param name="fieldName">字段名称</param>
-    /// <returns></returns>
-    public virtual async Task<List<string>> GetFieldListAsync(string fieldName)
-    {
-        return await Repository.GetFieldListAsync(fieldName);
-    }
-
-    /// <summary>
-    /// 根据条件，获取某字段数据字典列表
-    /// </summary>
-    /// <param name="fieldName">字段名称</param>
     /// <param name="condition">查询的条件</param>
     /// <returns></returns>
-    public virtual async Task<List<string>> GetFieldListByConditionAsync(string fieldName, string condition)
+    public virtual async Task<List<string>> GetFieldListAsync(string fieldName, string condition = "")
     {
         return await Repository.GetFieldListByConditionAsync(fieldName, condition);
-    }
-
-    /// <summary>
-    /// 根据条件，从视图里面获取记录
-    /// </summary>
-    /// <param name="viewName">视图名称</param>
-    /// <param name="condition">查询条件</param>
-    /// <returns></returns>
-    public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition)
-    {
-        return await Repository.FindByViewAsync(viewName, condition);
     }
 
     /// <summary>
@@ -473,7 +457,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="sortField">排序字段</param>
     /// <param name="isDescending">是否为降序</param>
     /// <returns></returns>
-    public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition, string sortField, bool isDescending)
+    public virtual async Task<DataTable> FindByViewAsync(string viewName, string condition, string sortField = "",
+        bool isDescending = default)
     {
         return await Repository.FindByViewAsync(viewName, condition, sortField, isDescending);
     }
@@ -495,22 +480,23 @@ public class BaseService<T> where T : BaseEntity, new()
     #region 基础接口
 
     /// <summary>
-    /// 获取表的所有记录数量
-    /// </summary>
-    /// <returns></returns>
-    public virtual async Task<int> GetRecordCountAsync()
-    {
-        return await Repository.GetRecordCountAsync();
-    }
-
-    /// <summary>
     /// 获取表的指定条件记录数量
     /// </summary>
     /// <param name="condition">查询条件</param>
     /// <returns></returns>
-    public virtual async Task<int> GetRecordCountAsync(string condition)
+    public virtual async Task<int> GetRecordCountAsync(string condition = "")
     {
         return await Repository.GetRecordCountAsync(condition);
+    }
+
+    /// <summary>
+    /// 获取表的所有记录数量
+    /// </summary>
+    /// <param name="expression">查询条件</param>
+    /// <returns></returns>
+    public virtual async Task<int> GetRecordCountAsync(Expression<Func<T,bool>> expression)
+    {
+        return await Repository.GetRecordCountAsync(expression);
     }
 
     /// <summary>
@@ -521,6 +507,16 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> IsExistRecordAsync(string condition)
     {
         return await Repository.IsExistRecordAsync(condition);
+    }
+
+    /// <summary>
+    /// 根据 expression 条件，判断是否存在记录
+    /// </summary>
+    /// <param name="expression">查询的条件</param>
+    /// <returns>如果存在返回True，否则False</returns>
+    public virtual async Task<bool> IsExistRecordAsync(Expression<Func<T,bool>> expression)
+    {
+        return await Repository.IsExistRecordAsync(expression);
     }
 
     /// <summary>
@@ -574,6 +570,16 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> DeleteAsync(object key)
     {
         return await Repository.DeleteAsync(key);
+    }
+
+    /// <summary>
+    /// 根据指定条件,从数据库中删除指定对象
+    /// </summary>
+    /// <param name="expression">条件表达式</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    public virtual async Task<bool> DeleteAsync(Expression<Func<T,bool>> expression)
+    {
+        return await Repository.DeleteAsync(expression);
     }
 
     /// <summary>
