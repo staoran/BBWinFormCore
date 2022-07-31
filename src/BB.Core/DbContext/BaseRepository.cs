@@ -801,7 +801,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
-    public virtual async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
+    public virtual async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName)
     {
         foreignKeyName ??= ForeignKey;
         if (foreignKeyName.IsNullOrEmpty())
@@ -816,7 +816,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
-    public virtual async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
+    public virtual async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName)
     {
         foreignKeyName ??= ForeignKey;
         if (foreignKeyName.IsNullOrEmpty())

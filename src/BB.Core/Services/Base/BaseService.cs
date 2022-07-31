@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Common;
 using System.Linq.Expressions;
@@ -61,7 +62,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="list">指定的对象集合</param>
     /// <returns>执行操作是否成功。</returns>
-    public virtual async Task<bool> InsertRangeAsync(List<T> list)
+    public virtual async Task<bool> InsertRangeAsync([Required]List<T> list)
     {
         list.ForEach(x => CheckEntity(OperationType.Add, x));
         return await Repository.InsertRangeAsync(list);
@@ -72,7 +73,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public virtual async Task<bool> UpdateAsync(T obj)
+    public virtual async Task<bool> UpdateAsync([Required]T obj)
     {
         CheckEntity(OperationType.Edit, obj);
         return await Repository.UpdateAsync(obj);
@@ -83,7 +84,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="recordField">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public virtual async Task<bool> UpdateFieldsAsync(Hashtable recordField)
+    public virtual async Task<bool> UpdateFieldsAsync([Required]Hashtable recordField)
     {
         CheckEntity(OperationType.Edit, recordField);
         return await Repository.UpdateFieldsAsync(recordField);
@@ -127,7 +128,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public virtual async Task<bool> InsertUpdateAsync(T obj)
+    public virtual async Task<bool> InsertUpdateAsync([Required]T obj)
     {
         return await Repository.InsertUpdateAsync(obj);
     }
@@ -137,7 +138,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行插入成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public virtual async Task<bool> InsertIfNewAsync(T obj)
+    public virtual async Task<bool> InsertIfNewAsync([Required]T obj)
     {
         return await Repository.InsertIfNewAsync(obj);
     }
@@ -195,7 +196,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="key">对象的ID值</param>
     /// <returns>存在则返回指定的对象,否则返回Null</returns>
-    public virtual async Task<T> FindByIdAsync(object key)
+    [QueryParameters]
+    public virtual async Task<T> FindByIdAsync([Required]object key)
     {
         return await Repository.FindByIdAsync(key);
     }
@@ -311,7 +313,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
-    public virtual async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
+    [QueryParameters]
+    public virtual async Task<List<T>> FindByForeignKeyAsync([Required]object foreignKeyId, [Required]string foreignKeyName)
     {
         return await Repository.FindByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
@@ -322,7 +325,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
-    public virtual async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
+    [QueryParameters]
+    public virtual async Task<List<string>> FindIdByForeignKeyAsync([Required]object foreignKeyId, [Required]string foreignKeyName)
     {
         return await Repository.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
@@ -336,7 +340,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="ids">主键数组</param>
     /// <returns>符合条件的对象列表</returns>
-    public virtual async Task<List<T>> FindByIDsAsync(object[] ids)
+    [HttpPost]
+    public virtual async Task<List<T>> FindByIDsAsync([Required]object[] ids)
     {
         return await Repository.FindByIDsAsync(ids);
     }
@@ -408,6 +413,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="info">分页实体信息</param>
     /// <returns>指定对象的集合</returns>
+    [QueryParameters]
     public virtual async Task<PageResult<T>> GetAllAsync(PageInput info)
     {
         return await Repository.GetAllAsync(info);
@@ -556,7 +562,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="fieldName">指定的属性名</param>
     /// <param name="key">指定的值</param>
     /// <returns>存在则返回<c>true</c>，否则为<c>false</c>。</returns>
-    public virtual async Task<bool> IsExistKeyAsync(string fieldName, object key)
+    [QueryParameters]
+    public virtual async Task<bool> IsExistKeyAsync([Required]string fieldName, [Required]object key)
     {
         return await Repository.IsExistKeyAsync(fieldName, key);
     }
@@ -567,7 +574,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="key">指定对象的ID</param>
     /// <param name="fieldName">字段名称</param>
     /// <returns></returns>
-    public virtual async Task<string> GetFieldValueAsync(object key, string fieldName)
+    [QueryParameters]
+    public virtual async Task<string> GetFieldValueAsync([Required]object key, [Required]string fieldName)
     {
         return await Repository.GetFieldValueAsync(key, fieldName);
     }
@@ -578,7 +586,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="key">指定对象的ID</param>
     /// <param name="fieldNameList">字段名称列表</param>
     /// <returns></returns>
-    public virtual async Task<Dictionary<string, string>> GetFieldValueListAsync(string key, List<string> fieldNameList)
+    [QueryParameters]
+    public virtual async Task<Dictionary<string, string>> GetFieldValueListAsync([Required]string key, [Required]List<string> fieldNameList)
     {
         return await Repository.GetFieldValueListAsync(key, fieldNameList);
     }
@@ -599,7 +608,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="key">指定对象的ID</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public virtual async Task<bool> DeleteAsync(object key)
+    [QueryParameters]
+    public virtual async Task<bool> DeleteAsync([Required]object key)
     {
         return await Repository.DeleteAsync(key);
     }
@@ -708,7 +718,8 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="key">主键</param>
     /// <returns></returns>
-    public virtual async Task<bool> ApproveAsync(object key)
+    [QueryParameters]
+    public virtual async Task<bool> ApproveAsync([Required]object key)
     {
         T info = await FindByIdAsync(key);
 
