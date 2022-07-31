@@ -6,28 +6,29 @@ namespace BB.Entity.Security;
 [DataContract]
 [Serializable]
 [Table(DBTableName)]
-public class OURoleEntity : BaseEntity
+public class UserRoleEntity : BaseEntity
 {
     [Key]
     [DataMember]
     [Column(FieldRoleId, "角色编号")]
     public int RoleId { get; set; }
+
     [Key]
     [DataMember]
-    [Column(FieldOUId, "机构编号")]
-    public string OUId { get; set; }
-    
+    [Column(FieldUserId, "用户编号")]
+    public int UserId { get; set; }
+
     /// <summary>
     /// 表名
     /// </summary>
     [NonSerialized]
-    public new const string DBTableName = "T_ACL_OU_Role";
+    public new const string DBTableName = "T_ACL_User_Role";
 
     /// <summary>
     /// 主键名
     /// </summary>
     [NonSerialized]
-    public new const string PrimaryKey = FieldOUId;
+    public new const string PrimaryKey = FieldRoleId;
 
     /// <summary>
     /// 角色ID
@@ -39,5 +40,5 @@ public class OURoleEntity : BaseEntity
     /// 功能ID
     /// </summary>
     [NonSerialized]
-    public const string FieldOUId = "OU_ID";
+    public const string FieldUserId = "User_ID";
 }

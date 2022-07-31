@@ -15,11 +15,19 @@ public class RoleInfo : BaseEntity
     /// 超级管理员名称
     /// </summary>
     public const string SUPER_ADMIN_NAME = "超级管理员";
+    /// <summary>
+    /// 超级管理员ID
+    /// </summary>
+    public const int SUPER_ADMIN_ID = 1;
 
     /// <summary>
     /// 公司级别的系统管理员
     /// </summary>
     public const string COMPANY_ADMIN_NAME = "系统管理员";
+    /// <summary>
+    /// 公司级别的系统管理员
+    /// </summary>
+    public const int COMPANY_ADMIN_ID = 2;
 
       
     /// <summary>

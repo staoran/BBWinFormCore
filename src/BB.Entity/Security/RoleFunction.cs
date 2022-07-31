@@ -9,7 +9,7 @@ namespace BB.Entity.Security;
 [DataContract]
 [Serializable]
 [Table(DBTableName)]
-public class RoleFunction
+public class RoleFunction : BaseEntity
 {
     /// <summary>
     /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过重写 _bll.NewEntity 方法实现）
@@ -44,13 +44,13 @@ public class RoleFunction
     /// 表名
     /// </summary>
     [NonSerialized]
-    public const string DBTableName = "T_ACL_Role_Function";
+    public new const string DBTableName = "T_ACL_Role_Function";
 
     /// <summary>
     /// 主键名
     /// </summary>
     [NonSerialized]
-    public const string PrimaryKey = FieldFunctionId;
+    public new const string PrimaryKey = FieldFunctionId;
 
     /// <summary>
     /// 角色ID

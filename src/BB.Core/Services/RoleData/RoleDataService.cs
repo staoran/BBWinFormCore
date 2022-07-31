@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
-using BB.Core.Services.Role;
 using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Extension;
@@ -11,12 +10,12 @@ namespace BB.Core.Services.RoleData;
 
 public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController, ITransient
 {
-    private readonly IRoleService _roleService;
-    private readonly IUserService _userService;
+    private readonly UserRoleService _userRoleService;
+    private readonly UserService _userService;
 
-    public RoleDataService(BaseRepository<RoleDataInfo> repository, IRoleService roleService, IUserService userService) : base(repository)
+    public RoleDataService(BaseRepository<RoleDataInfo> repository, UserRoleService userRoleService, UserService userService) : base(repository)
     {
-        _roleService = roleService;
+        _userRoleService = userRoleService;
         _userService = userService;
     }
 
@@ -79,7 +78,7 @@ public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController,
     public async Task<List<RoleDataInfo>> FindByUserAsync(int userId)
     {
         //获取用户包含的角色
-        List<RoleInfo> rolesByUser = await _roleService.GetRolesByUserAsync(userId);
+        List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
         List<int> roleList = new();
         foreach (RoleInfo info in rolesByUser)
         {

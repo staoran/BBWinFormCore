@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
-using BB.Core.Services.Role;
 using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Format;
@@ -13,17 +12,15 @@ namespace BB.Core.Services.OU;
 
 public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
 {
-    private readonly IUserService _userService;
-    private readonly IRoleService _roleService;
+    private readonly UserRoleService _userRoleService;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public OUService(BaseRepository<OUInfo> repository, IUserService userService, IRoleService roleService) :
+    public OUService(BaseRepository<OUInfo> repository, UserRoleService userRoleService) :
         base(repository)
     {
-        _userService = userService;
-        _roleService = roleService;
+        _userRoleService = userRoleService;
     }
 
     /// <summary>
@@ -45,6 +42,7 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     /// 重载只是显示未被删除的记录
     /// </summary>
     /// <returns></returns>
+    [NonAction]
     public async Task<List<OUInfo>> GetAllAsync()
     {
         return await FindAsync(" Deleted = 0");
@@ -64,24 +62,19 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     /// 如果是超级管理员，返回集团节点；如果是公司管理员，返回其公司节点
     /// </summary>
     /// <returns></returns>
-    public async Task<List<OUInfo>> GetMyTopGroupAsync(int userId)
+    public async Task<List<OUInfo>> GetMyTopGroupAsync()
     {
-        List<OUInfo> list = new List<OUInfo>();
+        List<OUInfo> list = new();
 
-        UserInfo userInfo = await _userService.FindByIdAsync(userId);
-        if (userInfo != null)
+        if (await _userRoleService.UserInRoleAsync(LoginUserInfo.ID, RoleInfo.SUPER_ADMIN_ID))
         {
-            OUInfo groupInfo = null;
-            if (await _userService.UserInRoleByIdAsync(userId, RoleInfo.SUPER_ADMIN_NAME))
-            {
-                //超级管理员取集团节点
-                list.AddRange(await GetTopGroupAsync());
-            }
-            else
-            {
-                groupInfo = await FindByIdAsync(userInfo.CompanyId);//公司管理员取公司节点
-                list.Add(groupInfo);
-            }
+            //超级管理员取集团节点
+            list.AddRange(await GetTopGroupAsync());
+        }
+        else
+        {
+            OUInfo groupInfo = await FindByIdAsync(LoginUserInfo.CompanyId);//公司管理员取公司节点
+            list.Add(groupInfo);
         }
         return list;
     }
@@ -167,11 +160,6 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     /// <param name="ouId">机构ID</param>
     public async Task AddUserAsync(int userId, string ouId)
     {
-        if (await OuInRoleAsync(ouId, RoleInfo.SUPER_ADMIN_NAME))
-        {
-            await _userService.CancelExpireAsync(userId);
-        }
-
         await Repository.Db.Insertable(new OUUserEntity() { OUId = ouId, UserId = userId }).ExecuteCommandAsync();
     }
 
@@ -208,50 +196,6 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
         string condition = $"Company_ID='{companyId}' AND Deleted=0";
         var list = await FindAsync(condition);
         return list;
-    }
-
-    /// <summary>
-    /// 判断机构是否在指定的角色中
-    /// </summary>
-    /// <param name="ouId">机构ID</param>
-    /// <param name="roleName">角色名称</param>
-    /// <returns></returns>
-    public async Task<bool> OuInRoleAsync(string ouId, string roleName)
-    {
-        bool result = false;
-        List<RoleInfo> rolesByOu = await _roleService.GetRolesByOuAsync(ouId);
-        foreach (RoleInfo info in rolesByOu)
-        {
-            if (info.Name == roleName)
-            {
-                result = true;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// 在机构中移除指定的用户
-    /// </summary>
-    /// <param name="userId">用户ID</param>
-    /// <param name="ouId">机构ID</param>
-    public async Task RemoveUserAsync(int userId, string ouId)
-    {
-        if (await OuInRoleAsync(ouId, RoleInfo.SUPER_ADMIN_NAME))
-        {
-            List<SimpleUserInfo> adminSimpleUsers = await _roleService.GetAdminSimpleUsersAsync();
-            if (adminSimpleUsers.Count == 1)
-            {
-                SimpleUserInfo info = (SimpleUserInfo)adminSimpleUsers[0];
-                if (userId == info.ID)
-                {
-                    throw Oops.Bah("管理员角色至少需要包含一个用户！");
-                }
-            }
-        }
-        await Repository.Db.Deleteable<OUUserEntity>().Where(x => x.OUId == ouId && x.UserId == userId).ExecuteCommandAsync();
     }
                         
     /// <summary>

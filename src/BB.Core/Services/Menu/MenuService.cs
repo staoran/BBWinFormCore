@@ -3,18 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
-using BB.Core.Services.Role;
+using BB.Core.Services.User;
 using BB.Entity.Security;
 
 namespace BB.Core.Services.Menu;
 
 public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransient
 {
-    private readonly IRoleService _roleService;
+    private readonly UserRoleService _userRoleService;
 
-    public MenuService(BaseRepository<MenuInfo> repository, IRoleService roleService) : base(repository)
+    public MenuService(BaseRepository<MenuInfo> repository, UserRoleService userRoleService) : base(repository)
     {
-        _roleService = roleService;
+        _userRoleService = userRoleService;
     }
 
     /// <summary>
@@ -206,7 +206,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<MenuNodeInfo>> GetMenuNodesByUser(int userId, string typeId)
     {
-        List<RoleInfo> rolesByUser = await _roleService.GetRolesByUserAsync(userId);
+        List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
         string roleIDs = ",";
         foreach (RoleInfo info in rolesByUser)
         {

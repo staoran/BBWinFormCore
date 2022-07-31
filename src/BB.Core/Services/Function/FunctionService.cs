@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
-using BB.Core.Services.Role;
+using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Format;
 
@@ -13,11 +13,11 @@ namespace BB.Core.Services.Function;
 
 public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController, ITransient
 {
-    private readonly IRoleService _roleService;
+    private readonly UserRoleService _userRoleService;
 
-    public FunctionService(BaseRepository<FunctionInfo> repository, IRoleService roleService) : base(repository)
+    public FunctionService(BaseRepository<FunctionInfo> repository, UserRoleService userRoleService) : base(repository)
     {
-        _roleService = roleService;
+        _userRoleService = userRoleService;
     }
 
     /// <summary>
@@ -88,7 +88,8 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
     /// <returns></returns>
     public async Task<List<FunctionInfo>> GetFunctionsByRoleAsync(int roleId)
     {
-        return await Repository.AsQueryable().LeftJoin<RoleFunction>((f, rf) => f.ID == rf.FunctionId && rf.RoleId == roleId)
+        return await Repository.AsQueryable()
+            .LeftJoin<RoleFunction>((f, rf) => f.ID == rf.FunctionId && rf.RoleId == roleId)
             .ToListAsync();
     }
 
@@ -100,7 +101,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
     /// <returns></returns>
     public async Task<List<FunctionInfo>> GetFunctionsByUserAsync(int userId, string typeId)
     {
-        List<RoleInfo> rolesByUser = await _roleService.GetRolesByUserAsync(userId);
+        List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
         List<int> roleIDs = rolesByUser.Select(info => info.ID).ToList();
 
         List<FunctionInfo> functions = new ();
@@ -120,7 +121,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
     /// <returns></returns>
     public async Task<List<FunctionNodeInfo>> GetFunctionNodesByUserAsync(int userId, string typeId)
     {
-        List<RoleInfo> rolesByUser = await _roleService.GetRolesByUserAsync(userId);
+        List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
         string roleIDs = ",";
         foreach (RoleInfo info in rolesByUser)
         {
@@ -134,6 +135,21 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
             functions = await GetFunctionNodesAsync(roleIDs, typeId);
         }
         return functions;
+    }
+
+    /// <summary>
+    /// 获取当前用户在指定系统类型下的功能集合
+    /// </summary>
+    /// <param name="typeId"></param>
+    /// <returns></returns>
+    public async Task<List<FunctionInfo>> GetUserFunctionsAsync(string typeId)
+    {
+        List<FunctionInfo> functionsByUser = null;
+        if (LoginUserInfo != null)
+        {
+            functionsByUser = await GetFunctionsByUserAsync(LoginUserInfo.ID, typeId);
+        }
+        return functionsByUser;
     }
 
     /// <summary>
@@ -221,7 +237,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
     /// </summary>
     public async Task<List<FunctionNodeInfo>> GetTreeWithUserAsync(string systemType, int userId)
     {
-        List<RoleInfo> rolesByUser = await _roleService.GetRolesByUserAsync(userId);
+        List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
         List<int> roleList = new List<int>();
         foreach (RoleInfo info in rolesByUser)
         {
