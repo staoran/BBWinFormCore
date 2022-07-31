@@ -269,6 +269,11 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         return await SqlValueListAsync(sql);
     }
 
+    /// <summary>
+    /// 新增用户
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public override async Task<bool> InsertAsync(UserInfo obj)
     {
         obj.Password = EncryptHelper.ComputeHash(UserInfo.DEFAULT_PASSWORD, obj.Name.ToLower());
@@ -338,6 +343,11 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         return result;
     }
 
+    /// <summary>
+    /// 更新用户资料
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public override async Task<bool> UpdateAsync(UserInfo obj)
     {
         if (obj.Password.Length < 50)
@@ -384,7 +394,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         string fieldName = GetFieldNameByImageType(imagetype);
 
         string sql = $"Select {fieldName} from {Repository.TableName} where Id = {userId} ";
-        return Repository.Db.Ado.SqlQuerySingle<byte[]>(sql);
+        return await Repository.Db.Ado.SqlQuerySingleAsync<byte[]>(sql);
     }
 
     /// <summary>
@@ -428,7 +438,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         string fieldName = GetFieldNameByImageType(imagetype);
 
         string sql = $"update {Repository.TableName} set {fieldName}=@image where Id = {userId} ";
-        return Repository.Db.Ado.ExecuteCommand(sql, new SugarParameter("@image", imageBytes)) > 0;
+        return await Repository.Db.Ado.ExecuteCommandAsync(sql, new SugarParameter("@image", imageBytes)) > 0;
     }
 
     /// <summary>
