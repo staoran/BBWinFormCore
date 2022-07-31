@@ -281,6 +281,19 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         return true;
     }
 
+    /// <summary>
+    /// 通用的插入检查处理
+    /// </summary>
+    /// <param name="checkSql">检查是否存在语句</param>
+    /// <param name="insertSql">插入数据的语句</param>
+    public async Task InsertCheckDuplicatedAsync(string checkSql, string insertSql)
+    {
+        if (await _db.Ado.GetIntAsync(checkSql) == 0)
+        {
+            await _db.Ado.ExecuteCommandAsync(insertSql);
+        }
+    }
+
     #endregion
 
     #region 对象添加、修改
@@ -943,6 +956,19 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         var query = AsQueryable().Where(expression);
         return await query.Select<string>(fieldName)
             .OrderBy($"{fieldName} {(IsDescending ? "desc" : "asc")}")
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// 根据条件，获取某字段数据字典列表
+    /// </summary>
+    /// <param name="filedExpression">字段名称</param>
+    /// <param name="expression">查询的条件</param>
+    /// <returns></returns>
+    public virtual async Task<List<string>> GetFieldListByConditionAsync(Expression<Func<T,string>> filedExpression, Expression<Func<T,bool>> expression)
+    {
+        var query = AsQueryable().Where(expression);
+        return await query.Select(filedExpression)
             .ToListAsync();
     }
 
