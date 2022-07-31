@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BB.Core.Services.Auth.dto;
 using BB.Core.Services.BlackIP;
 using BB.Core.Services.User;
 using BB.Entity.Base;
@@ -13,6 +14,10 @@ using Furion.UnifyResult;
 
 namespace BB.Core.Services.Auth;
 
+/// <summary>
+/// 用户认证服务
+/// </summary>
+[ApiDescriptionSettings(Order = 0)]
 public class AuthService : IDynamicApiController, ITransient
 {
     private readonly UserService _userService;
@@ -36,18 +41,17 @@ public class AuthService : IDynamicApiController, ITransient
     /// <summary>
     /// 根据用户名、密码验证用户身份有效性
     /// </summary>
-    /// <param name="userName">用户名称</param>
-    /// <param name="userPassword">用户密码</param>
-    /// <param name="systemType">系统类型ID</param>
+    /// <param name="input">用户登录输入参数</param>
     /// <returns></returns>
-    public async Task<LoginUserInfo> VerifyUserAsync(string userName, string userPassword, string systemType)
+    [AllowAnonymous]
+    public async Task<LoginUserInfo> VerifyUserAsync(LoginInput input)
     {
-        if (string.IsNullOrEmpty(systemType))
+        if (string.IsNullOrEmpty(input.SystemType))
         {
             return null;
         }
         LoginUserInfo loginUserInfo = null;
-        UserInfo userInfo = await _userService.GetUserByNameAsync(userName);
+        UserInfo userInfo = await _userService.GetUserByNameAsync(input.UserName);
         if (userInfo is { IsExpire: false, Deleted: false })
         {
             //还需要判断是否在有效期内
@@ -74,7 +78,7 @@ public class AuthService : IDynamicApiController, ITransient
                 if (ipAccess)
                 {
                     //如果为null，那么密码为空字符串
-                    userPassword = EncryptHelper.ComputeHash(userPassword ?? "", userName.ToLower());
+                    string userPassword = EncryptHelper.ComputeHash(input.UserPassword ?? "", input.UserName.ToLower());
                     if (userPassword == userInfo.Password)
                     {
                         // identity = EncryptHelper.EncryptStr(userName + Convert.ToString(Convert.ToChar(1)) + userPassword, systemType);
