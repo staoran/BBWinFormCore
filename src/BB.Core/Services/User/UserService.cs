@@ -21,7 +21,7 @@ using Furion.UnifyResult;
 
 namespace BB.Core.Services.User;
 
-public class UserService : BaseService<UserInfo>, IUserService
+public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransient
 {
     private const string SimpleUserColumnString = "ID,Name,Password,FullName,HandNo,MobilePhone,Email,Dept_ID,Company_ID";
     private readonly IRoleService _roleService;

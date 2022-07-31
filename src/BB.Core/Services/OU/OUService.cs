@@ -11,7 +11,7 @@ using BB.Tools.Format;
 
 namespace BB.Core.Services.OU;
 
-public class OUService : BaseService<OUInfo>, IOUService
+public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
 {
     private readonly IUserService _userService;
     private readonly IRoleService _roleService;

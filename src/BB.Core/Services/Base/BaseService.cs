@@ -15,7 +15,7 @@ using BB.Tools.Validation;
 
 namespace BB.Core.Services.Base;
 
-public class BaseService<T> : IBaseService<T> where T : BaseEntity, new()
+public class BaseService<T> where T : BaseEntity, new()
 {
     #region 构造函数
 

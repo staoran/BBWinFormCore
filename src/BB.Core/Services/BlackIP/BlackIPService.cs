@@ -8,11 +8,11 @@ using BB.Framework.Commons.Network;
 
 namespace BB.Core.Services.BlackIP;
 
-public class BlackIPService : BaseService<BlackIpInfo>, IBlackIPService
+public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, ITransient
 {
-    private readonly IUserService _userService;
+    private readonly UserService _userService;
 
-    public BlackIPService(BaseRepository<BlackIpInfo> repository, IUserService userService) : base(repository)
+    public BlackIPService(BaseRepository<BlackIpInfo> repository, UserService userService) : base(repository)
     {
         _userService = userService;
     }

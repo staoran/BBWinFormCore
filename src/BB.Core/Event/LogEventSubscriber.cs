@@ -27,7 +27,7 @@ public class LogEventSubscriber : IEventSubscriber
     public async Task AddLoginLog(EventHandlerExecutingContext context)
     {
         using IServiceScope scope = _serviceProvider.CreateScope();
-        var rep = scope.ServiceProvider.GetRequiredService<ILoginLogService>();
+        var rep = scope.ServiceProvider.GetRequiredService<LoginLogService>();
         dynamic payload = context.Source.Payload;
         await rep.AddLoginLogAsync(payload.Info, payload.SystemType, payload.IP, "", payload.Note);
     }

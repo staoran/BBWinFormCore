@@ -10,7 +10,7 @@ using BB.Entity.Security;
 
 namespace BB.Core.Services.Role;
 
-public class RoleService : BaseService<RoleInfo>, IRoleService
+public class RoleService : BaseService<RoleInfo>, IDynamicApiController, ITransient
 {
 	/// <summary>
 	/// 该ID(-99)实际为一个无效ID，当调用 FillAdminID 会初始化为真是的管理员ID，以后以该实际ID作为管理员的凭证

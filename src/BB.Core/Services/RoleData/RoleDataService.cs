@@ -9,7 +9,7 @@ using BB.Tools.Extension;
 
 namespace BB.Core.Services.RoleData;
 
-public class RoleDataService : BaseService<RoleDataInfo>, IRoleDataService
+public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController, ITransient
 {
     private readonly IRoleService _roleService;
     private readonly IUserService _userService;

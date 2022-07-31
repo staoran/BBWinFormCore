@@ -8,7 +8,7 @@ using BB.Entity.Security;
 
 namespace BB.Core.Services.Menu;
 
-public class MenuService : BaseService<MenuInfo>, IMenuService
+public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransient
 {
     private readonly IRoleService _roleService;
 

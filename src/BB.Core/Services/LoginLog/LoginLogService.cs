@@ -7,7 +7,7 @@ using BB.Entity.Security;
 
 namespace BB.Core.Services.LoginLog;
 
-public class LoginLogService : BaseService<LoginLogInfo>, ILoginLogService
+public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController, ITransient
 {
     public LoginLogService(BaseRepository<LoginLogInfo> repository) : base(repository)
     {

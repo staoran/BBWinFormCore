@@ -6,7 +6,7 @@ using BB.Tools.Validation;
 
 namespace BB.Core.Services.FieldControlConfig;
 
-public class FieldControlConfigService : BaseService<Entity.Security.FieldControlConfig>, IFieldControlConfigService
+public class FieldControlConfigService : BaseService<Entity.Security.FieldControlConfig>, IDynamicApiController, ITransient
 {
     public FieldControlConfigService(BaseRepository<Entity.Security.FieldControlConfig> repository) : base(repository)
     {

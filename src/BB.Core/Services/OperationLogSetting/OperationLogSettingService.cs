@@ -5,7 +5,7 @@ using BB.Entity.Security;
 
 namespace BB.Core.Services.OperationLogSetting;
 
-public class OperationLogSettingService : BaseService<OperationLogSettingInfo>, IOperationLogSettingService
+public class OperationLogSettingService : BaseService<OperationLogSettingInfo>, IDynamicApiController, ITransient
 {
     public OperationLogSettingService(BaseRepository<OperationLogSettingInfo> repository) : base(repository)
     {

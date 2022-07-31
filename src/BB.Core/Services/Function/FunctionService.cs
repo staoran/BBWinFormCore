@@ -11,7 +11,7 @@ using BB.Tools.Format;
 
 namespace BB.Core.Services.Function;
 
-public class FunctionService : BaseService<FunctionInfo>, IFunctionService
+public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController, ITransient
 {
     private readonly IRoleService _roleService;
 

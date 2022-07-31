@@ -6,11 +6,11 @@ using BB.Entity.Security;
 
 namespace BB.Core.Services.SystemType;
 
-public class SystemTypeService : BaseService<SystemTypeInfo>, ISystemTypeService
+public class SystemTypeService : BaseService<SystemTypeInfo>, IDynamicApiController, ITransient
 {
-    private readonly IRoleService _roleService;
+    private readonly RoleService _roleService;
 
-    public SystemTypeService(BaseRepository<SystemTypeInfo> repository, IRoleService roleService) : base(repository)
+    public SystemTypeService(BaseRepository<SystemTypeInfo> repository, RoleService roleService) : base(repository)
     {
         _roleService = roleService;
     }

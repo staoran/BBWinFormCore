@@ -8,13 +8,13 @@ using BB.Entity.Security;
 
 namespace BB.Core.Services.OperationLog;
 
-public class OperationLog : BaseService<OperationLogInfo>, IOperationLog
+public class OperationLog : BaseService<OperationLogInfo>, IDynamicApiController, ITransient
 {
-    private readonly IUserService _userService;
-    private readonly IOperationLogSettingService _operationLogSettingService;
+    private readonly UserService _userService;
+    private readonly OperationLogSettingService _operationLogSettingService;
 
-    public OperationLog(BaseRepository<OperationLogInfo> repository, IUserService userService,
-        IOperationLogSettingService operationLogSettingService) : base(repository)
+    public OperationLog(BaseRepository<OperationLogInfo> repository, UserService userService,
+        OperationLogSettingService operationLogSettingService) : base(repository)
     {
         _userService = userService;
         _operationLogSettingService = operationLogSettingService;
