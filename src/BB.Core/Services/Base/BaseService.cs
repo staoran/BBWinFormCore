@@ -608,6 +608,17 @@ public class BaseService<T> where T : BaseEntity, new()
     {
         return Repository.CreateTransaction(level);
     }
+    
+    /// <summary>
+    /// 执行事务，自动提交和回滚
+    /// </summary>
+    /// <param name="action">事务逻辑</param>
+    /// <param name="errorCallBack">错误回调</param>
+    [NonAction]
+    public virtual async Task<bool> UseTransactionAsync(Func<Task> action, Action<Exception> errorCallBack = null)
+    {
+        return await Repository.UseTransactionAsync(action, errorCallBack ?? (ex => throw Oops.Oh($"执行事务时发生错误:{ex}")));
+    }
 
     #endregion
 
