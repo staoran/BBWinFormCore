@@ -21,6 +21,7 @@ public static class EnumerableExtension
         if (val == null) return string.Empty;
         foreach (T v in val)
         {
+            if (v is null) continue;
             s.AppendFormat(format(v), v.ToString()).Append(separator);
         }
 
@@ -31,39 +32,17 @@ public static class EnumerableExtension
 
 
     /// <summary>
-    /// 将可枚举对象值转换为以指定符号分隔字符串连接的字符串
+    /// 将可枚举对象值转换为以指定符号分隔字符串连接的字符串，默认逗号
     /// </summary>
     /// <param name="val">可枚举对象</param>
     /// <param name="separator">连接符号</param>
     /// <param name="format">转换格式</param>
     /// <returns>字符串</returns>
-    public static string Splice<T>(this IEnumerable<T> val, string separator, string format)
+    public static string Splice<T>(this IEnumerable<T> val, string separator = ",", string format = "{0}")
     {
         return Splice(val, separator, o => string.Format(format, o));
     }
 
-
-    /// <summary>
-    /// 将可枚举对象值转换为以指定符号分隔字符串连接的字符串
-    /// </summary>
-    /// <param name="val">可枚举对象</param>
-    /// <param name="separator">连接符号</param>
-    /// <returns>字符串</returns>
-    public static string Splice<T>(this IEnumerable<T> val, string separator)
-    {
-        return Splice(val, separator, "{0}");
-    }
-
-
-    /// <summary>
-    /// 将可枚举对象值转换为以逗号分隔字符串连接的字符串
-    /// </summary>
-    /// <param name="val">可枚举对象</param>
-    /// <returns>字符串</returns>
-    public static string Splice<T>(this IEnumerable<T> val)
-    {
-        return Splice(val, ",", "{0}");
-    }
 
     /// <summary>
     /// 可枚举类型迭代函数
