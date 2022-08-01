@@ -1326,28 +1326,11 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// 获取表的字段名称和数据类型列表。
     /// </summary>
     /// <returns></returns>
-    public virtual DataTable GetFieldTypeList()
+    public virtual Dictionary<string, string> GetFieldTypeList()
     {
-        DataTable dt = DataTableHelper.CreateTable("ColumnName,DataType");
         List<DbColumnInfo> cols = _db.DbMaintenance.GetColumnInfosByTableName(_tableName);
-        if (cols.Any())
-        {
-            cols.ForEach(x =>
-            {
-                DataRow row = dt.NewRow();
-                row["ColumnName"] = x.DbColumnName;
-                row["DataType"] = x.DataType;
 
-                dt.Rows.Add(row);
-            });
-        }
-
-        if (dt.TableName.IsNullOrEmpty())
-        {
-            dt.TableName = "tableName"; //增加一个表名称，防止WCF方式因为TableName为空出错
-        }
-
-        return dt;
+        return cols.ToDictionary(col => col.DbColumnName, col => col.DataType);
     }
 
     /// <summary>

@@ -868,7 +868,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// 获取表的字段名称和数据类型列表
     /// </summary>
     /// <returns></returns>
-    public virtual async Task<DataTable> GetFieldTypeListAsync()
+    public virtual async Task<Dictionary<string, string>> GetFieldTypeListAsync()
     {
         return await Task.FromResult(Repository.GetFieldTypeList());
     }
