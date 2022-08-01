@@ -8,6 +8,7 @@ using System.Data.Common;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
+using BB.Core.Filter;
 using BB.Entity.Base;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
@@ -197,7 +198,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="key">对象的ID值</param>
     /// <returns>存在则返回指定的对象,否则返回Null</returns>
     [QueryParameters]
-    public virtual async Task<T> FindByIdAsync([Required]object key)
+    public virtual async Task<T> FindByIdAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
     {
         return await Repository.FindByIdAsync(key);
     }
@@ -314,7 +315,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
     [QueryParameters]
-    public virtual async Task<List<T>> FindByForeignKeyAsync([Required]object foreignKeyId, [Required]string foreignKeyName)
+    public virtual async Task<List<T>> FindByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, [Required]string foreignKeyName)
     {
         return await Repository.FindByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
@@ -326,7 +327,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
     [QueryParameters]
-    public virtual async Task<List<string>> FindIdByForeignKeyAsync([Required]object foreignKeyId, [Required]string foreignKeyName)
+    public virtual async Task<List<string>> FindIdByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, [Required]string foreignKeyName)
     {
         return await Repository.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
@@ -341,7 +342,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="ids">主键数组</param>
     /// <returns>符合条件的对象列表</returns>
     [HttpPost]
-    public virtual async Task<List<T>> FindByIDsAsync([Required]object[] ids)
+    public virtual async Task<List<T>> FindByIDsAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object[] ids)
     {
         return await Repository.FindByIDsAsync(ids);
     }
@@ -563,7 +564,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="key">指定的值</param>
     /// <returns>存在则返回<c>true</c>，否则为<c>false</c>。</returns>
     [QueryParameters]
-    public virtual async Task<bool> IsExistKeyAsync([Required]string fieldName, [Required]object key)
+    public virtual async Task<bool> IsExistKeyAsync([Required]string fieldName, [ModelBinder(typeof(ObjectModelBinder))][Required]object key)
     {
         return await Repository.IsExistKeyAsync(fieldName, key);
     }
@@ -575,7 +576,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="fieldName">字段名称</param>
     /// <returns></returns>
     [QueryParameters]
-    public virtual async Task<string> GetFieldValueAsync([Required]object key, [Required]string fieldName)
+    public virtual async Task<string> GetFieldValueAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key, [Required]string fieldName)
     {
         return await Repository.GetFieldValueAsync(key, fieldName);
     }
@@ -609,7 +610,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="key">指定对象的ID</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     [QueryParameters]
-    public virtual async Task<bool> DeleteAsync([Required]object key)
+    public virtual async Task<bool> DeleteAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
     {
         return await Repository.DeleteAsync(key);
     }
@@ -719,7 +720,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="key">主键</param>
     /// <returns></returns>
     [QueryParameters]
-    public virtual async Task<bool> ApproveAsync([Required]object key)
+    public virtual async Task<bool> ApproveAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
     {
         T info = await FindByIdAsync(key);
 

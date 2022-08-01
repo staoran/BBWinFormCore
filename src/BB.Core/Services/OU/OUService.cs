@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
+using BB.Core.Filter;
 using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
@@ -28,7 +30,7 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     /// </summary>
     /// <param name="key">机构ID</param>
     /// <returns></returns>
-    public override async Task<bool> DeleteAsync(object key)
+    public override async Task<bool> DeleteAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
     {
         if (await Repository.AsQueryable().Where(x => x.PID == key.ObjToStr()).AnyAsync())
         {

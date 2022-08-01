@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using BB.Core.DbContext;
+using BB.Core.Filter;
 using BB.Core.Services.Base;
 using BB.Core.Services.Role;
 using BB.Entity.Security;
@@ -20,7 +22,7 @@ public class SystemTypeService : BaseService<SystemTypeInfo>, IDynamicApiControl
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public override async Task<bool> DeleteAsync(object key)
+    public override async Task<bool> DeleteAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
     {
         int count = await _roleService.GetRecordCountAsync();
         if (count == 1)

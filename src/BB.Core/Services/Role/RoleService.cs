@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
+using BB.Core.Filter;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
 
@@ -38,7 +40,7 @@ public class RoleService : BaseService<RoleInfo>, IDynamicApiController, ITransi
 			.Where(x => x.RoleId == RoleInfo.SUPER_ADMIN_ID).Select(x => x.UserId).AnyAsync();
 	}
 
-	public override async Task<bool> DeleteAsync(object key)
+	public override async Task<bool> DeleteAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
 	{
 		if (Convert.ToInt32(key) == RoleInfo.SUPER_ADMIN_ID)
 		{
