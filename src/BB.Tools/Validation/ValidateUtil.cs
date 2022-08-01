@@ -627,7 +627,7 @@ public class ValidateUtil
             "drop\\s",
             "truncate\\s",
             "exec\\s",
-            "count\\(",
+            // "count\\(",
             "declare\\s",
             "asc\\(",
             "mid\\(",
