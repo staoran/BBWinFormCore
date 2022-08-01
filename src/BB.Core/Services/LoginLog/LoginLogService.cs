@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
+using BB.Entity.Base;
 using BB.Entity.Security;
 
 namespace BB.Core.Services.LoginLog;
@@ -21,7 +22,7 @@ public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController,
     /// <param name="ip">IP地址</param>
     /// <param name="macAddr">Mac地址</param>
     /// <param name="note">备注说明</param>
-    public async Task AddLoginLogAsync(LoginLogInfo info, string systemType, string ip, string macAddr, string note)
+    public async Task AddLoginLogAsync(LoginUserInfo info, string systemType, string ip, string macAddr, string note)
     {
         if (info == null) return;
 
@@ -37,7 +38,7 @@ public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController,
                 SystemTypeId = systemType,
                 UserId = info.ID.ToString(),
                 FullName = info.FullName,
-                LoginName = info.LoginName,
+                LoginName = info.Name,
                 CompanyId = info.CompanyId,
                 CompanyName = info.CompanyName
             };
