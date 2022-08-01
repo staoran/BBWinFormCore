@@ -1388,6 +1388,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         {
             Dictionary<string, string> dic = new();
             PropertyInfo[] properties = typeof(T).GetProperties();
+            List<DbColumnInfo> dbCols = new();
             foreach (PropertyInfo prop in properties)
             {
                 object attribute = prop.GetCustomAttribute(typeof(ColumnAttribute), false);
@@ -1396,19 +1397,21 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
                     var attr = (ColumnAttribute)attribute;
                     bool isHide = prop.GetCustomAttribute(typeof(HideAttribute), false)!.IsNotNull();
                     // Column 和 Hide 特性都可以设置隐藏
-                    if (!attr.Hide && !isHide)
+                    if (!attr.Hide && !isHide && !attr.Name.IsNullOrEmpty())
                     {
-                        dic.Add(attr.Name, attr.Display);
+                        string display = attr.Display;
+                        if (display.IsNullOrEmpty())
+                        {
+                            if (dbCols.Count == 0)
+                            {
+                                dbCols = _db.DbMaintenance.GetColumnInfosByTableName(_tableName);
+                            }
+
+                            display = dbCols.First(x => x.DbColumnName == attr.Name).ColumnDescription ?? string.Empty;
+                        }
+                        dic.Add(attr.Name, display);
                     }
                 }
-            }
-
-            if (dic.Count != 0) return dic;
-
-            List<DbColumnInfo> dbCols = _db.DbMaintenance.GetColumnInfosByTableName(_tableName);
-            if (dbCols.Any())
-            {
-                dbCols.ForEach(x => { dic.Add(x.DbColumnName, x.ColumnDescription); });
             }
 
             return dic;
