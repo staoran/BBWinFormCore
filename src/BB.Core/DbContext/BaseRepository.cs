@@ -1208,7 +1208,10 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<string> GetFieldValueAsync(object key, string fieldName)
     {
-        return await base.AsQueryable().Select<string>(fieldName).InSingleAsync(key);
+        return await base.AsQueryable()
+            .Select<string>(fieldName)
+            .Where($"{_primaryKey} = @id", new { id = key })
+            .FirstAsync();
     }
 
     /// <summary>
@@ -1221,7 +1224,8 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     {
         Dictionary<string, string> dict = new();
         IDictionary<string, object> row = (await base.AsQueryable()
-            .Select(fieldNameList.Splice()).InSingleAsync(key)).ToDictionary();
+            .Select(fieldNameList.Splice())
+            .Where($"{_primaryKey} = @id", new { id = key }).FirstAsync()).ToDictionary();
         foreach (KeyValuePair<string, object> keyValuePair in row)
         {
             if (fieldNameList.Contains(keyValuePair.Key))
