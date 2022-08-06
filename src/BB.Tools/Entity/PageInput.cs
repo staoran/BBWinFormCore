@@ -5,6 +5,16 @@
 /// </summary>
 public class PageInput
 {
+    public PageInput()
+    {
+    }
+    
+    public PageInput(int pageNo, int pageSize)
+    {
+        PageNo = pageNo;
+        PageSize = pageSize;
+    }
+
     /// <summary>
     /// 当前页码
     /// </summary>
