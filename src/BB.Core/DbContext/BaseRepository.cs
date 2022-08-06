@@ -695,6 +695,23 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <summary>
     /// 根据条件查询数据库,并返回对象集合
     /// </summary>
+    /// <param name="conModels">查询的条件</param>
+    /// <param name="orderBy">自定义排序语句，如Name desc；如不指定，则使用默认排序</param>
+    /// <returns>指定对象的集合</returns>
+    public virtual async Task<List<T>> FindAsync(List<IConditionalModel> conModels, string orderBy = "")
+    {
+        if (orderBy.IsNullOrEmpty())
+            orderBy = SortField.IsNullOrEmpty() ? string.Empty : $"{SortField} {(IsDescending ? "desc" : "asc")}";
+
+        return await base.AsQueryable()
+            .Where(conModels)
+            .OrderByIF(!orderBy.IsNullOrEmpty(), orderBy)
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// 根据条件查询数据库,并返回对象集合
+    /// </summary>
     /// <param name="condition">查询的条件</param>
     /// <param name="orderBy">自定义排序语句，如Name desc；如不指定，则使用默认排序</param>
     /// <param name="paramList">参数列表</param>
@@ -705,7 +722,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
             orderBy = SortField.IsNullOrEmpty() ? string.Empty : $"{SortField} {(IsDescending ? "desc" : "asc")}";
 
         return await base.AsQueryable()
-            .Where(condition)
+            .Where(condition, paramList)
             .OrderByIF(!orderBy.IsNullOrEmpty(), orderBy)
             .ToListAsync();
     }
@@ -791,6 +808,23 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
 
         return await _db.Queryable<T>()
             .Where(whereExpression)
+            .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {info.SortOrder}")
+            .ToPagedListAsync(info.PageNo, info.PageSize);
+    }
+
+    /// <summary>
+    /// 根据条件查询数据库,并返回对象集合(用于分页数据显示)
+    /// </summary>
+    /// <param name="conModels">查询的条件</param>
+    /// <param name="info">分页参数</param>
+    /// <returns>指定对象的集合</returns>
+    public virtual async Task<PageResult<T>> FindWithPagerAsync(List<IConditionalModel> conModels, PageInput info)
+    {
+        //如果不指定排序字段，用默认的
+        string fieldToSort = !string.IsNullOrEmpty(info.SortField) ? info.SortField : SortField;
+
+        return await _db.Queryable<T>()
+            .Where(conModels)
             .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {info.SortOrder}")
             .ToPagedListAsync(info.PageNo, info.PageSize);
     }
