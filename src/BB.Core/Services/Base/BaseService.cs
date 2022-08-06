@@ -63,6 +63,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="list">指定的对象集合</param>
     /// <returns>执行操作是否成功。</returns>
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<bool> InsertRangeAsync([Required]List<T> list)
     {
         list.ForEach(x => CheckEntity(OperationType.Add, x));
@@ -85,6 +86,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="recordField">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<bool> UpdateFieldsAsync([Required]Hashtable recordField)
     {
         CheckEntity(OperationType.Edit, recordField);
@@ -129,6 +131,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<bool> InsertUpdateAsync([Required]T obj)
     {
         return await Repository.InsertUpdateAsync(obj);
@@ -139,6 +142,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行插入成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<bool> InsertIfNewAsync([Required]T obj)
     {
         return await Repository.InsertIfNewAsync(obj);
@@ -198,6 +202,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="key">对象的ID值</param>
     /// <returns>存在则返回指定的对象,否则返回Null</returns>
     [QueryParameters]
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<T> FindByIdAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
     {
         return await Repository.FindByIdAsync(key);
@@ -315,6 +320,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
     [QueryParameters]
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<List<T>> FindByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, [Required]string foreignKeyName)
     {
         return await Repository.FindByForeignKeyAsync(foreignKeyId, foreignKeyName);
@@ -327,6 +333,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
     [QueryParameters]
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<List<string>> FindIdByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, [Required]string foreignKeyName)
     {
         return await Repository.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName);
@@ -341,10 +348,25 @@ public class BaseService<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="ids">主键数组</param>
     /// <returns>符合条件的对象列表</returns>
-    [HttpPost]
+    [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<List<T>> FindByIDsAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object[] ids)
     {
         return await Repository.FindByIDsAsync(ids);
+    }
+
+    /// <summary>
+    /// 根据条件查询数据库,并返回对象集合
+    /// </summary>
+    /// <param name="searchInfos">查询的条件</param>
+    /// <returns>指定对象的集合</returns>
+    [HttpPost]
+    [ApiDescriptionSettings(KeepVerb = true)]
+    public virtual async Task<List<T>> FindAsync(List<ConditionalModel> searchInfos)
+    {
+        var c = searchInfos.Adapt<List<ConditionalModel>>();
+        var conModels = new List<IConditionalModel>();
+        conModels.AddRange(c);
+        return await Repository.FindAsync(conModels);
     }
 
     /// <summary>
@@ -399,11 +421,22 @@ public class BaseService<T> where T : BaseEntity, new()
     }
 
     /// <summary>
+    /// 根据条件查询数据库,并返回对象集合(用于分页数据显示)
+    /// </summary>
+    /// <param name="conModels">查询的条件</param>
+    /// <param name="info">分页参数</param>
+    /// <returns>指定对象的集合</returns>
+    [NonAction]
+    public virtual async Task<PageResult<T>> FindWithPagerAsync(List<IConditionalModel> conModels, PageInput info)
+    {
+        return await Repository.FindWithPagerAsync(conModels, info);
+    }
+
+    /// <summary>
     /// 返回当前模块所有数据
     /// </summary>
     /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
     /// <returns>指定对象的集合</returns>
-    [NonAction]
     public virtual async Task<List<T>> GetAllAsync(string orderBy = "")
     {
         return await Repository.GetAllAsync(orderBy);
@@ -415,7 +448,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="info">分页实体信息</param>
     /// <returns>指定对象的集合</returns>
     [QueryParameters]
-    public virtual async Task<PageResult<T>> GetAllAsync(PageInput info)
+    public virtual async Task<PageResult<T>> GetAllByPageAsync(PageInput info)
     {
         return await Repository.GetAllAsync(info);
     }
@@ -696,7 +729,6 @@ public class BaseService<T> where T : BaseEntity, new()
     [NonAction]
     public virtual async Task<List<T>> GetEntitiesAsync(NameValueCollection searchInfos)
     {
-        // todo 使用 json to sql
         string where = GetConditionSql(searchInfos);
         return await FindAsync(where);
     }
@@ -712,6 +744,22 @@ public class BaseService<T> where T : BaseEntity, new()
     {
         string where = GetConditionSql(searchInfos);
         return await FindWithPagerAsync(where, pagerInfo);
+    }
+
+    /// <summary>
+    /// 根据条件获取分页实体数据
+    /// </summary>
+    /// <param name="searchInfos">分页搜索条件</param>
+    /// <returns></returns>
+    [HttpPost]
+    [ApiDescriptionSettings(KeepVerb = true)]
+    public virtual async Task<PageResult<T>> GetEntitiesByPageAsync(PaginatedSearchInfos searchInfos)
+    {
+        var c = searchInfos.SearchInfos.Adapt<List<ConditionalModel>>();
+        var conModels = new List<IConditionalModel>();
+        conModels.AddRange(c);
+        await Repository.AsQueryable().Where(conModels).ToListAsync();
+        return await FindWithPagerAsync(conModels, searchInfos.PagerInfo);
     }
 
     /// <summary>
