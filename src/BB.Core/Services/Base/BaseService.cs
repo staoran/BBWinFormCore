@@ -361,7 +361,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     [HttpPost]
     [ApiDescriptionSettings(KeepVerb = true)]
-    public virtual async Task<List<T>> FindAsync(List<ConditionalModel> searchInfos)
+    public virtual async Task<List<T>> FindAsync(SearchInfo[] searchInfos)
     {
         var c = searchInfos.Adapt<List<ConditionalModel>>();
         var conModels = new List<IConditionalModel>();
@@ -795,6 +795,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// 初始化一个实体
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public virtual async Task<T> NewEntityAsync()
     {
         return await Repository.NewEntityAsync();
