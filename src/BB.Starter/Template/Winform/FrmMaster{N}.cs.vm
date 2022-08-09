@@ -1,0 +1,563 @@
+﻿using System;
+using System.Data;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+
+using BB.Framework.BaseUI.AdvanceSearch;
+using BB.Framework.BaseUI.BaseUI;
+using BB.Framework.BaseUI.Extension;
+using BB.Framework.BaseUI.Other;
+using BB.Framework.IBLL.${NameSpace};
+using BB.Framework.Commons.Database;
+using BB.Framework.Commons.File;
+using BB.Framework.Commons.Format;
+using BB.Framework.Commons.Office;
+using BB.Framework.Commons.Others;
+
+using BB.Framework.Entity.${NameSpace};
+
+using DevExpress.Data;
+using DevExpress.XtraBars;
+
+namespace BB.${NameSpace}.UI;
+
+/// <summary>
+#if(${Display})
+/// ${Display}
+#else
+/// ${Name}
+#end
+/// </summary>
+public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Name}, ${ChildName}, I${ChildName}BLL>
+{
+#if(${Display})
+    public Frm${Name}() : base("${Display}")
+#else
+    public Frm${Name}() : base("${Name}")
+#end
+    {
+        InitializeComponent();
+
+        InitDictItem();
+    }
+
+    /// <summary>
+    /// 编写初始化窗体的实现
+    /// </summary>
+    public override void FormOnLoad()
+    {
+        base.FormOnLoad();
+#if(${IsQuery})
+
+        #region 查询表单
+
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch && ${FieldInfo.ControlType}=="SpinEdit")
+        ${FieldInfo.ControlName}1.KeyDown += SpinEdit_KeyDown;
+        ${FieldInfo.ControlName}2.KeyDown += SpinEdit_KeyDown;
+
+#end
+#end
+        #endregion
+#end
+
+        #region 按钮和按钮权限
+
+#if(${IsAdd})
+        addButton.Visibility = BarItemVisibility.Always;
+#end
+#if(${IsEdit})
+        editButton.Visibility = BarItemVisibility.Always;
+#end
+#if(${IsCheck})
+        checkButton.Visibility = BarItemVisibility.Always;
+#end
+#if(${IsImport})
+        importButton.Visibility = BarItemVisibility.Always;
+#end
+#if(${IsQuery})
+        queryButton.Visibility = BarItemVisibility.Always;
+        clearButton.Visibility = BarItemVisibility.Always;
+        advQueryButton.Visibility = BarItemVisibility.Always;
+#end
+#if(${IsExport})
+        exportButton.Visibility = BarItemVisibility.Always;
+#end
+#if(${IsTree})
+        hideTreeButton.Visibility = BarItemVisibility.Always;
+#end
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 窗体首次打开后
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Frm${Name}_Shown(object sender, EventArgs e)
+    {
+    }
+
+#if(${IsTree})
+    /// <summary>
+    /// 快查树初始化
+    /// </summary>
+    protected override void InitTree()
+    {
+#set($dictItem = "")
+#set($m = '"')
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType} == "ToggleSwitch" || $FieldInfo.ControlType=="CheckEdit")
+#if($dictItem == "")
+#set($dictItem = "x.AddNode(${Name}.Field${FieldInfo.CSharpFieldName}, ${m}${FieldInfo.ControlLabelName}${m}, GB.YesOrNo);")
+#else
+#set($dictItem = "${dictItem}${NewLine}            x.AddNode(${Name}.Field${FieldInfo.CSharpFieldName}, ${m}${FieldInfo.ControlLabelName}${m}, GB.YesOrNo);")
+#end
+#elseif(${FieldInfo.DataTableName} && ${FieldInfo.DataTableName} != "")
+#if($dictItem == "")
+#set($dictItem = "x.AddNode(${Name}.Field${FieldInfo.CSharpFieldName}, $FieldInfo.DataTableName);")
+#else
+#set($dictItem = "${dictItem}${NewLine}            x.AddNode(${Name}.Field${FieldInfo.CSharpFieldName}, $FieldInfo.DataTableName);")
+#end
+#end
+#end
+#end
+#if($dictItem == "")
+        bar1.Manager.Items["HideTree"].PerformClick();
+#else
+        treeView1.InitTree(x =>
+        {
+            $dictItem
+        });
+#end
+    }
+
+#end
+    /// <summary>
+    /// 初始化字典列表内容
+    /// </summary>
+    protected sealed override void InitDictItem()
+    {
+#if(${IsQuery})
+        #region 查询表单初始化
+
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#set($dictItem = "")
+#if($FieldInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $FieldInfo.CSharpFieldName.indexOf("AreaId") != -1)
+#set($dictItem = ".BindCityItems(false")
+#elseif(${FieldInfo.ControlType} == "ToggleSwitch" || $FieldInfo.ControlType=="CheckEdit")
+#set($dictItem = ".BindDictItems(GB.YesOrNo")
+#elseif(${FieldInfo.DataTableName} && ${FieldInfo.DataTableName} != "")
+#set($dictItem = ".BindDictItems($FieldInfo.DataTableName")
+#end
+#if($dictItem != "")
+## 查询表单中 ToggleSwitch 当成 ComboBoxEdit
+#if(${FieldInfo.ControlType} == "ToggleSwitch" || $FieldInfo.ControlType=="CheckEdit")
+#set($dictItem = "${dictItem}, null")
+## 如果有默认值
+#elseif($FieldInfo.Defaults && $FieldInfo.Defaults != "")
+#set($dictItem = "${dictItem}, ${FieldInfo.Defaults}")
+## 没有默认值
+#elseif($FieldInfo.CSharpFieldName.indexOf("AreaNo") == -1 && $FieldInfo.CSharpFieldName.indexOf("AreaId") == -1)
+#set($dictItem = "${dictItem}, null")
+#end
+## 查询表单默认增加空值选项，查询表单中 ToggleSwitch 当成 ComboBoxEdit
+#if($FieldInfo.CSharpFieldName.indexOf("AreaNo") == -1 && $FieldInfo.CSharpFieldName.indexOf("AreaId") == -1)
+#set($dictItem = "${dictItem}, true, false")
+#end
+        ${FieldInfo.ControlName}${dictItem});
+#end
+#end
+#end
+
+        #endregion
+
+#end
+        #region Grid初始化
+
+        base.InitDictItem();
+
+        #region 主表列
+
+        // 显示列的内容和排序，如不设置则默认按照别名解析排列
+        // winGridViewPager1.DisplayColumns = "${ColumnFieldNameString}";
+
+        #region 添加别名解析，两种方式均可
+
+#foreach($ColumnInfo in ${MetadataImports})
+#if($ColumnInfo.IsColumn)
+        // winGridViewPager1.AddColumnAlias(${Name}.Field${ColumnInfo.CSharpFieldName}, "${ColumnInfo.CSharpFieldDes}");
+#end
+#end
+
+        // 获取字段显示权限，并设置(默认不使用字段权限)
+        // winGridViewPager1.gridView1.SetColumnsPermit(permitDict);
+
+        #endregion
+
+        #region 添加列字段数据源
+
+#foreach($ColumnInfo in $MetadataImports)
+#if($ColumnInfo.IsColumn && ${ColumnInfo.DataTableName} && ${ColumnInfo.DataTableName} != "" && ${ColumnInfo.ControlType} != "ToggleSwitch")
+        winGridViewPager1.SetColumnDataSource(${Name}.Field${ColumnInfo.CSharpFieldName}, ${ColumnInfo.DataTableName});
+#elseif($ColumnInfo.IsColumn && ${ColumnInfo.ControlType} != "ToggleSwitch" && ($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1))
+        winGridViewPager1.SetColumnDataSource(${Name}.Field${ColumnInfo.CSharpFieldName}, GB.AllRegions);
+#end
+#end
+
+        #endregion
+
+        #region 添加列字段汇总行
+
+#set($IsSummary = false)
+#foreach($ColumnInfo in $MetadataImports)
+#if($ColumnInfo.IsColumn && ${ColumnInfo.SummaryItemType} != "None")
+#set($IsSummary = true)
+        winGridViewPager1.AddColumnSummaryItem(${Name}.Field${ColumnInfo.CSharpFieldName}, SummaryItemType.${ColumnInfo.SummaryItemType}, "${ColumnInfo.SummaryItemDisplayFormat}");
+#end
+#end
+#if($IsSummary)
+        winGridViewPager1.ShowFooter = true;
+#end
+
+        #endregion
+
+        #endregion
+
+        #region 明细表列
+
+        // 显示列的内容和排序，如不设置则默认按照别名解析排列
+        // winGridView2.DisplayColumns = "${ChildColumnFieldNameString}";
+
+        #region 添加别名解析，两种方式均可，尽量从后台取
+
+        #region 前端直接定义
+
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#if($ColumnInfo.IsColumn)
+        // winGridView2.AddColumnAlias(${ChildName}.Field${ColumnInfo.CSharpFieldName}, "${ColumnInfo.CSharpFieldDes}");
+#end
+#end
+
+        #endregion
+
+        // 获取字段显示权限，并设置(默认不使用字段权限)
+        // winGridView2.gridView1.SetColumnsPermit(permitDict);
+
+        #endregion
+
+        #region 添加列字段数据源
+
+#foreach($ColumnInfo in $ChildMetadataImports)
+#if($ColumnInfo.IsColumn && ${ColumnInfo.DataTableName} && ${ColumnInfo.DataTableName} != "" && ${ColumnInfo.ControlType} != "ToggleSwitch")
+        winGridView2.SetColumnDataSource(${ChildName}.Field${ColumnInfo.CSharpFieldName}, ${ColumnInfo.DataTableName});
+#elseif($ColumnInfo.IsColumn && ${ColumnInfo.ControlType} != "ToggleSwitch" && ($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1))
+        winGridView2.SetColumnDataSource(${ChildName}.Field${ColumnInfo.CSharpFieldName}, GB.AllRegions);
+#end
+#end
+
+        #endregion
+
+        #region 添加列字段汇总行
+
+#set($IsSummary = false)
+#foreach($ColumnInfo in $ChildMetadataImports)
+#if($ColumnInfo.IsColumn && ${ColumnInfo.SummaryItemType} != "None")
+#set($IsSummary = true)
+        winGridView2.AddColumnSummaryItem(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SummaryItemType.${ColumnInfo.SummaryItemType}, "${ColumnInfo.SummaryItemDisplayFormat}");
+#end
+#end
+#if($IsSummary)
+        winGridView2.ShowFooter = true;
+#end
+
+        #endregion
+
+        #endregion
+
+        #endregion
+    }
+
+    #region 网格列表信息
+
+    #region 主表列表信息
+
+    /// <summary>
+    /// 数据源变更时，分配各列的宽度
+    /// </summary>
+    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    {
+        base.gridView1_DataSourceChanged(sender, e);
+        if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)
+        {
+            #region 单独设置列宽
+
+            // 可特殊设置特别的宽度
+            // GridView gridView = winGridViewPager1.gridView1;
+            // if (gridView != null)
+            // {
+#foreach($ColumnInfo in ${MetadataImports})
+#if($ColumnInfo.IsColumn)
+            //     gridView.SetGridColumWidth(${Name}.Field${ColumnInfo.CSharpFieldName}, 200);
+#end
+#end
+            // }
+
+            #endregion
+        }
+    }
+
+    #endregion
+
+    #region 从表明细列表
+
+    /// <summary>
+    /// 明细表数据源变更时
+    /// </summary>
+    protected override void gridView2_DataSourceChanged(object sender, EventArgs e)
+    {
+        base.gridView2_DataSourceChanged(sender, e);
+        // 绑定数据后，分配各列的宽度
+        if (winGridView2.gridView1.Columns.Count > 0 && winGridView2.gridView1.RowCount > 0)
+        {
+            // 可特殊设置特别的宽度
+            // GridView gridView = winGridView2.gridView1;
+            // if (gridView != null)
+            // {
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#if($ColumnInfo.IsColumn)
+            //     gridView.SetGridColumWidth(${ChildName}.Field${ColumnInfo.CSharpFieldName}, 200);
+#end
+#end
+            // }
+        }
+    }
+
+    #endregion
+
+    #endregion
+
+    #region 快捷查询条件
+
+    /// <summary>
+    /// 根据查询条件构造查询条件对象
+    /// </summary>
+    protected override NameValueCollection GetQueryCondition()
+    {
+        // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
+#if(${IsTree})
+        return _treeCondition ?? _advanceCondition ?? new NameValueCollection
+#else
+        return _advanceCondition ?? new NameValueCollection
+#end
+        {
+#foreach($ColumnInfo in ${MetadataImports})
+#if($ColumnInfo.IsSearch)
+#if($ColumnInfo.ControlType=="ComboBoxEdit")
+#set($controlName = "${ColumnInfo.ControlName}.GetComboBoxValue()")
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName },
+#elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit")
+#set($controlName = "${ColumnInfo.ControlName}.EditValue.ObjToStr()")
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName },
+#elseif($ColumnInfo.ControlType=="SpinEdit")
+#set($controlName1 = "${ColumnInfo.ControlName}1.EditValue.ObjToStr()")
+#set($controlName2 = "${ColumnInfo.ControlName}2.EditValue.ObjToStr()")
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName1 },
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName2 },
+#elseif($ColumnInfo.ControlType=="DateEdit")
+#set($controlName1 = "${ColumnInfo.ControlName}1.EditValue.ObjToStr()")
+#set($controlName2 = "${ColumnInfo.ControlName}2.EditValue.ObjToStr()")
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName1 },
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName2 },
+## #elseif($ColumnInfo.ControlType=="ToggleSwitch")
+## #set($m = '"')
+## #set($controlName = "${ColumnInfo.ControlName}.IsOn ? ${m}1${m} : ${m}0${m}")
+#elseif($ColumnInfo.ControlType=="ToggleSwitch" || $ColumnInfo.ControlType=="CheckEdit")
+#set($controlName = "${ColumnInfo.ControlName}.GetComboBoxValue()")
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName },
+#elseif($ColumnInfo.ControlType=="CheckEdit")
+#set($controlName = "${ColumnInfo.ControlName}.Checked")
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName },
+#else
+#set($controlName = "${ColumnInfo.ControlName}.Text.Trim()")
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName },
+#end
+#end
+#end
+        };
+##         SearchCondition condition = _advanceCondition;
+##         if (condition == null)
+##         {
+##             condition = new SearchCondition();
+## #foreach($ColumnInfo in ${MetadataImports})
+## #if($ColumnInfo.IsSearch)
+## #if($ColumnInfo.ControlType=="ComboBoxEdit")
+## #set($controlName = "${ColumnInfo.ControlName}.GetComboBoxValue()")
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName, SqlOperator.Equal);
+## #elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit")
+## #set($controlName = "${ColumnInfo.ControlName}.EditValue")
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName, SqlOperator.Equal);
+## #elseif($ColumnInfo.ControlType=="SpinEdit")
+## #set($controlName1 = "${ColumnInfo.ControlName}1.Value")
+## #set($controlName2 = "${ColumnInfo.ControlName}2.Value")
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName1, SqlOperator.MoreThanOrEqual);
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName2, SqlOperator.LessThanOrEqual);
+## #elseif($ColumnInfo.ControlType=="DateEdit")
+## #set($controlName1 = "${ColumnInfo.ControlName}1.EditValue, ")
+## #set($controlName2 = "${ColumnInfo.ControlName}2.EditValue, ")
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName1, SqlOperator.MoreThanOrEqual);
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName2, SqlOperator.LessThanOrEqual);
+## #elseif($ColumnInfo.ControlType=="ToggleSwitch")
+## #set($controlName = "${ColumnInfo.ControlName}.IsOn")
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName, SqlOperator.Equal);
+## #elseif($ColumnInfo.ControlType=="CheckEdit")
+## #set($controlName = "${ColumnInfo.ControlName}.Checked")
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName, SqlOperator.Equal);
+## #else
+## #set($controlName = "${ColumnInfo.ControlName}.Text.Trim()")
+##             condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, $controlName, SqlOperator.Like);
+## #end
+## #end
+## #end
+##         }
+##
+##         string where = condition.BuildConditionSql().Replace("Where", "");
+##         return where;
+    }
+
+    #endregion
+
+    #region 导入导出
+
+    /// <summary>
+    /// 导入数据保存事件
+    /// </summary>
+    /// <param name="dr"></param>
+    /// <returns></returns>
+    protected override bool ExcelData_OnDataSave(DataRow dr)
+    {
+        DateTime dtNow = DateTime.Now;
+        var info = new ${Name}
+        {
+#foreach($ColumnInfo in $MetadataImports)
+#if($ColumnInfo.IsColumn)
+#if($ColumnInfo.CSharpFieldType.indexOf("bool")!=-1)
+#set($controlName = ' == "是"')
+#elseif($ColumnInfo.CSharpFieldType.indexOf("DateTime")!=-1)
+#set($controlName = ".ToDateTime(dtNow)")
+#elseif($ColumnInfo.CSharpFieldType.indexOf("decimal")!=-1)
+#set($controlName = ".ToDecimal()")
+#elseif($ColumnInfo.CSharpFieldType.indexOf("short")!=-1)
+#set($controlName = ".ObjToShort()")
+#elseif($ColumnInfo.CSharpFieldType.indexOf("int")!=-1)
+#set($controlName = ".ObjToInt()")
+#elseif($ColumnInfo.CSharpFieldType.indexOf("long")!=-1)
+#set($controlName = ".ObjToLong()")s
+#else
+#set($controlName = "")
+#end
+            ${ColumnInfo.CSharpFieldName} = GetRowData(dr, "${ColumnInfo.CSharpFieldDes}")${controlName},
+#end
+#end
+        };
+
+        return _bll.Insert(info);
+    }
+
+    /// <summary>
+    /// 导出的操作
+    /// </summary>
+    protected override void ExportData()
+    {
+        string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
+        if (string.IsNullOrEmpty(file)) return;
+        NameValueCollection condition = GetQueryCondition();
+        List<${Name}> list = _bll.GetEntities(condition);
+        DataTable dtNew = DataTableHelper.CreateTable(
+            "${ColumnFieldDesString}");
+        var j = 1;
+        foreach (${Name} t in list)
+        {
+            DataRow dr = dtNew.NewRow();
+            dr["序号"] = j++;
+#foreach($ColumnInfo in $MetadataImports)
+#if($ColumnInfo.IsColumn)
+#if($ColumnInfo.CSharpFieldType.indexOf("bool")!=-1)
+#set($controlName = ' ? "是" : "否"')
+#if($ColumnInfo.CSharpFieldType.indexOf("?")!=-1)
+#set($controlName = ".ObjToBool()${controlName}")
+#end
+#else
+#set($controlName = "")
+#end
+            dr["${ColumnInfo.CSharpFieldDes}"] = t.${ColumnInfo.CSharpFieldName}${controlName};
+#end
+#end
+            dtNew.Rows.Add(dr);
+        }
+
+        try
+        {
+            AsposeExcelTools.DataTableToExcel2(dtNew, file, out string error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                $"导出Excel出现错误：{error}".ShowUxError();
+            }
+            else
+            {
+                if ("导出成功，是否打开文件？".ShowYesNoAndUxTips() == DialogResult.Yes)
+                {
+                    Process.Start(file);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.ToString().LogError();;
+            ex.Message.ShowUxError();
+        }
+    }
+
+    #endregion
+
+    #region 高级查询
+
+    /// <summary>
+    /// 高级查询的操作
+    /// </summary>
+    protected override void AdvanceSearch()
+    {
+        if (_advDlg == null)
+        {
+            _advDlg = new FrmAdvanceSearch();
+            _advDlg.FieldTypeTable = Cache.Instance.Get("${Name}FieldTypeList",
+                () => _bll.GetFieldTypeList(), new TimeSpan(3, 0, 0));
+            _advDlg.ColumnNameAlias = Cache.Instance.Get("${Name}ColumnNameAlias",
+                () => _bll.GetColumnNameAlias(), new TimeSpan(3, 0, 0));
+
+            #region 下拉列表数据
+
+            // _advDlg.AddColumnListItem("UserType", Portal.gc.GetDictData("人员类型"));// 字典列表
+            // _advDlg.AddColumnListItem("Sex", "男,女");// 固定列表
+            // _advDlg.AddColumnListItem("Credit", _bll.GetFieldList("Credit"));// 动态列表
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdvSearch && ${FieldInfo.DataTableName} && ${FieldInfo.DataTableName} != "" && ${FieldInfo.ControlType} != "ToggleSwitch")
+            _advDlg.AddColumnListItem(${Name}.Field${FieldInfo.CSharpFieldName}, ${FieldInfo.DataTableName});
+#end
+#end
+
+            #endregion
+
+            _advDlg.ConditionChanged += advDlg_ConditionChanged;
+        }
+
+        _advDlg.ShowDialog();
+    }
+
+    #endregion
+}

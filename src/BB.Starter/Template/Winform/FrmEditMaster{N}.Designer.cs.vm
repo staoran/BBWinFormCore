@@ -1,0 +1,422 @@
+﻿namespace BB.${NameSpace}.UI
+{
+    partial class FrmEdit${Name}
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEdit${Name}));
+            this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+#set($allCount = 0)
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+            this.layout${FieldInfo.CSharpFieldName} = new DevExpress.XtraLayout.LayoutControlItem();
+            this.${FieldInfo.ControlName} = new DevExpress.XtraEditors.${FieldInfo.ControlType}();
+#if(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            this.gv${FieldInfo.CSharpFieldName} = new DevExpress.XtraGrid.Views.Grid.GridView();
+#end
+#set($allCount = $allCount + 1)
+#end
+#end
+#set($listNum = 0)
+#set($listWidth = 0)##表单单元格宽度
+#set($groupWidth = 20)
+#set($groupHeight = 25)
+#set($frmWidth = 20)##min 550
+#set($frmHeight = 457)##57 + 400
+#if($allCount < 11)
+#set($listNum = 1)
+#set($listWidth = 844)
+#set($groupWidth = 20 + $listWidth)
+#elseif($allCount > 10 && $allCount < 31)
+#set($listNum = 2)
+#set($listWidth = 422)
+#set($groupWidth = 20 + $listWidth * 2)
+#elseif($allCount > 30 && $allCount < 67)
+#set($listNum = 3)
+#set($listWidth = 280)
+#set($groupWidth = 20 + $listWidth * 3)
+#else
+#set($listNum = 4)
+#set($listWidth = 230)
+#set($groupWidth = 20 + $listWidth * 4)
+#end
+#set($endWidth = $listWidth)##最后一个单元格宽度
+#set($endLineCount = $allCount % $listNum)
+#if($endLineCount != 0)
+#set($endWidth = $listWidth * ($listNum - $endLineCount + 1))##单个表格宽度 * （总列数 - 剩余区域个数 + 1）
+#end
+#foreach($j in [1..$allCount])
+#if($j % $listNum == 0)##加一行
+#set($groupHeight = $groupHeight + 24)
+#else##加列
+#if($j == $allCount)##最后一行
+#set($groupHeight = $groupHeight + 24)
+#end
+#end##endif
+#end
+#set($txtWidth = $listWidth - 79)##表单输入框宽度
+#set($frmWidth = $frmWidth + $groupWidth)##min 550
+#set($frmHeight = $frmHeight + $groupHeight)
+#set($gvWidth = $frmWidth - 20)
+#set($gvY = 8 + $groupHeight - 1)
+#set($btnOKX = $frmWidth - 194)
+#set($btnOKY = $frmHeight - 40)
+#set($btnAddX = $frmWidth - 288)
+#set($btnAddY = $btnOKY)
+#set($btnCancelX = $frmWidth - 100)
+#set($btnCancelY = $btnOKY)
+#set($dataNavigator1X = 10)
+#set($dataNavigator1Y = $frmHeight - 36)
+#set($picPrintX = 207)
+#set($picPrintY = $dataNavigator1Y + 1)
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPrint)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
+            this.layoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
+            this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+#if(${FieldInfo.ControlType}=="DateEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}.Properties.CalendarTimeProperties)).BeginInit();
+#elseif(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.gv${FieldInfo.CSharpFieldName})).BeginInit();
+#end
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName})).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}.Properties)).BeginInit();
+#end
+#end
+            this.SuspendLayout();
+            //
+            // btnOK
+            //
+            this.btnOK.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.ImageOptions.Image")));
+            this.btnOK.Location = new System.Drawing.Point($btnOKX, $btnOKY);
+            //
+            // btnCancel
+            //
+            this.btnCancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.ImageOptions.Image")));
+            this.btnCancel.Location = new System.Drawing.Point($btnCancelX, $btnCancelY);
+            //
+            // btnAdd
+            //
+            this.btnAdd.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.ImageOptions.Image")));
+            this.btnAdd.Location = new System.Drawing.Point($btnAddX, $btnAddY);
+            //
+            // dataNavigator1
+            //
+            this.dataNavigator1.Location = new System.Drawing.Point($dataNavigator1X, $dataNavigator1Y);
+            //
+            // picPrint
+            //
+            this.picPrint.Location = new System.Drawing.Point($picPrintX, $picPrintY);
+            //
+            // layoutControl1
+            //
+            this.layoutControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+            this.layoutControl1.Controls.Add(this.${FieldInfo.ControlName});
+#end
+#end
+            this.layoutControl1.Location = new System.Drawing.Point(10, 8);
+            this.layoutControl1.Name = "layoutControl1";
+            this.layoutControl1.Root = this.layoutControlGroup1;
+            this.layoutControl1.Size = new System.Drawing.Size($groupWidth, $groupHeight);
+            this.layoutControl1.TabIndex = 200;
+            this.layoutControl1.Text = "layoutControl1";
+            //
+            // groupControl1
+            //
+            this.groupControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupControl1.AppearanceCaption.Options.UseTextOptions = true;
+            this.groupControl1.AppearanceCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.groupControl1.Controls.Add(this.gridControl1);
+            this.groupControl1.Location = new System.Drawing.Point(10, $gvY);
+            this.groupControl1.Name = "groupControl1";
+            this.groupControl1.Size = new System.Drawing.Size($gvWidth, 400);
+            this.groupControl1.TabIndex = 6;
+            this.groupControl1.Text = "明细清单";
+            //
+            // gridControl1
+            //
+            this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl1.Location = new System.Drawing.Point(2, 21);
+            this.gridControl1.MainView = this.gridView1;
+            this.gridControl1.Name = "gridControl1";
+            this.gridControl1.Size = new System.Drawing.Size(1055, 366);
+            this.gridControl1.TabIndex = 5;
+            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView1});
+            //
+            // gridView1
+            //
+            this.gridView1.GridControl = this.gridControl1;
+            this.gridView1.IndicatorWidth = 40;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.ViewCaptionHeight = 100;
+#set($count = 0)
+#set($txtLocationX = 87)
+#set($txtLocationY = 12)
+#set($layLocationX = 0)
+#set($layLocationY = 0)
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+#if(${FieldInfo.ControlType}=="DateEdit")
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.EditValue = null;
+            this.${FieldInfo.ControlName}.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}.Properties.DisplayFormat.FormatString = "yyyy-MM-dd HH:mm:ss";
+            this.${FieldInfo.ControlName}.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}.Properties.EditFormat.FormatString = "yyyy-MM-dd HH:mm:ss";
+            this.${FieldInfo.ControlName}.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}.Properties.Mask.EditMask = "yyyy-MM-dd HH:mm:ss";
+            this.${FieldInfo.ControlName}.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}.Properties.VistaEditTime = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.DisplayFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.EditFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.Mask.EditMask = "HH:mm";
+            this.${FieldInfo.ControlName}.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.TouchUI;
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="TimeEdit")
+            this.${FieldInfo.ControlName}.EditValue = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.${FieldInfo.ControlName}.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}.Properties.DisplayFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}.Properties.EditFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
+            this.${FieldInfo.ControlName}.Properties.Mask.EditMask = "HH:mm";
+            this.${FieldInfo.ControlName}.Properties.TimeEditStyle = DevExpress.XtraEditors.Repository.TimeEditStyle.TouchUI;
+            this.${FieldInfo.ControlName}.Properties.TouchUIMaxValue = new System.DateTime(1900, 1, 1, 23, 59, 0, 0);
+            this.${FieldInfo.ControlName}.Properties.TouchUIMinValue = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="SpinEdit")
+            this.${FieldInfo.ControlName}.EditValue = new decimal(0);
+            this.${FieldInfo.ControlName}.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.${FieldInfo.ControlName}.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
+            this.${FieldInfo.ControlName}.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="ComboBoxEdit" || ${FieldInfo.ControlType}=="CheckedComboBoxEdit")
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="CheckEdit")
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.EditValue = null;
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
+            this.${FieldInfo.ControlName}.Properties.NullStyle = DevExpress.XtraEditors.Controls.StyleIndeterminate.Unchecked;
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="ToggleSwitch")
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 6F);
+            this.${FieldInfo.ControlName}.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
+            this.${FieldInfo.ControlName}.Properties.OffText = "Off";
+            this.${FieldInfo.ControlName}.Properties.OnText = "On";
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}.Properties.NullText = "";
+            this.${FieldInfo.ControlName}.Properties.PopupSizeable = false;
+            this.${FieldInfo.ControlName}.Properties.PopupView = this.gv${FieldInfo.CSharpFieldName};
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+            //
+            // gv${FieldInfo.CSharpFieldName}
+            //
+            this.gv${FieldInfo.CSharpFieldName}.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gv${FieldInfo.CSharpFieldName}.Name = "gv${FieldInfo.CSharpFieldName}";
+            this.gv${FieldInfo.CSharpFieldName}.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gv${FieldInfo.CSharpFieldName}.OptionsView.ShowGroupPanel = false;
+#else
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#end
+            //
+            // layout${FieldInfo.CSharpFieldName}
+            //
+            this.layout${FieldInfo.CSharpFieldName}.Control = this.${FieldInfo.ControlName};
+            this.layout${FieldInfo.CSharpFieldName}.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($listWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
+            this.layout${FieldInfo.CSharpFieldName}.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.TextSize = new System.Drawing.Size(72, 14);
+#set($count = $count + 1)
+#if($count % $listNum == 0)##换行
+    #set($txtLocationX = 87)
+    #set($txtLocationY = $txtLocationY + 24)
+    #set($layLocationX = 0)
+    #set($layLocationY = $layLocationY + 24)
+#else##加列
+    #set($txtLocationX = $txtLocationX + $listWidth)
+    #set($layLocationX = $layLocationX + $listWidth)
+#end
+#if($count == $allCount - 1)
+#set($listWidth = $endWidth)
+#end
+#end##endif
+#end
+            //
+            // layoutControlGroup1
+            //
+            this.layoutControlGroup1.CustomizationFormText = "layoutControlGroup1";
+            this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+            this.layout${FieldInfo.CSharpFieldName},
+#end
+#end            });
+            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup1.Name = "layoutControlGroup1";
+            this.layoutControlGroup1.Size = new System.Drawing.Size($groupWidth, $groupHeight);
+            this.layoutControlGroup1.Text = "layoutControlGroup1";
+            this.layoutControlGroup1.TextVisible = false;
+            //
+            // FrmEdit${Name}
+            //
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size($frmWidth, $frmHeight);
+            this.Controls.Add(this.groupControl1);
+            this.Controls.Add(this.layoutControl1);
+            this.Name = "FrmEdit${Name}";
+            this.Text = "#if(${Display})${Display}#else${Name}#end";
+            this.Controls.SetChildIndex(this.layoutControl1, 0);
+            this.Controls.SetChildIndex(this.groupControl1, 0);
+            this.Controls.SetChildIndex(this.btnCancel, 0);
+            this.Controls.SetChildIndex(this.btnOK, 0);
+            this.Controls.SetChildIndex(this.btnAdd, 0);
+            this.Controls.SetChildIndex(this.dataNavigator1, 0);
+            this.Controls.SetChildIndex(this.picPrint, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPrint)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
+            this.layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
+            this.groupControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+#if(${FieldInfo.ControlType}=="DateEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}.Properties.CalendarTimeProperties)).EndInit();
+#elseif(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.gv${FieldInfo.CSharpFieldName})).EndInit();
+#end
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName})).EndInit();
+#end
+#end
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        #endregion
+
+        private DevExpress.XtraEditors.GroupControl groupControl1;
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+#if(${FieldInfo.ControlType}=="SearchLookUpEdit")
+        private DevExpress.XtraGrid.Views.Grid.GridView gv${FieldInfo.CSharpFieldName};
+#end
+        private DevExpress.XtraEditors.${FieldInfo.ControlType} ${FieldInfo.ControlName};
+        private DevExpress.XtraLayout.LayoutControlItem layout${FieldInfo.CSharpFieldName};
+#end
+#end
+    }
+}

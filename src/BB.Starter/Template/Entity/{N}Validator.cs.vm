@@ -1,0 +1,107 @@
+using BB.Framework.Commons.Entity;
+using BB.Framework.Entity.${NameSpace};
+using FluentValidation;
+
+namespace BB.Framework.EntityVerification.${NameSpace};
+
+/// <summary>
+#if(${Display})
+/// ${Display} 验证类
+#else
+/// ${Name} 验证类
+#end
+/// </summary>
+public class ${Name}Validator : AbstractValidator<${Name}>
+{
+    /// <summary>
+    /// 无参构造函数
+    /// </summary>
+    public ${Name}Validator() : this(OperationType.View)
+    {
+    }
+
+    /// <summary>
+    /// 验证规则构造函数
+    /// </summary>
+    /// <param name="operationType">当前操作类型</param>
+    public ${Name}Validator(OperationType operationType = OperationType.View)
+    {
+        #region 实体通用验证
+
+#foreach($FieldInfo in ${MetadataImports})
+#set($primaryKey = "")
+#if($FieldInfo.IsKey)
+#set($primaryKey = "u => u.${FieldInfo.CSharpFieldName}")
+#end
+## 参数值合法性验证
+#set($checkNull = "")
+#set($checkLong = "")
+## ↓准备长度或空值
+## ↓如果查长度
+#if($FieldInfo.IsCheckLong)
+#set($checkLong = ", ${FieldInfo.CSharpFieldLong}")
+#end
+## ↓如果查空
+#if($FieldInfo.IsCheckNull)
+#set($checkNull = "true")
+#end
+## ↓如果不查空只查长度
+#if(!$FieldInfo.IsCheckNull && $FieldInfo.IsCheckLong)
+#set($checkNull = "false")
+#end
+## ↑end 准备长度或空值
+## ↓是否有验证规则
+#if(${FieldInfo.Validation} && ${FieldInfo.Validation} != "")
+#if(${EntityProperty.CSharpFieldDes} != "")
+        // ${FieldInfo.CSharpFieldDes}
+#end
+        RuleFor(x => x.${FieldInfo.CSharpFieldName}).Is${FieldInfo.Validation}(${checkNull}${checkLong}).IsGo();
+#else
+## ↓没有验证规则
+## ↓但有 查空或查长度
+#if($checkNull != "")
+#if(${EntityProperty.CSharpFieldDes} != "")
+        // ${FieldInfo.CSharpFieldDes}
+#end
+#if(!$FieldInfo.IsCheckLong)
+#if($FieldInfo.IsCheckNull)
+#if($FieldInfo.CSharpFieldLong > 0 && $FieldInfo.CSharpFieldType != "bool")
+        RuleFor(x => x.${FieldInfo.CSharpFieldName}).IsEmpty(${FieldInfo.CSharpFieldLong}).IsGo();
+#else
+        RuleFor(x => x.${FieldInfo.CSharpFieldName}).IsEmpty().IsGo();
+#end
+#end
+#else
+#if($FieldInfo.CSharpFieldLong > 0 && $FieldInfo.CSharpFieldType != "bool")
+        RuleFor(x => x.${FieldInfo.CSharpFieldName}).IsLength(${checkNull}${checkLong}).IsGo();
+#end
+#end
+#end
+## ↑end 查空或查长度
+#end
+## ↑end 是否有验证规则
+#end
+
+        #endregion
+
+#######################
+        #region 参数值唯一性验证
+
+#foreach($FieldInfo in ${MetadataImports})
+## ↓查重
+#if($FieldInfo.IsCheckDuplicate)
+#if(${EntityProperty.CSharpFieldDes})
+        // ${FieldInfo.CSharpFieldDes}
+#end
+#set($when = "IsAdd")
+#if(!$FieldInfo.IsKey)
+#set($when = "${when}OrEdit")
+#end
+        RuleFor(x => x.${FieldInfo.CSharpFieldName}).IsUnique(${primaryKey}).${when}().IsGo();
+#end
+## ↑end 查重
+#end
+
+        #endregion
+    }
+}

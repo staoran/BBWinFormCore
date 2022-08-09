@@ -1,0 +1,19 @@
+using BB.Framework.Entity.${NameSpace};
+using BB.Framework.IBLL.Base;
+
+namespace BB.Framework.IBLL.${NameSpace};
+
+/// <summary>
+#if(${Display})
+/// ${Display} 业务逻辑接口类
+#else
+/// ${Name} 业务逻辑接口类
+#end
+/// </summary>
+#if(${ChildName} && ${ChildName} != "")
+public interface I${Name}BLL : IBaseT1BLL<${Name}, ${ChildName}>
+#else
+public interface I${Name}BLL : IBaseBLL<${Name}>
+#end
+{
+}

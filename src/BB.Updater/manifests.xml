@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <version>3.0.0</version>
+  <description>V3.0.0 本版本更新了系统显示布局及部分功能的完善，修正一些小Bug。</description>
+  <!--applicationId运用程序ID，需要与客户端配置一样，否则不会进行更新-->
+  <myapplication applicationId="f67be974-181f-4291-94e6-b16a7e6d6a2e">
+    <!--暂时没有使用，重新启动exe名称，parameters启动时传入的参数-->
+    <entryPoint file="TestUpdater.exe" parameters="121" />
+    <!--更新文件的目录，相对于更新系统，默认为同级目录-->
+    <location>.</location>
+  </myapplication>
+  <!--base表示存放该文件的url-->
+  <files base="http://localhost/Parking/Client/">
+    <!--文件名称-->
+    <file source="BB.Framework.BaseUI.Pager.dll" unzip="true" />
+  </files>
+</manifest>

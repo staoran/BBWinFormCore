@@ -1,0 +1,15 @@
+using BB.Framework.Entity.${NameSpace};
+using BB.Framework.IBLL.Base;
+
+namespace BB.Framework.IBLL.${NameSpace};
+
+/// <summary>
+#if(${ChildDisplay})
+/// ${ChildDisplay} 业务逻辑接口类
+#else
+/// ${ChildName} 业务逻辑接口类
+#end
+/// </summary>
+public interface I${ChildName}BLL : IBaseBLL<${ChildName}>
+{
+}

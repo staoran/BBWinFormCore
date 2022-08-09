@@ -1,0 +1,15 @@
+﻿using BB.Framework.Entity.${NameSpace};
+using BB.Framework.IDAL.Base;
+
+namespace BB.Framework.IDAL.${NameSpace};
+
+/// <summary>
+#if(${Display})
+/// ${Display} 数据访问接口类
+#else
+/// ${Name} 数据访问接口类
+#end
+/// </summary>
+public interface I${Name}DAL : IBaseDAL<${Name}>
+{
+}

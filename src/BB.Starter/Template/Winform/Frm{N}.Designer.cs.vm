@@ -1,0 +1,869 @@
+﻿namespace BB.${NameSpace}.UI
+{
+    partial class Frm${Name}
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm${Name}));
+            this.winGridViewPager1 = new BB.Framework.BaseUI.Pager.WinGridViewPager();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+#if(${IsTree})
+            this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.menuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuTree_ExpandAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuTree_Clapase = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuTree_Refresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+#end
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            this.${FieldInfo.ControlName}1 = new DevExpress.XtraEditors.${FieldInfo.ControlType}();
+            this.${FieldInfo.ControlName}2 = new DevExpress.XtraEditors.${FieldInfo.ControlType}();
+#elseif(${FieldInfo.ControlType}=="ToggleSwitch" || $FieldInfo.ControlType=="CheckEdit")
+            this.${FieldInfo.ControlName} = new DevExpress.XtraEditors.ComboBoxEdit();
+#else
+            this.${FieldInfo.ControlName} = new DevExpress.XtraEditors.${FieldInfo.ControlType}();
+#if(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            this.gv${FieldInfo.CSharpFieldName} = new DevExpress.XtraGrid.Views.Grid.GridView();
+#end
+#end
+#end
+#end
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            this.layout${FieldInfo.CSharpFieldName}1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layout${FieldInfo.CSharpFieldName}2 = new DevExpress.XtraLayout.LayoutControlItem();
+#else
+            this.layout${FieldInfo.CSharpFieldName} = new DevExpress.XtraLayout.LayoutControlItem();
+#end
+#end
+#end
+            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+            this.bar1 = new DevExpress.XtraBars.Bar();
+            this.standaloneBarDockControl1 = new DevExpress.XtraBars.StandaloneBarDockControl();
+            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
+            this.layoutControl1.SuspendLayout();
+#if(${IsTree})
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
+            this.splitContainerControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
+            this.groupControl1.SuspendLayout();
+            this.menuTree.SuspendLayout();
+#end
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}1.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}2.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}2.Properties)).BeginInit();
+#elseif(${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}2.Properties)).BeginInit();
+#else
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}.Properties)).BeginInit();
+#if(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.gv${FieldInfo.CSharpFieldName})).BeginInit();
+#end
+#end
+#end
+#end
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}2)).BeginInit();
+#elseif(${FieldInfo.ControlType}=="SpinEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}2)).BeginInit();
+#else
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName})).BeginInit();
+#end
+#end
+#end
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            this.SuspendLayout();
+########此处的内容用来计算布局的坐标位置
+## 查询区域，行高33，上下边距10，固定列数6
+## 高度=行数*33+20
+#set($allCount = 0)
+#set($layoutControlSizeHeight = 20)
+#set($endWidth = 160)
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+#set($allCount = $allCount + 2)
+#else
+#set($allCount = $allCount + 1)
+#end
+#end##endif
+#end
+#set($endLineCount = $allCount % 6)
+#if($endLineCount != 0)
+#set($endWidth = 160 * (6 - $endLineCount + 1))
+#end
+#foreach($j in [1..$allCount])
+#if($j % 6 == 0)##加一行
+#set($layoutControlSizeHeight = $layoutControlSizeHeight + 24)
+#else
+#if($j == $allCount)##最后一行
+#set($layoutControlSizeHeight = $layoutControlSizeHeight + 24)
+#end
+#end##endif
+#end
+#set($standaloneBarDockControlLocationY = 8 + $layoutControlSizeHeight)
+## 分页网格Y轴（竖向）起点
+#set($winGridViewPagerLocationY = 8 + $layoutControlSizeHeight + 29)
+## 分页网格高度 = frm高度 - 上下空位 - 查询表单 - 按钮条
+#set($winGridViewPagerHeight = 719 - 50 - $layoutControlSizeHeight - 29)
+#if(!${IsTree})
+            //
+            // winGridViewPager1
+            //
+            this.winGridViewPager1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.winGridViewPager1.AppendedMenu = null;
+            this.winGridViewPager1.DataSource = null;
+            this.winGridViewPager1.DisplayColumns = "";
+            this.winGridViewPager1.FixedColumns = null;
+            this.winGridViewPager1.IsExportAllPage = false;
+            this.winGridViewPager1.Location = new System.Drawing.Point(12, $winGridViewPagerLocationY);
+            this.winGridViewPager1.MinimumSize = new System.Drawing.Size(540, 0);
+            this.winGridViewPager1.Name = "winGridViewPager1";
+            this.winGridViewPager1.PrintTitle = "";
+            this.winGridViewPager1.ShowAddMenu = true;
+            this.winGridViewPager1.ShowCheckBox = false;
+            this.winGridViewPager1.ShowDeleteMenu = true;
+            this.winGridViewPager1.ShowEditMenu = true;
+            this.winGridViewPager1.ShowExportButton = true;
+            this.winGridViewPager1.Size = new System.Drawing.Size(980, $winGridViewPagerHeight);
+            this.winGridViewPager1.TabIndex = 11;
+#else
+            //
+            // winGridViewPager1
+            //
+            this.winGridViewPager1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.winGridViewPager1.AppendedMenu = null;
+            this.winGridViewPager1.DataSource = null;
+            this.winGridViewPager1.DisplayColumns = "";
+            this.winGridViewPager1.FixedColumns = null;
+            this.winGridViewPager1.IsExportAllPage = false;
+            this.winGridViewPager1.Location = new System.Drawing.Point(0, 0);
+            this.winGridViewPager1.MinimumSize = new System.Drawing.Size(540, 0);
+            this.winGridViewPager1.Name = "winGridViewPager1";
+            this.winGridViewPager1.PrintTitle = "";
+            this.winGridViewPager1.ShowAddMenu = true;
+            this.winGridViewPager1.ShowCheckBox = false;
+            this.winGridViewPager1.ShowDeleteMenu = true;
+            this.winGridViewPager1.ShowEditMenu = true;
+            this.winGridViewPager1.ShowExportButton = true;
+            this.winGridViewPager1.Size = new System.Drawing.Size(775, $winGridViewPagerHeight);
+            this.winGridViewPager1.TabIndex = 11;
+            //
+            // splitContainerControl1
+            //
+            this.splitContainerControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainerControl1.Location = new System.Drawing.Point(12, $winGridViewPagerLocationY);
+            this.splitContainerControl1.Name = "splitContainerControl1";
+            this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
+            this.splitContainerControl1.Panel1.Text = "Panel1";
+            this.splitContainerControl1.Panel2.Controls.Add(this.winGridViewPager1);
+            this.splitContainerControl1.Panel2.Text = "Panel2";
+            this.splitContainerControl1.Size = new System.Drawing.Size(980, $winGridViewPagerHeight);
+            this.splitContainerControl1.SplitterPosition = 200;
+            this.splitContainerControl1.TabIndex = 102;
+            this.splitContainerControl1.Text = "splitContainerControl1";
+            //
+            // groupControl1
+            //
+            this.groupControl1.AppearanceCaption.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.groupControl1.AppearanceCaption.Options.UseFont = true;
+            this.groupControl1.AppearanceCaption.Options.UseTextOptions = true;
+            this.groupControl1.AppearanceCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.groupControl1.Controls.Add(this.treeView1);
+            this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupControl1.Location = new System.Drawing.Point(0, 0);
+            this.groupControl1.Name = "groupControl1";
+            this.groupControl1.Size = new System.Drawing.Size(200, 524);
+            this.groupControl1.TabIndex = 101;
+            this.groupControl1.Text = "${Display}分类快查";
+            //
+            // treeView1
+            //
+            this.treeView1.ContextMenuStrip = this.menuTree;
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.ItemHeight = 27;
+            this.treeView1.Location = new System.Drawing.Point(2, 22);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.Size = new System.Drawing.Size(196, 524);
+            this.treeView1.TabIndex = 97;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            //
+            // menuTree
+            //
+            this.menuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuTree_ExpandAll,
+            this.menuTree_Clapase,
+            this.menuTree_Refresh});
+            this.menuTree.Name = "menuTree";
+            this.menuTree.Size = new System.Drawing.Size(141, 70);
+            //
+            // menuTree_ExpandAll
+            //
+            this.menuTree_ExpandAll.Image = ((System.Drawing.Image)(resources.GetObject("menuTree_ExpandAll.Image")));
+            this.menuTree_ExpandAll.Name = "menuTree_ExpandAll";
+            this.menuTree_ExpandAll.Size = new System.Drawing.Size(140, 22);
+            this.menuTree_ExpandAll.Text = "全部展开(&E)";
+            this.menuTree_ExpandAll.Click += new System.EventHandler(this.menuTree_ExpandAll_Click);
+            //
+            // menuTree_Clapase
+            //
+            this.menuTree_Clapase.Image = ((System.Drawing.Image)(resources.GetObject("menuTree_Clapase.Image")));
+            this.menuTree_Clapase.Name = "menuTree_Clapase";
+            this.menuTree_Clapase.Size = new System.Drawing.Size(140, 22);
+            this.menuTree_Clapase.Text = "全部折叠(&C)";
+            this.menuTree_Clapase.Click += new System.EventHandler(this.menuTree_Clapase_Click);
+            //
+            // menuTree_Refresh
+            //
+            this.menuTree_Refresh.Image = ((System.Drawing.Image)(resources.GetObject("menuTree_Refresh.Image")));
+            this.menuTree_Refresh.Name = "menuTree_Refresh";
+            this.menuTree_Refresh.Size = new System.Drawing.Size(140, 22);
+            this.menuTree_Refresh.Text = "刷新列表(&R)";
+            this.menuTree_Refresh.Click += new System.EventHandler(this.menuTree_Refresh_Click);
+            //
+            // imageList1
+            //
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Tip.png");
+            this.imageList1.Images.SetKeyName(1, "Organ.ico");
+            this.imageList1.Images.SetKeyName(2, "Search2.ICO");
+            this.imageList1.Images.SetKeyName(3, "tableInfo.ico");
+            this.imageList1.Images.SetKeyName(4, "accept.ico");
+            this.imageList1.Images.SetKeyName(5, "ima.ico");
+            this.imageList1.Images.SetKeyName(6, "sm.ico");
+            this.imageList1.Images.SetKeyName(7, "tra.ico");
+#end
+            //
+            // contextMenuStrip1
+            //
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            //
+            // layoutControl1
+            //
+            this.layoutControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            this.layoutControl1.Controls.Add(this.${FieldInfo.ControlName}1);
+            this.layoutControl1.Controls.Add(this.${FieldInfo.ControlName}2);
+#else
+            this.layoutControl1.Controls.Add(this.${FieldInfo.ControlName});
+#end
+#end
+#end
+            this.layoutControl1.Location = new System.Drawing.Point(12, 8);
+            this.layoutControl1.Name = "layoutControl1";
+            this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(70, 185, 250, 350);
+            this.layoutControl1.Root = this.layoutControlGroup1;
+            this.layoutControl1.Size = new System.Drawing.Size(980, $layoutControlSizeHeight);
+            this.layoutControl1.TabIndex = 12;
+            this.layoutControl1.Text = "layoutControl1";
+            //
+            // layoutControlGroup1
+            //
+            this.layoutControlGroup1.CustomizationFormText = "layoutControlGroup1";
+            this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            this.layout${FieldInfo.CSharpFieldName}1,
+            this.layout${FieldInfo.CSharpFieldName}2,
+#else
+            this.layout${FieldInfo.CSharpFieldName},
+#end
+#end
+#end            });
+            this.layoutControlGroup1.Name = "layoutControlGroup1";
+            this.layoutControlGroup1.Size = new System.Drawing.Size(980, $layoutControlSizeHeight);
+            this.layoutControlGroup1.TextVisible = false;
+#set($count = 0)
+#set($layLocationX = 0)
+#set($layLocationY = 0)
+#set($txtLocationX = 64)
+#set($txtLocationY = 12)
+#set($layoutWidth = 160)
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit")
+            //
+            // layout${FieldInfo.CSharpFieldName}1
+            //
+            this.layout${FieldInfo.CSharpFieldName}1.Control = this.${FieldInfo.ControlName}1;
+            this.layout${FieldInfo.CSharpFieldName}1.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}1#else${FieldInfo.CSharpFieldName}1#end";
+            this.layout${FieldInfo.CSharpFieldName}1.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}1.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}1.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}1.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end >=";
+            this.layout${FieldInfo.CSharpFieldName}1.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}1
+            //
+            this.${FieldInfo.ControlName}1.EditValue = null;
+            this.${FieldInfo.ControlName}1.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}1.Name = "${FieldInfo.ControlName}1";
+            this.${FieldInfo.ControlName}1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}1.Properties.DisplayFormat.FormatString = "yyyy-MM-dd HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}1.Properties.EditFormat.FormatString = "yyyy-MM-dd HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}1.Properties.Mask.EditMask = "yyyy-MM-dd HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}1.Properties.VistaEditTime = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}1.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.${FieldInfo.ControlName}1.Properties.VistaTimeProperties.DisplayFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.VistaTimeProperties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}1.Properties.VistaTimeProperties.EditFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.VistaTimeProperties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}1.Properties.VistaTimeProperties.Mask.EditMask = "HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.TouchUI;
+            this.${FieldInfo.ControlName}1.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}1.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}1.TabIndex = $count;
+#set($count = $count + 1)
+#if($count % 6 == 0)##换行
+    #set($layLocationX = 0)
+    #set($txtLocationX = 64)
+    #set($layLocationY = $layLocationY + 24)
+    #set($txtLocationY = $txtLocationY + 24)
+#else##加列
+    #set($layLocationX = $layLocationX + 160)
+    #set($txtLocationX = $txtLocationX + 160)
+#end
+#if($count == $allCount - 1)
+#set($layoutWidth = $endWidth)
+#end
+            //
+            // layout${FieldInfo.CSharpFieldName}2
+            //
+            this.layout${FieldInfo.CSharpFieldName}2.Control = this.${FieldInfo.ControlName}2;
+            this.layout${FieldInfo.CSharpFieldName}2.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}2#else${FieldInfo.CSharpFieldName}2#end";
+            this.layout${FieldInfo.CSharpFieldName}2.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}2.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}2.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}2.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end <=";
+            this.layout${FieldInfo.CSharpFieldName}2.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}2
+            //
+            this.${FieldInfo.ControlName}2.EditValue = null;
+            this.${FieldInfo.ControlName}2.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}2.Name = "${FieldInfo.ControlName}2";
+            this.${FieldInfo.ControlName}2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}2.Properties.DisplayFormat.FormatString = "yyyy-MM-dd HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}2.Properties.EditFormat.FormatString = "yyyy-MM-dd HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}2.Properties.Mask.EditMask = "yyyy-MM-dd HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}2.Properties.VistaEditTime = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}2.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.${FieldInfo.ControlName}2.Properties.VistaTimeProperties.DisplayFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.VistaTimeProperties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}2.Properties.VistaTimeProperties.EditFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.VistaTimeProperties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}2.Properties.VistaTimeProperties.Mask.EditMask = "HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.TouchUI;
+            this.${FieldInfo.ControlName}2.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}2.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}2.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="TimeEdit")
+            //
+            // layout${FieldInfo.CSharpFieldName}1
+            //
+            this.layout${FieldInfo.CSharpFieldName}1.Control = this.${FieldInfo.ControlName}1;
+            this.layout${FieldInfo.CSharpFieldName}1.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}1#else${FieldInfo.CSharpFieldName}1#end";
+            this.layout${FieldInfo.CSharpFieldName}1.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}1.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}1.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}1.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end >=";
+            this.layout${FieldInfo.CSharpFieldName}1.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}1
+            //
+            this.${FieldInfo.ControlName}1.EditValue = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.${FieldInfo.ControlName}1.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.${FieldInfo.ControlName}1.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}1.Name = "${FieldInfo.ControlName}1";
+            this.${FieldInfo.ControlName}1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}1.Properties.DisplayFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}1.Properties.EditFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}1.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
+            this.${FieldInfo.ControlName}1.Properties.Mask.EditMask = "HH:mm";
+            this.${FieldInfo.ControlName}1.Properties.TimeEditStyle = DevExpress.XtraEditors.Repository.TimeEditStyle.TouchUI;
+            this.${FieldInfo.ControlName}1.Properties.TouchUIMaxValue = new System.DateTime(1900, 1, 1, 23, 59, 0, 0);
+            this.${FieldInfo.ControlName}1.Properties.TouchUIMinValue = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.${FieldInfo.ControlName}1.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}1.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}1.TabIndex = $count;
+#set($count = $count + 1)
+#if($count % 6 == 0)
+    #set($layLocationX = 0)
+    #set($txtLocationX = 64)
+    #set($txtLocationY = $txtLocationY + 24)
+    #set($layLocationY = $layLocationY + 24)
+#else
+    #set($txtLocationX = $txtLocationX + 160)
+    #set($layLocationX = $layLocationX + 160)
+#end
+#if($count == $allCount - 1)
+#set($layoutWidth = $endWidth)
+#end
+            //
+            // layout${FieldInfo.CSharpFieldName}2
+            //
+            this.layout${FieldInfo.CSharpFieldName}2.Control = this.${FieldInfo.ControlName}2;
+            this.layout${FieldInfo.CSharpFieldName}2.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}2#else${FieldInfo.CSharpFieldName}2#end";
+            this.layout${FieldInfo.CSharpFieldName}2.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}2.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}2.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}2.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end <=";
+            this.layout${FieldInfo.CSharpFieldName}2.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}2
+            //
+            this.${FieldInfo.ControlName}2.EditValue = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.${FieldInfo.ControlName}2.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.${FieldInfo.ControlName}2.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}2.Name = "${FieldInfo.ControlName}2";
+            this.${FieldInfo.ControlName}2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}2.Properties.DisplayFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}2.Properties.EditFormat.FormatString = "HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.${FieldInfo.ControlName}2.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
+            this.${FieldInfo.ControlName}2.Properties.Mask.EditMask = "HH:mm";
+            this.${FieldInfo.ControlName}2.Properties.TimeEditStyle = DevExpress.XtraEditors.Repository.TimeEditStyle.TouchUI;
+            this.${FieldInfo.ControlName}2.Properties.TouchUIMaxValue = new System.DateTime(1900, 1, 1, 23, 59, 0, 0);
+            this.${FieldInfo.ControlName}2.Properties.TouchUIMinValue = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.${FieldInfo.ControlName}2.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}2.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}2.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="SpinEdit")
+            //
+            // layout${FieldInfo.CSharpFieldName}1
+            //
+            this.layout${FieldInfo.CSharpFieldName}1.Control = this.${FieldInfo.ControlName}1;
+            this.layout${FieldInfo.CSharpFieldName}1.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}1#else${FieldInfo.CSharpFieldName}1#end";
+            this.layout${FieldInfo.CSharpFieldName}1.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}1.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}1.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}1.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end >=";
+            this.layout${FieldInfo.CSharpFieldName}1.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}1
+            //
+            this.${FieldInfo.ControlName}1.EditValue = null;
+            this.${FieldInfo.ControlName}1.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.${FieldInfo.ControlName}1.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}1.Name = "${FieldInfo.ControlName}1";
+            this.${FieldInfo.ControlName}1.Properties.AllowMouseWheel = true;
+            this.${FieldInfo.ControlName}1.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.${FieldInfo.ControlName}1.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
+            this.${FieldInfo.ControlName}1.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
+            this.${FieldInfo.ControlName}1.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}1.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}1.TabIndex = $count;
+#set($count = $count + 1)
+#if($count % 6 == 0)
+    #set($layLocationX = 0)
+    #set($txtLocationX = 64)
+    #set($txtLocationY = $txtLocationY + 24)
+    #set($layLocationY = $layLocationY + 24)
+#else
+    #set($txtLocationX = $txtLocationX + 160)
+    #set($layLocationX = $layLocationX + 160)
+#end
+#if($count == $allCount - 1)
+#set($layoutWidth = $endWidth)
+#end
+            //
+            // layout${FieldInfo.CSharpFieldName}2
+            //
+            this.layout${FieldInfo.CSharpFieldName}2.Control = this.${FieldInfo.ControlName}2;
+            this.layout${FieldInfo.CSharpFieldName}2.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}2#else${FieldInfo.CSharpFieldName}2#end";
+            this.layout${FieldInfo.CSharpFieldName}2.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}2.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}2.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}2.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end <=";
+            this.layout${FieldInfo.CSharpFieldName}2.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}2
+            //
+            this.${FieldInfo.ControlName}2.EditValue = null;
+            this.${FieldInfo.ControlName}2.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.${FieldInfo.ControlName}2.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}2.Name = "${FieldInfo.ControlName}2";
+            this.${FieldInfo.ControlName}2.Properties.AllowMouseWheel = true;
+            this.${FieldInfo.ControlName}2.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            this.${FieldInfo.ControlName}2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.${FieldInfo.ControlName}2.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
+            this.${FieldInfo.ControlName}2.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
+            this.${FieldInfo.ControlName}2.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}2.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}2.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="ComboBoxEdit" || ${FieldInfo.ControlType}=="CheckedComboBoxEdit" || ${FieldInfo.ControlType}=="ToggleSwitch" || ${FieldInfo.ControlType}=="CheckEdit")
+            //
+            // layout${FieldInfo.CSharpFieldName}
+            //
+            this.layout${FieldInfo.CSharpFieldName}.Control = this.${FieldInfo.ControlName};
+            this.layout${FieldInfo.CSharpFieldName}.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+## #elseif(${FieldInfo.ControlType}=="CheckEdit")
+##             //
+##             // layout${FieldInfo.CSharpFieldName}
+##             //
+##             this.layout${FieldInfo.CSharpFieldName}.Control = this.${FieldInfo.ControlName};
+##             this.layout${FieldInfo.CSharpFieldName}.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+##             this.layout${FieldInfo.CSharpFieldName}.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+##             this.layout${FieldInfo.CSharpFieldName}.Name = "layout${FieldInfo.CSharpFieldName}";
+##             this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($layoutWidth, 24);
+##             this.layout${FieldInfo.CSharpFieldName}.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+##             this.layout${FieldInfo.CSharpFieldName}.TextSize = new System.Drawing.Size(48, 14);
+##             //
+##             // ${FieldInfo.ControlName}
+##             //
+##             this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+##             this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+##             this.${FieldInfo.ControlName}.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
+##             this.${FieldInfo.ControlName}.Properties.Caption = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+##             this.${FieldInfo.ControlName}.Size = new System.Drawing.Size(105, 20);
+##             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+##             this.${FieldInfo.ControlName}.TabIndex = $count;
+## #elseif(${FieldInfo.ControlType}=="ToggleSwitch")
+##             //
+##             // layout${FieldInfo.CSharpFieldName}
+##             //
+##             this.layout${FieldInfo.CSharpFieldName}.Control = this.${FieldInfo.ControlName};
+##             this.layout${FieldInfo.CSharpFieldName}.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+##             this.layout${FieldInfo.CSharpFieldName}.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+##             this.layout${FieldInfo.CSharpFieldName}.Name = "layout${FieldInfo.CSharpFieldName}";
+##             this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($layoutWidth, 24);
+##             this.layout${FieldInfo.CSharpFieldName}.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+##             this.layout${FieldInfo.CSharpFieldName}.TextSize = new System.Drawing.Size(48, 14);
+##             //
+##             // ${FieldInfo.ControlName}
+##             //
+##             this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+##             this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+##             this.${FieldInfo.ControlName}.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 6F);
+##             this.${FieldInfo.ControlName}.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
+##             this.${FieldInfo.ControlName}.Properties.OffText = "Off";
+##             this.${FieldInfo.ControlName}.Properties.OnText = "On";
+##             this.${FieldInfo.ControlName}.Size = new System.Drawing.Size(105, 20);
+##             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+##             this.${FieldInfo.ControlName}.TabIndex = $count;
+#elseif(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            //
+            // layout${FieldInfo.CSharpFieldName}
+            //
+            this.layout${FieldInfo.CSharpFieldName}.Control = this.${FieldInfo.ControlName};
+            this.layout${FieldInfo.CSharpFieldName}.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.${FieldInfo.ControlName}.Properties.NullText = "";
+            this.${FieldInfo.ControlName}.Properties.PopupSizeable = false;
+            this.${FieldInfo.ControlName}.Properties.PopupView = this.gv${FieldInfo.CSharpFieldName};
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+            //
+            // gv${FieldInfo.CSharpFieldName}
+            //
+            this.gv${FieldInfo.CSharpFieldName}.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gv${FieldInfo.CSharpFieldName}.Name = "gv${FieldInfo.CSharpFieldName}";
+            this.gv${FieldInfo.CSharpFieldName}.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gv${FieldInfo.CSharpFieldName}.OptionsView.ShowGroupPanel = false;
+#else
+            //
+            // layout${FieldInfo.CSharpFieldName}
+            //
+            this.layout${FieldInfo.CSharpFieldName}.Control = this.${FieldInfo.ControlName};
+            this.layout${FieldInfo.CSharpFieldName}.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.Location = new System.Drawing.Point($layLocationX, $layLocationY);
+            this.layout${FieldInfo.CSharpFieldName}.Name = "layout${FieldInfo.CSharpFieldName}";
+            this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($layoutWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
+            this.layout${FieldInfo.CSharpFieldName}.TextSize = new System.Drawing.Size(48, 14);
+            //
+            // ${FieldInfo.ControlName}
+            //
+            this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
+            this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size(105, 20);
+            this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
+            this.${FieldInfo.ControlName}.TabIndex = $count;
+#end
+#set($count = $count + 1)
+#if($count % 6 == 0)
+    #set($layLocationX = 0)
+    #set($txtLocationX = 64)
+    #set($txtLocationY = $txtLocationY + 24)
+    #set($layLocationY = $layLocationY + 24)
+#else
+    #set($txtLocationX = $txtLocationX + 160)
+    #set($layLocationX = $layLocationX + 160)
+#end
+#if($count == $allCount - 1)
+#set($layoutWidth = $endWidth)
+#end
+#end##endif
+#end
+            //
+            // barManager1
+            //
+            this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar1});
+            this.barManager1.DockControls.Add(this.standaloneBarDockControl1);
+            this.barManager1.DockControls.Add(this.barDockControlBottom);
+            this.barManager1.DockControls.Add(this.barDockControlLeft);
+            this.barManager1.DockControls.Add(this.barDockControlRight);
+            this.barManager1.Form = this;
+            this.barManager1.MaxItemId = 0;
+            //
+            // bar1
+            //
+            this.bar1.BarName = "Tools";
+            this.bar1.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Standalone;
+            this.bar1.DockCol = 0;
+            this.bar1.DockRow = 0;
+            this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
+            this.bar1.FloatLocation = new System.Drawing.Point(274, 193);
+            this.bar1.OptionsBar.AllowQuickCustomization = false;
+            this.bar1.OptionsBar.DrawDragBorder = false;
+            this.bar1.OptionsBar.UseWholeRow = true;
+            this.bar1.OptionsBar.DisableClose = true;
+            this.bar1.StandaloneBarDockControl = this.standaloneBarDockControl1;
+            this.bar1.Text = "Tools";
+            //
+            // standaloneBarDockControl1
+            //
+            this.standaloneBarDockControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.standaloneBarDockControl1.CausesValidation = false;
+            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, $standaloneBarDockControlLocationY);
+            this.standaloneBarDockControl1.Manager = this.barManager1;
+            this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
+            this.standaloneBarDockControl1.Size = new System.Drawing.Size(980, 29);
+            this.standaloneBarDockControl1.Text = "standaloneBarDockControl1";
+            //
+            // barDockControlBottom
+            //
+            this.barDockControlBottom.CausesValidation = false;
+            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 719);
+            this.barDockControlBottom.Manager = this.barManager1;
+            this.barDockControlBottom.Size = new System.Drawing.Size(1020, 0);
+            //
+            // barDockControlLeft
+            //
+            this.barDockControlLeft.CausesValidation = false;
+            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlLeft.Manager = this.barManager1;
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 719);
+            //
+            // barDockControlRight
+            //
+            this.barDockControlRight.CausesValidation = false;
+            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControlRight.Location = new System.Drawing.Point(1004, 0);
+            this.barDockControlRight.Manager = this.barManager1;
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 719);
+            //
+            // Frm${Name}
+            //
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1004, 680);
+            this.Controls.Add(this.standaloneBarDockControl1);
+            this.Controls.Add(this.barDockControlBottom);
+            this.Controls.Add(this.barDockControlLeft);
+            this.Controls.Add(this.barDockControlRight);
+            this.Controls.Add(this.layoutControl1);
+#if(${IsTree})
+            this.Controls.Add(this.splitContainerControl1);
+#else
+            this.Controls.Add(this.winGridViewPager1);
+#end
+            this.Name = "Frm${Name}";
+            this.Text = "#if(${Display})${Display}#else${Name}#end";
+            this.Shown += new System.EventHandler(this.Frm${Name}_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
+            this.layoutControl1.ResumeLayout(false);
+#if(${IsTree})
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
+            this.splitContainerControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
+            this.groupControl1.ResumeLayout(false);
+            this.menuTree.ResumeLayout(false);
+#end
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}1.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}2.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}2.Properties)).EndInit();
+#elseif(${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}2.Properties)).EndInit();
+#else
+            ((System.ComponentModel.ISupportInitialize)(this.${FieldInfo.ControlName}.Properties)).EndInit();
+#if(${FieldInfo.ControlType}=="SearchLookUpEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.gv${FieldInfo.CSharpFieldName})).EndInit();
+#end
+#end
+#end
+#end
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}2)).EndInit();
+#elseif(${FieldInfo.ControlType}=="SpinEdit")
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName}2)).EndInit();
+#else
+            ((System.ComponentModel.ISupportInitialize)(this.layout${FieldInfo.CSharpFieldName})).EndInit();
+#end
+#end
+#end
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        #endregion
+
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+
+#if(${IsTree})
+        private DevExpress.XtraEditors.GroupControl groupControl1;
+        private System.Windows.Forms.ContextMenuStrip menuTree;
+        private System.Windows.Forms.ToolStripMenuItem menuTree_ExpandAll;
+        private System.Windows.Forms.ToolStripMenuItem menuTree_Clapase;
+        private System.Windows.Forms.ToolStripMenuItem menuTree_Refresh;
+        private System.Windows.Forms.ImageList imageList1;
+#end
+
+        private DevExpress.XtraBars.BarManager barManager1;
+        private DevExpress.XtraBars.StandaloneBarDockControl standaloneBarDockControl1;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+
+#foreach($FieldInfo in $MetadataImports)
+#if($FieldInfo.IsSearch)
+#if(${FieldInfo.ControlType}=="DateEdit" || ${FieldInfo.ControlType}=="SpinEdit" || ${FieldInfo.ControlType}=="TimeEdit")
+        private DevExpress.XtraEditors.${FieldInfo.ControlType} ${FieldInfo.ControlName}1;
+        private DevExpress.XtraLayout.LayoutControlItem layout${FieldInfo.CSharpFieldName}1;
+        private DevExpress.XtraEditors.${FieldInfo.ControlType} ${FieldInfo.ControlName}2;
+        private DevExpress.XtraLayout.LayoutControlItem layout${FieldInfo.CSharpFieldName}2;
+#elseif(${FieldInfo.ControlType}=="ToggleSwitch" || $FieldInfo.ControlType=="CheckEdit")
+        private DevExpress.XtraEditors.ComboBoxEdit ${FieldInfo.ControlName};
+        private DevExpress.XtraLayout.LayoutControlItem layout${FieldInfo.CSharpFieldName};
+#else
+        private DevExpress.XtraEditors.${FieldInfo.ControlType} ${FieldInfo.ControlName};
+        private DevExpress.XtraLayout.LayoutControlItem layout${FieldInfo.CSharpFieldName};
+#if(${FieldInfo.ControlType}=="SearchLookUpEdit")
+        private DevExpress.XtraGrid.Views.Grid.GridView gv${FieldInfo.CSharpFieldName};
+#end
+#end
+#end
+#end
+    }
+}

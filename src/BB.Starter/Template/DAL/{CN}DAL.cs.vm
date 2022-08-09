@@ -1,0 +1,102 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using BB.Framework.Commons.Database;
+using BB.Framework.Commons.Others;
+using BB.Framework.DAL.Base;
+using BB.Framework.Entity.${NameSpace};
+using BB.Framework.IDAL.${NameSpace};
+
+namespace BB.Framework.DAL.${NameSpace};
+
+/// <summary>
+#if(${ChildDisplay})
+/// ${ChildDisplay} 数据访问类
+#else
+/// ${ChildName} 数据访问类
+#end
+/// </summary>
+public class ${ChildName}DAL : BaseDALSQL<${ChildName}>, I${ChildName}DAL
+{
+    #region 对象实例及构造函数
+
+    // public static ${ChildName} Instance => new();
+
+    public ${ChildName}DAL() : base(${ChildName}.DBTableName, ${ChildName}.PrimaryKey, ${ChildName}.ForeignKey)
+    {
+        SortField = ${ChildName}.FieldCreationDate;
+        IsDescending = true;
+    }
+
+    #endregion
+
+	#region 实体解析函数
+
+    /// <summary>
+    /// 将DataReader的属性值转化为实体类的属性值，返回实体类
+    /// </summary>
+    /// <param name="dataReader">有效的DataReader对象</param>
+    /// <returns>实体类对象</returns>
+    protected override ${ChildName} DataReaderToEntity(IDataReader dataReader)
+    {
+        var reader = new SmartDataReader(dataReader);
+        var info = new ${ChildName}
+        {
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#set($null = "")
+#if($ColumnInfo.CSharpFieldType.indexOf("?")!=-1)
+#set($null = "Nullable")
+#end
+            ${ColumnInfo.CSharpFieldName} = reader.Get${ColumnInfo.CSharpFieldFullType}${null}(${ChildName}.Field${ColumnInfo.CSharpFieldName}),
+#end
+        };
+
+        return info;
+    }
+
+    /// <summary>
+    /// 将实体对象的属性值转化为Hashtable对应的键值
+    /// </summary>
+    /// <param name="obj">有效的实体对象</param>
+    /// <returns>包含键值映射的Hashtable</returns>
+    protected override Hashtable GetHashByEntity(${ChildName} obj)
+    {
+        var hash = new Hashtable
+        {
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#if(!$ColumnInfo.IsIdentity)
+            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, obj.${ColumnInfo.CSharpFieldName} },
+#end
+#end
+        };
+
+        return hash;
+    }
+
+	#endregion
+##
+##     /// <summary>
+##     /// 获取列字段中文别名（用于界面显示）的字典集合
+##     /// </summary>
+##     /// <returns></returns>
+##     public override Dictionary<string, string> GetColumnNameAlias()
+##     {
+##         return Cache.Instance.Get("${ChildName}ColumnNameAlias", () =>
+##         {
+##             Dictionary<string, string> dict = new();
+
+##             #region 添加别名解析
+
+## #foreach($ColumnInfo in ${ChildMetadataImports})
+## #if($ColumnInfo.IsColumn)
+##             dict.Add(${ChildName}.Field${ColumnInfo.CSharpFieldName}, "${ColumnInfo.CSharpFieldDes}");
+## #end
+## #end
+
+##             #endregion
+
+##             return dict;
+##         }, new TimeSpan(6, 0, 0));
+##     }
+}

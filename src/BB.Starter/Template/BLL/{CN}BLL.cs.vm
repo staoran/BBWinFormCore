@@ -1,0 +1,266 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data.Common;
+using System.Reflection;
+using BB.Framework.BLL.Base;
+using BB.Framework.Commons.Database;
+using BB.Framework.Commons.Extension;
+using BB.Framework.Commons.Format;
+using BB.Framework.Entity.Base;
+using BB.Framework.Entity.${NameSpace};
+using BB.Framework.IBLL.${NameSpace};
+using BB.Framework.IDAL.${NameSpace};
+
+namespace BB.Framework.BLL.${NameSpace};
+
+/// <summary>
+#if(${ChildDisplay})
+/// ${ChildDisplay} 业务逻辑类
+#else
+/// ${ChildName} 业务逻辑类
+#end
+/// </summary>
+public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
+{
+    private readonly I${ChildName}DAL _dal;
+
+    public ${ChildName}BLL()
+    {
+        Init(GetType().FullName, Assembly.GetExecutingAssembly().GetName().Name);
+        CheckDAL();
+        _dal = BaseDAL as I${ChildName}DAL;
+    }
+
+    /// <summary>
+    /// 初始化实体并附加默认值
+    /// </summary>
+    /// <returns></returns>
+    public override ${ChildName} NewEntity()
+    {
+        ${ChildName} entity = base.NewEntity();
+#foreach($EntityField in $ChildMetadataImports)
+#if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
+        entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
+#end
+#end
+        return entity;
+    }
+
+    /// <summary>
+    /// 验证实体或键值对
+    /// </summary>
+    /// <param name="operationType">操作类型</param>
+    /// <param name="obj">实体或键值对</param>
+    /// <param name="primaryKeyValue">主键</param>
+    /// <returns></returns>
+    public override void CheckEntity(OperationType operationType, object obj, object primaryKeyValue = null)
+    {
+        // 暂时取消对 Hashtable 的支持
+        base.CheckEntity(operationType, obj, primaryKeyValue);
+
+        var validator = new ${ChildName}Validator(operationType);
+
+        validator.ValidateAndThrow((${ChildName})obj);
+##
+##         if (obj is not (${ChildName} or Hashtable)) return;
+##
+##         #region 实体通用验证
+##
+## #foreach($FieldInfo in ${ChildMetadataImports})
+## ## 参数值合法性验证
+## #set($checkNull = "")
+## #set($checkLong = "")
+## ## ↓准备长度或空值
+## ## ↓如果查长度
+## #if($FieldInfo.IsCheckLong)
+## #set($checkLong = ", ${FieldInfo.CSharpFieldLong}")
+## #end
+## ## ↓如果查空
+## #if($FieldInfo.IsCheckNull)
+## #set($checkNull = ", true")
+## #end
+## ## ↓如果不查空只查长度
+## #if(!$FieldInfo.IsCheckNull && $FieldInfo.IsCheckLong)
+## #set($checkNull = ", false")
+## #end
+## ## ↑end 准备长度或空值
+## ## ↓是否有验证规则
+## #if(${FieldInfo.Validation} && ${FieldInfo.Validation} != "")
+##         CheckEntityValue(ValidateType.${FieldInfo.Validation}, obj, ${ChildName}.Field${FieldInfo.CSharpFieldName}${checkNull}${checkLong});
+## #else
+## ## ↓没有验证规则
+## ## ↓但有 查空或查长度
+## #if($checkLong != "" || $checkNull != "")
+##         CheckEntityValue(ValidateType.Null, obj, ${ChildName}.Field${FieldInfo.CSharpFieldName}${checkNull}${checkLong});
+## #end
+## ## ↑end 查空或查长度
+## #end
+## ## ↑end 是否有验证规则
+## #end
+##
+##         #endregion
+##
+## #######################
+##         #region 参数值唯一性验证
+##
+## #foreach($FieldInfo in ${ChildMetadataImports})
+## ## ↓查重
+## #if($FieldInfo.IsCheckDuplicate)
+##         if (operationType is OperationType.Add)
+##             CheckUnique(${ChildName}.Field${FieldInfo.CSharpFieldName}, "${FieldInfo.CSharpFieldDes}", obj);
+## ## ↓查重，不是主键
+## #if(!$FieldInfo.IsKey)
+##         if (operationType is OperationType.Edit)
+##             CheckUnique(${ChildName}.Field${FieldInfo.CSharpFieldName}, "${FieldInfo.CSharpFieldDes}", obj, ${ChildName}.PrimaryKey, primaryKeyValue);
+## #end
+## ## ↑end 查重，不是主键
+## #end
+## ## ↑end 查重
+## #end
+##
+##         #endregion
+    }
+
+    /// <summary>
+    /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示
+    /// </summary>
+    /// <param name="isNew">是否新增</param>
+    /// <returns></returns>
+    public override Dictionary<string, int> GetPermitDict(bool isNew)
+    {
+        var permitDict = new Dictionary<string, int>
+        {
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#if(!$ColumnInfo.IsVisible || (!$ColumnInfo.IsAdd && !$ColumnInfo.IsEdit))
+            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 3 },
+#elseif($ColumnInfo.IsReadonly)
+            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 1 },
+#elseif($ColumnInfo.IsAdd && (!$ColumnInfo.IsEdit || $ColumnInfo.IsKey))
+#if($ColumnInfo.IsKey)
+            // 主键不为空则只读
+#end
+            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, isNew ? 0 : 1 },
+## #elseif($ColumnInfo.IsAdd && $ColumnInfo.IsEdit)
+##             { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 0 },
+#end
+#end
+        };
+        // 后端权限控制
+        // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
+        return permitDict;
+    }
+
+    /// <summary>
+    /// 新增一条数据
+    /// </summary>
+    /// <param name="obj">指定的对象</param>
+    /// <param name="trans">事务对象</param>
+    /// <returns>执行操作是否成功。</returns>
+    public override bool Insert(${ChildName} obj, DbTransaction trans = null)
+    {
+        #region 新增前
+
+        #endregion
+
+        bool succeed = base.Insert(obj, trans);
+
+        #region 新增后
+
+        if (!succeed) return false;
+
+        //可添加其他关联操作
+
+        return true;
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 更新一条数据
+    /// </summary>
+    /// <param name="obj">指定的对象</param>
+    /// <param name="primaryKeyValue">主键的值</param>
+    /// <param name="optimisticLock">乐观锁验证</param>
+    /// <param name="trans">事务对象</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    public override bool Update(${ChildName} obj, object primaryKeyValue, bool optimisticLock = true, DbTransaction trans = null)
+    {
+        #region 修改前
+
+        #endregion
+
+        bool succeed = base.Update(obj, optimisticLock, trans);
+
+        #region 修改后
+
+        if (!succeed) return false;
+
+        //可添加其他关联操作
+
+        return true;
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 删除一条数据
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
+    /// <param name="trans">事务对象</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    public override bool Delete(object key, DbTransaction trans = null)
+    {
+        #region 删除前
+
+        #endregion
+
+        bool succeed = base.Delete(key, trans);
+        if (!succeed) return false;
+
+        #region 删除后
+
+        //可添加其他关联操作
+
+        #endregion
+
+        return true;
+    }
+
+    /// <summary>
+    /// 构造查询语句
+    /// </summary>
+    /// <param name="searchInfos">查询参数</param>
+    /// <returns></returns>
+    public override string GetConditionSql(NameValueCollection searchInfos)
+    {
+        var condition = new SearchCondition();
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#if($ColumnInfo.IsSearch || $ColumnInfo.IsAdvSearch)
+#if($ColumnInfo.ControlType=="ComboBoxEdit")
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+#elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit")
+#if($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1)
+        bool areaNoLength = !searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].IsNullOrEmpty() && searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].Length < 6;
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}],
+            areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
+#else
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+#end
+#elseif($ColumnInfo.ControlType=="SpinEdit")
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Between);
+#elseif($ColumnInfo.ControlType=="DateEdit")
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Between);
+#elseif($ColumnInfo.ControlType=="ToggleSwitch")
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+#elseif($ColumnInfo.ControlType=="CheckEdit")
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+#else
+        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Like);
+#end
+#end
+#end
+        return condition.BuildConditionSql().Replace("Where", "");
+    }
+}

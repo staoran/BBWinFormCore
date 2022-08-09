@@ -1,0 +1,154 @@
+﻿using System;
+#if(${ChildName} && ${ChildName} != "")
+using System.Collections.Generic;
+#end
+using System.Runtime.Serialization;
+using BB.Framework.Commons.Entity;
+using BB.Framework.Entity.Base;
+
+namespace BB.Framework.Entity.${NameSpace};
+
+/// <summary>
+#if(${Display})
+/// ${Display} 实体类
+#else
+/// ${Name} 实体类
+#end
+/// </summary>
+[DataContract]
+[Serializable]
+[Table(DBTableName)]
+public sealed class ${Name} : BaseEntity
+{
+    /// <summary>
+    /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过重写 _bll.NewEntity 方法实现）
+    /// </summary>
+    public ${Name}()
+    {
+## #foreach($EntityField in $MetadataImports)
+## ## #if(${EntityField.Defaults})
+## ##         ${EntityField.CSharpFieldName} = ${EntityField.Defaults};
+## ## #end
+## #end
+    }
+
+    #region Property Members
+
+#foreach($EntityProperty in $MetadataImports)
+#if(${EntityProperty.CSharpFieldDes})
+    /// <summary>
+    /// ${EntityProperty.CSharpFieldDes}
+    /// </summary>
+#end
+    [DataMember]
+#if(${EntityProperty.IsKey})
+#set($keyName = $EntityProperty.CSharpFieldName)
+    [Key]
+#end
+#if(${EntityProperty.IsIdentity})
+    [Identity]
+#end
+#if(!$ColumnInfo.IsColumn)
+    [Hide]
+#end
+#if(${EntityProperty.OptimisticLock})
+#set($optimisticLock = $EntityProperty.CSharpFieldName)
+    [OptimisticLock]
+#end
+#if(${EntityProperty.OrderBy} && ${EntityProperty.OrderBy} != "")
+#set($orderBy = $EntityProperty.CSharpFieldName)
+#if(${EntityProperty.OrderBy} == "desc")
+#set($isDesc = "true")
+#else
+#set($isDesc = "false")
+#end
+    [Sort(IsDesc)]
+#end
+    [Column(Field${EntityProperty.CSharpFieldName}, Dis${EntityProperty.CSharpFieldName})]
+    public ${EntityProperty.CSharpFieldType} ${EntityProperty.CSharpFieldName} { get; set; }
+
+#end
+#if(${ChildName} && ${ChildName} != "")
+    /// <summary>
+#if(${ChildDisplay})
+    /// ${ChildDisplay} 集合
+#else
+    /// ${ChildName} 集合
+#end
+    /// </summary>
+    [Ignore]
+    public IEnumerable<${ChildName}> ${ChildName}List { get; set; }
+
+#end
+    #endregion
+
+    #region 定义字段名称相关常量
+
+    /// <summary>
+    /// 表名
+    /// </summary>
+    [NonSerialized]
+    public new const string DBTableName = "${TableName}";
+
+    /// <summary>
+    /// 主键名
+    /// </summary>
+    [NonSerialized]
+    public new const string PrimaryKey = Field${keyName};
+
+#if(${orderBy})
+    /// <summary>
+    /// 排序字段
+    /// </summary>
+    [NonSerialized]
+    public new const string SortKey = Field${orderBy};
+
+#end
+#if(${isDesc})
+    /// <summary>
+    /// 排序方式
+    /// </summary>
+    [NonSerialized]
+    public new const bool IsDesc = $isDesc;
+
+#end
+#if(${optimisticLock})
+    /// <summary>
+    /// 乐观锁字段
+    /// </summary>
+    [NonSerialized]
+    public new const string OptimisticLockKey = Field${optimisticLock};
+
+#end
+    #region 列名
+#foreach($EntityProperty in $MetadataImports)
+#set($fieldDis = ${EntityProperty.DataBaseFieldName})
+#if(${EntityProperty.DataBaseFieldDes})
+#set($fieldDis = ${EntityProperty.DataBaseFieldDes})
+#end
+    /// <summary>
+    /// ${EntityProperty.DataBaseFieldDes}
+    /// </summary>
+    [NonSerialized]
+    public const string Field${EntityProperty.CSharpFieldName} = "${EntityProperty.DataBaseFieldName}";
+
+#end
+    #endregion
+
+    #region 列显示名
+#foreach($EntityProperty in $MetadataImports)
+#set($fieldDis = ${EntityProperty.DataBaseFieldName})
+#if(${EntityProperty.DataBaseFieldDes})
+#set($fieldDis = ${EntityProperty.DataBaseFieldDes})
+#end
+    /// <summary>
+    /// ${fieldDis}
+    /// </summary>
+    [NonSerialized]
+    public const string Dis${EntityProperty.CSharpFieldName} = "${fieldDis}";
+
+#end
+    #endregion
+
+    #endregion
+}

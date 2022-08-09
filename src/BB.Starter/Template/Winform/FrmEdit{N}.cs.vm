@@ -1,0 +1,272 @@
+﻿using System;
+using System.Collections.Generic;
+
+using BB.Framework.BaseUI.BaseUI;
+using BB.Framework.BaseUI.Extension;
+using BB.Framework.BaseUI.Other;
+using BB.Framework.IBLL.${NameSpace};
+using BB.Framework.Commons.Extension;
+using BB.Framework.Entity.${NameSpace};
+using BB.Framework.EntityVerification.${NameSpace};
+
+namespace BB.${NameSpace}.UI;
+
+/// <summary>
+#if(${Display})
+/// ${Display}
+#else
+/// ${Name}
+#end
+/// </summary>
+public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}Validator>
+{
+    public FrmEdit${Name}()
+    {
+        InitializeComponent();
+
+        Load += FrmEdit${Name}_Load;
+    }
+
+    /// <summary>
+    /// 窗体第一次显示前
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void FrmEdit${Name}_Load(object sender, EventArgs e)
+    {
+    }
+
+## #set($checkString = "")
+## #foreach($FieldInfo in $MetadataImports)
+## #if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+## #set($checkNull = "")
+## #set($checkLong = "")
+## ## ↓准备长度或空值
+## ## ↓如果查长度
+## #if($FieldInfo.IsCheckLong)
+## #set($checkLong = ", ${FieldInfo.CSharpFieldLong}")
+## #end
+## ## ↓如果查空
+## #if($FieldInfo.IsCheckNull)
+## #set($checkNull = ", true")
+## #end
+## ## ↓如果不查空只查长度
+## #if(!$FieldInfo.IsCheckNull && $FieldInfo.IsCheckLong)
+## #set($checkNull = ", false")
+## #end
+## ## ↑end 准备长度或空值
+## ## ↓是否有验证规则
+## #if(${FieldInfo.Validation} && ${FieldInfo.Validation} != "")
+## ## ↓有验证规则
+## ## ↓是不是第一行
+## #if($checkString == "")
+## #set($checkString = "ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.${FieldInfo.Validation}${checkNull}${checkLong});")
+## #else
+## #set($checkString = "${checkString}${NewLine}        ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.${FieldInfo.Validation}${checkNull}${checkLong});")
+## #end
+## ## ↑end 是不是第一行
+## #else
+## ## ↓没有验证规则
+## ## ↓但有 查空或查长度
+## #if($checkLong != "" || $checkNull != "")
+## ## ↓是不是第一行
+## #if($checkString == "")
+## #set($checkString = "ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.Null${checkNull}${checkLong});")
+## #else
+## #set($checkString = "${checkString}${NewLine}        ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.Null${checkNull}${checkLong});")
+## #end
+## ## ↑end 是不是第一行
+## #end
+## ## ↑end 查空或查长度
+## #end
+## ## ↑end 是否有验证规则
+## #end
+## ## ↑end 是否可以编辑
+## #end
+##    ## /// <summary>
+##    ## /// 实现控件输入检查的函数
+##    ## /// </summary>
+##    ## /// <returns></returns>
+##    ## public override bool CheckInput()
+##    ## {
+##    ##     SetInfo(_tempInfo);
+##    ##     var validator = new ${Name}Validator();
+##    ##     return ProcessValidationResults(validator.Validate(_tempInfo));
+##         bool result = true; //默认是可以通过
+##
+##         #region 保存前验证
+##
+## #if($checkString != "")
+##         ErrorProvider.ClearErrors();
+##         ${checkString}
+##         result = !ErrorProvider.HasErrors;
+## #end
+##
+##         #endregion
+##
+##         return result;
+##    ## }
+##
+    /// <summary>
+    /// 初始化数据字典
+    /// </summary>
+    private void InitDictItem()
+    {
+        //初始化代码
+#foreach($FieldInfo in $MetadataImports)
+#if(${$FieldInfo.OptimisticLock})
+#set($optimisticLock = $FieldInfo.CSharpFieldName)
+#end
+##如果有编辑，有数据源
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+#set($dictItem = "")
+#if($FieldInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $FieldInfo.CSharpFieldName.indexOf("AreaId") != -1)
+#set($dictItem = ".BindCityItems(true")
+#elseif(${FieldInfo.DataTableName} && ${FieldInfo.DataTableName} != "")
+#set($dictItem = ".BindDictItems($FieldInfo.DataTableName")
+#end
+#if($dictItem != "")
+## 如果有默认值
+#if($FieldInfo.Defaults && $FieldInfo.Defaults != "")
+#set($dictItem = "${dictItem}, ${FieldInfo.Defaults}")
+## 没有默认值，并且不是ToggleSwitch
+#elseif(${FieldInfo.ControlType} != "ToggleSwitch" && $FieldInfo.CSharpFieldName.indexOf("AreaNo") == -1 && $FieldInfo.CSharpFieldName.indexOf("AreaId") == -1)
+#set($dictItem = "${dictItem}, null")
+#end
+## 如果不是ToggleSwitch，最后验证是否允许空值
+#if(${FieldInfo.ControlType} != "ToggleSwitch" && $FieldInfo.CSharpFieldName.indexOf("AreaNo") == -1 && $FieldInfo.CSharpFieldName.indexOf("AreaId") == -1)
+## 如果检查非空
+#if($FieldInfo.IsCheckNull)
+#set($dictItem = "${dictItem}, false, false")
+#else
+#set($dictItem = "${dictItem}, true, false")
+#end
+#end
+        ${FieldInfo.ControlName}${dictItem});
+#end
+#end
+#end
+    }
+## 
+##     /// <summary>
+##     /// 数据显示的函数
+##     /// </summary>
+##     public override void DisplayData()
+##     {
+##         InitDictItem(); //数据字典加载（公用）
+
+##         base.DisplayData();
+
+##         // 初始化表单
+##         DisplayInfo(_tempInfo);
+
+##         //_tempInfo在对象存在则为指定对象，新建则是全新的对象，但有一些初始化的GUID用于附件上传
+##         //SetAttachInfo(_tempInfo);
+
+##         // 字段权限相关
+##         SetPermit();
+##     }
+##
+##     /// <summary>
+##     /// 初始化控件的显示信息
+##     /// </summary>
+##     /// <param name="info"></param>
+##     private void DisplayInfo(${Name} info)
+##     {
+##         if (!_tempInfo.Equals(info))
+##             _tempInfo = info; //重新给临时对象赋值，使之指向存在的记录对象
+## 
+##         #region 控件赋值
+## 
+## #foreach($ColumnInfo in ${MetadataImports})
+## #if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
+## #set($controlName = "")
+## #if($ColumnInfo.CSharpFieldType.indexOf("?")!=-1)
+## #if($ColumnInfo.CSharpFieldType.indexOf("bool")!=-1)
+## #set($controlName = ".ObjToBool()")
+## #elseif($ColumnInfo.CSharpFieldType.indexOf("decimal")!=-1)
+## #set($controlName = ".ObjToDecimal()")
+## #else
+## #set($controlName = "")
+## #end
+## #end
+## #if($ColumnInfo.ControlType=="ComboBoxEdit")
+##         ${ColumnInfo.ControlName}.SetComboBoxItem(info.${ColumnInfo.CSharpFieldName});
+## #elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit" || $ColumnInfo.ControlType=="CheckedComboBoxEdit")
+##         ${ColumnInfo.ControlName}.EditValue = info.${ColumnInfo.CSharpFieldName};
+## #elseif($ColumnInfo.ControlType=="SpinEdit")
+##         ${ColumnInfo.ControlName}.Value = info.${ColumnInfo.CSharpFieldName}${controlName};
+## #elseif($ColumnInfo.ControlType=="ToggleSwitch")
+##         ${ColumnInfo.ControlName}.IsOn = info.${ColumnInfo.CSharpFieldName}${controlName};
+## #elseif($ColumnInfo.ControlType=="CheckEdit")
+##         ${ColumnInfo.ControlName}.Checked = info.${ColumnInfo.CSharpFieldName}${controlName};
+## #elseif($ColumnInfo.ControlType=="DateEdit")
+##         ${ColumnInfo.ControlName}.SetDateTime(info.${ColumnInfo.CSharpFieldName});
+## #else
+##         ${ColumnInfo.ControlName}.Text = info.${ColumnInfo.CSharpFieldName};
+## #end
+## #end
+## #end
+## 
+##         #endregion
+##     }
+
+    /// <summary>
+    /// 设置控件字段的权限显示或者隐藏(默认不使用字段权限)
+    /// </summary>
+    protected override void SetPermit()
+    {
+        #region 设置控件和字段的对应关系，字段权限判断也用到，无权字段赋值：*
+
+#foreach($ColumnInfo in ${MetadataImports})
+#if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
+        ${ColumnInfo.ControlName}.Tag = ${Name}.Field${ColumnInfo.CSharpFieldName};
+#end
+#end
+
+        #endregion
+
+        base.SetPermit();
+    }
+
+    // /// <summary>
+    // /// 查看编辑附件信息
+    // /// </summary>
+    //private void SetAttachInfo(${Name}Info info)
+    //{
+    //    this.attachmentGUID.AttachmentGUID = info.AttachGUID;
+    //    this.attachmentGUID.userId = LoginUserInfo.Name;
+
+    //    string name = "#if(${Display})${Display}#else${Name}#end";
+    //    if (!string.IsNullOrEmpty(name))
+    //    {
+    //        string dir = string.Format("{0}", name);
+    //        this.attachmentGUID.Init(dir, info.OrgCode, LoginUserInfo.Name);
+    //    }
+    //}
+##
+##     /// <summary>
+##     /// 编辑或者保存状态下取值函数
+##     /// </summary>
+##     /// <param name="info"></param>
+##     protected override void SetInfo(${Name} info)
+##     {
+## #foreach($ColumnInfo in ${MetadataImports})
+## #if(($ColumnInfo.IsAdd || $ColumnInfo.IsEdit) && !$ColumnInfo.IsReadonly)
+## #if($ColumnInfo.ControlType=="ComboBoxEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.GetComboBoxValue();
+## #elseif($ColumnInfo.ControlType=="SpinEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.Value;
+## #elseif($ColumnInfo.ControlType=="ToggleSwitch")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.IsOn;
+## #elseif($ColumnInfo.ControlType=="CheckEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.Checked;
+## #elseif($ColumnInfo.ControlType=="DateEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.DateTime;
+## #else
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.Text;
+## #end
+## #end
+## #end
+##     }
+}

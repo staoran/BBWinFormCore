@@ -1,0 +1,668 @@
+﻿using System;
+using System.Collections.Generic;
+
+using BB.Framework.BaseUI.BaseUI;
+using BB.Framework.BaseUI.Extension;
+using BB.Framework.BaseUI.Other;
+using BB.Framework.IBLL.${NameSpace};
+using BB.Framework.Commons.Extension;
+using BB.Framework.Entity.${NameSpace};
+using BB.Framework.EntityVerification.${NameSpace};
+
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+
+namespace BB.${NameSpace}.UI;
+
+/// <summary>
+#if(${Display})
+/// ${Display}
+#else
+/// ${Name}
+#end
+/// </summary>
+public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}Validator, ${ChildName}, I${ChildName}BLL, ${ChildName}Validator>
+{
+    public FrmEdit${Name}()
+    {
+        InitializeComponent();
+
+        Load += FrmEdit${Name}_Load;
+    }
+
+    /// <summary>
+    /// 窗体第一次显示前
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void FrmEdit${Name}_Load(object sender, EventArgs e)
+    {
+    }
+
+    /// <summary>
+    /// 初始化明细表的GridView数据显示
+    /// </summary>
+    private void InitDetailGrid()
+    {
+        #region 列初始化
+
+        gridView1.Columns.Clear();
+        gridView1.CreateColumn("Operate", "操作", 60).CreateButtonEdit(repositoryBtn_ButtonClick);
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
+#if(!$ColumnInfo.IsVisible)
+        gridView1.CreateColumn(${ChildName}.Field${ColumnInfo.CSharpFieldName}, "${ColumnInfo.CSharpFieldDes}", 100).Visible = false;
+#else
+#set($createControl = "")
+#if($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1)
+#set($createControl = ".BindCityItems(")
+#elseif(${ColumnInfo.DataTableName} && ${ColumnInfo.DataTableName} != "")
+#set($createControl = ".BindDictItems(${ColumnInfo.DataTableName}")
+#end
+#if($createControl != "")
+#set($createControl = "${createControl})")
+#end
+        gridView1.CreateColumn(${ChildName}.Field${ColumnInfo.CSharpFieldName}, "${ColumnInfo.CSharpFieldDes}", 100).Create${ColumnInfo.ControlType}()${createControl};
+#end
+#end
+#end
+## 
+        ## // 获取子表字段权限的列表
+        ## Dictionary<string, int> permitDict = _childBll.GetPermitDict(ID.IsNullOrEmpty());
+        ## gridView1.SetColumnsPermit(permitDict);
+
+        gridView1.ViewCaption = @"#if(${Display})${Display}#else${Name}#end明细";
+
+        #endregion
+
+        base.InitDetailGrid();
+    }
+
+    #region GridView事件
+
+    /// <summary>
+    /// 初始化新行
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="e"></param>
+    protected override void gridView1_InitNewRow(object s, InitNewRowEventArgs e)
+    {
+        base.gridView1_InitNewRow(s, e);
+        // 此处加入新增列的数据初始化
+        // gridView1.SetRowCellValue(e.RowHandle, "ISID", Guid.NewGuid().ToString()); //明细表ID
+        ## gridView1.SetRowCellValue(e.RowHandle, ${ChildName}.ForeignKey, _tempInfo.${ForeignKeyName}); //明细表的外键
+        //gridView1.SetRowCellValue(e.RowHandle, "Apply_ID", tempInfo.Apply_ID);
+        //gridView1.SetRowCellValue(e.RowHandle, "OccurTime", DateTime.Now);
+## #foreach($ColumnInfo in ${ChildMetadataImports})
+## #if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
+## #if(${ColumnInfo.Defaults} != "")
+##         gridView1.SetRowCellValue(e.RowHandle, ${ChildName}.Field${ColumnInfo.CSharpFieldName}, ${ColumnInfo.Defaults});
+## #end
+## #end
+## #end
+    }
+
+    /// <summary>
+    /// 行数据校验
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected override void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)
+    {
+        base.gridView1_ValidateRow(sender, e);
+        ## var view = sender as ColumnView;
+        ## if (view == null) return;
+        ## view.ClearColumnErrors();
+        ## var entity = view.RowToModel<${ChildName}>(e.RowHandle);
+        ## var validator = new ${ChildName}Validator();
+        ## view.ProcessValidationResults(e, validator.Validate(entity));
+## #foreach($FieldInfo in ${ChildMetadataImports})
+## ## 参数值合法性验证
+## #set($checkNull = "")
+## #set($checkLong = "")
+## ## ↓准备长度或空值
+## ## ↓如果查长度
+## #if($FieldInfo.IsCheckLong)
+## #set($checkLong = ", ${FieldInfo.CSharpFieldLong}")
+## #end
+## ## ↓如果查空
+## #if($FieldInfo.IsCheckNull)
+## #set($checkNull = ", true")
+## #end
+## ## ↓如果不查空只查长度
+## #if(!$FieldInfo.IsCheckNull && $FieldInfo.IsCheckLong)
+## #set($checkNull = ", false")
+## #end
+## ## ↑end 准备长度或空值
+## ## ↓是否有验证规则
+## #if(${FieldInfo.Validation} && ${FieldInfo.Validation} != "")
+##         view.ValidateRowField(e, ${ChildName}.Field${FieldInfo.CSharpFieldName}, ValidateType.${FieldInfo.Validation}${checkNull}${checkLong});
+## #else
+## ## ↓没有验证规则
+## ## ↓但有 查空或查长度
+## #if($checkLong != "" || $checkNull != "")
+##         view.ValidateRowField(e, ${ChildName}.Field${FieldInfo.CSharpFieldName}, ValidateType.Null${checkNull}${checkLong});
+## #end
+## ## ↑end 查空或查长度
+## #end
+## ## ↑end 是否有验证规则
+## #end
+## ## #set($columnstring = "")
+## ## #set($columnRange = "")
+## ## #set($columnFilePath = "")
+## ## #set($columnURL = "")
+## ## #set($columnPhoneAndMobile = "")
+## ## #set($columnMobile = "")
+## ## #set($columnPhone = "")
+## ## #set($columnEmail = "")
+## ## #set($columnIdCard = "")
+## ## #set($columnLetter = "")
+## ## #set($columnChinese = "")
+## ## #set($columnDecimal = "")
+## ## #set($columnNumber = "")
+## ## #set($columnNumeric = "")
+## ## #set($columnUserName = "")
+## ## #foreach($ColumnInfo in ${ChildMetadataImports})
+## ## #if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
+## ## #if($ColumnInfo.IsCheckLong)
+## ## #if($columnRange == "")
+## ## #set($columnRange = "gridControl1.ValidateRange(e, ${ChildName}.Field${ColumnInfo.CSharpFieldName}, ${ColumnInfo.CSharpFieldLong});")
+## ## #else
+## ## #set($columnRange = "${columnRange}${NewLine}        gridControl1.ValidateRange(e, ${ChildName}.Field${ColumnInfo.CSharpFieldName}, ${ColumnInfo.CSharpFieldLong});")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.IsCheckNull})
+## ## #if($columnstring == "")
+## ## #set($columnstring = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnstring = "${columnstring}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="UserName")
+## ## #if($columnUserName == "")
+## ## #set($columnUserName = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnUserName = "${columnUserName}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Numeric")
+## ## #if($columnNumeric == "")
+## ## #set($columnNumeric = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnNumeric = "${columnNumeric}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Number")
+## ## #if($columnNumber == "")
+## ## #set($columnNumber = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnNumber = "${columnNumber}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Decimal")
+## ## #if($columnDecimal == "")
+## ## #set($columnDecimal = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnDecimal = "${columnDecimal}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Chinese")
+## ## #if($columnChinese == "")
+## ## #set($columnChinese = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnChinese = "${columnChinese}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Letter")
+## ## #if($columnLetter == "")
+## ## #set($columnLetter = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnLetter = "${columnLetter}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="IdCard")
+## ## #if($columnIdCard == "")
+## ## #set($columnIdCard = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnIdCard = "${columnIdCard}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Email")
+## ## #if($columnEmail == "")
+## ## #set($columnEmail = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnEmail = "${columnEmail}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Phone")
+## ## #if($columnPhone == "")
+## ## #set($columnPhone = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnPhone = "${columnPhone}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="Mobile")
+## ## #if($columnMobile == "")
+## ## #set($columnMobile = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnMobile = "${columnMobile}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="PhoneAndMobile")
+## ## #if($columnPhoneAndMobile == "")
+## ## #set($columnPhoneAndMobile = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnPhoneAndMobile = "${columnPhoneAndMobile}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="URL")
+## ## #if($columnURL == "")
+## ## #set($columnURL = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnURL = "${columnURL}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #if(${ColumnInfo.Validation}=="FilePath")
+## ## #if($columnFilePath == "")
+## ## #set($columnFilePath = "${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #else
+## ## #set($columnFilePath = "${columnFilePath}, ${ChildName}.Field${ColumnInfo.CSharpFieldName}")
+## ## #end
+## ## #end
+## ## #end
+## ## #end
+## ##         // 如果需要校验非空输入，那么添加对应字段
+## ## #if($columnstring == "")
+## ##         // gridControl1.ValidateRowNull(e, "ContactPerson", "Address", "ProvinceNo", "CityNo", "AreaNo", "Mobile");
+## ## #else
+## ##         gridControl1.ValidateRowNull(e, ${columnstring});
+## ## #end
+## ## #if($columnRange != "")
+## ##         $columnRange
+## ## #end
+## ## #if($columnUserName != "")
+## ##         gridControl1.ValidateUserName(e, fieldNames: new[] { ${columnUserName} });
+## ## #end
+## ## #if($columnNumeric != "")
+## ##         gridControl1.ValidateNumeric(e, fieldNames: new[] { ${columnNumeric} });
+## ## #end
+## ## #if($columnNumber != "")
+## ##         gridControl1.ValidateNumber(e, fieldNames: new[] { ${columnNumber} });
+## ## #end
+## ## #if($columnDecimal != "")
+## ##         gridControl1.ValidateDecimal(e, fieldNames: new[] { ${columnDecimal} });
+## ## #end
+## ## #if($columnChinese != "")
+## ##         gridControl1.ValidateChinese(e, fieldNames: new[] { ${columnChinese} });
+## ## #end
+## ## #if($columnLetter != "")
+## ##         gridControl1.ValidateLetter(e, fieldNames: new[] { ${columnLetter} });
+## ## #end
+## ## #if($columnIdCard != "")
+## ##         gridControl1.ValidateIdCard(e, fieldNames: new[] { ${columnIdCard} });
+## ## #end
+## ## #if($columnEmail != "")
+## ##         gridControl1.ValidateEmail(e, fieldNames: new[] { ${columnEmail} });
+## ## #end
+## ## #if($columnPhone != "")
+## ##         gridControl1.ValidatePhone(e, fieldNames: new[] { ${columnPhone} });
+## ## #end
+## ## #if($columnMobile != "")
+## ##         gridControl1.ValidateMobile(e, fieldNames: new[] { ${columnMobile} });
+## ## #end
+## ## #if($columnPhoneAndMobile != "")
+## ##         gridControl1.ValidatePhoneAndMobile(e, fieldNames: new[] { ${columnPhoneAndMobile} });
+## ## #end
+## ## #if($columnURL != "")
+## ##         gridControl1.ValidateURL(e, fieldNames: new[] { ${columnURL} });
+## ## #end
+## ## #if($columnFilePath != "")
+## ##         gridControl1.ValidateFilePath(e, fieldNames: new[] { ${columnFilePath} });
+## ## #end
+##         // if (!result)
+##         //     e.ErrorText.ShowUxError();
+    }
+
+    /// <summary>
+    /// 自定义行绘制指示器
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="e"></param>
+    protected override void gridView1_CustomDrawRowIndicator(object s, RowIndicatorCustomDrawEventArgs e)
+    {
+        base.gridView1_CustomDrawRowIndicator(s, e);
+        ## if (e.Info.IsRowIndicator && e.RowHandle >= 0)
+        ## {
+        ##     e.Info.DisplayText = (e.RowHandle + 1).ToString();
+        ## }
+    }
+
+    /// <summary>
+    /// 定义单元格样式
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected override void gridView1_RowCellStyle(object sender, RowCellStyleEventArgs e)
+    {
+        base.gridView1_RowCellStyle(sender, e);
+        ## //GridView gridView = gridView1;
+        ## //if (e.Column.FieldName == "OrderStatus")
+        ## //{
+        ## //    string status = gridView.GetRowCellValue(e.RowHandle, "OrderStatus").ToString();
+        ## //    Color color = Color.White;
+        ## //    if (status == "已审核")
+        ## //    {
+        ## //        e.Appearance.BackColor = Color.Red;
+        ## //        e.Appearance.BackColor2 = Color.LightCyan;
+        ## //    }
+        ## //}
+    }
+
+    /// <summary>
+    /// 自定义列的显示文本
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected override void gridView1_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
+    {
+        base.gridView1_CustomColumnDisplayText(sender, e);
+        ## // string columnName = e.Column.FieldName;
+        ## // else if (columnName == "DictType_ID")
+        ## // {
+        ## //     e.DisplayText = BLLFactory<DictData>.Instance.GetFieldValue(string.Concat(e.Value), "Name");
+        ## // }
+    }
+
+    /// <summary>
+    /// 自定义列按钮事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected override void repositoryBtn_ButtonClick(object sender, ButtonPressedEventArgs e)
+    {
+        base.repositoryBtn_ButtonClick(sender, e);
+        ## if (e.Button.Kind == ButtonPredefines.Delete)
+        ## {
+        ##     gridView1.DeleteRow(gridView1.FocusedRowHandle);
+        ## }
+    }
+
+    #endregion
+
+## #set($checkString = "")
+## #foreach($FieldInfo in $MetadataImports)
+## #if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+## #set($checkNull = "")
+## #set($checkLong = "")
+## #if($FieldInfo.IsCheckLong)
+## #set($checkLong = ", ${FieldInfo.CSharpFieldLong}")
+## #end
+## #if($FieldInfo.IsCheckNull)
+## #set($checkNull = ", true")
+## #end
+## #if(!$FieldInfo.IsCheckNull && $FieldInfo.IsCheckLong)
+## #set($checkNull = ", false")
+## #end
+## #if(${FieldInfo.Validation} && ${FieldInfo.Validation} != "")
+## #if($checkString == "")
+## #set($checkString = "ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.${FieldInfo.Validation}${checkNull}${checkLong});")
+## #else
+## #set($checkString = "${checkString}${NewLine}        ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.${FieldInfo.Validation}${checkNull}${checkLong});")
+## #end
+## #else
+## #if($checkLong != "" || $checkNull != "")
+## #if($checkString == "")
+## #set($checkString = "ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.Null${checkNull}${checkLong});")
+## #else
+## #set($checkString = "${checkString}${NewLine}        ErrorProvider.ValidateEdit(${FieldInfo.ControlName}, ValidateType.Null${checkNull}${checkLong});")
+## #end
+## #end
+## #end
+## #end
+## #end
+##    ## /// <summary>
+##    ## /// 实现控件输入检查的函数
+##    ## /// </summary>
+##    ## /// <returns></returns>
+##    ## public override bool CheckInput()
+##    ## {
+##    ##     SetInfo(_tempInfo);
+##    ##     var validator = new ${ChildName}Validator();
+##    ##     return ProcessValidationResults(validator.Validate(_tempInfo));
+##         bool result = true; //默认是可以通过
+##
+##         #region 保存前验证
+##
+## #if($checkString != "")
+##         ErrorProvider.ClearErrors();
+##         ${checkString}
+##         result = !ErrorProvider.HasErrors;
+## #end
+##
+##         #endregion
+##
+##         return result;
+##    ## }
+##
+    /// <summary>
+    /// 初始化数据字典
+    /// </summary>
+    private void InitDictItem()
+    {
+        //初始化代码
+#foreach($FieldInfo in $MetadataImports)
+#if(${$FieldInfo.OptimisticLock})
+#set($optimisticLock = $FieldInfo.CSharpFieldName)
+#end
+##如果有编辑，有数据源
+#if($FieldInfo.IsAdd || $FieldInfo.IsEdit)
+#set($dictItem = "")
+#if($FieldInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $FieldInfo.CSharpFieldName.indexOf("AreaId") != -1)
+#set($dictItem = ".BindCityItems(true")
+#elseif(${FieldInfo.DataTableName} && ${FieldInfo.DataTableName} != "")
+#set($dictItem = ".BindDictItems($FieldInfo.DataTableName")
+#end
+#if($dictItem != "")
+## 如果有默认值
+#if($FieldInfo.Defaults && $FieldInfo.Defaults != "")
+#set($dictItem = "${dictItem}, ${FieldInfo.Defaults}")
+## 没有默认值，并且不是ToggleSwitch
+#elseif(${FieldInfo.ControlType} != "ToggleSwitch" && $FieldInfo.CSharpFieldName.indexOf("AreaNo") == -1 && $FieldInfo.CSharpFieldName.indexOf("AreaId") == -1)
+#set($dictItem = "${dictItem}, null")
+#end
+## 如果不是ToggleSwitch，最后验证是否允许空值
+#if(${FieldInfo.ControlType} != "ToggleSwitch" && $FieldInfo.CSharpFieldName.indexOf("AreaNo") == -1 && $FieldInfo.CSharpFieldName.indexOf("AreaId") == -1)
+## 如果检查非空
+#if($FieldInfo.IsCheckNull)
+#set($dictItem = "${dictItem}, false, false")
+#else
+#set($dictItem = "${dictItem}, true, false")
+#end
+#end
+        ${FieldInfo.ControlName}${dictItem});
+#end
+#end
+#end
+    }
+## 
+##     /// <summary>
+##     /// 数据显示的函数
+##     /// </summary>
+##     public override void DisplayData()
+##     {
+##         InitDictItem(); //数据字典加载（公用）
+## 
+##         List<${ChildName}> list = new();
+##         if (!string.IsNullOrEmpty(ID))
+##         {
+##             #region 编辑时的显示信息
+## 
+##             _tempInfo = _bll.FindById(ID);
+##             if (_tempInfo != null)
+##             {
+## #if(${optimisticLock})
+##                 ChangeTheTime = _tempInfo.${optimisticLock}; // 记录修改时间作为乐观锁
+## #end
+##                 list = _childBll.FindByForeignKey(_tempInfo.${ForeignKeyName}); //根据外键获取明细列表记录
+##             }
+## 
+##             #endregion
+## 
+##             #region 按钮权限
+## 
+##             btnOK.Enabled = HasFunction("Frm${Name}/Edit");
+##             btnAdd.Enabled = HasFunction("Frm${Name}/Add") && HasFunction("Frm${Name}/Edit");
+## 
+##             #endregion
+## 
+##             #region 默认值
+## 
+##             // _tempInfo.LastUpdatedBy = LoginUserInfo.ID.ToString();
+##             // _tempInfo.LastUpdateDate = DateTime.Now;
+## 
+##             #endregion
+##         }
+##         else
+##         {
+##             // 新增时
+##             #region 按钮权限
+## 
+##             btnOK.Enabled = HasFunction("Frm${Name}/Add");
+##             btnAdd.Enabled = HasFunction("Frm${Name}/Add") && HasFunction("Frm${Name}/Edit");
+## 
+##             #endregion
+## 
+##             #region 默认值
+## 
+##             // 以保存前的赋值为准，新增时一般不用调整，都已在_bll.NewEntity()中处理
+##             // _tempInfo.OrgCode = LoginUserInfo.CompanyId;
+##             // _tempInfo.CreatedBy = LoginUserInfo.ID.ToString();
+##             // _tempInfo.CreationDate = DateTime.Now;
+## 
+##             #endregion
+##         }
+## 
+##         // 初始化表单
+##         DisplayInfo(_tempInfo);
+## 
+##         // 统一展示明细数据，没有则绑定空数据源
+##         // gridControl1.DataSource = new BindingList<TranCustomersInfo>(list);
+##         // 改为绑定DataTable，用来跟踪增删改
+##         gridControl1.DataSource = list.ToDataTable();
+## 
+##         //_tempInfo在对象存在则为指定对象，新建则是全新的对象，但有一些初始化的GUID用于附件上传
+##         //SetAttachInfo(_tempInfo);
+## 
+##         // 字段权限相关
+##         SetPermit();
+## 
+##         // 初始化明细表
+##         InitDetailGrid();
+##     }
+## 
+##     /// <summary>
+##     /// 初始化控件的显示信息
+##     /// </summary>
+##     /// <param name="info"></param>
+##     private void DisplayInfo(${Name} info)
+##     {
+##         if (!_tempInfo.Equals(info))
+##             _tempInfo = info; //重新给临时对象赋值，使之指向存在的记录对象
+## 
+##         #region 控件赋值
+## 
+## #foreach($ColumnInfo in ${MetadataImports})
+## #if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
+## #set($controlName = "")
+## #if($ColumnInfo.CSharpFieldType.indexOf("?")!=-1)
+## #if($ColumnInfo.CSharpFieldType.indexOf("bool")!=-1)
+## #set($controlName = ".ObjToBool()")
+## #elseif($ColumnInfo.CSharpFieldType.indexOf("decimal")!=-1)
+## #set($controlName = ".ObjToDecimal()")
+## #else
+## #set($controlName = "")
+## #end
+## #end
+## #if($ColumnInfo.ControlType=="ComboBoxEdit")
+##         ${ColumnInfo.ControlName}.SetComboBoxItem(info.${ColumnInfo.CSharpFieldName});
+## #elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit" || $ColumnInfo.ControlType=="CheckedComboBoxEdit")
+##         ${ColumnInfo.ControlName}.EditValue = info.${ColumnInfo.CSharpFieldName};
+## #elseif($ColumnInfo.ControlType=="SpinEdit")
+##         ${ColumnInfo.ControlName}.Value = info.${ColumnInfo.CSharpFieldName}${controlName};
+## #elseif($ColumnInfo.ControlType=="ToggleSwitch")
+##         ${ColumnInfo.ControlName}.IsOn = info.${ColumnInfo.CSharpFieldName}${controlName};
+## #elseif($ColumnInfo.ControlType=="CheckEdit")
+##         ${ColumnInfo.ControlName}.Checked = info.${ColumnInfo.CSharpFieldName}${controlName};
+## #elseif($ColumnInfo.ControlType=="DateEdit")
+##         ${ColumnInfo.ControlName}.SetDateTime(info.${ColumnInfo.CSharpFieldName});
+## #else
+##         ${ColumnInfo.ControlName}.Text = info.${ColumnInfo.CSharpFieldName};
+## #end
+## #end
+## #end
+## 
+##         #endregion
+##     }
+
+    /// <summary>
+    /// 设置控件字段的权限显示或者隐藏(默认不使用字段权限)
+    /// </summary>
+    protected override void SetPermit()
+    {
+        #region 设置控件和字段的对应关系，字段权限判断也用到，无权字段赋值：*
+
+#foreach($ColumnInfo in ${MetadataImports})
+#if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
+        ${ColumnInfo.ControlName}.Tag = ${Name}.Field${ColumnInfo.CSharpFieldName};
+#end
+#end
+
+        #endregion
+
+        base.SetPermit();
+    }
+
+    // /// <summary>
+    // /// 查看编辑附件信息
+    // /// </summary>
+    //private void SetAttachInfo(${Name}Info info)
+    //{
+    //    this.attachmentGUID.AttachmentGUID = info.AttachGUID;
+    //    this.attachmentGUID.userId = LoginUserInfo.Name;
+
+    //    string name = "#if(${Display})${Display}#else${Name}#end";
+    //    if (!string.IsNullOrEmpty(name))
+    //    {
+    //        string dir = string.Format("{0}", name);
+    //        this.attachmentGUID.Init(dir, info.OrgCode, LoginUserInfo.Name);
+    //    }
+    //}
+## 
+##     /// <summary>
+##     /// 编辑或者保存状态下取值函数
+##     /// </summary>
+##     /// <param name="info"></param>
+##     protected override void SetInfo(${Name} info)
+##     {
+## #foreach($ColumnInfo in ${MetadataImports})
+## #if(($ColumnInfo.IsAdd || $ColumnInfo.IsEdit) && !$ColumnInfo.IsReadonly)
+## #if($ColumnInfo.ControlType=="ComboBoxEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.GetComboBoxValue();
+## #elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit" || $ColumnInfo.ControlType=="CheckedComboBoxEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.EditValue.ToString();
+## #elseif($ColumnInfo.ControlType=="SpinEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.Value;
+## #elseif($ColumnInfo.ControlType=="ToggleSwitch")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.IsOn;
+## #elseif($ColumnInfo.ControlType=="CheckEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.Checked;
+## #elseif($ColumnInfo.ControlType=="DateEdit")
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.DateTime;
+## #else
+##         info.${ColumnInfo.CSharpFieldName} = ${ColumnInfo.ControlName}.Text;
+## #end
+## #end
+## #end
+##     }
+}

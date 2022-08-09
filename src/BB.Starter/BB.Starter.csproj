@@ -1,0 +1,88 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>..\..\output\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\..\output\Release\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="DevExpress.BonusSkins.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.BonusSkins.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Drawing.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Drawing.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Printing.v22.1.Core">
+            <HintPath>..\..\..\Reference\DevExpress.Printing.v22.1.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Data.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Data.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Data.Desktop.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Data.Desktop.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Utils.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Utils.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraBars.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraBars.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraEditors.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraEditors.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraGrid.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraGrid.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraLayout.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraLayout.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraTreeList.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraTreeList.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="SettingsProviderNet">
+          <HintPath>..\..\..\Reference\SettingsProviderNet.dll</HintPath>
+        </Reference>
+        <Reference Include="WinHtmlControl">
+            <HintPath>..\..\..\Reference\WinHtmlControl.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="FieldData" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BB.BaseUI\BB.BaseUI.csproj" />
+      <ProjectReference Include="..\BB.EntityVerification\BB.EntityVerification.csproj" />
+      <ProjectReference Include="..\BB.HttpService\BB.HttpService.csproj" />
+      <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
+      <ProjectReference Include="..\BB.Updater\BB.Updater.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
