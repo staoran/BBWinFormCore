@@ -145,7 +145,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// 获取所有用户的基本信息
     /// </summary>
     /// <returns></returns>
-    [NonAction]
+    [HttpGet("allSimpleUsers")]
     public async Task<List<SimpleUserInfo>> GetSimpleUsersAsync()
     {
         return await FindSimpleUsersAsync(null);

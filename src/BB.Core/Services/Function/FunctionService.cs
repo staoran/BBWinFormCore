@@ -219,7 +219,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
         return list;
     }
 
-    public FunctionNodeInfo GetNode(string id, List<FunctionInfo> dt)
+    private FunctionNodeInfo GetNode(string id, List<FunctionInfo> dt)
     {
         FunctionInfo menuInfo = dt.Find(x => x.ID == id);
         FunctionNodeInfo menuNodeInfo = new (menuInfo);
@@ -364,7 +364,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
     /// <param name="pid">PID</param>
     /// <param name="dt">所有集合，包含ID、PID</param>
     /// <returns></returns>
-    public List<string> GetSubNodeIdList(string pid, DataTable dt)
+    private List<string> GetSubNodeIdList(string pid, DataTable dt)
     {
         List<string> list = new List<string>();
 
@@ -379,7 +379,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
         return list;
     }
 
-    public FunctionInfo CreateSubFunction(FunctionInfo mainInfo)
+    private FunctionInfo CreateSubFunction(FunctionInfo mainInfo)
     {
         var subInfo = new FunctionInfo
         {

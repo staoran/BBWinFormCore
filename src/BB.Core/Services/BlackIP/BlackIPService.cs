@@ -4,7 +4,7 @@ using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
-using BB.Framework.Commons.Network;
+using BB.Tools.Device;
 
 namespace BB.Core.Services.BlackIP;
 
@@ -40,13 +40,23 @@ public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, I
 
         return await _userService.GetSimpleUsersAsync(userIdList.Trim(','));
     }
-        
+
+    /// <summary>
+    /// 新增黑用户
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="blackId"></param>
     public async Task AddUserAsync(int userId, string blackId)
     {
         Dictionary<string, object> dic = new() { { "User_ID", userId }, { "BLACKIP_ID", blackId } };
         await Repository.Db.Insertable(dic).AS("T_ACL_BLACKIP_USER").ExecuteCommandAsync();
     }
 
+    /// <summary>
+    /// 移除黑用户
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="blackId"></param>
     public async Task RemoveUserAsync(int userId, string blackId)
     {
         Dictionary<string, object> dic = new()
@@ -99,7 +109,7 @@ public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, I
         return true;
     }
 
-    public bool IsInList(List<BlackIpInfo> list, string ip)
+    private bool IsInList(List<BlackIpInfo> list, string ip)
     {
         foreach (BlackIpInfo info in list)
         {

@@ -660,6 +660,17 @@ public class BaseService<T> where T : BaseEntity, new()
     }
 
     /// <summary>
+    /// 根据多个对象的ID,批量删除指定对象
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [ApiDescriptionSettings(KeepVerb = true)]
+    public virtual async Task<bool> DeleteByIdsAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object[] key)
+    {
+        return await Repository.DeleteByIdsAsync(key);
+    }
+
+    /// <summary>
     /// 根据指定条件,从数据库中删除指定对象
     /// </summary>
     /// <param name="condition">删除记录的条件语句</param>
