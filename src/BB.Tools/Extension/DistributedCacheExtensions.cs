@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Concurrent;
+using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace BB.Tools.Extension;
@@ -8,6 +9,8 @@ namespace BB.Tools.Extension;
 /// </summary>
 public static class DistributedCacheExtensions
 {
+    private static readonly ConcurrentBag<string> AllKeys = new();
+    
     #region 异步方法
 
     /// <summary>
@@ -24,6 +27,10 @@ public static class DistributedCacheExtensions
         TimeSpan? absoluteTimeSpan = null, DateTimeOffset? absoluteExpiry = null)
     {
         await SetAsync(cache, key, value, CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
+        if (AllKeys.All(x => x != key))
+        {
+            AllKeys.Add(key);
+        }
     }
 
     /// <summary>
@@ -39,6 +46,10 @@ public static class DistributedCacheExtensions
     {
         var json = JsonSerializer.Serialize(value);
         await cache.SetStringAsync(key, json, options);
+        if (AllKeys.All(x => x != key))
+        {
+            AllKeys.Add(key);
+        }
     }
 
     /// <summary>
@@ -106,8 +117,33 @@ public static class DistributedCacheExtensions
             return value;
 
         await cache.SetAsync(key, value, options);
+        if (AllKeys.All(x => x != key))
+        {
+            AllKeys.Add(key);
+        }
 
         return value;
+    }
+
+    /// <summary>
+    /// 获取一个值，该值表示拥有指定键值的缓存是否存在。
+    /// </summary>
+    /// <param name="cache">分布式缓存</param>
+    /// <param name="key">指定的键值。</param>
+    /// <returns>如果缓存存在，则返回true，否则返回false。</returns>
+    public static async Task<bool>ExistsAsync(this IDistributedCache cache, string key)
+    {
+        return await GetAsync<object>(cache, key) != null;
+    }
+
+    /// <summary>
+    /// 清空所有缓存
+    /// </summary>
+    public static async Task FlushAllAsync(this IDistributedCache cache)
+    {
+        foreach (var item in AllKeys)
+            await cache.RemoveAsync(item);
+        AllKeys.Clear();
     }
 
     #endregion
@@ -128,6 +164,10 @@ public static class DistributedCacheExtensions
         TimeSpan? absoluteTimeSpan = null, DateTimeOffset? absoluteExpiry = null)
     {
         Set(cache, key, value, CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
+        if (AllKeys.All(x => x != key))
+        {
+            AllKeys.Add(key);
+        }
     }
 
     /// <summary>
@@ -142,6 +182,10 @@ public static class DistributedCacheExtensions
     {
         var json = JsonSerializer.Serialize(value);
         cache.SetString(key, json, options);
+        if (AllKeys.All(x => x != key))
+        {
+            AllKeys.Add(key);
+        }
     }
 
     /// <summary>
@@ -208,8 +252,33 @@ public static class DistributedCacheExtensions
             return value;
 
         cache.Set(key, value, options);
+        if (AllKeys.All(x => x != key))
+        {
+            AllKeys.Add(key);
+        }
 
         return value;
+    }
+
+    /// <summary>
+    /// 获取一个值，该值表示拥有指定键值的缓存是否存在。
+    /// </summary>
+    /// <param name="cache">分布式缓存</param>
+    /// <param name="key">指定的键值。</param>
+    /// <returns>如果缓存存在，则返回true，否则返回false。</returns>
+    public static bool Exists(this IDistributedCache cache, string key)
+    {
+        return cache.Get<object>(key) != null;
+    }
+
+    /// <summary>
+    /// 清空所有缓存
+    /// </summary>
+    public static void FlushAll(this IDistributedCache cache)
+    {
+        foreach (var item in AllKeys)
+            cache.Remove(item);
+        AllKeys.Clear();
     }
 
     #endregion
