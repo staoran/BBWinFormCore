@@ -85,7 +85,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="11.1.0" />
+      <PackageReference Include="FluentValidation" Version="11.2.0" />
       <PackageReference Include="SunnyUI" Version="3.2.2" />
       <PackageReference Include="System.IO.Ports" Version="6.0.0" />
     </ItemGroup>
