@@ -1,0 +1,108 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>..\..\output\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\..\output\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="DevExpress.BonusSkins.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.BonusSkins.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Drawing.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Drawing.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Printing.v22.1.Core">
+            <HintPath>..\..\..\Reference\DevExpress.Printing.v22.1.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Data.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Data.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Data.Desktop.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Data.Desktop.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Utils.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Utils.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraBars.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraBars.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraEditors.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraEditors.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraGrid.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraGrid.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraLayout.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraLayout.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraNavBar.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraNavBar.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraTreeList.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraTreeList.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraPdfViewer.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraPdfViewer.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraRichEdit.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraRichEdit.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.RichEdit.v22.1.Core">
+            <HintPath>..\..\..\Reference\DevExpress.RichEdit.v22.1.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraSpreadsheet.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.XtraSpreadsheet.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Spreadsheet.v22.1.Core">
+            <HintPath>..\..\..\Reference\DevExpress.Spreadsheet.v22.1.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Images.v22.1">
+            <HintPath>..\..\..\Reference\DevExpress.Images.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.ReportViewer.WinForms">
+          <HintPath>..\..\..\Reference\Microsoft.ReportViewer.WinForms.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.ReportViewer.Common">
+          <HintPath>..\..\..\Reference\Microsoft.ReportViewer.Common.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BB.Entity\BB.Entity.csproj" />
+      <ProjectReference Include="..\BB.HttpService\BB.HttpService.csproj" />
+      <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.1.0" />
+      <PackageReference Include="SunnyUI" Version="3.2.2" />
+      <PackageReference Include="System.IO.Ports" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
