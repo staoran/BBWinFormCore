@@ -105,7 +105,7 @@ public static class ReflectionExtension
     /// <param name="obj">对象实例</param>
     /// <param name="name">属性名称</param>
     /// <param name="value">属性值</param>
-    public static void SetProperty(this object obj, string name, object value)
+    public static void SetProperty(this object obj, string name, object? value)
     {
         //PropertyInfo fieldInfo = obj.GetType().GetProperty(name, bf);
         //value = Convert.ChangeType(value, fieldInfo.PropertyType);

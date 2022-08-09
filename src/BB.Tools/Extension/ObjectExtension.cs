@@ -12,12 +12,12 @@ namespace BB.Tools.Extension;
 /// </summary>
 public static class ObjectExtension
 {    
-    public static bool IsNull(this object obj)
+    public static bool IsNull(this object? obj)
     {
         return obj == null;
     }
 
-    public static bool IsNotNull(this object obj)
+    public static bool IsNotNull(this object? obj)
     {
         return obj != null;
     }
@@ -29,7 +29,7 @@ public static class ObjectExtension
     /// <param name="value">枚举值</param>
     /// <param name="defaultText">未在枚举中找到此枚举值时显示的文本</param>
     /// <returns>枚举显示</returns>
-    public static string ToDisplay<TEnum>(this object value, string defaultText = "")
+    public static string ToDisplay<TEnum>(this object? value, string defaultText = "")
     {
         if (value == null) return defaultText;
         return EnumHelper.GetDisplayName<TEnum>(value.ToString(), defaultText);

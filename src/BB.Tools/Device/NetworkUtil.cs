@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using BB.Tools.Format;
 using Microsoft.Win32;
 
-namespace BB.Framework.Commons.Network;
+namespace BB.Tools.Device;
 
 /// <summary>
 /// 网络相关操作辅助类
