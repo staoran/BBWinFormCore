@@ -1,7 +1,38 @@
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using SqlSugar;
 
 namespace BB.Entity.Base;
+
+/// <summary>
+/// 有子表的实体基类
+/// </summary>
+/// <typeparam name="T"></typeparam>
+[DataContract]
+[Serializable]
+public class BaseEntity<T> : BaseEntity where T : BaseEntity
+{
+    /// <summary>
+    /// 获取子表外键
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public string GetChildForeignKey => ChildForeignKey;
+
+    /// <summary>
+    /// 子表数据
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    [Navigate(NavigateType.OneToMany, ChildForeignKey)]
+    public List<T>? ChildTableList { get; set; }
+
+    /// <summary>
+    /// 子表外键
+    /// </summary>
+    [NonSerialized]
+    public const string ChildForeignKey = "";
+}
 
 /// <summary>
 /// 框架实体类的基类
@@ -17,31 +48,73 @@ public class BaseEntity : INotifyPropertyChanged
     [Ignore]
     public string CurrentLoginUserId { get; set; }
 
+    /// <summary>
+    /// 获取表名
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public string GetDBTableName => DBTableName;
+
+    /// <summary>
+    /// 获取主键
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public string GetPrimaryKey => PrimaryKey;
+
+    /// <summary>
+    /// 获取外键
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public string GetForeignKey => ForeignKey;
+
+    /// <summary>
+    /// 获取排序字段
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public string GetSortKey => SortKey;
+
+    /// <summary>
+    /// 获取排序方式
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public bool GetIsDesc => IsDesc;
+
+    /// <summary>
+    /// 获取乐观锁字段
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public string GetOptimisticLockKey => OptimisticLockKey;
+
     #region 定义字段名称相关常量
 
     /// <summary>
     /// 表名
     /// </summary>
     [NonSerialized]
-    public const string DBTableName = null;
+    public const string DBTableName = "";
 
     /// <summary>
     /// 主键名
     /// </summary>
     [NonSerialized]
-    public const string PrimaryKey = null;
+    public const string PrimaryKey = "";
 
     /// <summary>
     /// 外键名
     /// </summary>
     [NonSerialized]
-    public const string ForeignKey = null;
+    public const string ForeignKey = "";
 
     /// <summary>
     /// 排序字段
     /// </summary>
     [NonSerialized]
-    public const string SortKey = null;
+    public const string SortKey = "";
 
     /// <summary>
     /// 排序方式
@@ -53,7 +126,7 @@ public class BaseEntity : INotifyPropertyChanged
     /// 乐观锁字段
     /// </summary>
     [NonSerialized]
-    public const string OptimisticLockKey = null;
+    public const string OptimisticLockKey = "";
     
     #endregion
 
