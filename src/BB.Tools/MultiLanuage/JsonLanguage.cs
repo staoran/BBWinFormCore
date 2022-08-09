@@ -85,7 +85,7 @@ public class JsonLanguage
     /// <param name="file">JSON格式文件</param>
     private void LoadFile(string file)
     {
-        var content = File.ReadAllText(file, Encoding.UTF8);
+        var content = System.IO.File.ReadAllText(file, Encoding.UTF8);
         if (!string.IsNullOrEmpty(content))
         {
             var dict = JSON.Deserialize<Dictionary<string, string>>(content);
@@ -150,7 +150,7 @@ public class JsonLanguage
     /// <param name="file">JSON格式文件</param>
     private void TranslateFile(string file, string from = "zh", string to = "en",bool sorted = true)
     {
-        var content = File.ReadAllText(file, Encoding.UTF8);
+        var content = System.IO.File.ReadAllText(file, Encoding.UTF8);
         if (!string.IsNullOrEmpty(content))
         {
             bool modified = false;
@@ -191,7 +191,7 @@ public class JsonLanguage
                     newContent = JSON.Serialize(dict, new JsonSerializerOptions() { WriteIndented = true });
                 }
                 //写入原来的文件，覆盖
-                File.WriteAllText(file, newContent, Encoding.UTF8);
+                System.IO.File.WriteAllText(file, newContent, Encoding.UTF8);
 
                 Debug.WriteLine(newContent);
                 Debug.WriteLine($"文件[{file}]内容已更新");//调试更新信息
