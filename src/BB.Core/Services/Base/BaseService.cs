@@ -14,6 +14,7 @@ using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.Validation;
+using FluentValidation;
 
 namespace BB.Core.Services.Base;
 
@@ -27,6 +28,11 @@ public class BaseService<T> where T : BaseEntity, new()
     protected readonly BaseRepository<T> Repository;
 
     /// <summary>
+    /// 数据验证器
+    /// </summary>
+    public IValidator<T> Validator { get; }
+
+    /// <summary>
     /// 登陆用户基础信息（泛型类继承的父类中的静态对象是共享的）
     /// </summary>
     protected readonly LoginUserInfo LoginUserInfo;
@@ -35,8 +41,10 @@ public class BaseService<T> where T : BaseEntity, new()
     /// 构造函数
     /// </summary>
     /// <param name="repository">数据仓储</param>
-    public BaseService(BaseRepository<T> repository)
+    /// <param name="validator">数据验证器</param>
+    public BaseService(BaseRepository<T> repository, IValidator<T> validator)
     {
+        Validator = validator;
         Repository = repository;
         
         LoginUserInfo = App.User.Adapt<LoginUserInfo>();
@@ -819,9 +827,23 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="obj">实体或键值对</param>
     /// <returns></returns>
     [NonAction]
-    public virtual void CheckEntity(OperationType operationType, object obj)
+    public virtual async Task CheckEntityAsync(OperationType operationType, object obj)
     {
         ArgumentValidation.CheckForNullReference(obj, "待验证的对象为空");
+
+        // 相当于实现更多自定义项的 ValidateAndThrow()，ValidateAndThrow 扩展方法不支持额外的设置。
+        // ValidationContext<DocNoRule> context = ValidationContext<DocNoRule>.CreateWithOptions((DocNoRule)obj, options =>
+        // {
+        //     options.ThrowOnFailures(); // 抛出异常
+        //     options.IncludeRuleSets("Create").IncludeRulesNotInRuleSet(); // 执行 Create 规则集
+        //     // 更多设置
+        // });
+        // 如果 context 上下文不需要额外设置，可以直接 new
+        // ValidationContext<DocNoRule> context = new ValidationContext<DocNoRule>((DocNoRule)obj);
+        // context.RootContextData.Add("HashData", obj); // 向根上下文中传入任意数据
+        // var validator = new DocNoRuleValidator(operationType);
+        // validator.Validate(context);
+        await Validator.ValidateAndThrowAsync(obj, operationType);
     }
 
     /// <summary>
