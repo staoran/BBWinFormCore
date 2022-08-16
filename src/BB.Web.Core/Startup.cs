@@ -4,6 +4,7 @@ using BB.Core.DbContext;
 using BB.Core.Event;
 using BB.Core.Filter;
 using FastExpressionCompiler;
+using FluentValidation;
 using Furion;
 using Mapster;
 using Microsoft.AspNetCore.Builder;
@@ -33,8 +34,13 @@ public class Startup : AppStartup
         // 跨域
         services.AddCorsAccessor();
 
+        // 数据校验
+        services.AddValidatorsFromAssemblies(App.Assemblies);
+
         services.AddControllers()
-            .AddAppLocalization() // 注册多语言
+            // 注册多语言
+            .AddAppLocalization()
+            // Json 序列化配置
             .AddJsonOptions(options =>
             {
                 // 驼峰命名
