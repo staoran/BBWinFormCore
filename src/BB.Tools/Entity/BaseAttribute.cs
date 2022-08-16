@@ -1,4 +1,4 @@
-﻿namespace BB.Entity.Base;
+﻿namespace BB.Tools.Entity;
 
 /// <summary>
 /// 主键

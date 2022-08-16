@@ -3,6 +3,7 @@ using System.Reflection;
 using BB.BaseUI.Extension;
 using BB.Entity.Base;
 using BB.HttpService.Base;
+using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
 using DevExpress.XtraEditors.Controls;

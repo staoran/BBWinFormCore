@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using BB.Entity.Base;
+using BB.Tools.Entity;
 
 namespace BB.Entity.Security;
 

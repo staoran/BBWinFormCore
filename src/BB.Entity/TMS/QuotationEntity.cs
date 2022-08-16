@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 using BB.Entity.Base;
+using BB.Tools.Entity;
 
 namespace BB.Entity.TMS;
 
@@ -10,7 +11,7 @@ namespace BB.Entity.TMS;
 [Serializable]
 [IsChildListNull]
 [Table(DBTableName)]
-public sealed class Quotation : BaseEntity
+public sealed class Quotation : BaseEntity<Quotations>
 {
     /// <summary>
     /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过重写 _bll.NewEntity 方法实现）

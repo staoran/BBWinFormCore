@@ -12,4 +12,8 @@
       <PackageReference Include="SqlSugarCore" Version="5.1.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
+    </ItemGroup>
+
 </Project>
