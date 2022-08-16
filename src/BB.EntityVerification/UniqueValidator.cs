@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
-using BB.Tools.Utils;
 using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Validators;
@@ -59,7 +57,8 @@ public class UniqueValidator<T, TProperty> : PropertyValidator<T, TProperty>
                     throw new ArgumentException("没有正确提供主键名或主键值，无法验证编辑时的唯一性");
                 }
 
-                var bll = App.GetService<IDocNoRuleHttpService>();
+                var bll = App.GetService<DocNoRuleService>();
+                
                 // 反射获取当前实体字段的数据库字段名
                 object propertyObjName =  ReflectionExtension.GetField(typeof(T), $"Field{context.PropertyName}");
                 string propertyName = propertyObjName == null ? context.PropertyName : propertyObjName.ObjToStr();
@@ -93,4 +92,24 @@ public class UniqueValidator<T, TProperty> : PropertyValidator<T, TProperty>
 
     protected override string GetDefaultMessageTemplate(string errorCode)
         => "输入的 {PropertyName} 值 {PropertyValue} 已存在，不能重复添加！";
+}
+
+/// <summary>
+/// 唯一验证扩展
+/// </summary>
+public static class UniqueValidatorExtension
+{
+    /// <summary>
+    /// 是否唯一
+    /// </summary>
+    /// <typeparam name="T">正在验证的对象类型</typeparam>
+    /// <typeparam name="TProperty">正在验证的属性类型</typeparam>
+    /// <param name="ruleBuilder">规则构建器</param>
+    /// <param name="expression">指定主键的表达式</param>
+    /// <param name="operationType">当前操作类型</param>
+    /// <returns></returns>
+    public static IRuleBuilderOptions<T, TProperty> IsUnique<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, Expression<Func<T, object>> expression = null, OperationType operationType = OperationType.View)
+    {
+        return ruleBuilder.SetValidator(new UniqueValidator<T, TProperty>(expression, operationType));
+    }
 }
