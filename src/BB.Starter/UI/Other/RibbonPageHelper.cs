@@ -3,7 +3,7 @@ using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.BaseUI.PlugInInterface;
 using BB.Entity.Security;
-using BB.HttpService.Menu;
+using BB.HttpServices.Core.Menu;
 using BB.Starter.UI.SYS;
 using BB.Tools.Entity;
 using DevExpress.XtraBars;

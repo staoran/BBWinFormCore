@@ -2,10 +2,10 @@
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.Entity.Security;
-using BB.HttpService.Function;
-using BB.HttpService.OU;
-using BB.HttpService.SystemType;
-using BB.HttpService.User;
+using BB.HttpServices.Core.Function;
+using BB.HttpServices.Core.OU;
+using BB.HttpServices.Core.SystemType;
+using BB.HttpServices.Core.User;
 using BB.Tools.Format;
 using Furion.LinqBuilder;
 using Furion.Logging.Extensions;

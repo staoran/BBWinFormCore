@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using BB.Entity.Security;
-using BB.HttpService.Menu;
+using BB.HttpServices.Core.Menu;
 using BB.Tools.Format;
 using Furion;
 

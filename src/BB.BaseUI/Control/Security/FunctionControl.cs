@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using BB.Entity.Security;
-using BB.HttpService.Function;
+using BB.HttpServices.Core.Function;
 using BB.Tools.Format;
 using Furion;
 

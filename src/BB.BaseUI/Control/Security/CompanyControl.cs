@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using BB.BaseUI.Other;
 using BB.Entity.Security;
-using BB.HttpService.OU;
+using BB.HttpServices.Core.OU;
 using BB.Tools.Format;
 using DevExpress.XtraEditors;
 using Furion;

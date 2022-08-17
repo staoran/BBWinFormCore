@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using BB.Entity.Base;
-using BB.HttpService.Base;
+using BB.HttpServices.Base;
 using FluentValidation;
 
 namespace BB.BaseUI.BaseUI;

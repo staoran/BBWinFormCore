@@ -1,4 +1,5 @@
 ﻿using BB.Entity.Dictionary;
+using BB.HttpServices.Core.UserParameter;
 using Furion;
 using SettingsProviderNet;
 

@@ -2,8 +2,9 @@
 using BB.BaseUI.Other;
 using BB.BaseUI.WinForm;
 using BB.Entity.Security;
-using BB.HttpService.FieldControlConfig;
-using BB.HttpService.Menu;
+using BB.HttpServices.Core.Dict;
+using BB.HttpServices.Core.FieldControlConfig;
+using BB.HttpServices.Core.Menu;
 using BB.Starter.UI.Code;
 using BB.Tools.Entity;
 using BB.Tools.Extension;

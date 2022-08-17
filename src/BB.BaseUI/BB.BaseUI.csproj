@@ -80,7 +80,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BB.Entity\BB.Entity.csproj" />
-      <ProjectReference Include="..\BB.HttpService\BB.HttpService.csproj" />
+      <ProjectReference Include="..\BB.HttpServices\BB.HttpServices.csproj" />
       <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
     </ItemGroup>
 

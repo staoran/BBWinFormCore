@@ -1,6 +1,6 @@
 ﻿using BB.BaseUI.Extension;
 using BB.Entity.Base;
-using BB.HttpService.Base;
+using BB.HttpServices.Base;
 using BB.Tools.Extension;
 using FluentValidation;
 using Furion;

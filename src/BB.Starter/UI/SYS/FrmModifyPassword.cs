@@ -1,7 +1,6 @@
 ﻿using BB.BaseUI.BaseUI;
 using BB.BaseUI.Extension;
-using BB.HttpService.User;
-using Furion;
+using BB.HttpServices.Core.User;
 
 namespace BB.Starter.UI.SYS;
 

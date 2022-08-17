@@ -1,11 +1,10 @@
 ﻿using BB.BaseUI.Extension;
 using BB.Entity.Base;
 using BB.Entity.Security;
-using BB.HttpService.Auth;
-using BB.HttpService.Auth.dto;
-using BB.HttpService.OU;
-using BB.HttpService.Role;
-using BB.HttpService.User;
+using BB.HttpServices.Core.Auth;
+using BB.HttpServices.Core.Auth.dto;
+using BB.HttpServices.Core.OU;
+using BB.HttpServices.Core.User;
 using BB.Tools.Extension;
 using BB.Tools.Utils;
 using Furion;

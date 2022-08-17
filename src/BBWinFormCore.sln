@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.Updater", "BB.Updater\BB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.EntityVerification", "BB.EntityVerification\BB.EntityVerification.csproj", "{14ED0DF2-02A3-44E0-96E6-4C7A9993FBA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.HttpService", "BB.HttpService\BB.HttpService.csproj", "{E2192ABA-652C-4718-BE73-288B1B23C2DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.HttpServices", "BB.HttpServices\BB.HttpServices.csproj", "{E2192ABA-652C-4718-BE73-288B1B23C2DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
