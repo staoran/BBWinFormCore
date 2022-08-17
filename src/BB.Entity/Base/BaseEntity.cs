@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using BB.Tools.Entity;
 using SqlSugar;
 
 namespace BB.Entity.Base;

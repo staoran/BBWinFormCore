@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Furion.Pure" Version="4.1.11" />
+      <PackageReference Include="Furion.Pure" Version="4.2.3" />
     </ItemGroup>
 
     <ItemGroup>
