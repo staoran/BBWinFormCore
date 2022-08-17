@@ -17,7 +17,6 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using Mapster;
 
 namespace BB.BaseUI.Pager;
 

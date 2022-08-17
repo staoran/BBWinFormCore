@@ -4,7 +4,6 @@ using BB.BaseUI.PlugInInterface;
 using BB.Entity.Base;
 using BB.Tools.Entity;
 using BB.Tools.MultiLanuage;
-using BB.Tools.Utils;
 using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;

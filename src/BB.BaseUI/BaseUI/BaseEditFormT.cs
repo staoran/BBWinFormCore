@@ -3,7 +3,6 @@ using BB.Entity.Base;
 using BB.HttpServices.Base;
 using BB.Tools.Extension;
 using FluentValidation;
-using Furion;
 
 namespace BB.BaseUI.BaseUI;
 

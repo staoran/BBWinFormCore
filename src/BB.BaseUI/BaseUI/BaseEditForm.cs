@@ -4,7 +4,6 @@ using BB.Tools.MultiLanuage;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
 using FluentValidation.Results;
-using Furion.DependencyInjection;
 
 namespace BB.BaseUI.BaseUI;
 

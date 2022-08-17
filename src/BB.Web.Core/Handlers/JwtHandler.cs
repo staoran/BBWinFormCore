@@ -1,9 +1,9 @@
-﻿using Furion.Authorization;
+﻿using System.Threading.Tasks;
+using Furion.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 
-namespace BB.Web.Core;
+namespace BB.Web.Core.Handlers;
 
 public class JwtHandler : AppAuthorizeHandler
 {

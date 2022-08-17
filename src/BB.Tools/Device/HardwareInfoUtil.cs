@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Win32;
 
-namespace BB.Tool.Device;
+namespace BB.Tools.Device;
 
 /// <summary>
 /// 获取系统信息、电脑CPU、磁盘、网卡、内存等相关信息辅助类

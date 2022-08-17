@@ -1,5 +1,4 @@
 ﻿using BB.BaseUI.Other;
-using BB.BaseUI.Pager.Others;
 using BB.Tools.Entity;
 using BB.Tools.MultiLanuage;
 using DevExpress.XtraEditors;

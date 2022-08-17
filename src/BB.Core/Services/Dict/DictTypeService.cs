@@ -6,7 +6,6 @@ using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
 using BB.Tools.Entity;
-using BB.Tools.Extension;
 using FluentValidation;
 
 namespace BB.Core.Services.Dict;

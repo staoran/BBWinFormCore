@@ -1,7 +1,6 @@
 using System.Collections;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Print;
-using DevExpress.Utils.Drawing.Helpers;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 

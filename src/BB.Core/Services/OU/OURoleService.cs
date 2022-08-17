@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
-using BB.Entity.TMS;
 using FluentValidation;
 
 namespace BB.Core.Services.OU;
