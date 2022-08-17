@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
+using FluentValidation;
 
 namespace BB.Core.Services.UserParameter;
 
@@ -12,7 +13,7 @@ namespace BB.Core.Services.UserParameter;
 /// </summary>
 public class UserParameterService : BaseService<UserParameterInfo>, IDynamicApiController, ITransient
 {
-    public UserParameterService(BaseRepository<UserParameterInfo> repository) : base(repository)
+    public UserParameterService(BaseRepository<UserParameterInfo> repository, IValidator<UserParameterInfo> validator) : base(repository, validator)
     {
     }
 

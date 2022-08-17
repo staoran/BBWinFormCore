@@ -3,12 +3,13 @@ using System.Linq;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Tools.Validation;
+using FluentValidation;
 
 namespace BB.Core.Services.FieldControlConfig;
 
 public class FieldControlConfigService : BaseService<Entity.Security.FieldControlConfig>, IDynamicApiController, ITransient
 {
-    public FieldControlConfigService(BaseRepository<Entity.Security.FieldControlConfig> repository) : base(repository)
+    public FieldControlConfigService(BaseRepository<Entity.Security.FieldControlConfig> repository, IValidator<Entity.Security.FieldControlConfig> validator) : base(repository, validator)
     {
     }
     

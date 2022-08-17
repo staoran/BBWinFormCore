@@ -5,6 +5,7 @@ using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Extension;
+using FluentValidation;
 
 namespace BB.Core.Services.RoleData;
 
@@ -13,7 +14,8 @@ public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController,
     private readonly UserRoleService _userRoleService;
     private readonly UserService _userService;
 
-    public RoleDataService(BaseRepository<RoleDataInfo> repository, UserRoleService userRoleService, UserService userService) : base(repository)
+    public RoleDataService(BaseRepository<RoleDataInfo> repository, IValidator<RoleDataInfo> validator,
+        UserRoleService userRoleService, UserService userService) : base(repository, validator)
     {
         _userRoleService = userRoleService;
         _userService = userService;

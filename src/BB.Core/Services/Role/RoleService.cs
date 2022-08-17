@@ -7,6 +7,7 @@ using BB.Core.DbContext;
 using BB.Core.Filter;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.Role;
 
@@ -15,7 +16,7 @@ public class RoleService : BaseService<RoleInfo>, IDynamicApiController, ITransi
 	/// <summary>
 	/// 构造函数
 	/// </summary>
-	public RoleService(BaseRepository<RoleInfo> repository) : base(repository)
+	public RoleService(BaseRepository<RoleInfo> repository, IValidator<RoleInfo> validator) : base(repository, validator)
 	{
 	}
 

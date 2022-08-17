@@ -10,6 +10,7 @@ using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Format;
+using FluentValidation;
 
 namespace BB.Core.Services.Function;
 
@@ -17,7 +18,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
 {
     private readonly UserRoleService _userRoleService;
 
-    public FunctionService(BaseRepository<FunctionInfo> repository, UserRoleService userRoleService) : base(repository)
+    public FunctionService(BaseRepository<FunctionInfo> repository, IValidator<FunctionInfo> validator, UserRoleService userRoleService) : base(repository, validator)
     {
         _userRoleService = userRoleService;
     }

@@ -9,6 +9,7 @@ using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Format;
+using FluentValidation;
 
 namespace BB.Core.Services.OU;
 
@@ -19,8 +20,8 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     /// <summary>
     /// 构造函数
     /// </summary>
-    public OUService(BaseRepository<OUInfo> repository, UserRoleService userRoleService) :
-        base(repository)
+    public OUService(BaseRepository<OUInfo> repository, IValidator<OUInfo> validator, UserRoleService userRoleService) :
+        base(repository, validator)
     {
         _userRoleService = userRoleService;
     }

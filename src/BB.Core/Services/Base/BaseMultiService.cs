@@ -5,6 +5,8 @@ using BB.Core.DbContext;
 using BB.Core.Filter;
 using BB.Entity.Base;
 using BB.Tools.Entity;
+using BB.Tools.Validation;
+using FluentValidation;
 
 namespace BB.Core.Services.Base;
 
@@ -18,10 +20,12 @@ public class BaseMultiService<T, T1> : BaseService<T>
     where T1 : BaseEntity, new()
 {
     private readonly BaseRepository<T1> _childRepository;
+    private readonly IValidator<T1> _childValidator;
 
-    public BaseMultiService(BaseRepository<T> repository, BaseRepository<T1> childRepository) : base(repository)
+    public BaseMultiService(BaseRepository<T> repository, BaseRepository<T1> childRepository, IValidator<T> validator, IValidator<T1> childValidator) : base(repository, validator)
     {
         _childRepository = childRepository;
+        _childValidator = childValidator;
     }
 
     /// <summary>
@@ -31,11 +35,11 @@ public class BaseMultiService<T, T1> : BaseService<T>
     /// <returns>执行操作是否成功。</returns>
     public override async Task<bool> InsertAsync(T obj)
     {
-        CheckEntity(OperationType.Add, obj);
-        obj.ChildTableList?.ForEach(x => CheckEntity(OperationType.Add, x));
+        await CheckEntityAsync(OperationType.Add, obj);
+        obj.ChildTableList?.ForEach(x => CheckEntityAsync(OperationType.Add, x));
 
         return await Repository.Db.InsertNav(obj)
-            .Include(x=>x.ChildTableList)
+            .Include(x => x.ChildTableList)
             .ExecuteCommandAsync();
     }
 
@@ -47,14 +51,10 @@ public class BaseMultiService<T, T1> : BaseService<T>
     [ApiDescriptionSettings(KeepVerb = true)]
     public override async Task<bool> InsertRangeAsync([Required]List<T> list)
     {
-        list.ForEach(x =>
-        {
-            CheckEntity(OperationType.Add, x);
-            x.ChildTableList?.ForEach(x1 => CheckEntity(OperationType.Add, x1));
-        });
+        await Parallel.ForEachAsync(list, async (entity, _) => await CheckEntityAsync(OperationType.Add, entity));
 
         return await Repository.Db.InsertNav(list)
-            .Include(x=>x.ChildTableList)
+            .Include(x => x.ChildTableList)
             .ExecuteCommandAsync();
     }
 
@@ -65,11 +65,10 @@ public class BaseMultiService<T, T1> : BaseService<T>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public override async Task<bool> UpdateAsync([Required]T obj)
     {
-        CheckEntity(OperationType.Edit, obj);
-        obj.ChildTableList?.ForEach(x => CheckEntity(OperationType.Edit, x));
+        await CheckEntityAsync(OperationType.Edit, obj);
 
         return await Repository.Db.UpdateNav(obj)
-            .Include(x=>x.ChildTableList)
+            .Include(x => x.ChildTableList)
             .ExecuteCommandAsync();
     }
 
@@ -83,7 +82,7 @@ public class BaseMultiService<T, T1> : BaseService<T>
     {
         var data = await FindByIdAsync(key);
         return await Repository.Db.DeleteNav(data)
-            .Include(x1=>x1.ChildTableList)
+            .Include(x1 => x1.ChildTableList)
             .ExecuteCommandAsync();
     }
 
@@ -97,7 +96,24 @@ public class BaseMultiService<T, T1> : BaseService<T>
     {
         var data = await FindByIDsAsync(key);
         return await Repository.Db.DeleteNav(data)
-            .Include(x1=>x1.ChildTableList)
+            .Include(x1 => x1.ChildTableList)
             .ExecuteCommandAsync();
+    }
+
+    /// <summary>
+    /// 验证一个实体或键值对
+    /// </summary>
+    /// <param name="operationType">操作类型</param>
+    /// <param name="obj">实体或键值对</param>
+    /// <returns></returns>
+    [NonAction]
+    public override async Task CheckEntityAsync(OperationType operationType, object obj)
+    {
+        await base.CheckEntityAsync(operationType, obj);
+        if (obj is T { ChildTableList.Count: > 0 } o)
+        {
+            await Parallel.ForEachAsync(o.ChildTableList,
+                async (entity, _) => await _childValidator.ValidateAndThrowAsync(entity, operationType));
+        }
     }
 }

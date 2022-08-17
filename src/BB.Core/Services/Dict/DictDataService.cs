@@ -6,6 +6,7 @@ using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
 using BB.Tools.Entity;
+using FluentValidation;
 
 namespace BB.Core.Services.Dict;
 
@@ -14,7 +15,7 @@ namespace BB.Core.Services.Dict;
 /// </summary>
 public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController, ITransient
 {
-    public DictDataService(BaseRepository<DictDataInfo> repository) : base(repository)
+    public DictDataService(BaseRepository<DictDataInfo> repository, IValidator<DictDataInfo> validator) : base(repository, validator)
     {
     }
 

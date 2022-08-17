@@ -5,6 +5,7 @@ using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Device;
+using FluentValidation;
 
 namespace BB.Core.Services.BlackIP;
 
@@ -12,7 +13,7 @@ public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, I
 {
     private readonly UserService _userService;
 
-    public BlackIPService(BaseRepository<BlackIpInfo> repository, UserService userService) : base(repository)
+    public BlackIPService(BaseRepository<BlackIpInfo> repository, IValidator<BlackIpInfo> validator, UserService userService) : base(repository, validator)
     {
         _userService = userService;
     }

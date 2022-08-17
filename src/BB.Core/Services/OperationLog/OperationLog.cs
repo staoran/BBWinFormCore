@@ -5,6 +5,7 @@ using BB.Core.Services.Base;
 using BB.Core.Services.OperationLogSetting;
 using BB.Core.Services.User;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.OperationLog;
 
@@ -13,8 +14,8 @@ public class OperationLog : BaseService<OperationLogInfo>, IDynamicApiController
     private readonly UserService _userService;
     private readonly OperationLogSettingService _operationLogSettingService;
 
-    public OperationLog(BaseRepository<OperationLogInfo> repository, UserService userService,
-        OperationLogSettingService operationLogSettingService) : base(repository)
+    public OperationLog(BaseRepository<OperationLogInfo> repository, IValidator<OperationLogInfo> validator, UserService userService,
+        OperationLogSettingService operationLogSettingService) : base(repository, validator)
     {
         _userService = userService;
         _operationLogSettingService = operationLogSettingService;

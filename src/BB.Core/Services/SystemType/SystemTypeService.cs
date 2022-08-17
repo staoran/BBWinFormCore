@@ -5,6 +5,7 @@ using BB.Core.Filter;
 using BB.Core.Services.Base;
 using BB.Core.Services.Role;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.SystemType;
 
@@ -12,7 +13,7 @@ public class SystemTypeService : BaseService<SystemTypeInfo>, IDynamicApiControl
 {
     private readonly RoleService _roleService;
 
-    public SystemTypeService(BaseRepository<SystemTypeInfo> repository, RoleService roleService) : base(repository)
+    public SystemTypeService(BaseRepository<SystemTypeInfo> repository, IValidator<SystemTypeInfo> validator, RoleService roleService) : base(repository, validator)
     {
         _roleService = roleService;
     }

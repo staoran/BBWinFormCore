@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.Role;
 
 public class RoleFunctionService : BaseService<RoleFunction>, ITransient
 {
-    public RoleFunctionService(BaseRepository<RoleFunction> repository) : base(repository)
+    public RoleFunctionService(BaseRepository<RoleFunction> repository, IValidator<RoleFunction> validator) : base(repository, validator)
     {
     }
 

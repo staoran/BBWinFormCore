@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.User;
 
 public class UserRoleService : BaseService<UserRoleEntity>, ITransient
 {
-    public UserRoleService(BaseRepository<UserRoleEntity> repository) : base(repository)
+    public UserRoleService(BaseRepository<UserRoleEntity> repository, IValidator<UserRoleEntity> validator) : base(repository, validator)
     {
     }
 

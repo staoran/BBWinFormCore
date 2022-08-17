@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
+using FluentValidation;
 
 namespace BB.Core.Services.Region;
 
@@ -12,7 +13,7 @@ namespace BB.Core.Services.Region;
 /// </summary>
 public class ProvinceService : BaseService<ProvinceInfo>, IDynamicApiController, ITransient
 {
-    public ProvinceService(BaseRepository<ProvinceInfo> repository) : base(repository)
+    public ProvinceService(BaseRepository<ProvinceInfo> repository, IValidator<ProvinceInfo> validator) : base(repository, validator)
     {
     }
 

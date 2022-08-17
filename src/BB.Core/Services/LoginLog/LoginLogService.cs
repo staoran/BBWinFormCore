@@ -5,12 +5,13 @@ using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Base;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.LoginLog;
 
 public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController, ITransient
 {
-    public LoginLogService(BaseRepository<LoginLogInfo> repository) : base(repository)
+    public LoginLogService(BaseRepository<LoginLogInfo> repository, IValidator<LoginLogInfo> validator) : base(repository, validator)
     {
     }
 

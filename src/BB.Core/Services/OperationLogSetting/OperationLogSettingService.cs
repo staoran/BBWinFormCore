@@ -2,12 +2,13 @@
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.OperationLogSetting;
 
 public class OperationLogSettingService : BaseService<OperationLogSettingInfo>, IDynamicApiController, ITransient
 {
-    public OperationLogSettingService(BaseRepository<OperationLogSettingInfo> repository) : base(repository)
+    public OperationLogSettingService(BaseRepository<OperationLogSettingInfo> repository, IValidator<OperationLogSettingInfo> validator) : base(repository, validator)
     {
     }
 

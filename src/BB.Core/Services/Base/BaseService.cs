@@ -52,7 +52,7 @@ public class BaseService<T> where T : BaseEntity, new()
 
     #endregion
 
-    #region 对象添加、修改、查询接口
+    #region 对象添加、修改、删除、查询接口
 
     /// <summary>
     /// 插入指定对象到数据库中
@@ -61,7 +61,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>执行操作是否成功。</returns>
     public virtual async Task<bool> InsertAsync(T obj)
     {
-        CheckEntity(OperationType.Add, obj);
+        await CheckEntityAsync(OperationType.Add, obj);
 
         return await Repository.InsertAsync(obj);
     }
@@ -74,7 +74,8 @@ public class BaseService<T> where T : BaseEntity, new()
     [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<bool> InsertRangeAsync([Required]List<T> list)
     {
-        list.ForEach(x => CheckEntity(OperationType.Add, x));
+        await Parallel.ForEachAsync(list, async (x, _) => await CheckEntityAsync(OperationType.Add, x));
+
         return await Repository.InsertRangeAsync(list);
     }
 
@@ -85,7 +86,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public virtual async Task<bool> UpdateAsync([Required]T obj)
     {
-        CheckEntity(OperationType.Edit, obj);
+        await CheckEntityAsync(OperationType.Edit, obj);
         return await Repository.UpdateAsync(obj);
     }
 
@@ -97,7 +98,7 @@ public class BaseService<T> where T : BaseEntity, new()
     [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<bool> UpdateFieldsAsync([Required]Hashtable recordField)
     {
-        CheckEntity(OperationType.Edit, recordField);
+        await CheckEntityAsync(OperationType.Edit, recordField);
         return await Repository.UpdateFieldsAsync(recordField);
     }
 
@@ -130,7 +131,7 @@ public class BaseService<T> where T : BaseEntity, new()
     [NonAction]
     public virtual async Task<bool> UpdateAsync(Hashtable recordField)
     {
-        CheckEntity(OperationType.Edit, recordField);
+        await CheckEntityAsync(OperationType.Edit, recordField);
         return await Repository.UpdateAsync(recordField);
     }
 
@@ -154,6 +155,61 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<bool> InsertIfNewAsync([Required]T obj)
     {
         return await Repository.InsertIfNewAsync(obj);
+    }
+
+    /// <summary>
+    /// 从数据库中删除指定对象
+    /// </summary>
+    /// <param name="entity">指定对象</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [NonAction]
+    public virtual async Task<bool> DeleteAsync(T entity)
+    {
+        return await Repository.DeleteAsync(entity);
+    }
+
+    /// <summary>
+    /// 根据指定对象的ID,从数据库中删除指定对象
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [QueryParameters]
+    public virtual async Task<bool> DeleteAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
+    {
+        return await Repository.DeleteAsync(key);
+    }
+
+    /// <summary>
+    /// 根据指定条件,从数据库中删除指定对象
+    /// </summary>
+    /// <param name="expression">条件表达式</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [NonAction]
+    public virtual async Task<bool> DeleteAsync(Expression<Func<T,bool>> expression)
+    {
+        return await Repository.DeleteAsync(expression);
+    }
+
+    /// <summary>
+    /// 根据多个对象的ID,批量删除指定对象
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [ApiDescriptionSettings(KeepVerb = true)]
+    public virtual async Task<bool> DeleteByIdsAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object[] key)
+    {
+        return await Repository.DeleteByIdsAsync(key);
+    }
+
+    /// <summary>
+    /// 根据指定条件,从数据库中删除指定对象
+    /// </summary>
+    /// <param name="condition">删除记录的条件语句</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [NonAction]
+    public virtual async Task<bool> DeleteByConditionAsync(string condition)
+    {
+        return await Repository.DeleteByConditionAsync(condition);
     }
 
     /// <summary>
@@ -635,61 +691,6 @@ public class BaseService<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 从数据库中删除指定对象
-    /// </summary>
-    /// <param name="entity">指定对象</param>
-    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [NonAction]
-    public virtual async Task<bool> DeleteAsync(T entity)
-    {
-        return await Repository.DeleteAsync(entity);
-    }
-
-    /// <summary>
-    /// 根据指定对象的ID,从数据库中删除指定对象
-    /// </summary>
-    /// <param name="key">指定对象的ID</param>
-    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [QueryParameters]
-    public virtual async Task<bool> DeleteAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object key)
-    {
-        return await Repository.DeleteAsync(key);
-    }
-
-    /// <summary>
-    /// 根据指定条件,从数据库中删除指定对象
-    /// </summary>
-    /// <param name="expression">条件表达式</param>
-    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [NonAction]
-    public virtual async Task<bool> DeleteAsync(Expression<Func<T,bool>> expression)
-    {
-        return await Repository.DeleteAsync(expression);
-    }
-
-    /// <summary>
-    /// 根据多个对象的ID,批量删除指定对象
-    /// </summary>
-    /// <param name="key">指定对象的ID</param>
-    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [ApiDescriptionSettings(KeepVerb = true)]
-    public virtual async Task<bool> DeleteByIdsAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object[] key)
-    {
-        return await Repository.DeleteByIdsAsync(key);
-    }
-
-    /// <summary>
-    /// 根据指定条件,从数据库中删除指定对象
-    /// </summary>
-    /// <param name="condition">删除记录的条件语句</param>
-    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [NonAction]
-    public virtual async Task<bool> DeleteByConditionAsync(string condition)
-    {
-        return await Repository.DeleteByConditionAsync(condition);
-    }
-
-    /// <summary>
     /// 打开数据库连接，并创建事务对象
     /// </summary>
     [NonAction]
@@ -729,12 +730,12 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
     [NonAction]
-    protected virtual string GetConditionSql(NameValueCollection searchInfos)
+    public virtual string GetConditionSql(NameValueCollection searchInfos)
     {
         var condition = new SearchCondition();
         foreach (string key in searchInfos.AllKeys)
         {
-            condition.AddCondition(key, searchInfos[key], SqlOperator.Equal);
+            if (key != null) condition.AddCondition(key, searchInfos[key], SqlOperator.Equal);
         }
 
         return condition.BuildConditionSql().Replace("Where", "");
@@ -844,6 +845,34 @@ public class BaseService<T> where T : BaseEntity, new()
         // var validator = new DocNoRuleValidator(operationType);
         // validator.Validate(context);
         await Validator.ValidateAndThrowAsync(obj, operationType);
+
+        // if (result.IsValid)
+        // {
+        //     var e = string.Empty;
+        //     result.Errors.ForEach(a =>
+        //     {
+        //         e += a.ErrorMessage + Environment.NewLine;
+        //     });
+        //     throw new Exception(e);
+        // }
+        // #region 实体通用验证
+        //
+        // CheckEntityValue(ValidateType.Null, obj, DocNoRule.FieldDocCode, true, 2);
+        // CheckEntityValue(ValidateType.Null, obj, DocNoRule.FieldRuleFormat, true, 50);
+        // CheckEntityValue(ValidateType.Number, obj, DocNoRule.FieldNoLength);
+        // CheckEntityValue(ValidateType.Null, obj, DocNoRule.FieldCreationDate, true);
+        // CheckEntityValue(ValidateType.Null, obj, DocNoRule.FieldCreatedBy, true, 20);
+        //
+        // #endregion
+        //
+        // #region 参数值唯一性验证
+        //
+        // if (operationType is OperationType.Add)
+        //     CheckUnique(DocNoRule.FieldDocCode, "单据编码", obj);
+        // if (operationType is OperationType.Edit)
+        //     CheckUnique(DocNoRule.FieldDocCode, "单据编码", obj, DocNoRule.PrimaryKey, primaryKeyValue);
+        //
+        // #endregion
     }
 
     /// <summary>
@@ -939,7 +968,7 @@ public class BaseService<T> where T : BaseEntity, new()
 
         // 字段权限表控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
-        // return permitDict;
+        // return await Task.FromResult(permitDict);
     }
 
     #endregion

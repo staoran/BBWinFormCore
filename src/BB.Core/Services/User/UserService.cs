@@ -11,6 +11,7 @@ using BB.Tools.Encrypt;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
+using FluentValidation;
 using Furion.EventBus;
 
 namespace BB.Core.Services.User;
@@ -25,8 +26,8 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// </summary>
     private readonly HttpContext _httpContext;
 
-    public UserService(BaseRepository<UserInfo> repository, IEventPublisher eventPublisher, 
-        IHttpContextAccessor httpContextAccessor) : base(repository)
+    public UserService(BaseRepository<UserInfo> repository, IValidator<UserInfo> validator, IEventPublisher eventPublisher, 
+        IHttpContextAccessor httpContextAccessor) : base(repository, validator)
     {
         _eventPublisher = eventPublisher;
         _httpContext = httpContextAccessor.HttpContext;
@@ -145,7 +146,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// 获取所有用户的基本信息
     /// </summary>
     /// <returns></returns>
-    [HttpGet("allSimpleUsers")]
+    [ApiDescriptionSettings(Name = "allSimpleUsers")]
     public async Task<List<SimpleUserInfo>> GetSimpleUsersAsync()
     {
         return await FindSimpleUsersAsync(null);

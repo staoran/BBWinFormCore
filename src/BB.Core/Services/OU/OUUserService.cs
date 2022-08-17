@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.OU;
 
 public class OUUserService : BaseService<OUUserEntity>, ITransient
 {
-    public OUUserService(BaseRepository<OUUserEntity> repository) : base(repository)
+    public OUUserService(BaseRepository<OUUserEntity> repository, IValidator<OUUserEntity> validator) : base(repository, validator)
     {
     }
 

@@ -5,6 +5,7 @@ using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
+using FluentValidation;
 
 namespace BB.Core.Services.Menu;
 
@@ -12,7 +13,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
 {
     private readonly UserRoleService _userRoleService;
 
-    public MenuService(BaseRepository<MenuInfo> repository, UserRoleService userRoleService) : base(repository)
+    public MenuService(BaseRepository<MenuInfo> repository, IValidator<MenuInfo> validator, UserRoleService userRoleService) : base(repository, validator)
     {
         _userRoleService = userRoleService;
     }

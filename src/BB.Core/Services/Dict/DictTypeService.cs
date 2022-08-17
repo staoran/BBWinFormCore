@@ -7,6 +7,7 @@ using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
+using FluentValidation;
 
 namespace BB.Core.Services.Dict;
 
@@ -15,7 +16,7 @@ namespace BB.Core.Services.Dict;
 /// </summary>
 public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController, ITransient
 {
-    public DictTypeService(BaseRepository<DictTypeInfo> repository) : base(repository)
+    public DictTypeService(BaseRepository<DictTypeInfo> repository, IValidator<DictTypeInfo> validator) : base(repository, validator)
     {
     }
 
