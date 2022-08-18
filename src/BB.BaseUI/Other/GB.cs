@@ -12,6 +12,7 @@ using BB.HttpServices.Core.OU;
 using BB.HttpServices.Core.Region;
 using BB.HttpServices.Core.RoleData;
 using BB.HttpServices.Core.User;
+using BB.HttpServices.TMS;
 using BB.Tools.Device;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
@@ -671,7 +672,7 @@ namespace BB.BaseUI.Other;
         AllCostType.Clear();
         EnabledCostType.Clear();
 
-        List<BasicCostType> ctl = await App.GetService<IBasicCostTypeHttpService>().GetAll();
+        List<BasicCostType> ctl = await App.GetService<BasicCostTypeHttpService>().GetAllAsync();
 
         if (ctl.Any())
         {
@@ -691,7 +692,7 @@ namespace BB.BaseUI.Other;
         AllCostBillType.Clear();
         EnabledCostBillType.Clear();
 
-        List<BasicCostBillType> cbtl = await App.GetService<IBasicCostBillTypeHttpService>().GetAll();
+        List<BasicCostBillType> cbtl = await App.GetService<BasicCostBillTypeHttpService>().GetAllAsync();
 
         if (cbtl.Any())
         {
@@ -709,14 +710,14 @@ namespace BB.BaseUI.Other;
 
         #region 加载字典数据
 
-        AllDictType = await App.GetService<IDictTypeHttpService>().GetAll();
-        AllDictData = await App.GetService<IDictDataHttpService>().GetAll();
+        AllDictType = await App.GetService<DictTypeHttpService>().GetAllAsync();
+        AllDictData = await App.GetService<DictDataHttpService>().GetAllAsync();
 
         #endregion
 
         #region 处理和缓存行政区
 
-        var allRegion = await App.GetService<IRegionHttpService>().GetAllRegion();
+        var allRegion = await App.GetService<RegionHttpService>().GetAllRegionAsync();
 
         if (allRegion.Any())
         {

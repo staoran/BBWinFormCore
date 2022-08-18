@@ -27,16 +27,17 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
     private readonly List<FieldControlConfig> _list = new();
 
     private readonly string _dataPath = @$"{AppDomain.CurrentDomain.BaseDirectory}FieldData\";
-    private readonly IDictTypeHttpService _dictTypeBLL;
+    private readonly DictTypeHttpService _dictTypeBLL;
 
-    public FrmSelectDataBase(FieldControlConfigHttpService fieldControlConfigHttpService, MenuHttpService menuHttpService)
+    public FrmSelectDataBase(FieldControlConfigHttpService fieldControlConfigHttpService, MenuHttpService menuHttpService,
+        DictTypeHttpService dictTypeHttpService)
     {
         SplashScreenHelper.Show();
         SplashScreenHelper.SetDescription("界面加载中...");
         InitializeComponent();
         _fieldControlConfigHttpService = fieldControlConfigHttpService;
         _menuHttpService = menuHttpService;
-        _dictTypeBLL = await App.GetService<IDictTypeHttpService>();
+        _dictTypeBLL = dictTypeHttpService;
     }
 
     private async void frmSelectDataBase_Load(object sender, EventArgs e)
@@ -86,7 +87,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
                 new("网格树", "TreeListLookUpEdit")
             }, false);
         List<string> dataSourceSelection =
-            _dictTypeBLL.GetEndpointItems().Select(x => $"\"{x.Value}\"").ToList();
+            (await _dictTypeBLL.GetEndpointItemsAsync()).Select(x => $"\"{x.Value}\"").ToList();
         dataSourceSelection.Insert(0, "GB.AllRegions");
         dataSourceSelection.Insert(0, "GB.AllUserDict");
         dataSourceSelection.Insert(0, "GB.AllOuDict");
@@ -357,14 +358,17 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         SplashScreenHelper.SetDescription("元数据加载中...");
         _list.Clear();
         // 从数据库加载当前表的字段元数据
-        _list.AddRange(await _fieldControlConfigHttpService.GetFieldControlConfigs(txtTable.EditValue.ToString().Split('|')[0]));
+        _list.AddRange(await _fieldControlConfigHttpService.GetFieldControlConfigs(txtTable.EditValue.ObjToStr().Split('|')[0]));
 
         // 子表是否有勾选，如果有，则加载子表的字段元数据
         var data = txtChildTable.Properties.Items.Where(p => p.CheckState == CheckState.Checked).ToList();
         if (data.Count > 0)
         {
-            data.ForEach(async x =>
-                _list.AddRange(await _fieldControlConfigHttpService.GetFieldControlConfigs(x.Value.ToString().Split('|')[0])));
+            foreach (CheckedListBoxItem x in data)
+            {
+                _list.AddRange(
+                    await _fieldControlConfigHttpService.GetFieldControlConfigs(x.Value.ObjToStr().Split('|')[0]));
+            }
         }
 
         SplashScreenHelper.SetDescription("历史数据加载中...");

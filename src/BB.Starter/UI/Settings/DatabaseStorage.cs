@@ -45,7 +45,7 @@ public class DatabaseStorage : JsonSettingsStoreBase
             Creator = _creator
         };
 
-        await App.GetService<IUserParameterHttpService>().SaveParamater(info);
+        App.GetService<UserParameterHttpService>().SaveParamaterAsync(info).Wait();
     }
 
     /// <summary>
@@ -55,6 +55,6 @@ public class DatabaseStorage : JsonSettingsStoreBase
     /// <returns></returns>
     protected override string ReadTextFile(string filename)
     {
-        return await App.GetService<IUserParameterHttpService>().LoadParameter(filename, _creator);
+        return App.GetService<UserParameterHttpService>().LoadParameterAsync(filename, _creator).Result;
     }
 }
