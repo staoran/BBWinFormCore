@@ -39,8 +39,6 @@ public static class SecurityHelper
                     return false;
                 }
                 GB.LoginUserInfo = loginUser;
-                // GB.SetSessionData(); // 验证成功后直接在服务端设置session数据
-                GB.TimedTask(); // 保持心跳，CoreRemoting 模式不开启
                 GB.RoleList = await userRoleHttpService.GetRolesByUserAsync(loginUser.ID);//用户的角色集合
 
                 #region 保存用户登录信息
