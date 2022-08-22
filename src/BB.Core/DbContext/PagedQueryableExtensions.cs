@@ -28,14 +28,7 @@ public static class PagedQueryableExtensions
       var total = 0;
       List<TEntity> list = entities.ToPageList(pageIndex, pageSize, ref total);
       var num2 = (int) Math.Ceiling((double) total / pageSize);
-      return new PageResult<TEntity>()
-      {
-        PageNo = pageIndex,
-        PageSize = pageSize,
-        Rows = list,
-        TotalRows = total,
-        TotalPage = num2
-      };
+      return new PageResult<TEntity>(pageIndex, pageSize, list, total, num2);
     }
 
     /// <summary>
@@ -54,13 +47,6 @@ public static class PagedQueryableExtensions
       RefAsync<int> total = 0;
       List<TEntity> listAsync = await entities.ToPageListAsync(pageIndex, pageSize, total);
       var num = (int) Math.Ceiling((double) total / pageSize);
-      return new PageResult<TEntity>()
-      {
-        PageNo = pageIndex,
-        PageSize = pageSize,
-        Rows = listAsync,
-        TotalRows = total,
-        TotalPage = num
-      };
+      return new PageResult<TEntity>(pageIndex, pageSize, listAsync, total, num);
     }
 }
