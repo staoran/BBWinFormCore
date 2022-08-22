@@ -28,6 +28,13 @@ public interface IUserRoleHttpService : IBaseHttpService<UserRoleEntity>
     Task UpdateRolesAsync(int userid, List<int> roleList);
 
     /// <summary>
+    /// 给指定角色添加用户
+    /// </summary>
+    /// <param name="userId">用户ID</param>
+    /// <param name="roleId">角色ID</param>
+    Task AddUserAsync(int userId, int roleId);
+
+    /// <summary>
     /// 从角色的用户列表中移除指定的用户
     /// </summary>
     /// <param name="userId">用户ID</param>

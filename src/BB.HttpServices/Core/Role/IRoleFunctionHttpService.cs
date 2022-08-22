@@ -14,6 +14,13 @@ public interface IRoleFunctionHttpService : IBaseHttpService<RoleFunction>
     Task<RESTfulResult<List<RoleInfo>>> GetRolesByFunctionAsync(string functionId);
 
     /// <summary>
+    /// 给指定角色添加功能点
+    /// </summary>
+    /// <param name="functionId">功能ID</param>
+    /// <param name="roleId">角色ID</param>
+    Task AddFunctionAsync(string functionId, int roleId);
+
+    /// <summary>
     /// 从角色操作功能列表中，移除对应的功能
     /// </summary>
     /// <param name="functionId">功能ID</param>

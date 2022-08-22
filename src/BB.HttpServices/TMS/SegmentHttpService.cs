@@ -6,9 +6,9 @@ namespace BB.HttpServices.TMS;
 /// <summary>
 /// 线路表 业务逻辑类
 /// </summary>
-public class SegmentService : BaseHttpService<Segment>
+public class SegmentHttpService : BaseHttpService<Segment>
 {
-    public SegmentService(ISegmentHttpService httpService) : base(httpService)
+    public SegmentHttpService(ISegmentHttpService httpService) : base(httpService)
     {
     }
 }

@@ -22,6 +22,13 @@ public interface IOURoleHttpService : IBaseHttpService<OURoleEntity>
     Task<RESTfulResult<List<RoleInfo>>> GetRolesByOuAsync(string ouId);
 
     /// <summary>
+    /// 给指定角色添加机构
+    /// </summary>
+    /// <param name="ouId">机构ID</param>
+    /// <param name="roleId">角色ID</param>
+    Task AddOUAsync(string ouId, int roleId);
+
+    /// <summary>
     /// 从角色机构列表中，移除指定的机构
     /// </summary>
     /// <param name="ouId">机构ID</param>

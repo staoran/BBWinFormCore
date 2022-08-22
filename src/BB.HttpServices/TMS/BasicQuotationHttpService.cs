@@ -6,9 +6,9 @@ namespace BB.HttpServices.TMS;
 /// <summary>
 /// 公式报价 业务逻辑类
 /// </summary>
-public class BasicQuotationService : BaseHttpService<BasicQuotation>
+public class BasicQuotationHttpService : BaseHttpService<BasicQuotation>
 {
-    public BasicQuotationService(IBasicQuotationHttpService httpService) : base(httpService)
+    public BasicQuotationHttpService(IBasicQuotationHttpService httpService) : base(httpService)
     {
     }
 }

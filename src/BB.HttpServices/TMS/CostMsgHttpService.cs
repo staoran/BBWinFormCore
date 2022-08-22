@@ -6,9 +6,9 @@ namespace BB.HttpServices.TMS;
 /// <summary>
 /// 费用调整 业务逻辑类
 /// </summary>
-public class CostMsgService : BaseHttpService<CostMsg>
+public class CostMsgHttpService : BaseHttpService<CostMsg>
 {
-    public CostMsgService(ICostMsgHttpService httpService) : base(httpService)
+    public CostMsgHttpService(ICostMsgHttpService httpService) : base(httpService)
     {
     }
 }

@@ -23,6 +23,16 @@ public class RoleFunctionHttpService : BaseHttpService<RoleFunction>
     }
 
     /// <summary>
+    /// 给指定角色添加功能点
+    /// </summary>
+    /// <param name="functionId">功能ID</param>
+    /// <param name="roleId">角色ID</param>
+    public async Task AddFunctionAsync(string functionId, int roleId)
+    {
+        await _roleFunctionHttpService.AddFunctionAsync(functionId, roleId);
+    }
+
+    /// <summary>
     /// 从角色操作功能列表中，移除对应的功能
     /// </summary>
     /// <param name="functionId">功能ID</param>

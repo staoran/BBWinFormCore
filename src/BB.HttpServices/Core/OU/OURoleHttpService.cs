@@ -34,6 +34,16 @@ public class OURoleHttpService : BaseHttpService<OURoleEntity>
 	}
 
 	/// <summary>
+	/// 给指定角色添加机构
+	/// </summary>
+	/// <param name="ouId">机构ID</param>
+	/// <param name="roleId">角色ID</param>
+	public async Task AddOUAsync(string ouId, int roleId)
+	{
+		await _ouRoleHttpService.AddOUAsync(ouId, roleId);
+	}
+
+	/// <summary>
 	/// 从角色机构列表中，移除指定的机构
 	/// </summary>
 	/// <param name="ouId">机构ID</param>
