@@ -34,7 +34,7 @@ public delegate void ItemBorderStyleChangedEventHandler(object sender, ItemBorde
 [Designer(typeof(MozPaneDesigner))]
 [ToolboxItem(true)]
 [DefaultEvent("ItemClick")]
-[ToolboxBitmap(typeof(MozPane),"BB.Framework.BaseUI.Settings.MozPane.bmp")]
+[ToolboxBitmap(typeof(MozPane),"BB.BaseUI.Settings.MozPane.bmp")]
 public class MozPane : ScrollableControlWithScrollEvents , ISupportInitialize	 	 	
 {	
 		

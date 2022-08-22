@@ -24,11 +24,12 @@ namespace BB.BaseUI.BaseUI;
 public partial class BaseViewDock<T, IT, TE> : BaseDock
     where T : BaseEntity
     where IT : BaseHttpService<T>
-    where TE : BaseForm, new()
+    where TE : BaseForm
 {
-    protected readonly string moduleName;
+    protected string moduleName;
     
     protected readonly IT _bll;
+    protected readonly TE _baseForm;
     protected BarButtonItem addButton;
     protected BarButtonItem editButton;
     protected BarButtonItem checkButton;
@@ -44,28 +45,27 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 高级查询条件语句对象
     /// </summary>
-    protected NameValueCollection _advanceCondition;
+    protected NameValueCollection? _advanceCondition;
 
     /// <summary>
     /// 快捷树查询条件语句对象
     /// </summary>
-    protected NameValueCollection _treeCondition;
+    protected NameValueCollection? _treeCondition;
 
-    public BaseViewDock(string name)
+    public BaseViewDock(IT bll, TE baseForm)
     {
         InitializeComponent();
 
-        moduleName = name;
+        _bll = bll;
+        _baseForm = baseForm;
 
-        _bll = App.GetService<IT>();
-        
         Shown += View_Shown;
     }
 
     /// <summary>
     /// 编写初始化窗体的实现
     /// </summary>
-    public override void FormOnLoad()
+    public override Task FormOnLoad()
     {
         #region 网格事件和配置
 
@@ -136,6 +136,8 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
         tableDirectionButton.Visibility = BarItemVisibility.Never;
 
         #endregion
+        
+        return Task.CompletedTask;
     }
 
     /// <summary>
@@ -143,10 +145,10 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void View_Shown(object sender, EventArgs e)
+    protected virtual async void View_Shown(object sender, EventArgs e)
     {
         InitTree();
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -194,7 +196,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     {
         ShowWaitForm();
         WaitForm.SetWaitFormDescription("数据加载中...");
-        SearchInfo[] condition = GetQueryCondition();
+        CListItem[] condition = GetQueryCondition();
         PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
         PageResult<T> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
         winGridViewPager1.InitDataSource(list, $"{moduleName}报表");
@@ -262,17 +264,17 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件刷新操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnRefresh(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnRefresh(object sender, EventArgs e)
     {
-        BindData();
+        await BindData();
     }
 
     /// <summary>
     /// 分页控件删除操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnDeleteSelected(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnDeleteSelected(object sender, EventArgs e)
     {
-        DeleteData();
+        await DeleteData();
     }
 
     /// <summary>
@@ -294,10 +296,10 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件全部导出操作前的操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnStartExport(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
     {
-        SearchInfo[] condition = GetQueryCondition();
-        winGridViewPager1.AllToExport = _bll.FindAsync(condition);
+        CListItem[] condition = GetQueryCondition();
+        winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
     }
 
     /// <summary>
@@ -315,9 +317,9 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected virtual SearchInfo[] GetQueryCondition()
+    protected virtual CListItem[] GetQueryCondition()
     {
-        return null;
+        return Array.Empty<CListItem>();
     }
 
     #endregion
@@ -327,12 +329,12 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 查询数据操作
     /// </summary>
-    protected virtual void btnSearch_Click(object sender, EventArgs e)
+    protected virtual async void btnSearch_Click(object sender, EventArgs e)
     {
         // 必须重置查询条件，否则可能会使用高级查询条件了
         _advanceCondition = null;
         _treeCondition = null;
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -354,9 +356,9 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 审核数据操作
     /// </summary>
-    protected virtual void btnCheck_Click(object sender, EventArgs e)
+    protected virtual async void btnCheck_Click(object sender, EventArgs e)
     {
-        CheckData();
+        await CheckData();
     }
 
     /// <summary>
@@ -364,9 +366,9 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void btnAdvanceSearch_Click(object sender, EventArgs e)
+    protected virtual async void btnAdvanceSearch_Click(object sender, EventArgs e)
     {
-        AdvanceSearch();
+        await AdvanceSearch();
     }
 
     /// <summary>
@@ -393,9 +395,9 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void ExcelData_OnRefreshData(object sender, EventArgs e)
+    protected virtual async void ExcelData_OnRefreshData(object sender, EventArgs e)
     {
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -411,9 +413,9 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void edit_OnDataSaved(object sender, EventArgs e)
+    protected virtual async void edit_OnDataSaved(object sender, EventArgs e)
     {
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -442,7 +444,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+    protected virtual async void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
         // 构建 快查树的查询条件
         switch (e.Node)
@@ -450,7 +452,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
             case { Text: "所有记录" }:
                 _treeCondition = null;
                 btnClear_Click(sender, e);
-                BindData();
+                await BindData();
                 break;
             // Tag 是单个键值类，上级 Tag 是 列名，键值类的值是值
             case { Tag: CListItem item, Parent.Tag: string fieldName }:
@@ -458,13 +460,13 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
                 {
                     { fieldName, item.Value }
                 };
-                BindData();
+                await BindData();
                 break;
             // Tag 是键值类列表，键值类的键是列名，值是值
             case { Tag: List<CListItem> items }:
                 _treeCondition = new NameValueCollection();
                 items.ForEach(x => _treeCondition.Add(x.Text, x.Value));
-                BindData();
+                await BindData();
                 break;
         }
     }
@@ -534,15 +536,14 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 
         if (!string.IsNullOrEmpty(id))
         {
-            var edit = new TE();
-            edit.ID = id;
-            edit.IdList = idList;
+            _baseForm.ID = id;
+            _baseForm.IdList = idList;
 
             // 保存成功后事件
-            edit.OnDataSaved += edit_OnDataSaved;
-            edit.InitFunction(LoginUserInfo, FunctionDict); //给子窗体赋值用户权限信息
+            _baseForm.OnDataSaved += edit_OnDataSaved;
+            _baseForm.InitFunction(LoginUserInfo, FunctionDict); //给子窗体赋值用户权限信息
 
-            if (DialogResult.OK == edit.ShowDialog())
+            if (DialogResult.OK == _baseForm.ShowDialog())
             {
                 // BindData();
             }
@@ -571,7 +572,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
             await _bll.DeleteAsync(id);
         }
 
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -640,16 +641,17 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="dr"></param>
     /// <returns></returns>
-    protected virtual bool ExcelData_OnDataSave(DataRow dr)
+    protected virtual Task<bool> ExcelData_OnDataSave(DataRow dr)
     {
-        return false;
+        return Task.FromResult(false);
     }
 
     /// <summary>
     /// 导出的操作
     /// </summary>
-    protected virtual void ExportData()
+    protected virtual Task ExportData()
     {
+        return Task.CompletedTask;
     }
 
     #endregion
@@ -659,20 +661,37 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 高级查询界面
     /// </summary>
-    protected FrmAdvanceSearch _advDlg;
+    protected FrmAdvanceSearch? AdvDlg;
 
     /// <summary>
     /// 高级查询的操作
     /// </summary>
-    protected virtual void AdvanceSearch()
+    protected virtual async Task AdvanceSearch()
     {
+        if (AdvDlg == null)
+        {
+            DataTable? fieldTypeTable = await Cache.Instance.GetOrCreateAsync("CarFieldTypeList",
+                async () => await _bll.GetFieldTypeListAsync(), new TimeSpan(3, 0, 0));
+
+            Dictionary<string, string>? columnNameAlias = await Cache.Instance.GetOrCreateAsync("CarColumnNameAlias",
+                async () => await _bll.GetColumnNameAliasAsync(), new TimeSpan(3, 0, 0));
+
+            if (fieldTypeTable is null || columnNameAlias is null)
+            {
+                throw Oops.Bah("字段类型表或字段别名表为空");
+            }
+
+            AdvDlg = new FrmAdvanceSearch();
+            AdvDlg.FieldTypeTable = fieldTypeTable;
+            AdvDlg.ColumnNameAlias = columnNameAlias;
+        }
     }
 
-    protected virtual void advDlg_ConditionChanged(NameValueCollection condition)
+    protected virtual async void advDlg_ConditionChanged(NameValueCollection condition)
     {
         _advanceCondition = condition;
         _treeCondition = null;
-        BindData();
+        await BindData();
     }
 
     #endregion
@@ -722,23 +741,23 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 public partial class BaseViewDock<T, IT, TE, T1, IT1> : BaseViewDock<T, IT, TE>
     where T : BaseEntity
     where IT : BaseHttpService<T>
-    where TE : BaseForm, new()
+    where TE : BaseForm
     where T1 : BaseEntity
     where IT1 : BaseHttpService<T1>
 {
     private readonly IT1 _childBll;
 
-    public BaseViewDock(string name) : base(name)
+    public BaseViewDock(IT bll, IT1 childBll, TE baseForm) : base(bll, baseForm)
     {
-        _childBll = App.GetService<IT1>();
+        _childBll = childBll;
     }
 
     /// <summary>
     /// 编写初始化窗体的实现
     /// </summary>
-    public override void FormOnLoad()
+    public override async Task FormOnLoad()
     {
-        base.FormOnLoad();
+        await base.FormOnLoad();
 
         splitContainerControl1.Panel1.Dock = DockStyle.Left;
         

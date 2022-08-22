@@ -68,7 +68,7 @@ public static class TreeNodeExtension
     /// <param name="nodes">上级节点</param>
     /// <param name="nodeName">节点名称</param>
     /// <param name="itemList">节点数据组</param>
-    /// <param name="parentImageIndex">节点图标</param>
+    /// <param name="imageIndex">节点图标</param>
     public static void AddNode(this TreeNodeCollection nodes, string nodeName, List<CListItem> itemList, int imageIndex)
     {
         var node = new TreeNode(nodeName, imageIndex, imageIndex)

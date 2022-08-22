@@ -90,7 +90,7 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
         }
     }
 
-    private void btnExport_Click(object sender, EventArgs e)
+    private async void btnExport_Click(object sender, EventArgs e)
     {
         _isExportAllPage = true;
         ExportToExcel();

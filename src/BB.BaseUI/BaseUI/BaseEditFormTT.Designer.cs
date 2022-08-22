@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace BB.BaseUI.BaseUI;
 
-partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> where T : BaseEntity<T1> where IT : BaseHttpService<T> where TV : AbstractValidator<T>, new() where T1 : BaseEntity, new() where IT1 : BaseHttpService<T1> where TV1 : AbstractValidator<T1>, new()
+partial class BaseEditForm<T, IT, T1, IT1>
 {
     /// <summary>
     /// Required designer variable.

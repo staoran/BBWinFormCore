@@ -109,8 +109,9 @@ public partial class BaseDock : XtraForm, IFunction, ILoadFormActived, ITransien
     /// <summary>
     /// 可供重写的窗体加载函数，子窗体特殊处理只需重写该函数
     /// </summary>
-    public virtual void FormOnLoad()
+    public virtual Task FormOnLoad()
     {
+        return Task.CompletedTask;
     }
 
     /// <summary>
@@ -154,7 +155,7 @@ public partial class BaseDock : XtraForm, IFunction, ILoadFormActived, ITransien
         HideWaitForm();
     }
 
-    private void BaseForm_Load(object sender, EventArgs e)
+    private async void BaseForm_Load(object sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -163,7 +164,7 @@ public partial class BaseDock : XtraForm, IFunction, ILoadFormActived, ITransien
 
             try
             {
-                FormOnLoad();
+                await FormOnLoad();
             }
             catch (Exception ex)
             {
@@ -180,12 +181,12 @@ public partial class BaseDock : XtraForm, IFunction, ILoadFormActived, ITransien
         }
     }
 
-    private void BaseForm_KeyUp(object sender, KeyEventArgs e)
+    private async void BaseForm_KeyUp(object sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
         {
             case Keys.F5://刷新
-                FormOnLoad();
+                await FormOnLoad();
                 break;
         }
     }

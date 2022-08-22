@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Data;
 using BB.BaseUI.AdvanceSearch;
+using BB.Tools.Entity;
 using DevExpress.XtraBars;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
@@ -50,10 +51,10 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void View_Shown(object sender, EventArgs e)
+    protected virtual async void View_Shown(object sender, EventArgs e)
     {
         InitTree();
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -66,8 +67,9 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 初始化字典列表内容
     /// </summary>
-    protected virtual void InitDictItem()
+    protected virtual Task InitDictItem()
     {
+        return Task.CompletedTask;
     }
 
     #region 网格列表信息
@@ -75,8 +77,9 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 绑定列表数据
     /// </summary>
-    protected virtual void BindData()
+    protected virtual Task BindData()
     {
+        return Task.CompletedTask;
     }
 
     /// <summary>
@@ -107,9 +110,9 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 分页控件刷新操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnRefresh(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnRefresh(object sender, EventArgs e)
     {
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -144,9 +147,9 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 分页控件翻页的操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnPageChanged(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnPageChanged(object sender, EventArgs e)
     {
-        BindData();
+        await BindData();
     }
 
     #endregion
@@ -156,9 +159,9 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected virtual NameValueCollection GetQueryCondition()
+    protected virtual CListItem[] GetQueryCondition()
     {
-        return null;
+        return Array.Empty<CListItem>();
     }
 
     #endregion
@@ -182,7 +185,7 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 新增数据操作
     /// </summary>
-    protected virtual void btnAddNew_Click(object sender, EventArgs e)
+    protected virtual async void btnAddNew_Click(object sender, EventArgs e)
     {
         AddData();
     }
@@ -227,9 +230,9 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void ExcelData_OnRefreshData(object sender, EventArgs e)
+    protected virtual async void ExcelData_OnRefreshData(object sender, EventArgs e)
     {
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -245,9 +248,9 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void edit_OnDataSaved(object sender, EventArgs e)
+    protected virtual async void edit_OnDataSaved(object sender, EventArgs e)
     {
-        BindData();
+        await BindData();
     }
 
     /// <summary>
@@ -327,16 +330,17 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="dr"></param>
     /// <returns></returns>
-    protected virtual bool ExcelData_OnDataSave(DataRow dr)
+    protected virtual Task<bool> ExcelData_OnDataSave(DataRow dr)
     {
-        return false;
+        return Task.FromResult(false);
     }
 
     /// <summary>
     /// 导出的操作
     /// </summary>
-    protected virtual void ExportData()
+    protected virtual Task ExportData()
     {
+        return Task.CompletedTask;
     }
 
     #endregion
@@ -346,8 +350,9 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 高级查询的操作
     /// </summary>
-    protected virtual void AdvanceSearch()
+    protected virtual Task AdvanceSearch()
     {
+        return Task.CompletedTask;
     }
 
     protected virtual void advDlg_ConditionChanged(NameValueCollection condition)

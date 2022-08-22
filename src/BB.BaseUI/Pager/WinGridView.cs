@@ -473,7 +473,7 @@ public partial class WinGridView : XtraUserControl
             _printTitle = JsonLanguage.Default.GetString(value);
     }
 
-    private void btnExport_Click(object sender, EventArgs e)
+    private async void btnExport_Click(object sender, EventArgs e)
     {
         _isExportAllPage = true;
         ExportToExcel();

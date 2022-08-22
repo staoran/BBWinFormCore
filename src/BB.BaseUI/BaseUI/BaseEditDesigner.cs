@@ -35,8 +35,9 @@ public partial class BaseEditDesigner : BaseEditForm
     /// <summary>
     /// 初始化数据字典
     /// </summary>
-    protected virtual void InitDictItem()
+    protected virtual Task InitDictItem()
     {
+        return Task.CompletedTask;
     }
 
     protected virtual void SetInfo(object tempInfo)

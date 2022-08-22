@@ -16,13 +16,11 @@ namespace BB.BaseUI.BaseUI;
 /// <summary>
 /// 主从编辑界面基类
 /// </summary>
-public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT, TV>
-    where T : BaseEntity<T1>
+public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
+    where T : BaseEntity<T1>, new()
     where IT : BaseHttpService<T>
-    where TV : AbstractValidator<T>, new()
     where T1 : BaseEntity, new()
     where IT1 : BaseHttpService<T1>
-    where TV1 : AbstractValidator<T1>, new()
 {
     /// <summary>
     /// 是否检查子表为空
@@ -32,17 +30,20 @@ public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT,
     /// <summary>
     /// 子表业务逻辑
     /// </summary>
-    protected readonly IT1 _childBll;
+    protected readonly IT1 ChildBll;
+
+    private readonly IValidator<T1> _childValidator;
 
     /// <summary>
     /// 无参构造函数,默认不检查子表是否为空
     /// </summary>
-    protected BaseEditForm(IT bll, IT1 childBll) : base(bll)
+    protected BaseEditForm(IT bll, IT1 childBll, IValidator<T> validator, IValidator<T1> childValidator) : base(bll, validator)
     {
         InitializeComponent();
 
         _isCheckChildNull = typeof(T).GetCustomAttribute<IsChildListNullAttribute>().IsNotNull();
-        _childBll = childBll;
+        ChildBll = childBll;
+        _childValidator = childValidator;
 
         Shown += BaseEditForm_Shown;
     }
@@ -121,9 +122,10 @@ public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT,
         {
             #region 编辑时的显示信息
 
-            if (_tempInfo != null)
+            var key = TempInfo?.GetPrimaryKeyValue();
+            if (key != null)
             {
-                list = await _childBll.FindByForeignKeyAsync(_tempInfo.GetPrimaryKeyValue()); //根据外键获取明细列表记录
+                list = await ChildBll.FindByForeignKeyAsync(key); //根据外键获取明细列表记录
             }
 
             #endregion
@@ -148,7 +150,7 @@ public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT,
     protected virtual async Task InitDetailGrid()
     {
         // 获取子表字段权限的列表
-        Dictionary<string, int> permitDict = await _childBll.GetPermitDictAsync();
+        Dictionary<string, int> permitDict = await ChildBll.GetPermitDictAsync();
 
         // 调整可新增不可编辑的字段
         if (permitDict.ContainsValue(4))
@@ -172,15 +174,15 @@ public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT,
     public override async Task<bool> SaveAddNew()
     {
         //必须使用存在的局部变量，因为部分信息可能被附件使用
-        if (_tempInfo == null) return false;
+        if (TempInfo == null) return false;
         // SetInfo(_tempInfo);
 
         #region 新增数据
 
         var dt = gridControl1.DataSource as DataTable;
-        _tempInfo.ChildTableList = dt.ToList<T1>();
+        TempInfo.ChildTableList = dt.ToList<T1>();
 
-        bool succeed = await _bll.InsertAsync(_tempInfo);
+        bool succeed = await Bll.InsertAsync(TempInfo);
         if (succeed)
         {
             //可添加其他关联操作
@@ -199,15 +201,15 @@ public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT,
     /// <returns></returns>
     public override async Task<bool> SaveUpdated()
     {
-        if (_tempInfo == null) return false;
+        if (TempInfo == null) return false;
         // SetInfo(_tempInfo);
 
         #region 更新数据
 
         var dt = gridControl1.DataSource as DataTable;
-        _tempInfo.ChildTableList = dt.ToList<T1>();
+        TempInfo.ChildTableList = dt.ToList<T1>();
 
-        bool succeed = await _bll.UpdateAsync(_tempInfo);
+        bool succeed = await Bll.UpdateAsync(TempInfo);
         if (succeed)
         {
             //可添加其他关联操作
@@ -248,7 +250,7 @@ public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT,
     {
         if (s is not ColumnView view) throw new Exception("行数据获取异常");
         
-        T1 entity = await _childBll.NewEntityAsync(); // 数据在此初始化
+        T1 entity = await ChildBll.NewEntityAsync(); // 数据在此初始化
         
         string foreignKey = entity.GetField("ForeignKey").ObjToStr(); // 外键字段名称
         if (!ID.IsNullOrEmpty())
@@ -273,14 +275,13 @@ public partial class BaseEditForm<T, IT, TV, T1, IT1, TV1> : BaseEditForm<T, IT,
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)
+    protected virtual async void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)
     {
         if (sender is not ColumnView view) throw new Exception("行数据获取异常");
 
         view.ClearColumnErrors();
         var entity = view.RowToModel<T1>(e.RowHandle);
-        var validator = new TV1();
-        view.ProcessValidationResults(e, validator.Validate(entity));
+        view.ProcessValidationResults(e, await _childValidator.ValidateAsync(entity));
     }
 
     /// <summary>

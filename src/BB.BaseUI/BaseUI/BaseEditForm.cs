@@ -49,21 +49,21 @@ public partial class BaseEditForm : BaseForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void dataNavigator1_PositionChanged(object sender, EventArgs e)
+    private async void dataNavigator1_PositionChanged(object sender, EventArgs e)
     {
         ID = IdList[dataNavigator1.CurrentIndex];
-        DisplayData();
+        await DisplayData();
 
         // 启动时用此方法标识必填项
-        CheckInput();
+        await CheckInput();
     }
 
     /// <summary>
     /// 加载窗体的事件
     /// </summary>
-    public override void FormOnLoad()
+    public override async Task FormOnLoad()
     {
-        base.FormOnLoad();
+        await base.FormOnLoad();
         if (!DesignMode)
         {
             if (!string.IsNullOrEmpty(ID))
@@ -91,17 +91,17 @@ public partial class BaseEditForm : BaseForm
         #endregion
     }
 
-    private void BaseEditForm_Shown(object sender, EventArgs e)
+    private async void BaseEditForm_Shown(object sender, EventArgs e)
     {
         dataNavigator1.IdList = IdList;
         dataNavigator1.CurrentIndex = IdList.IndexOf(ID);
         if (IdList == null || IdList.Count == 0)
         {
             dataNavigator1.Visible = false;
-            DisplayData(); //CurrentIndex = -1的时候需要主动调用
+            await DisplayData(); //CurrentIndex = -1的时候需要主动调用
 
             // 启动时用此方法标识必填项
-            CheckInput();
+            await CheckInput();
         }
 
         //由于上面设置this.dataNavigator1.CurrentIndex，导致里面触发dataNavigator1_PositionChanged
@@ -116,7 +116,7 @@ public partial class BaseEditForm : BaseForm
     /// <summary>
     /// 显示数据到控件上
     /// </summary>
-    public virtual async Task DisplayData()
+    public virtual Task DisplayData()
     {
         throw new NotSupportedException("无法直接调用基类方法，请在派生类中实现该方法");
     }
@@ -137,7 +137,7 @@ public partial class BaseEditForm : BaseForm
     {
         ID = "";////需要设置为空，表示新增
         ClearControlValue(this);
-        FormOnLoad();
+        await FormOnLoad();
     }
 
     /// <summary>
@@ -245,9 +245,9 @@ public partial class BaseEditForm : BaseForm
     /// 保存新增的数据
     /// </summary>
     /// <returns></returns>
-    public virtual async Task<bool> SaveAddNew()
+    public virtual Task<bool> SaveAddNew()
     {
-        return true;
+        return Task.FromResult(true);
     }
 
     /// <summary>
@@ -359,7 +359,7 @@ public partial class BaseEditForm : BaseForm
     {
         if (keyData == Keys.F5)
         {
-            FormOnLoad();
+            FormOnLoad().Wait();
         }
 
         if (!(ActiveControl is Button))

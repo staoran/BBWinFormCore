@@ -24,7 +24,7 @@ public partial class FrmImportExcelData : BaseForm
     /// </summary>
     /// <param name="dr"></param>
     /// <returns></returns>
-    public delegate bool SaveDataHandler(DataRow dr);
+    public delegate Task<bool> SaveDataHandler(DataRow dr);
 
     /// <summary>
     /// 数据保存的事件
@@ -77,7 +77,7 @@ public partial class FrmImportExcelData : BaseForm
         }
     }
 
-    void worker_DoWork(object sender, DoWorkEventArgs e)
+    async void worker_DoWork(object sender, DoWorkEventArgs e)
     {
         int itemCount = 0;
         int errorCount = 0;
@@ -96,7 +96,7 @@ public partial class FrmImportExcelData : BaseForm
                         #region 保存操作，如果有错误，则记录并处理
                         try
                         {
-                            bool success = OnDataSave(dr);
+                            bool success = await OnDataSave(dr);
                             if (success)
                             {
                                 itemCount++;

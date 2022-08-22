@@ -403,7 +403,7 @@ public static class ComboBoxExtension
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
     /// <param name="limitedContent">是否限定输入内容</param>
-    public static void BindDictItems(this ComboBoxEdit combo, List<CListItem> itemList, string defaultValue, bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
+    public static void BindDictItems(this ComboBoxEdit combo, List<CListItem> itemList, string? defaultValue, bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
     {
         combo.Properties.BeginUpdate();//可以加快
         combo.Properties.NullValuePromptShowForEmptyValue = true;

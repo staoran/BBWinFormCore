@@ -2,7 +2,7 @@
 
 namespace BB.BaseUI.BaseUI;
 
-partial class BaseEditForm<T, IT, TV>
+partial class BaseEditForm<T, IT>
 {
     /// <summary>
     /// Required designer variable.
