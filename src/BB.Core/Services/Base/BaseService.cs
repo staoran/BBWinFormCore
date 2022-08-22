@@ -425,7 +425,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     [HttpPost]
     [ApiDescriptionSettings(KeepVerb = true)]
-    public virtual async Task<List<T>> FindAsync(SearchInfo[] searchInfos)
+    public virtual async Task<List<T>> FindAsync(CListItem[] searchInfos)
     {
         var c = searchInfos.Adapt<List<ConditionalModel>>();
         var conModels = new List<IConditionalModel>();
@@ -576,6 +576,16 @@ public class BaseService<T> where T : BaseEntity, new()
     public virtual async Task<List<string>> GetFieldListAsync(string fieldName, string condition = "")
     {
         return await Repository.GetFieldListByConditionAsync(fieldName, condition);
+    }
+
+    /// <summary>
+    /// 获取字段列表
+    /// </summary>
+    /// <param name="fieldName">字段名称</param>
+    /// <returns></returns>
+    public virtual async Task<List<string>> GetFieldListAsync([Required]string fieldName)
+    {
+        return await GetFieldListAsync(fieldName, null);
     }
 
     /// <summary>
@@ -739,6 +749,28 @@ public class BaseService<T> where T : BaseEntity, new()
         }
 
         return condition.BuildConditionSql().Replace("Where", "");
+    }
+
+    /// <summary>
+    /// 构造查询条件
+    /// </summary>
+    /// <param name="searchInfos">查询参数</param>
+    /// <returns></returns>
+    [NonAction]
+    public virtual List<IConditionalModel> GetConditionExc(CListItem[] searchInfos)
+    {
+        var condition = new List<IConditionalModel>();
+        foreach (CListItem cListItem in searchInfos)
+        {
+            if (cListItem != null) condition.Add(new ConditionalModel()
+            {
+                ConditionalType = ConditionalType.Equal,
+                FieldName = cListItem.Text,
+                FieldValue = cListItem.Value
+            });
+        }
+
+        return condition;
     }
 
     /// <summary>

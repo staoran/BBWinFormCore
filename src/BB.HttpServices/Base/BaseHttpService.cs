@@ -121,7 +121,7 @@ public class BaseHttpService<T> : ITransient
     /// </summary>
     /// <param name="searchInfos">查询的条件</param>
     /// <returns>指定对象的集合</returns>
-    public async Task<List<T>> FindAsync(SearchInfo[] searchInfos)
+    public async Task<List<T>> FindAsync(CListItem[] searchInfos)
     {
         return (await _baseHttpService.FindAsync(searchInfos)).Data;
     }
@@ -177,6 +177,16 @@ public class BaseHttpService<T> : ITransient
     public async Task<Dictionary<string, string>> GetFieldValueListAsync(string key, List<string> fieldNameList)
     {
         return (await _baseHttpService.GetFieldValueListAsync(key, fieldNameList)).Data;
+    }
+    
+    /// <summary>
+    /// 获取字段列表
+    /// </summary>
+    /// <param name="fieldName">字段名称</param>
+    /// <returns></returns>
+    public async Task<List<string>> GetFieldListAsync(string fieldName)
+    {
+        return (await _baseHttpService.GetFieldListAsync(fieldName)).Data;
     }
 
     /// <summary>
