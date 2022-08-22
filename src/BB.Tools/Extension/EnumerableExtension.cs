@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.Specialized;
+using System.Text;
+using BB.Tools.Entity;
 
 namespace BB.Tools.Extension;
 
@@ -191,5 +193,20 @@ public static class EnumerableExtension
         Func<TSource, bool> expression)
     {
         return !condition ? sources : sources.Where(expression);
+    }
+
+    public static CListItem[] ToCListItems(this NameValueCollection dic)
+    {
+        CListItem[] c = Array.Empty<CListItem>();
+        var i = 0;
+        foreach (string? o in dic)
+        {
+            if (o.IsNullOrEmpty()) continue;
+
+            c[i] = new CListItem(o!, dic.Get(o) ?? string.Empty);
+            i++;
+        }
+
+        return c;
     }
 }

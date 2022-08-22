@@ -333,12 +333,12 @@ public static class StringExtension
 
     #region 其他辅助方法
 
-    public static bool IsNullOrEmpty(this string str)
+    public static bool IsNullOrEmpty(this string? str)
     {
         return string.IsNullOrEmpty(str);
     }
 
-    public static bool IsNullOrWhiteSpace(this string str)
+    public static bool IsNullOrWhiteSpace(this string? str)
     {
         return string.IsNullOrWhiteSpace(str);
     }
