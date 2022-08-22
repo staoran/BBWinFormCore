@@ -22,6 +22,16 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
     {
         _userRoleService = userRoleService;
     }
+    
+    public override async Task<bool> InsertAsync(FunctionInfo obj)
+    {
+        //检查不同ID是否还有其他相同关键字的记录
+        if (await IsExistRecordAsync(x => x.ControlId == obj.ControlId && x.SystemTypeId == obj.SystemTypeId))
+        {
+            throw Oops.Bah("指定功能控制ID重复，请重新输入！");
+        }
+        return await base.InsertAsync(obj);
+    }
 
     /// <summary>
     /// 重写删除操作，把下面的节点提到上一级
@@ -265,6 +275,11 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
     /// <exception cref="Exception"></exception>
     public async Task<bool> AddMore(FunctionInfo mainInfo, bool isAdd, bool isUpdate, bool isDelete, bool isExport, bool isImport, bool isView)
     {
+        if (await IsExistRecordAsync(x => x.ControlId == mainInfo.ControlId && x.SystemTypeId == mainInfo.SystemTypeId))
+        {
+            throw Oops.Bah("指定功能控制ID重复，请重新输入！");
+        }
+        
         return await Repository.UseTransactionAsync(async () =>
         {
             if (await InsertAsync(mainInfo))

@@ -78,4 +78,15 @@ public class SystemTypeService : BaseService<SystemTypeInfo>, IDynamicApiControl
 
         return flag;
     }
+
+    public override async Task<bool> UpdateAsync(SystemTypeInfo obj)
+    {
+        //检查不同ID是否还有其他相同关键字的记录
+        if (await IsExistRecordAsync(x => x.Name == obj.Name && x.Oid != obj.Oid))
+        {
+            throw Oops.Bah("指定的【系统名称】已经存在，不能重复添加，请修改");
+        }
+
+        return await base.UpdateAsync(obj);
+    }
 }

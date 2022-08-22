@@ -58,6 +58,16 @@ public class UserRoleService : BaseService<UserRoleEntity>, ITransient
     }
 
     /// <summary>
+    /// 给指定角色添加用户
+    /// </summary>
+    /// <param name="userId">用户ID</param>
+    /// <param name="roleId">角色ID</param>
+    public async Task AddUserAsync(int userId, int roleId)
+    {
+        await InsertAsync(new UserRoleEntity(){RoleId = roleId, UserId = userId});
+    }
+
+    /// <summary>
     /// 从角色的用户列表中移除指定的用户
     /// </summary>
     /// <param name="userId">用户ID</param>

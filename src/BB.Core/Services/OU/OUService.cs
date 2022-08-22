@@ -25,6 +25,26 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     {
         _userRoleService = userRoleService;
     }
+    
+    public override async Task<bool> InsertAsync(OUInfo obj)
+    {
+        //检查不同ID是否还有其他相同关键字的记录
+        if (await IsExistRecordAsync(x => x.Name == obj.Name && x.PID == obj.PID))
+        {
+            throw Oops.Bah("组织机构名称已存在！");
+        }
+        return await base.InsertAsync(obj);
+    }
+
+    public override async Task<bool> UpdateAsync(OUInfo obj)
+    {
+        //检查不同ID是否还有其他相同关键字的记录
+        if (await IsExistRecordAsync(x => x.Name == obj.Name && x.ID != obj.ID))
+        {
+            throw Oops.Bah("组织机构名称已存在！");
+        }
+        return await base.UpdateAsync(obj);
+    }
 
     /// <summary>
     /// 删除机构

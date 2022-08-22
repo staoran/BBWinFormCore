@@ -26,6 +26,16 @@ public class RoleFunctionService : BaseService<RoleFunction>, ITransient
     }
 
     /// <summary>
+    /// 给指定角色添加功能点
+    /// </summary>
+    /// <param name="functionId">功能ID</param>
+    /// <param name="roleId">角色ID</param>
+    public async Task AddFunctionAsync(string functionId, int roleId)
+    {
+        await InsertAsync(new RoleFunction() { FunctionId = functionId, RoleId = roleId });
+    }
+
+    /// <summary>
     /// 从角色操作功能列表中，移除对应的功能
     /// </summary>
     /// <param name="functionId">功能ID</param>

@@ -66,6 +66,21 @@ public class RoleService : BaseService<RoleInfo>, IDynamicApiController, ITransi
 		return await FindSingleAsync(condition);
 	}
 
+	public override async Task<bool> InsertAsync(RoleInfo obj)
+	{
+		if (obj.ID == RoleInfo.SUPER_ADMIN_ID)
+		{
+			throw Oops.Bah("超级管理员为保留名称，不能新增使用！");
+		}
+		
+		//检查不同ID是否还有其他相同关键字的记录
+		if (await IsExistRecordAsync(x => x.Name == obj.Name && x.CompanyId == obj.CompanyId))
+		{
+			throw Oops.Bah("角色名称已存在！");
+		}
+		return await base.InsertAsync(obj);
+	}
+
 	/// <summary>
 	/// 更新角色信息
 	/// </summary>
@@ -75,9 +90,15 @@ public class RoleService : BaseService<RoleInfo>, IDynamicApiController, ITransi
 	{
 		if (obj.ID == RoleInfo.SUPER_ADMIN_ID)
 		{
-			obj.Name = RoleInfo.SUPER_ADMIN_NAME;
+			throw Oops.Bah("保留角色不能修改！");
 		}
-		return await UpdateAsync(obj);
+		
+		//检查不同ID是否还有其他相同关键字的记录
+		if (await IsExistRecordAsync(x => x.Name == obj.Name && x.ID != obj.ID))
+		{
+			throw Oops.Bah("角色名称已存在！");
+		}
+		return await base.UpdateAsync(obj);
 	}
                        
 	/// <summary>
