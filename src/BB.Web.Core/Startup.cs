@@ -1,8 +1,10 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using BB.Core.DbContext;
 using BB.Core.Event;
 using BB.Core.Filter;
+using BB.Tools.Entity;
 using BB.Web.Core.Handlers;
 using FastExpressionCompiler;
 using FluentValidation;
@@ -37,6 +39,9 @@ public class Startup : AppStartup
 
         // 数据校验
         services.AddValidatorsFromAssemblies(App.Assemblies);
+
+        // 延迟加载，注入（避免循环注入）
+        services.AddTransient(typeof(Lazy<>), typeof(LazilyResolved<>));
 
         services.AddControllers()
             // 注册多语言
