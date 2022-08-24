@@ -85,7 +85,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="SunnyUI" Version="3.2.3" />
+      <PackageReference Include="SunnyUI" Version="3.2.3.1" />
       <PackageReference Include="System.IO.Ports" Version="6.0.0" />
     </ItemGroup>
 
