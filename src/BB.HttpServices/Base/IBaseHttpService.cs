@@ -97,7 +97,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// <param name="searchInfos">查询的条件</param>
     /// <returns>指定对象的集合</returns>
     [Post("find"), Client("local")]
-    Task<RESTfulResult<List<T>>> FindAsync(CListItem[] searchInfos);
+    Task<RESTfulResult<List<T>>> FindAsync(Dictionary<string, string> searchInfos);
 
     /// <summary>
     /// 返回当前模块所有数据

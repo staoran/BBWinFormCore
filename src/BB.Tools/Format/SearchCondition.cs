@@ -4,6 +4,7 @@ using System.Text;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using Furion;
+using Furion.FriendlyException;
 
 namespace BB.Tools.Format;
 
@@ -16,6 +17,17 @@ public class SearchCondition
 
     private readonly Hashtable _conditionTable = new();
 
+    private readonly Dictionary<string, string> _conditionData;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="collection">初始查询数据</param>
+    public SearchCondition(Dictionary<string, string> collection)
+    {
+        _conditionData = collection;
+    }
+
     /// <summary>
     /// 查询条件列表
     /// </summary>
@@ -26,23 +38,44 @@ public class SearchCondition
     /// <example>
     /// 用法一：
     /// SearchCondition searchObj = new SearchCondition();
-    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual);
-    /// searchObj.AddCondition("Test2", "Test2Value", SqlOperator.Like);
+    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual, false);
+    /// searchObj.AddCondition("Test2", "Test2Value", SqlOperator.Like, true);
     /// string conditionSql = searchObj.BuildConditionSql();
     /// 
     /// 用法二：AddCondition函数可以串起来添加多个条件
     /// SearchCondition searchObj = new SearchCondition();
-    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual).AddCondition("Test2", "Test2Value", SqlOperator.Like);
+    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual, false).AddCondition("Test2", "Test2Value", SqlOperator.Like, true);
     /// string conditionSql = searchObj.BuildConditionSql();
     /// </example>
     /// </summary>
-    /// <param name="fielName">字段名称</param>
-    /// <param name="fieldValue">字段值</param>
+    /// <param name="fieldName">字段名称</param>
     /// <param name="sqlOperator">SqlOperator枚举类型</param>
-    /// <returns>增加条件后的Hashtable</returns>
-    public SearchCondition AddCondition(string fielName, object fieldValue, SqlOperator sqlOperator)
+    /// <param name="excludeIfTrue">如果返回 true 才执行</param>
+    /// <returns></returns>
+    public async Task<SearchCondition> AddCondition(string fieldName, SqlOperator sqlOperator,
+        Func<Dictionary<string, string>, Task<bool>>? excludeIfTrue = null)
     {
-        _conditionTable.Add(Guid.NewGuid()/*fielName*/, new SearchInfo(fielName, fieldValue, sqlOperator));
+        if (_conditionData == null)
+        {
+            throw Oops.Bah("没有初始化查询数据");
+        }
+        ;
+        if (!_conditionData.TryGetValue(fieldName, out string? value))
+        {
+            return this;
+        }
+
+        var ifTrue = true;
+        if (excludeIfTrue != null)
+        {
+            ifTrue = await excludeIfTrue(_conditionData);
+        }
+
+        if (ifTrue)
+        {
+            AddCondition(fieldName, value!, sqlOperator);
+        }
+
         return this;
     }
 
@@ -61,14 +94,84 @@ public class SearchCondition
     /// string conditionSql = searchObj.BuildConditionSql();
     /// </example>
     /// </summary>
-    /// <param name="fielName">字段名称</param>
+    /// <param name="fieldConditionType">字段查询类型</param>
+    /// <returns></returns>
+    public async Task<SearchCondition> AddCondition(FieldConditionType fieldConditionType)
+    {
+        if (_conditionData == null)
+        {
+            throw Oops.Bah("没有初始化查询数据");
+        }
+
+        if (!_conditionData.TryGetValue(fieldConditionType.FieldName, out string? value) && fieldConditionType.QueryRequired)
+        {
+            throw Oops.Bah($"缺少必填的查询参数：{fieldConditionType.FieldName}");
+        }
+
+        if (value.IsNullOrEmpty()) return this;
+
+        var ifTrue = true;
+        if (fieldConditionType.EnabledConditions != null)
+        {
+            ifTrue = await fieldConditionType.EnabledConditions(_conditionData);
+        }
+
+        if (ifTrue)
+        {
+            AddCondition(fieldConditionType.FieldName, value!, fieldConditionType.SqlOperator);
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// 为查询添加条件
+    /// <example>
+    /// 用法一：
+    /// SearchCondition searchObj = new SearchCondition();
+    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual);
+    /// searchObj.AddCondition("Test2", "Test2Value", SqlOperator.Like);
+    /// string conditionSql = searchObj.BuildConditionSql();
+    /// 
+    /// 用法二：AddCondition函数可以串起来添加多个条件
+    /// SearchCondition searchObj = new SearchCondition();
+    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual).AddCondition("Test2", "Test2Value", SqlOperator.Like);
+    /// string conditionSql = searchObj.BuildConditionSql();
+    /// </example>
+    /// </summary>
+    /// <param name="fieldName">字段名称</param>
+    /// <param name="fieldValue">字段值</param>
+    /// <param name="sqlOperator">SqlOperator枚举类型</param>
+    /// <returns>增加条件后的Hashtable</returns>
+    public SearchCondition AddCondition(string fieldName, object fieldValue, SqlOperator sqlOperator)
+    {
+        _conditionTable.Add(Guid.NewGuid()/*fieldName*/, new SearchInfo(fieldName, fieldValue, sqlOperator));
+        return this;
+    }
+
+    /// <summary>
+    /// 为查询添加条件
+    /// <example>
+    /// 用法一：
+    /// SearchCondition searchObj = new SearchCondition();
+    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual, false);
+    /// searchObj.AddCondition("Test2", "Test2Value", SqlOperator.Like, true);
+    /// string conditionSql = searchObj.BuildConditionSql();
+    /// 
+    /// 用法二：AddCondition函数可以串起来添加多个条件
+    /// SearchCondition searchObj = new SearchCondition();
+    /// searchObj.AddCondition("Test", 1, SqlOperator.NotEqual, false).AddCondition("Test2", "Test2Value", SqlOperator.Like, true);
+    /// string conditionSql = searchObj.BuildConditionSql();
+    /// </example>
+    /// </summary>
+    /// <param name="fieldName">字段名称</param>
     /// <param name="fieldValue">字段值</param>
     /// <param name="sqlOperator">SqlOperator枚举类型</param>
     /// <param name="excludeIfEmpty">如果字段为空或者Null则不作为查询条件</param>
     /// <returns></returns>
-    public SearchCondition AddCondition(string fielName, object fieldValue, SqlOperator sqlOperator, bool excludeIfEmpty)
+    public SearchCondition AddCondition(string fieldName, object fieldValue, SqlOperator sqlOperator, bool excludeIfEmpty)
     {
-        _conditionTable.Add(Guid.NewGuid()/*fielName*/, new SearchInfo(fielName, fieldValue, sqlOperator, excludeIfEmpty));
+        _conditionTable.Add(Guid.NewGuid()/*fieldName*/, new SearchInfo(fieldName, fieldValue, sqlOperator, excludeIfEmpty));
         return this;
     }
 
@@ -76,16 +179,16 @@ public class SearchCondition
     /// 将多个条件分组归类作为一个条件来查询，
     /// 如需构造一个括号内的条件 ( Test = "AA1" OR Test = "AA2")
     /// </summary>
-    /// <param name="fielName">字段名称</param>
+    /// <param name="fieldName">字段名称</param>
     /// <param name="fieldValue">字段值</param>
     /// <param name="sqlOperator">SqlOperator枚举类型</param>
     /// <param name="excludeIfEmpty">如果字段为空或者Null则不作为查询条件</param>
     /// <param name="groupName">分组的名称，如需构造一个括号内的条件 ( Test = "AA1" OR Test = "AA2"), 定义一个组名集中条件</param>
     /// <returns></returns>
-    public SearchCondition AddCondition(string fielName, object fieldValue, SqlOperator sqlOperator,
+    public SearchCondition AddCondition(string fieldName, object fieldValue, SqlOperator sqlOperator,
         bool excludeIfEmpty, string groupName)
     {
-        _conditionTable.Add(Guid.NewGuid()/*fielName*/, new SearchInfo(fielName, fieldValue, sqlOperator, excludeIfEmpty, groupName));
+        _conditionTable.Add(Guid.NewGuid()/*fieldName*/, new SearchInfo(fieldName, fieldValue, sqlOperator, excludeIfEmpty, groupName));
         return this;
     }
 
@@ -111,6 +214,36 @@ public class SearchCondition
     /// <returns></returns> 
     public string BuildConditionSql()
     {
+        string databaseType = App.Configuration["ConnectionConfigs:0:DbType"];
+        DatabaseType dbType = GetDataBaseType(databaseType);
+        return BuildConditionSql(dbType);
+    }
+
+    /// <summary>
+    /// 根据对象构造相关的条件语句（从配置文件中读取数据库类型：ComponentDbType），如返回的语句是:
+    /// <para>
+    /// Where (1=1)  AND Test4  &lt;  'Value4' AND Test6  >=  'Value6' AND Test7  &lt;=  'value7' AND Test  &lt;>  '1' AND Test5  >  'Value5' AND Test2  Like  '%Value2%' AND Test3  =  'Value3'
+    /// </para>
+    /// </summary>
+    /// <returns></returns> 
+    public async Task<string> BuildConditionSql(List<FieldConditionType> dic)
+    {
+        if (_conditionData == null)
+        {
+            throw Oops.Bah("没有初始化查询数据");
+        }
+
+        if (dic.Count == 0)
+        {
+            throw Oops.Bah("未配置有效的查询条件");
+        }
+        
+        _conditionTable.Clear();
+        foreach (FieldConditionType fieldConditionType in dic)
+        {
+            await AddCondition(fieldConditionType);
+        }
+
         string databaseType = App.Configuration["ConnectionConfigs:0:DbType"];
         DatabaseType dbType = GetDataBaseType(databaseType);
         return BuildConditionSql(dbType);

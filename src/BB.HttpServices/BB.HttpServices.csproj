@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Furion.Pure" Version="4.2.3" />
+      <ProjectReference Include="..\BB.Entity\BB.Entity.csproj" />
+      <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BB.Entity\BB.Entity.csproj" />
-      <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
+      <PackageReference Include="Furion.Pure" Version="4.2.3" />
     </ItemGroup>
 
 </Project>

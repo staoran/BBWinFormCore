@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
@@ -425,11 +425,9 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns>指定对象的集合</returns>
     [HttpPost]
     [ApiDescriptionSettings(KeepVerb = true)]
-    public virtual async Task<List<T>> FindAsync(CListItem[] searchInfos)
+    public virtual async Task<List<T>> FindAsync(Dictionary<string, string> searchInfos)
     {
-        var c = searchInfos.Adapt<List<ConditionalModel>>();
-        var conModels = new List<IConditionalModel>();
-        conModels.AddRange(c);
+        var conModels = await GetConditionExc(searchInfos);
         return await Repository.FindAsync(conModels);
     }
 
@@ -534,9 +532,9 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="condition">查询条件</param>
     /// <returns></returns>
     [NonAction]
-    public virtual async Task<DataTable> FindToDataTableAsync(NameValueCollection condition)
+    public virtual async Task<DataTable> FindToDataTableAsync(Dictionary<string, string> condition)
     {
-        string where = GetConditionSql(condition);
+        string where = await GetConditionSql(condition);
         return await FindToDataTableAsync(where);
     }
 
@@ -740,12 +738,19 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
     [NonAction]
-    public virtual string GetConditionSql(NameValueCollection searchInfos)
+    public virtual async Task<string> GetConditionSql(Dictionary<string, string> searchInfos)
     {
-        var condition = new SearchCondition();
-        foreach (string key in searchInfos.AllKeys)
+        var condition = new SearchCondition(searchInfos);
+
+        var conditionTypes = GetConditionTypes();
+        if (conditionTypes.Any())
         {
-            if (key != null) condition.AddCondition(key, searchInfos[key], SqlOperator.Equal);
+            return (await condition.BuildConditionSql(conditionTypes)).Replace("Where", "");
+        }
+
+        foreach (var searchInfo in searchInfos)
+        {
+            condition.AddCondition(searchInfo.Key, searchInfo.Value, SqlOperator.Equal);
         }
 
         return condition.BuildConditionSql().Replace("Where", "");
@@ -779,9 +784,9 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="searchInfos">参数名和参数值</param>
     /// <returns></returns>
     [NonAction]
-    public virtual async Task<List<T>> GetEntitiesAsync(NameValueCollection searchInfos)
+    public virtual async Task<List<T>> GetEntitiesAsync(Dictionary<string, string> searchInfos)
     {
-        string where = GetConditionSql(searchInfos);
+        string where = await GetConditionSql(searchInfos);
         return await FindAsync(where);
     }
 
@@ -792,9 +797,9 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="pagerInfo">分页条件</param>
     /// <returns></returns>
     [NonAction]
-    public virtual async Task<PageResult<T>> GetEntitiesAsync(NameValueCollection searchInfos, PageInput pagerInfo)
+    public virtual async Task<PageResult<T>> GetEntitiesAsync(Dictionary<string, string> searchInfos, PageInput pagerInfo)
     {
-        string where = GetConditionSql(searchInfos);
+        string where = await GetConditionSql(searchInfos);
         return await FindWithPagerAsync(where, pagerInfo);
     }
 
@@ -807,10 +812,7 @@ public class BaseService<T> where T : BaseEntity, new()
     [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<PageResult<T>> GetEntitiesByPageAsync(PaginatedSearchInfos searchInfos)
     {
-        var c = searchInfos.SearchInfos.Adapt<List<ConditionalModel>>();
-        var conModels = new List<IConditionalModel>();
-        conModels.AddRange(c);
-        await Repository.AsQueryable().Where(conModels).ToListAsync();
+        var conModels = await GetConditionExc(searchInfos.SearchInfos);
         return await FindWithPagerAsync(conModels, searchInfos.PagerInfo);
     }
 

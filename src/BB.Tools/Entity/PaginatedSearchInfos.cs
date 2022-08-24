@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="SearchInfos">搜索条件</param>
 /// <param name="PagerInfo">分页条件</param>
-public record PaginatedSearchInfos(CListItem[] SearchInfos, PageInput PagerInfo);
+public record PaginatedSearchInfos(Dictionary<string, string> SearchInfos, PageInput PagerInfo);

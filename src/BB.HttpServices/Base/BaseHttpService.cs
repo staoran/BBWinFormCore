@@ -121,7 +121,7 @@ public class BaseHttpService<T> : ITransient
     /// </summary>
     /// <param name="searchInfos">查询的条件</param>
     /// <returns>指定对象的集合</returns>
-    public async Task<List<T>> FindAsync(CListItem[] searchInfos)
+    public async Task<List<T>> FindAsync(Dictionary<string, string> searchInfos)
     {
         return (await _baseHttpService.FindAsync(searchInfos)).Data;
     }
