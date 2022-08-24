@@ -73,6 +73,12 @@ public enum SqlOperator
     LikeStartAt,
 
     /// <summary>
+    /// Like 结尾匹配模糊查询，如Like '%ABC'
+    /// </summary>
+    [Description("Like 结尾匹配模糊查询，如Like '%ABC'")]
+    LikeEndAt,
+
+    /// <summary>
     /// ＝ 等于号 
     /// </summary>
     [Description("＝ 等于号")]
@@ -109,20 +115,54 @@ public enum SqlOperator
     LessThanOrEqual,
 
     /// <summary>
-    /// 在某两个值的中间，between and 等同于 >= 和 <=
+    /// 在某两个值的中间，between and 等同于 ≥ 和 ≤
     /// </summary>
+    [Description("在某两个值的中间")]
     Between,
 
     /// <summary>
     /// 不在某两个值的中间，not between and 等同于 < 和 >
     /// </summary>
+    [Description("不在某两个值的中间")]
     NotBetween,
 
     /// <summary>
-    /// 在某个字符串值中
+    /// 在数据集合中
     /// </summary>
-    [Description("在某个字符串值中")]
-    In
+    [Description("在数据集合中")]
+    In,
+
+    /// <summary>
+    /// 不在数据集合中
+    /// </summary>
+    [Description("不在数据集合中")]
+    NotIn,
+
+    /// <summary>
+    /// value 是 null 或 ""
+    /// </summary>
+    [Description("value 是 null 或 空")]
+    IsNullOrEmpty,
+
+    /// <summary>
+    /// field is not null
+    /// field 不等于 value
+    /// </summary>
+    [Description("field is not null | field 不等于 value")]
+    IsNot,
+
+    /// <summary>
+    /// field is null
+    /// field = value
+    /// </summary>
+    [Description("field is null | field = value")]
+    EqualNull,
+
+    /// <summary>
+    /// 多个 Like or，value = x,x,x
+    /// </summary>
+    [Description("多个 Like or")]
+    InLike,
 }
 
 /// <summary>

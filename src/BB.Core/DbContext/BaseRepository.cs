@@ -1436,6 +1436,34 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
+    /// 获取字段搜索配置
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NotSupportedException"></exception>
+    public virtual List<FieldConditionType> GetFieldConditionTypes()
+    {
+        return _cache.GetOrCreate($"{typeof(T).Name}ConditionType", () =>
+        {
+            List<FieldConditionType> dic = new();
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            foreach (PropertyInfo prop in properties)
+            {
+                object attribute = prop.GetCustomAttribute(typeof(ColumnAttribute), false);
+                if (attribute != null)
+                {
+                    var attr = (ColumnAttribute)attribute;
+                    if (attr.SqlOperator != SqlOperator.Empty)
+                    {
+                        dic.Add(new FieldConditionType(attr.Name, attr.SqlOperator, attr.QueryRequired));
+                    }
+                }
+            }
+
+            return dic;
+        });
+    }
+
+    /// <summary>
     /// 获取列表显示的字段（用于界面显示）
     /// </summary>
     /// <returns></returns>

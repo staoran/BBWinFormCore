@@ -757,20 +757,20 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
     [NonAction]
-    public virtual List<IConditionalModel> GetConditionExc(CListItem[] searchInfos)
+    public virtual async Task<List<IConditionalModel>> GetConditionExc(Dictionary<string, string> searchInfos)
     {
-        var condition = new List<IConditionalModel>();
-        foreach (CListItem cListItem in searchInfos)
-        {
-            if (cListItem != null) condition.Add(new ConditionalModel()
-            {
-                ConditionalType = ConditionalType.Equal,
-                FieldName = cListItem.Text,
-                FieldValue = cListItem.Value
-            });
-        }
+        return await searchInfos.BuildConditionExc(GetConditionTypes());
+    }
 
-        return condition;
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    [NonAction]
+    public virtual List<FieldConditionType> GetConditionTypes()
+    {
+        // 默认通过反射获取实体类中的配置
+        return Repository.GetFieldConditionTypes();
     }
 
     /// <summary>
