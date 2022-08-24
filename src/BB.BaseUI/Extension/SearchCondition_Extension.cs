@@ -42,10 +42,16 @@ public static class SearchConditionExtension
     /// <param name="startDate">开始日期</param>
     /// <param name="endDate">结束日期</param>
     /// <returns></returns>
-    public static SearchCondition AddDateCondition(this SearchCondition condition, string fieldName, DateTime startDate, DateTime endDate)
+    public static SearchCondition AddDateCondition(this SearchCondition condition, string fieldName, DateTime? startDate, DateTime? endDate)
     {
-        condition.AddCondition(fieldName, startDate, SqlOperator.MoreThanOrEqual);
-        condition.AddCondition(fieldName, endDate.AddDays(1), SqlOperator.LessThan);
+        if (startDate.HasValue)
+        {
+            condition.AddCondition(fieldName, startDate.Value, SqlOperator.MoreThanOrEqual);
+        }
+        if (endDate.HasValue)
+        {
+            condition.AddCondition(fieldName, endDate.Value.AddDays(1), SqlOperator.LessThan);
+        }
         return condition;
     }
 
