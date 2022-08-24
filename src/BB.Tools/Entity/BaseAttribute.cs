@@ -97,12 +97,16 @@ public class ColumnAttribute : Attribute
     /// <param name="display">列显示名</param>
     /// <param name="hide">是否隐藏</param>
     /// <param name="permit">表单操作权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑</param>
-    public ColumnAttribute(string name, string display = "", bool hide = false, int permit = 0)
+    /// <param name="sqlOperator">Sql 查询类型</param>
+    /// <param name="queryRequired">查询时是否必填</param>
+    public ColumnAttribute(string name, string display = "", bool hide = false, int permit = 0, SqlOperator sqlOperator = SqlOperator.Empty, bool queryRequired = false)
     {
         Name = name;
         Display = display;
         Hide = hide;
         Permit = permit;
+        SqlOperator = sqlOperator;
+        QueryRequired = queryRequired;
     }
 
     /// <summary>
@@ -124,4 +128,14 @@ public class ColumnAttribute : Attribute
     /// 表单操作权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
     /// </summary>
     public int Permit { get; }
+
+    /// <summary>
+    /// Sql 查询类型
+    /// </summary>
+    public SqlOperator SqlOperator { get; }
+
+    /// <summary>
+    /// 查询时是否必填
+    /// </summary>
+    public bool QueryRequired { get; }
 }
