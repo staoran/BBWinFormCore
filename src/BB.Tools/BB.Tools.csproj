@@ -18,4 +18,11 @@
       <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Utils\CCalendarData.xml" />
+      <EmbeddedResource Include="Utils\CCalendarData.xml">
+        <CustomToolNamespace>BB.Tools.Utils</CustomToolNamespace>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

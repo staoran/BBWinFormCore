@@ -12,7 +12,7 @@ public class CCalendar
     /// 自定义的CCalendarDate.XML的限定名称，命名空间修改，必须也跟着修改，
     /// 右键查看CCalendarData.xml文件的属性可以看到它的命名空间
     /// </summary>
-    const string CCalendarDateFile = "CCalendarData.xml";
+    const string CCalendarDateFile = "BB.Tools.Utils.CCalendarData.xml";
 
     /// <summary>
     /// 结构。日期对象

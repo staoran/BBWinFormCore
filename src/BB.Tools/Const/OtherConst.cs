@@ -501,9 +501,9 @@ public partial class Const
 	/// <summary>
 	/// 自定义的CCalendarDate.XML的限定名称，命名空间修改，必须也跟着修改，
 	/// 右键查看CCalendarData.xml文件的属性可以看到它的命名空间
-	/// 在 JCodes.Framework.Common 项目下Others 文件夹下找到 CCalendarData.xml文件 右击修改其 生成操作:嵌入的资源;自定义工具命名空间:JCodes.Framework.Common.Others
+	/// 修改其 生成操作:嵌入的资源;自定义工具命名空间:BB.Tools.Utils
 	/// </summary>
-	public const string C_CALENDAR_DATE_FILE = "JCodes.Framework.Common.Others.CCalendarData.xml";
+	public const string C_CALENDAR_DATE_FILE = "BB.Tools.Utils.CCalendarData.xml";
 
 	/// <summary>
 	/// 缓存大小
