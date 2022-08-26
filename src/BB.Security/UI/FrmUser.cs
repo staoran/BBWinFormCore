@@ -694,7 +694,7 @@ public partial class FrmUser : BaseDock
             TreeNode selectedNode = treeRole.SelectedNode;
             if (_isUseRoleSearch && selectedNode is { Tag: { } })
             {
-                string roleId = selectedNode.Tag.ToString();
+                string roleId = selectedNode.Tag.ObjToStr();
                 if (!string.IsNullOrEmpty(roleId))
                 {
                     list = await _userRoleBll.GetUsersByRoleAsync(roleId.ToInt32());

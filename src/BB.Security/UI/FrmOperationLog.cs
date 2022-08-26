@@ -132,7 +132,7 @@ public partial class FrmOperationLog : BaseDock
     /// </summary>
     public override async Task FormOnLoad()
     {
-        InitTree();
+        await InitTree();
         await BindData();
     }
         
@@ -235,7 +235,7 @@ public partial class FrmOperationLog : BaseDock
     private Dictionary<string,string> GetConditionSql()
     {
         //如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
-        var condition = new NameValueCollection
+        var condition = _treeCondition ?? new NameValueCollection
         {
             { OperationLogInfo.FieldLoginName, txtLoginName.Text.Trim() },
             { OperationLogInfo.FieldTableName, txtTableName.Text.Trim() },
@@ -405,7 +405,7 @@ public partial class FrmOperationLog : BaseDock
         {
             TreeNode subNode = new TreeNode(info.Name, 1, 1)
             {
-                Tag = $"Company_ID='{info.HandNo}' "
+                Tag = new NameValueCollection() { { OperationLogInfo.FieldCompanyId, info.HandNo } }
             };
             companyNode.Nodes.Add(subNode);
         }
@@ -414,35 +414,25 @@ public partial class FrmOperationLog : BaseDock
         treeView1.Nodes.Add(tableNode);
         List<string> tableList = await _bll.GetFieldListAsync("TableName");
 
-        bool isCompanyAdmin = GB.UserInRole(RoleInfo.COMPANY_ADMIN_NAME);
-        foreach (string tablename in tableList)
+        foreach (string tableName in tableList)
         {
-            TreeNode subNode = new TreeNode(tablename, 3, 3);                
-            //如果是公司管理员，增加公司标识
-            if (isCompanyAdmin)
+            var subNode = new TreeNode(tableName, 3, 3)
             {
-                subNode.Tag = $"TableName='{tablename}' AND Company_ID='{GB.LoginUserInfo.CompanyId}' ";
-            }
-            else
-            {
-                subNode.Tag = $"TableName='{tablename}' ";
-            }
+                Tag = new NameValueCollection() { { OperationLogInfo.FieldTableName, tableName } }
+            };
             tableNode.Nodes.Add(subNode);
 
             List<string> operationList = new List<string>() { "增加", "修改", "删除"};
             foreach (string operationType in operationList)
             {
-                TreeNode operationNode = new TreeNode(operationType, 4, 4);                    
-                //如果是公司管理员，增加公司标识
-                if (isCompanyAdmin)
+                var operationNode = new TreeNode(operationType, 4, 4)
                 {
-                    operationNode.Tag =
-                        $"TableName='{tablename}'  AND OperationType='{operationType}' AND Company_ID='{GB.LoginUserInfo.CompanyId}' ";
-                }
-                else
-                {
-                    operationNode.Tag = $"TableName='{tablename}' AND OperationType='{operationType}' ";
-                }
+                    Tag = new NameValueCollection()
+                    {
+                        { OperationLogInfo.FieldTableName, tableName },
+                        { OperationLogInfo.FieldOperationType, operationType }
+                    }
+                };
                 subNode.Nodes.Add(operationNode);
             }
         }
