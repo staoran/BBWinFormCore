@@ -159,9 +159,9 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected virtual CListItem[] GetQueryCondition()
+    protected virtual Dictionary<string,string> GetQueryCondition()
     {
-        return Array.Empty<CListItem>();
+        return new Dictionary<string, string>();
     }
 
     #endregion

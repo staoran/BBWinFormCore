@@ -362,7 +362,7 @@ public partial class FrmNode : BaseViewDock<Node, NodeHttpService, FrmEditNode, 
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -382,7 +382,7 @@ public partial class FrmNode : BaseViewDock<Node, NodeHttpService, FrmEditNode, 
             { Node.FieldTranNodeStatus, txtTranNodeStatus.GetComboBoxValue() },
             { Node.FieldPublicYN, txtPublicYN.GetComboBoxValue() },
             { Node.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -462,7 +462,7 @@ public partial class FrmNode : BaseViewDock<Node, NodeHttpService, FrmEditNode, 
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
         if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<Node> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "网点ID,结算网点编号,网点名称,网点类型,合同开始时间,合同终止时间,上级网点ID,网点负责人,负责人证件号码,网点联系方式,网点地址,锁机限制,锁机金额,警戒金额,开通短信,封锁,开通回单,代收款限额,代收款限额BKP,到付款限额,到付款限额BKP,区,进港时间,出港时间,备注,创建时间,创建人,更新时间,更新人,网点状态,是否开放,审核,审核人,审核时间,签收周期起算时间,签收最晚时间,签收天数,回单返回天数,跨平台结算主体,管理费,系统使用费,押金,合同备注,仅送货,自提限重,自提限方,网点坐标,网点锁机kpi是否执行,所属财务中心,白名单,黑名单");

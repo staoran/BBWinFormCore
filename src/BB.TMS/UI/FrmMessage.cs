@@ -271,7 +271,7 @@ public partial class FrmMessage : BaseViewDock<Message, MessageHttpService, FrmE
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -286,7 +286,7 @@ public partial class FrmMessage : BaseViewDock<Message, MessageHttpService, FrmE
             { Message.FieldCreationDate, txtCreationDate1.EditValue.ObjToStr() },
             { Message.FieldCreationDate, txtCreationDate2.EditValue.ObjToStr() },
             { Message.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -330,7 +330,7 @@ public partial class FrmMessage : BaseViewDock<Message, MessageHttpService, FrmE
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
         if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<Message> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "问题件编号,问题件类型,运单号,发送方网点,问题件内容,接收方网点,处理状态,附件地址,创建时间,创建人,修改时间,修改人,审核,审核人,审核时间");

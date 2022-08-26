@@ -225,7 +225,7 @@ public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, Logistic
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -244,7 +244,7 @@ public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, Logistic
             { LogisticCompany.FieldFlagInvoice, txtFlagInvoice.GetComboBoxValue() },
             { LogisticCompany.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
             { LogisticCompany.FieldCancelYN, txtCancelYN.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -302,7 +302,7 @@ public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, Logistic
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
                 if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<LogisticCompany> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "网点名称,承运商编号,承运商名称,助记码,联系人,电话,地址,主营线路,信誉,法人,税号,开户行,银行账号,账期说明,合同起始日期,合同结束日期,是否启用,是否开票,备注,创建时间,创建人,更新时间,更新人,审核,审批人,审批时间,是否作废,作废时间,作废人");

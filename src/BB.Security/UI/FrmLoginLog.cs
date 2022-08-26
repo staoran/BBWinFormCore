@@ -176,7 +176,7 @@ public partial class FrmLoginLog : BaseForm
     /// <summary>
     /// 根据查询条件构造查询语句
     /// </summary> 
-    private CListItem[] GetConditionSql()
+    private Dictionary<string,string> GetConditionSql()
     {
         return new NameValueCollection
         {
@@ -188,7 +188,7 @@ public partial class FrmLoginLog : BaseForm
             { LoginLogInfo.FieldSystemTypeId, txtSystemType.GetComboBoxValue() },
             { LoginLogInfo.FieldIPAddress, txtIPAddress.Text.Trim() },
             { LoginLogInfo.FieldMacAddress, txtMacAddress.Text.Trim() }
-        }.ToCListItems();
+        }.ToDicString();
     }
         
     /// <summary>
@@ -211,7 +211,7 @@ public partial class FrmLoginLog : BaseForm
 
         #endregion
 
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
         PageResult<LoginLogInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
         winGridViewPager1.InitDataSource(list, "用户登录日志信息报表");
@@ -265,7 +265,7 @@ public partial class FrmLoginLog : BaseForm
         string file = FileDialogHelper.SaveExcel($"{_moduleName}.xls");
         if (!string.IsNullOrEmpty(file))
         {
-            CListItem[] condition = GetConditionSql();
+            Dictionary<string,string> condition = GetConditionSql();
             List<LoginLogInfo> list = await _bll.FindAsync(condition);
             DataTable dtNew = DataTableHelper.CreateTable("序号|int,登录用户ID,登录名,真实名称,所属公司ID,所属公司名称,日志描述,IP地址,Mac地址,更新时间,系统编号");
             DataRow dr;

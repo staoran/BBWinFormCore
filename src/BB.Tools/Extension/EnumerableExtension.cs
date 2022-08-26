@@ -209,4 +209,17 @@ public static class EnumerableExtension
 
         return c;
     }
+
+    public static Dictionary<string,string> ToDicString(this NameValueCollection dic)
+    {
+        Dictionary<string,string> c = new Dictionary<string,string>();
+        foreach (string? o in dic)
+        {
+            if (string.IsNullOrEmpty(o)) continue;
+
+            c.Add(o, dic.Get(o) ?? string.Empty);
+        }
+
+        return c;
+    }
 }

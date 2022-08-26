@@ -247,7 +247,7 @@ public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection()
@@ -273,7 +273,7 @@ public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
             { Car.FieldContactTel, txtContactTel.Text.Trim() },
             { Car.FieldCreationDate, txtCreationDate1.EditValue.ObjToStr() },
             { Car.FieldCreationDate, txtCreationDate2.EditValue.ObjToStr() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -334,7 +334,7 @@ public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
                 if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<Car> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "网点编码,车牌号,车辆性质,车型,车体状况,服务范围,信誉,主营路线,购买日期,运营编号,发动机号,车架号,载重,长,宽,高,体积,联系人,联系电话,驾驶员,驾驶证号,手机号码,固定电话,家庭住址,备注,创建时间,创建人,最后修改时间,最后修改人,审核,审核人,审核时间");

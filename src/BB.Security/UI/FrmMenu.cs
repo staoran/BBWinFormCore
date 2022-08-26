@@ -174,7 +174,7 @@ public partial class FrmMenu : BaseForm
     /// </summary> 
     private async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
     {
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
     }
 
@@ -189,7 +189,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 根据查询条件构造查询语句
     /// </summary> 
-    private CListItem[] GetConditionSql()
+    private Dictionary<string,string> GetConditionSql()
     {
         //如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         var condition = _treeCondition ??  new NameValueCollection
@@ -205,7 +205,7 @@ public partial class FrmMenu : BaseForm
             condition.Add(MenuInfo.FieldVisible, "1");
         }
 
-        return condition.ToCListItems();
+        return condition.ToDicString();
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ public partial class FrmMenu : BaseForm
 
         #endregion
 
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
         PageResult<MenuInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
         winGridViewPager1.InitDataSource(list, "功能菜单信息报表");

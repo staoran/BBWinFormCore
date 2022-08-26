@@ -220,7 +220,7 @@ public partial class FrmBlackIp : BaseDock
     /// </summary> 
     private async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
     {
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
     }
 
@@ -236,7 +236,7 @@ public partial class FrmBlackIp : BaseDock
     /// <summary>
     /// 根据查询条件构造查询语句
     /// </summary> 
-    private CListItem[] GetConditionSql()
+    private Dictionary<string,string> GetConditionSql()
     {
         var condition = new NameValueCollection
         {
@@ -249,7 +249,7 @@ public partial class FrmBlackIp : BaseDock
             condition.Add(BlackIpInfo.FieldForbid, "1");
         }
 
-        return condition.ToCListItems();
+        return condition.ToDicString();
     }
         
     /// <summary>
@@ -274,7 +274,7 @@ public partial class FrmBlackIp : BaseDock
 
         #endregion
 
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         List<BlackIpInfo> list = await _bll.FindAsync(condition);
         winGridViewPager1.DataSource = new SortableBindingList<BlackIpInfo>(list);
         winGridViewPager1.PrintTitle = "登陆系统的黑白名单列表报表";

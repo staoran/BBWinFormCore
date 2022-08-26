@@ -207,7 +207,7 @@ public partial class FrmBasicCostType : BaseViewDock<BasicCostType, BasicCostTyp
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -220,7 +220,7 @@ public partial class FrmBasicCostType : BaseViewDock<BasicCostType, BasicCostTyp
             { BasicCostType.FieldPayPostType, txtPayPostType.GetComboBoxValue() },
             { BasicCostType.FieldRecvPostType, txtRecvPostType.GetComboBoxValue() },
             { BasicCostType.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -267,7 +267,7 @@ public partial class FrmBasicCostType : BaseViewDock<BasicCostType, BasicCostTyp
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
                 if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<BasicCostType> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "费用类型编号,费用类型,正负,启用,适用范围,付款网点类型,收款网点类型,付款入账类型,收款入账类型,收入费用,备注,审核,审核人,审核时间,创建人,创建时间,修改人,修改时间");

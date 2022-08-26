@@ -186,7 +186,7 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -196,7 +196,7 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
             { BasicCostBillType.FieldCostDesc, txtCostDesc.Text.Trim() },
             { BasicCostBillType.FieldUseType, txtUseType.GetComboBoxValue() },
             { BasicCostBillType.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -238,7 +238,7 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
                 if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<BasicCostBillType> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "自增ID,类型编号,类型名称,正负1/-1,备注,适用范围,创建人,创建时间,审核,审批人,审批时间,修改人,修改时间");

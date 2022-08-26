@@ -221,7 +221,7 @@ public partial class FrmCostBill : BaseViewDock<CostBill, CostBillHttpService, F
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -240,7 +240,7 @@ public partial class FrmCostBill : BaseViewDock<CostBill, CostBillHttpService, F
             { CostBill.FieldCreationDate, txtCreationDate1.EditValue.ObjToStr() },
             { CostBill.FieldCreationDate, txtCreationDate2.EditValue.ObjToStr() },
             { CostBill.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -292,7 +292,7 @@ public partial class FrmCostBill : BaseViewDock<CostBill, CostBillHttpService, F
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
                 if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<CostBill> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "预付单类型,预付单编号,运单编号,收款网点,付款网点,来源单号,操作类型,正负,金额,入账,入账时间,入账人,单据状态,备注,创建时间,创建人,创建网点,修改时间,修改人,审批,审批人,审批时间,财务中心");

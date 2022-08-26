@@ -185,7 +185,7 @@ public partial class FrmBasicTranslateWords : BaseViewDock<BasicTranslateWords, 
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -196,7 +196,7 @@ public partial class FrmBasicTranslateWords : BaseViewDock<BasicTranslateWords, 
             { BasicTranslateWords.FieldCanSelectYN, txtCanSelectYN.GetComboBoxValue() },
             { BasicTranslateWords.FieldExampleStr, txtExampleStr.Text.Trim() },
             { BasicTranslateWords.FieldCancelYN, txtCancelYN.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -237,7 +237,7 @@ public partial class FrmBasicTranslateWords : BaseViewDock<BasicTranslateWords, 
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
                 if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<BasicTranslateWords> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "自增ID,关键字,代码,代码类型,可选,说明,禁用,备注,创建时间,创建人,修改时间,修改人");

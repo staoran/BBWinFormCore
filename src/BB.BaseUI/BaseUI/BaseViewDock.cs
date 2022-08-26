@@ -196,7 +196,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     {
         ShowWaitForm();
         WaitForm.SetWaitFormDescription("数据加载中...");
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
         PageResult<T> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
         winGridViewPager1.InitDataSource(list, $"{moduleName}报表");
@@ -298,7 +298,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     protected virtual async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
     {
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
     }
 
@@ -317,9 +317,9 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected virtual CListItem[] GetQueryCondition()
+    protected virtual Dictionary<string,string> GetQueryCondition()
     {
-        return Array.Empty<CListItem>();
+        return new Dictionary<string, string>();
     }
 
     #endregion

@@ -185,7 +185,7 @@ public partial class FrmDocNoRule : BaseViewDock<DocNoRule, DocNoRuleHttpService
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -195,7 +195,7 @@ public partial class FrmDocNoRule : BaseViewDock<DocNoRule, DocNoRuleHttpService
             { DocNoRule.FieldFlagSpilitNo, txtFlagSpilitNo.GetComboBoxValue() },
             { DocNoRule.FieldFlagIncludeDocCode, txtFlagIncludeDocCode.GetComboBoxValue() },
             { DocNoRule.FieldFlagLastMillisecond, txtFlagLastMillisecond.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -236,7 +236,7 @@ public partial class FrmDocNoRule : BaseViewDock<DocNoRule, DocNoRuleHttpService
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
                 if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<DocNoRule> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "自增ID,单据编码,编码组合,自增数长度,自动归零,包含单据字头,序号前加间隔符,末尾增加毫秒,当前序号,当前年月日,创建日期,创建人");

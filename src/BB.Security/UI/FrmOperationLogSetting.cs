@@ -208,7 +208,7 @@ public partial class FrmOperationLogSetting : BaseDock
     /// </summary> 
     private async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
     {
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
     }
 
@@ -223,7 +223,7 @@ public partial class FrmOperationLogSetting : BaseDock
     /// <summary>
     /// 根据查询条件构造查询语句
     /// </summary> 
-    private CListItem[] GetConditionSql()
+    private Dictionary<string,string> GetConditionSql()
     {
         //如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         var condition = new NameValueCollection
@@ -237,7 +237,7 @@ public partial class FrmOperationLogSetting : BaseDock
             condition.Add(OperationLogSettingInfo.FieldForbid, "1");
         }
         
-        return condition.ToCListItems();
+        return condition.ToDicString();
     }
         
     /// <summary>
@@ -264,7 +264,7 @@ public partial class FrmOperationLogSetting : BaseDock
 
         #endregion
 
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
         PageResult<OperationLogSettingInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
         winGridViewPager1.InitDataSource(list, "记录操作日志的数据表配置报表");

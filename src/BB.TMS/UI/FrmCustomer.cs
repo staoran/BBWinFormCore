@@ -323,7 +323,7 @@ public partial class FrmCustomer : BaseViewDock<Customer, CustomerHttpService, F
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -339,7 +339,7 @@ public partial class FrmCustomer : BaseViewDock<Customer, CustomerHttpService, F
             { Customer.FieldCreationDate, txtCreationDate1.EditValue.ObjToStr() },
             { Customer.FieldCreationDate, txtCreationDate2.EditValue.ObjToStr() },
             { Customer.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -396,7 +396,7 @@ public partial class FrmCustomer : BaseViewDock<Customer, CustomerHttpService, F
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
         if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<Customer> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "公司编号,助记码,网点编号,联系人,公司名称,地址,区,电话号码,手机号,开户行,银行账号,备注,是否在用(Y/N）,付款方式,税率,业务员提成方式,提成比例,客服,项目主管,开票,业务员,创建日期,创建人,更新日期,更新人,审核,审核人,审核日期");

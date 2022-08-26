@@ -217,7 +217,7 @@ public partial class FrmOperationLog : BaseDock
     /// </summary> 
     private async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
     {
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
     }
 
@@ -232,7 +232,7 @@ public partial class FrmOperationLog : BaseDock
     /// <summary>
     /// 根据查询条件构造查询语句
     /// </summary> 
-    private CListItem[] GetConditionSql()
+    private Dictionary<string,string> GetConditionSql()
     {
         //如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         var condition = new NameValueCollection
@@ -244,7 +244,7 @@ public partial class FrmOperationLog : BaseDock
             { OperationLogInfo.FieldCreationDate, txtCreationDate2.Text.Trim() }
         };
 
-        return condition.ToCListItems();
+        return condition.ToDicString();
     }
         
     /// <summary>
@@ -267,7 +267,7 @@ public partial class FrmOperationLog : BaseDock
 
         #endregion
 
-        CListItem[] condition = GetConditionSql();
+        Dictionary<string,string> condition = GetConditionSql();
         PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
         PageResult<OperationLogInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
         winGridViewPager1.InitDataSource(list, "用户关键操作记录报表");
@@ -318,7 +318,7 @@ public partial class FrmOperationLog : BaseDock
         string file = FileDialogHelper.SaveExcel($"{_moduleName}.xls");
         if (!string.IsNullOrEmpty(file))
         {
-            CListItem[] condition = GetConditionSql();
+            Dictionary<string,string> condition = GetConditionSql();
             List<OperationLogInfo> list = await _bll.FindAsync(condition);
             DataTable dtNew = DataTableHelper.CreateTable("序号|int,登录用户ID,登录名,真实名称,所属公司ID,所属公司名称,操作表名称,操作类型,日志描述,IP地址,Mac地址,创建时间");
             DataRow dr;
@@ -475,9 +475,9 @@ public partial class FrmOperationLog : BaseDock
         treeView1.CollapseAll();
     }
 
-    private void menuTree_Refresh_Click(object sender, EventArgs e)
+    private async void menuTree_Refresh_Click(object sender, EventArgs e)
     {
-        InitTree();
+        await InitTree();
     }
 
 }

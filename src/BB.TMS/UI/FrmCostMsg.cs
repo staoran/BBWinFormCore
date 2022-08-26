@@ -284,7 +284,7 @@ public partial class FrmCostMsg : BaseViewDock<CostMsg, CostMsgHttpService, FrmE
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -299,7 +299,7 @@ public partial class FrmCostMsg : BaseViewDock<CostMsg, CostMsgHttpService, FrmE
             { CostMsg.FieldCreationDate, txtCreationDate1.EditValue.ObjToStr() },
             { CostMsg.FieldCreationDate, txtCreationDate2.EditValue.ObjToStr() },
             { CostMsg.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -348,7 +348,7 @@ public partial class FrmCostMsg : BaseViewDock<CostMsg, CostMsgHttpService, FrmE
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
         if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<CostMsg> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "费用调整编号,来源类型,运单编号,申请网点,内容描述,附件,接收类型,接收网点,费用类型,原始值,修改值,单据状态,创建时间,创建人,修改时间,修改人,审核,审批人,审批时间,财务中心");

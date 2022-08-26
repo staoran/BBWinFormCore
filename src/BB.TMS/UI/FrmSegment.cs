@@ -278,7 +278,7 @@ public partial class FrmSegment : BaseViewDock<Segment, SegmentHttpService, FrmE
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -291,7 +291,7 @@ public partial class FrmSegment : BaseViewDock<Segment, SegmentHttpService, FrmE
             { Segment.FieldCreationDate, txtCreationDate1.EditValue.ObjToStr() },
             { Segment.FieldCreationDate, txtCreationDate2.EditValue.ObjToStr() },
             { Segment.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -339,7 +339,7 @@ public partial class FrmSegment : BaseViewDock<Segment, SegmentHttpService, FrmE
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
         if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<Segment> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "线路编号,线路类型,线路名称,起始网点,结束网点,起始时间,预估时间（小时）,预估距离,预估油耗,预估开支,预估路桥费,备注,创建时间,创建人,修改时间,修改人,审核,审核人,审核时间");

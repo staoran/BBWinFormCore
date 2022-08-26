@@ -262,7 +262,7 @@ public partial class FrmQuotation : BaseViewDock<Quotation, QuotationHttpService
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override CListItem[] GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
@@ -272,7 +272,7 @@ public partial class FrmQuotation : BaseViewDock<Quotation, QuotationHttpService
             { Quotation.FieldCostType, txtCostType.GetComboBoxValue() },
             { Quotation.FieldCargoTypePerYN, txtCargoTypePerYN.GetComboBoxValue() },
             { Quotation.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
-        }).ToCListItems();
+        }).ToDicString();
     }
 
     #endregion
@@ -313,7 +313,7 @@ public partial class FrmQuotation : BaseViewDock<Quotation, QuotationHttpService
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
         if (string.IsNullOrEmpty(file)) return;
-        CListItem[] condition = GetQueryCondition();
+        Dictionary<string,string> condition = GetQueryCondition();
         List<Quotation> list = await _bll.FindAsync(condition);
         DataTable dtNew = DataTableHelper.CreateTable(
             "报价编号,报价名称,费用类型,支持加成,备注,创建时间,创建人,修改时间,修改人,审批,审批人,审批时间");
