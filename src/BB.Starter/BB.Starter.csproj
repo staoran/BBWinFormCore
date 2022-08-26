@@ -18,43 +18,43 @@
 
     <ItemGroup>
         <Reference Include="DevExpress.BonusSkins.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.BonusSkins.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.BonusSkins.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.Drawing.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.Drawing.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.Drawing.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.Printing.v22.1.Core">
-            <HintPath>..\..\..\Reference\DevExpress.Printing.v22.1.Core.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.Printing.v22.1.Core.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.Data.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.Data.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.Data.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.Data.Desktop.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.Data.Desktop.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.Data.Desktop.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.Utils.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.Utils.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.Utils.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.XtraBars.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.XtraBars.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.XtraBars.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.XtraEditors.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.XtraEditors.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.XtraEditors.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.XtraGrid.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.XtraGrid.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.XtraGrid.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.XtraLayout.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.XtraLayout.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.XtraLayout.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.XtraTreeList.v22.1">
-            <HintPath>..\..\..\Reference\DevExpress.XtraTreeList.v22.1.dll</HintPath>
+            <HintPath>..\..\reference\DevExpress.XtraTreeList.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="SettingsProviderNet">
-          <HintPath>..\..\..\Reference\SettingsProviderNet.dll</HintPath>
+          <HintPath>..\..\reference\SettingsProviderNet.dll</HintPath>
         </Reference>
         <Reference Include="WinHtmlControl">
-            <HintPath>..\..\..\Reference\WinHtmlControl.dll</HintPath>
+            <HintPath>..\..\reference\WinHtmlControl.dll</HintPath>
         </Reference>
     </ItemGroup>
 
@@ -66,6 +66,7 @@
       <ProjectReference Include="..\BB.BaseUI\BB.BaseUI.csproj" />
       <ProjectReference Include="..\BB.EntityVerification\BB.EntityVerification.csproj" />
       <ProjectReference Include="..\BB.HttpServices\BB.HttpServices.csproj" />
+      <ProjectReference Include="..\BB.Security\BB.Security.csproj" />
       <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
       <ProjectReference Include="..\BB.Updater\BB.Updater.csproj" />
     </ItemGroup>
