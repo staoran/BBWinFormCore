@@ -30,12 +30,12 @@ public static class ConditionalModelExtensions
         List<IConditionalModel> conditionalModels = new();
         foreach (FieldConditionType fieldConditionType in dic)
         {
-            if (!conditionData.TryGetValue(fieldConditionType.FieldName, out string? value) && fieldConditionType.QueryRequired)
+            if (!conditionData.TryGetValue(fieldConditionType.FieldName, out string value) && fieldConditionType.QueryRequired)
             {
                 throw Oops.Bah($"缺少必填的查询参数：{fieldConditionType.FieldName}");
             }
 
-            if (value.IsNullOrEmpty()) continue;
+            if (string.IsNullOrEmpty(value)) continue;
 
             var ifTrue = true;
             if (fieldConditionType.EnabledConditions != null)
@@ -45,12 +45,51 @@ public static class ConditionalModelExtensions
 
             if (ifTrue)
             {
-                conditionalModels.Add(new ConditionalModel()
+                if (fieldConditionType.SqlOperator == SqlOperator.Between)
                 {
-                    FieldName = fieldConditionType.FieldName,
-                    ConditionalType = fieldConditionType.SqlOperator.ToConditionalType(),
-                    FieldValue = value
-                });
+                    if (value.Contains(','))
+                    {
+                        // 如果有逗号分隔，转数组后，取有效值做相应运算
+                        var values = value.Split(",");
+                        if (!values[0].IsNullOrEmpty())
+                        {
+                            conditionalModels.Add(new ConditionalModel()
+                            {
+                                FieldName = fieldConditionType.FieldName,
+                                ConditionalType = ConditionalType.GreaterThanOrEqual,
+                                FieldValue = values[0]
+                            });
+                        }
+                        if (!values[1].IsNullOrEmpty())
+                        {
+                            conditionalModels.Add(new ConditionalModel()
+                            {
+                                FieldName = fieldConditionType.FieldName,
+                                ConditionalType = ConditionalType.LessThanOrEqual,
+                                FieldValue = values[1]
+                            });
+                        }
+                    }
+                    else
+                    {
+                        // 如果没有逗号分隔，默认按最小值处理，做大于等于运算
+                        conditionalModels.Add(new ConditionalModel()
+                        {
+                            FieldName = fieldConditionType.FieldName,
+                            ConditionalType = ConditionalType.GreaterThanOrEqual,
+                            FieldValue = value
+                        });
+                    }
+                }
+                else
+                {
+                    conditionalModels.Add(new ConditionalModel()
+                    {
+                        FieldName = fieldConditionType.FieldName,
+                        ConditionalType = fieldConditionType.SqlOperator.ToConditionalType(),
+                        FieldValue = value
+                    });
+                }
             }
         }
 
