@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -128,24 +128,25 @@ public class SegmentsService : BaseService<Segments>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Segments.FieldCostType, searchInfos[Segments.FieldCostType], SqlOperator.Equal);
-        condition.AddCondition(Segments.FieldQuotationNo, searchInfos[Segments.FieldQuotationNo], SqlOperator.Equal);
-        condition.AddCondition(Segments.FieldPayNodeType, searchInfos[Segments.FieldPayNodeType], SqlOperator.Equal);
-        condition.AddCondition(Segments.FieldPayNodeNo, searchInfos[Segments.FieldPayNodeNo], SqlOperator.Like);
-        condition.AddCondition(Segments.FieldRecvNodeType, searchInfos[Segments.FieldRecvNodeType], SqlOperator.Equal);
-        condition.AddCondition(Segments.FieldRecvNodeNo, searchInfos[Segments.FieldRecvNodeNo], SqlOperator.Like);
-        condition.AddCondition(Segments.FieldOpenTime, searchInfos[Segments.FieldOpenTime], SqlOperator.Between);
-        condition.AddCondition(Segments.FieldClosetime, searchInfos[Segments.FieldClosetime], SqlOperator.Between);
-        condition.AddCondition(Segments.FieldRemark, searchInfos[Segments.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(Segments.FieldFinancialCenterType, searchInfos[Segments.FieldFinancialCenterType], SqlOperator.Equal);
-        condition.AddCondition(Segments.FieldFinancialCenter, searchInfos[Segments.FieldFinancialCenter], SqlOperator.Like);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(Segments)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Segments.FieldCostType, SqlOperator.Equal),
+                new(Segments.FieldQuotationNo, SqlOperator.Equal),
+                new(Segments.FieldPayNodeType, SqlOperator.Equal),
+                new(Segments.FieldPayNodeNo, SqlOperator.Like),
+                new(Segments.FieldRecvNodeType, SqlOperator.Equal),
+                new(Segments.FieldRecvNodeNo, SqlOperator.Like),
+                new(Segments.FieldOpenTime, SqlOperator.Between),
+                new(Segments.FieldClosetime, SqlOperator.Between),
+                new(Segments.FieldRemark, SqlOperator.Like),
+                new(Segments.FieldFinancialCenterType, SqlOperator.Equal),
+                new(Segments.FieldFinancialCenter, SqlOperator.Like)
+            });
     }
 }

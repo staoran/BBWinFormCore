@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -123,20 +123,21 @@ public class BasicQuotationsService : BaseService<BasicQuotations>, IDynamicApiC
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(BasicQuotations.FieldMathConditional, searchInfos[BasicQuotations.FieldMathConditional], SqlOperator.Like);
-        condition.AddCondition(BasicQuotations.FieldMathContent, searchInfos[BasicQuotations.FieldMathContent], SqlOperator.Like);
-        condition.AddCondition(BasicQuotations.FieldRemark, searchInfos[BasicQuotations.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(BasicQuotations.FieldCreationDate, searchInfos[BasicQuotations.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(BasicQuotations.FieldCreatedBy, searchInfos[BasicQuotations.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotations.FieldLastUpdateDate, searchInfos[BasicQuotations.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(BasicQuotations.FieldLastUpdatedBy, searchInfos[BasicQuotations.FieldLastUpdatedBy], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(BasicQuotations)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(BasicQuotations.FieldMathConditional, SqlOperator.Like),
+                new(BasicQuotations.FieldMathContent, SqlOperator.Like),
+                new(BasicQuotations.FieldRemark, SqlOperator.Like),
+                new(BasicQuotations.FieldCreationDate, SqlOperator.Between),
+                new(BasicQuotations.FieldCreatedBy, SqlOperator.Equal),
+                new(BasicQuotations.FieldLastUpdateDate, SqlOperator.Between),
+                new(BasicQuotations.FieldLastUpdatedBy, SqlOperator.Equal)
+            });
     }
 }

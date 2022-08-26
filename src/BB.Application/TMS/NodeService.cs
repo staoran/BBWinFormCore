@@ -1,11 +1,10 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Format;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -198,66 +197,89 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(Node)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Node.FieldTranNodeNO, SqlOperator.Like),
+                new(Node.FieldTranNodeCostNo, SqlOperator.Equal),
+                new(Node.FieldTranNodeName, SqlOperator.Like),
+                new(Node.FieldTranNodeType, SqlOperator.Equal),
+                new(Node.FieldTranNodeBeginDate, SqlOperator.Between),
+                new(Node.FieldTranNodeEndDate, SqlOperator.Between),
+                new(Node.FieldParentNo, SqlOperator.Equal),
+                new(Node.FieldTranNodePerson, SqlOperator.Like),
+                new(Node.FieldTranNodePersonID, SqlOperator.Like),
+                new(Node.FieldTranNodeMobile, SqlOperator.Like),
+                new(Node.FieldTranNodeAddress, SqlOperator.Like),
+                new(Node.FieldLockLimit, SqlOperator.Equal),
+                new(Node.FieldLockLimitAmt, SqlOperator.Between),
+                new(Node.FieldWarningLimitAmt, SqlOperator.Between),
+                new(Node.FieldSendSMS, SqlOperator.Equal),
+                new(Node.FieldISLocked, SqlOperator.Equal),
+                new(Node.FieldAckRec, SqlOperator.Equal),
+                new(Node.FieldAgencyRecLimitAmt, SqlOperator.Between),
+                // new(Node.FieldAgencyRecLimitAmtBKP, SqlOperator.Between),
+                new(Node.FieldCarriageForwardLimitAmt, SqlOperator.Between),
+                // new(Node.FieldCarriageForwardLimitAmtBKP, SqlOperator.Between),
+                new(Node.FieldAreaNo, SqlOperator.Equal),
+                new(Node.FieldInTime, SqlOperator.Between),
+                new(Node.FieldOutTime, SqlOperator.Between),
+                new(Node.FieldRemark, SqlOperator.Like),
+                new(Node.FieldCreationDate, SqlOperator.Between),
+                new(Node.FieldCreatedBy, SqlOperator.Equal),
+                new(Node.FieldLastUpdateDate, SqlOperator.Between),
+                new(Node.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(Node.FieldTranNodeStatus, SqlOperator.Equal),
+                new(Node.FieldPublicYN, SqlOperator.Equal),
+                new(Node.FieldFlagApp, SqlOperator.Equal),
+                new(Node.FieldAppUser, SqlOperator.Equal),
+                new(Node.FieldAppDate, SqlOperator.Between),
+                new(Node.FieldSignLoopEndTime, SqlOperator.Between),
+                new(Node.FieldSignLimitTime, SqlOperator.Between),
+                new(Node.FieldSignDays, SqlOperator.Like),
+                new(Node.FieldAckRecDays, SqlOperator.Like),
+                new(Node.FieldCostMasterYN, SqlOperator.Equal),
+                new(Node.FieldManagementFee, SqlOperator.Between),
+                new(Node.FieldUsageFee, SqlOperator.Between),
+                new(Node.FieldDeposit, SqlOperator.Between),
+                new(Node.FieldContractNote, SqlOperator.Like),
+                new(Node.FieldDispatchOnly, SqlOperator.Equal),
+                new(Node.FieldPickupWeightLimit, SqlOperator.Between),
+                new(Node.FieldPickupVolumeLimit, SqlOperator.Between),
+                new(Node.FieldTranNodeAxes, SqlOperator.Like),
+                new(Node.FieldIsLockLimitKPI, SqlOperator.Equal),
+                new(Node.FieldFinancialCenter, SqlOperator.Equal),
+                new(Node.FieldWhiteList, SqlOperator.Like),
+                new(Node.FieldBlackList, SqlOperator.Like)
+            });
+    }
+
+    /// <summary>
+    /// 构造查询条件
     /// </summary>
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override async Task<List<IConditionalModel>> GetConditionExc(Dictionary<string, string> searchInfos)
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Node.FieldTranNodeNO, searchInfos[Node.FieldTranNodeNO], SqlOperator.Like);
-        condition.AddCondition(Node.FieldTranNodeCostNo, searchInfos[Node.FieldTranNodeCostNo], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldTranNodeName, searchInfos[Node.FieldTranNodeName], SqlOperator.Like);
-        condition.AddCondition(Node.FieldTranNodeType, searchInfos[Node.FieldTranNodeType], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldTranNodeBeginDate, searchInfos[Node.FieldTranNodeBeginDate], SqlOperator.Between);
-        condition.AddCondition(Node.FieldTranNodeEndDate, searchInfos[Node.FieldTranNodeEndDate], SqlOperator.Between);
-        condition.AddCondition(Node.FieldParentNo, searchInfos[Node.FieldParentNo], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldTranNodePerson, searchInfos[Node.FieldTranNodePerson], SqlOperator.Like);
-        condition.AddCondition(Node.FieldTranNodePersonID, searchInfos[Node.FieldTranNodePersonID], SqlOperator.Like);
-        condition.AddCondition(Node.FieldTranNodeMobile, searchInfos[Node.FieldTranNodeMobile], SqlOperator.Like);
-        condition.AddCondition(Node.FieldTranNodeAddress, searchInfos[Node.FieldTranNodeAddress], SqlOperator.Like);
-        condition.AddCondition(Node.FieldLockLimit, searchInfos[Node.FieldLockLimit], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldLockLimitAmt, searchInfos[Node.FieldLockLimitAmt], SqlOperator.Between);
-        condition.AddCondition(Node.FieldWarningLimitAmt, searchInfos[Node.FieldWarningLimitAmt], SqlOperator.Between);
-        condition.AddCondition(Node.FieldSendSMS, searchInfos[Node.FieldSendSMS], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldISLocked, searchInfos[Node.FieldISLocked], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldAckRec, searchInfos[Node.FieldAckRec], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldAgencyRecLimitAmt, searchInfos[Node.FieldAgencyRecLimitAmt], SqlOperator.Between);
-        // condition.AddCondition(Node.FieldAgencyRecLimitAmtBKP, searchInfos[Node.FieldAgencyRecLimitAmtBKP], SqlOperator.Between);
-        condition.AddCondition(Node.FieldCarriageForwardLimitAmt, searchInfos[Node.FieldCarriageForwardLimitAmt], SqlOperator.Between);
-        // condition.AddCondition(Node.FieldCarriageForwardLimitAmtBKP, searchInfos[Node.FieldCarriageForwardLimitAmtBKP], SqlOperator.Between);
-        bool areaNoLength = !searchInfos[Node.FieldAreaNo].IsNullOrEmpty() && searchInfos[Node.FieldAreaNo].Length < 6;
-        condition.AddCondition(Node.FieldAreaNo, searchInfos[Node.FieldAreaNo],
-            areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
-        condition.AddCondition(Node.FieldInTime, searchInfos[Node.FieldInTime], SqlOperator.Between);
-        condition.AddCondition(Node.FieldOutTime, searchInfos[Node.FieldOutTime], SqlOperator.Between);
-        condition.AddCondition(Node.FieldRemark, searchInfos[Node.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(Node.FieldCreationDate, searchInfos[Node.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Node.FieldCreatedBy, searchInfos[Node.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldLastUpdateDate, searchInfos[Node.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Node.FieldLastUpdatedBy, searchInfos[Node.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldTranNodeStatus, searchInfos[Node.FieldTranNodeStatus], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldPublicYN, searchInfos[Node.FieldPublicYN], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldFlagApp, searchInfos[Node.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldAppUser, searchInfos[Node.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldAppDate, searchInfos[Node.FieldAppDate], SqlOperator.Between);
-        condition.AddCondition(Node.FieldSignLoopEndTime, searchInfos[Node.FieldSignLoopEndTime], SqlOperator.Between);
-        condition.AddCondition(Node.FieldSignLimitTime, searchInfos[Node.FieldSignLimitTime], SqlOperator.Between);
-        condition.AddCondition(Node.FieldSignDays, searchInfos[Node.FieldSignDays], SqlOperator.Like);
-        condition.AddCondition(Node.FieldAckRecDays, searchInfos[Node.FieldAckRecDays], SqlOperator.Like);
-        condition.AddCondition(Node.FieldCostMasterYN, searchInfos[Node.FieldCostMasterYN], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldManagementFee, searchInfos[Node.FieldManagementFee], SqlOperator.Between);
-        condition.AddCondition(Node.FieldUsageFee, searchInfos[Node.FieldUsageFee], SqlOperator.Between);
-        condition.AddCondition(Node.FieldDeposit, searchInfos[Node.FieldDeposit], SqlOperator.Between);
-        condition.AddCondition(Node.FieldContractNote, searchInfos[Node.FieldContractNote], SqlOperator.Like);
-        condition.AddCondition(Node.FieldDispatchOnly, searchInfos[Node.FieldDispatchOnly], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldPickupWeightLimit, searchInfos[Node.FieldPickupWeightLimit], SqlOperator.Between);
-        condition.AddCondition(Node.FieldPickupVolumeLimit, searchInfos[Node.FieldPickupVolumeLimit], SqlOperator.Between);
-        condition.AddCondition(Node.FieldTranNodeAxes, searchInfos[Node.FieldTranNodeAxes], SqlOperator.Like);
-        condition.AddCondition(Node.FieldIsLockLimitKPI, searchInfos[Node.FieldIsLockLimitKPI], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldFinancialCenter, searchInfos[Node.FieldFinancialCenter], SqlOperator.Equal);
-        condition.AddCondition(Node.FieldWhiteList, searchInfos[Node.FieldWhiteList], SqlOperator.Like);
-        condition.AddCondition(Node.FieldBlackList, searchInfos[Node.FieldBlackList], SqlOperator.Like);
-        return condition.BuildConditionSql().Replace("Where", "");
+        var condition = await base.GetConditionExc(searchInfos);
+        bool areaNoLength =
+            !searchInfos[Node.FieldAreaNo].IsNullOrEmpty() && searchInfos[Node.FieldAreaNo].Length < 6;
+        if (areaNoLength)
+        {
+            condition.ForEach(x =>
+            {
+                if (x is ConditionalModel { FieldName: Node.FieldAreaNo } c)
+                {
+                    c.ConditionalType = ConditionalType.LikeLeft;
+                }
+            });
+        }
+
+        return condition;
     }
 }

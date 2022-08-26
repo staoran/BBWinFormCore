@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -133,34 +133,35 @@ public class BasicQuotationService : BaseMultiService<BasicQuotation, BasicQuota
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(BasicQuotation.FieldQuotationNo, searchInfos[BasicQuotation.FieldQuotationNo], SqlOperator.Like);
-        condition.AddCondition(BasicQuotation.FieldQuotationDesc, searchInfos[BasicQuotation.FieldQuotationDesc], SqlOperator.Like);
-        condition.AddCondition(BasicQuotation.FieldTranNodeNO, searchInfos[BasicQuotation.FieldTranNodeNO], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldCostType, searchInfos[BasicQuotation.FieldCostType], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldCargoType, searchInfos[BasicQuotation.FieldCargoType], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldPickUpType, searchInfos[BasicQuotation.FieldPickUpType], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldDeliveryType, searchInfos[BasicQuotation.FieldDeliveryType], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldTransportType, searchInfos[BasicQuotation.FieldTransportType], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldFroms, searchInfos[BasicQuotation.FieldFroms], SqlOperator.Like);
-        condition.AddCondition(BasicQuotation.FieldTos, searchInfos[BasicQuotation.FieldTos], SqlOperator.Like);
-        condition.AddCondition(BasicQuotation.FieldBeginTime, searchInfos[BasicQuotation.FieldBeginTime], SqlOperator.Between);
-        condition.AddCondition(BasicQuotation.FieldEndTime, searchInfos[BasicQuotation.FieldEndTime], SqlOperator.Between);
-        condition.AddCondition(BasicQuotation.FieldRemark, searchInfos[BasicQuotation.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(BasicQuotation.FieldCreationDate, searchInfos[BasicQuotation.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(BasicQuotation.FieldCreatedBy, searchInfos[BasicQuotation.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldLastUpdateDate, searchInfos[BasicQuotation.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(BasicQuotation.FieldLastUpdatedBy, searchInfos[BasicQuotation.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldFlagApp, searchInfos[BasicQuotation.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldAppUser, searchInfos[BasicQuotation.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(BasicQuotation.FieldAppDate, searchInfos[BasicQuotation.FieldAppDate], SqlOperator.Between);
-        condition.AddCondition(BasicQuotation.FieldRakeMarkYN, searchInfos[BasicQuotation.FieldRakeMarkYN], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(BasicQuotation)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(BasicQuotation.FieldQuotationNo, SqlOperator.Like),
+                new(BasicQuotation.FieldQuotationDesc, SqlOperator.Like),
+                new(BasicQuotation.FieldTranNodeNO, SqlOperator.Equal),
+                new(BasicQuotation.FieldCostType, SqlOperator.Equal),
+                new(BasicQuotation.FieldCargoType, SqlOperator.Equal),
+                new(BasicQuotation.FieldPickUpType, SqlOperator.Equal),
+                new(BasicQuotation.FieldDeliveryType, SqlOperator.Equal),
+                new(BasicQuotation.FieldTransportType, SqlOperator.Equal),
+                new(BasicQuotation.FieldFroms, SqlOperator.Like),
+                new(BasicQuotation.FieldTos, SqlOperator.Like),
+                new(BasicQuotation.FieldBeginTime, SqlOperator.Between),
+                new(BasicQuotation.FieldEndTime, SqlOperator.Between),
+                new(BasicQuotation.FieldRemark, SqlOperator.Like),
+                new(BasicQuotation.FieldCreationDate, SqlOperator.Between),
+                new(BasicQuotation.FieldCreatedBy, SqlOperator.Equal),
+                new(BasicQuotation.FieldLastUpdateDate, SqlOperator.Between),
+                new(BasicQuotation.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(BasicQuotation.FieldFlagApp, SqlOperator.Equal),
+                new(BasicQuotation.FieldAppUser, SqlOperator.Equal),
+                new(BasicQuotation.FieldAppDate, SqlOperator.Between),
+                new(BasicQuotation.FieldRakeMarkYN, SqlOperator.Equal)
+            });
     }
 }

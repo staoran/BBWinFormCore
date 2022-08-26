@@ -1,10 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Format;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -130,28 +129,54 @@ public class NodesService : BaseService<Nodes>, IDynamicApiController, ITransien
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(Nodes)}ConditionTypes",
+            () =>
+            {
+                return new List<FieldConditionType>
+                {
+                    new(Nodes.FieldTranNodeAreaName, SqlOperator.Like),
+                    new(Nodes.FieldTranNodeAreaDesc, SqlOperator.Like),
+                    new(Nodes.FieldDeliveryType, SqlOperator.Equal),
+                    new(Nodes.FieldEFence, SqlOperator.Like),
+                    new(Nodes.FieldCenterCoordinate, SqlOperator.Like),
+                    new(Nodes.FieldConvertVK, SqlOperator.Between),
+                    new(Nodes.FieldAreaId, SqlOperator.Equal),
+                    new(Nodes.FieldAddress, SqlOperator.Like),
+                    new(Nodes.FieldPerson, SqlOperator.Like),
+                    new(Nodes.FieldPhone, SqlOperator.Like),
+                    new(Nodes.FieldSignLimitHour, SqlOperator.Between),
+                    new(Nodes.FieldCancelYN, SqlOperator.Equal),
+                    new(Nodes.FieldRemark, SqlOperator.Like)
+                };
+            });
+    }
+
+    /// <summary>
+    /// 构造查询条件
     /// </summary>
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override async Task<List<IConditionalModel>> GetConditionExc(Dictionary<string, string> searchInfos)
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Nodes.FieldTranNodeAreaName, searchInfos[Nodes.FieldTranNodeAreaName], SqlOperator.Like);
-        condition.AddCondition(Nodes.FieldTranNodeAreaDesc, searchInfos[Nodes.FieldTranNodeAreaDesc], SqlOperator.Like);
-        condition.AddCondition(Nodes.FieldDeliveryType, searchInfos[Nodes.FieldDeliveryType], SqlOperator.Equal);
-        condition.AddCondition(Nodes.FieldEFence, searchInfos[Nodes.FieldEFence], SqlOperator.Like);
-        condition.AddCondition(Nodes.FieldCenterCoordinate, searchInfos[Nodes.FieldCenterCoordinate], SqlOperator.Like);
-        condition.AddCondition(Nodes.FieldConvertVK, searchInfos[Nodes.FieldConvertVK], SqlOperator.Between);
-        bool areaNoLength = !searchInfos[Nodes.FieldAreaId].IsNullOrEmpty() && searchInfos[Nodes.FieldAreaId].Length < 6;
-        condition.AddCondition(Nodes.FieldAreaId, searchInfos[Nodes.FieldAreaId],
-            areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
-        condition.AddCondition(Nodes.FieldAddress, searchInfos[Nodes.FieldAddress], SqlOperator.Like);
-        condition.AddCondition(Nodes.FieldPerson, searchInfos[Nodes.FieldPerson], SqlOperator.Like);
-        condition.AddCondition(Nodes.FieldPhone, searchInfos[Nodes.FieldPhone], SqlOperator.Like);
-        condition.AddCondition(Nodes.FieldSignLimitHour, searchInfos[Nodes.FieldSignLimitHour], SqlOperator.Between);
-        condition.AddCondition(Nodes.FieldCancelYN, searchInfos[Nodes.FieldCancelYN], SqlOperator.Equal);
-        condition.AddCondition(Nodes.FieldRemark, searchInfos[Nodes.FieldRemark], SqlOperator.Like);
-        return condition.BuildConditionSql().Replace("Where", "");
+        var condition = await base.GetConditionExc(searchInfos);
+        bool areaNoLength =
+            !searchInfos[Nodes.FieldAreaId].IsNullOrEmpty() && searchInfos[Nodes.FieldAreaId].Length < 6;
+        if (areaNoLength)
+        {
+            condition.ForEach(x =>
+            {
+                if (x is ConditionalModel { FieldName: Nodes.FieldAreaId } c)
+                {
+                    c.ConditionalType = ConditionalType.LikeLeft;
+                }
+            });
+        }
+
+        return condition;
     }
 }

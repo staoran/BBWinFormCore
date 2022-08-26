@@ -1,10 +1,10 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -142,36 +142,37 @@ public class CostBillService : BaseService<CostBill>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(CostBill.FieldCostBillType, searchInfos[CostBill.FieldCostBillType], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldCostBillNo, searchInfos[CostBill.FieldCostBillNo], SqlOperator.Like);
-        condition.AddCondition(CostBill.FieldWaybillNo, searchInfos[CostBill.FieldWaybillNo], SqlOperator.Like);
-        condition.AddCondition(CostBill.FieldTranNodeNO, searchInfos[CostBill.FieldTranNodeNO], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldTranNodeNOPay, searchInfos[CostBill.FieldTranNodeNOPay], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldSourceNo, searchInfos[CostBill.FieldSourceNo], SqlOperator.Like);
-        condition.AddCondition(CostBill.FieldCostType, searchInfos[CostBill.FieldCostType], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldCtrl, searchInfos[CostBill.FieldCtrl], SqlOperator.Like);
-        condition.AddCondition(CostBill.FieldCost, searchInfos[CostBill.FieldCost], SqlOperator.Between);
-        condition.AddCondition(CostBill.FieldPostYN, searchInfos[CostBill.FieldPostYN], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldPostDate, searchInfos[CostBill.FieldPostDate], SqlOperator.Between);
-        condition.AddCondition(CostBill.FieldPostBy, searchInfos[CostBill.FieldPostBy], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldStatusID, searchInfos[CostBill.FieldStatusID], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldRemark, searchInfos[CostBill.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(CostBill.FieldCreationDate, searchInfos[CostBill.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(CostBill.FieldCreatedBy, searchInfos[CostBill.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldCreatedByNode, searchInfos[CostBill.FieldCreatedByNode], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldLastUpdateDate, searchInfos[CostBill.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(CostBill.FieldLastUpdatedBy, searchInfos[CostBill.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldFlagApp, searchInfos[CostBill.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldAppUser, searchInfos[CostBill.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(CostBill.FieldAppDate, searchInfos[CostBill.FieldAppDate], SqlOperator.Between);
-        condition.AddCondition(CostBill.FieldFinancialCenter, searchInfos[CostBill.FieldFinancialCenter], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(CostBill)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(CostBill.FieldCostBillType, SqlOperator.Equal),
+                new(CostBill.FieldCostBillNo, SqlOperator.Like),
+                new(CostBill.FieldWaybillNo, SqlOperator.Like),
+                new(CostBill.FieldTranNodeNO, SqlOperator.Equal),
+                new(CostBill.FieldTranNodeNOPay, SqlOperator.Equal),
+                new(CostBill.FieldSourceNo, SqlOperator.Like),
+                new(CostBill.FieldCostType, SqlOperator.Equal),
+                new(CostBill.FieldCtrl, SqlOperator.Like),
+                new(CostBill.FieldCost, SqlOperator.Between),
+                new(CostBill.FieldPostYN, SqlOperator.Equal),
+                new(CostBill.FieldPostDate, SqlOperator.Between),
+                new(CostBill.FieldPostBy, SqlOperator.Equal),
+                new(CostBill.FieldStatusID, SqlOperator.Equal),
+                new(CostBill.FieldRemark, SqlOperator.Like),
+                new(CostBill.FieldCreationDate, SqlOperator.Between),
+                new(CostBill.FieldCreatedBy, SqlOperator.Equal),
+                new(CostBill.FieldCreatedByNode, SqlOperator.Equal),
+                new(CostBill.FieldLastUpdateDate, SqlOperator.Between),
+                new(CostBill.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(CostBill.FieldFlagApp, SqlOperator.Equal),
+                new(CostBill.FieldAppUser, SqlOperator.Equal),
+                new(CostBill.FieldAppDate, SqlOperator.Between),
+                new(CostBill.FieldFinancialCenter, SqlOperator.Equal)
+            });
     }
 }

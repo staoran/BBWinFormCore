@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Core.Services.OperationLogSetting;
 using BB.Core.Services.User;
 using BB.Entity.Security;
+using BB.Tools.Entity;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Core.Services.OperationLog;
@@ -13,12 +17,14 @@ public class OperationLog : BaseService<OperationLogInfo>, IDynamicApiController
 {
     private readonly UserService _userService;
     private readonly OperationLogSettingService _operationLogSettingService;
+    private readonly UserRoleService _userRoleService;
 
     public OperationLog(BaseRepository<OperationLogInfo> repository, IValidator<OperationLogInfo> validator, UserService userService,
-        OperationLogSettingService operationLogSettingService) : base(repository, validator)
+        OperationLogSettingService operationLogSettingService, UserRoleService userRoleService) : base(repository, validator)
     {
         _userService = userService;
         _operationLogSettingService = operationLogSettingService;
+        _userRoleService = userRoleService;
     }
 
     /// <summary>
@@ -67,5 +73,21 @@ public class OperationLog : BaseService<OperationLogInfo>, IDynamicApiController
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(OperationLogInfo)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(OperationLogInfo.FieldLoginName, SqlOperator.Like),
+                new(OperationLogInfo.FieldTableName, SqlOperator.Like ),
+                new(OperationLogInfo.FieldOperationType, SqlOperator.Like ),
+                new(OperationLogInfo.FieldCreationDate, SqlOperator.Like )
+            });
     }
 }

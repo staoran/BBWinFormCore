@@ -1,10 +1,10 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -144,42 +144,43 @@ public class LogisticCompanyService : BaseService<LogisticCompany>, IDynamicApiC
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(LogisticCompany.FieldOrgCode, searchInfos[LogisticCompany.FieldOrgCode], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldLogisticCode, searchInfos[LogisticCompany.FieldLogisticCode], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldLogisticName, searchInfos[LogisticCompany.FieldLogisticName], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldZJM, searchInfos[LogisticCompany.FieldZJM], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldContacts, searchInfos[LogisticCompany.FieldContacts], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldTel, searchInfos[LogisticCompany.FieldTel], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldAddress, searchInfos[LogisticCompany.FieldAddress], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldMainLine, searchInfos[LogisticCompany.FieldMainLine], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldTrustLevel, searchInfos[LogisticCompany.FieldTrustLevel], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldLegal, searchInfos[LogisticCompany.FieldLegal], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldTax, searchInfos[LogisticCompany.FieldTax], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldBank, searchInfos[LogisticCompany.FieldBank], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldBankAccount, searchInfos[LogisticCompany.FieldBankAccount], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldPaymentTerm, searchInfos[LogisticCompany.FieldPaymentTerm], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldContractDate1, searchInfos[LogisticCompany.FieldContractDate1], SqlOperator.Between);
-        condition.AddCondition(LogisticCompany.FieldContractDate2, searchInfos[LogisticCompany.FieldContractDate2], SqlOperator.Between);
-        condition.AddCondition(LogisticCompany.FieldInUse, searchInfos[LogisticCompany.FieldInUse], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldFlagInvoice, searchInfos[LogisticCompany.FieldFlagInvoice], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldRemark, searchInfos[LogisticCompany.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(LogisticCompany.FieldCreationDate, searchInfos[LogisticCompany.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(LogisticCompany.FieldCreatedBy, searchInfos[LogisticCompany.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldLastUpdateDate, searchInfos[LogisticCompany.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(LogisticCompany.FieldLastUpdatedBy, searchInfos[LogisticCompany.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldFlagApp, searchInfos[LogisticCompany.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldAppUser, searchInfos[LogisticCompany.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldAppDate, searchInfos[LogisticCompany.FieldAppDate], SqlOperator.Between);
-        condition.AddCondition(LogisticCompany.FieldCancelYN, searchInfos[LogisticCompany.FieldCancelYN], SqlOperator.Equal);
-        condition.AddCondition(LogisticCompany.FieldCancelDate, searchInfos[LogisticCompany.FieldCancelDate], SqlOperator.Between);
-        condition.AddCondition(LogisticCompany.FieldCancelUser, searchInfos[LogisticCompany.FieldCancelUser], SqlOperator.Like);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(LogisticCompany)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(LogisticCompany.FieldOrgCode, SqlOperator.Equal),
+                new(LogisticCompany.FieldLogisticCode, SqlOperator.Like),
+                new(LogisticCompany.FieldLogisticName, SqlOperator.Like),
+                new(LogisticCompany.FieldZJM, SqlOperator.Like),
+                new(LogisticCompany.FieldContacts, SqlOperator.Like),
+                new(LogisticCompany.FieldTel, SqlOperator.Like),
+                new(LogisticCompany.FieldAddress, SqlOperator.Like),
+                new(LogisticCompany.FieldMainLine, SqlOperator.Like),
+                new(LogisticCompany.FieldTrustLevel, SqlOperator.Equal),
+                new(LogisticCompany.FieldLegal, SqlOperator.Like),
+                new(LogisticCompany.FieldTax, SqlOperator.Like),
+                new(LogisticCompany.FieldBank, SqlOperator.Like),
+                new(LogisticCompany.FieldBankAccount, SqlOperator.Like),
+                new(LogisticCompany.FieldPaymentTerm, SqlOperator.Like),
+                new(LogisticCompany.FieldContractDate1, SqlOperator.Between),
+                new(LogisticCompany.FieldContractDate2, SqlOperator.Between),
+                new(LogisticCompany.FieldInUse, SqlOperator.Equal),
+                new(LogisticCompany.FieldFlagInvoice, SqlOperator.Equal),
+                new(LogisticCompany.FieldRemark, SqlOperator.Like),
+                new(LogisticCompany.FieldCreationDate, SqlOperator.Between),
+                new(LogisticCompany.FieldCreatedBy, SqlOperator.Equal),
+                new(LogisticCompany.FieldLastUpdateDate, SqlOperator.Between),
+                new(LogisticCompany.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(LogisticCompany.FieldFlagApp, SqlOperator.Equal),
+                new(LogisticCompany.FieldAppUser, SqlOperator.Equal),
+                new(LogisticCompany.FieldAppDate, SqlOperator.Between),
+                new(LogisticCompany.FieldCancelYN, SqlOperator.Equal),
+                new(LogisticCompany.FieldCancelDate, SqlOperator.Between),
+                new(LogisticCompany.FieldCancelUser, SqlOperator.Like)
+            });
     }
 }

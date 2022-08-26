@@ -1,10 +1,10 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -145,33 +145,34 @@ public class CostMsgService : BaseMultiService<CostMsg, CostMsgs>, IDynamicApiCo
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(CostMsg.FieldCostMsgNo, searchInfos[CostMsg.FieldCostMsgNo], SqlOperator.Like);
-        condition.AddCondition(CostMsg.FieldSourceType, searchInfos[CostMsg.FieldSourceType], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldWaybillNo, searchInfos[CostMsg.FieldWaybillNo], SqlOperator.Like);
-        condition.AddCondition(CostMsg.FieldSendMsgNode, searchInfos[CostMsg.FieldSendMsgNode], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldSendMsgContent, searchInfos[CostMsg.FieldSendMsgContent], SqlOperator.Like);
-        condition.AddCondition(CostMsg.FieldAttaPath, searchInfos[CostMsg.FieldAttaPath], SqlOperator.Like);
-        condition.AddCondition(CostMsg.FieldRecvMsgType, searchInfos[CostMsg.FieldRecvMsgType], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldRecvMsgAccount, searchInfos[CostMsg.FieldRecvMsgAccount], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldValueType, searchInfos[CostMsg.FieldValueType], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldSourceValue, searchInfos[CostMsg.FieldSourceValue], SqlOperator.Between);
-        condition.AddCondition(CostMsg.FieldActiveValue, searchInfos[CostMsg.FieldActiveValue], SqlOperator.Between);
-        condition.AddCondition(CostMsg.FieldStatusID, searchInfos[CostMsg.FieldStatusID], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldCreationDate, searchInfos[CostMsg.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(CostMsg.FieldCreatedBy, searchInfos[CostMsg.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldLastUpdateDate, searchInfos[CostMsg.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(CostMsg.FieldLastUpdatedBy, searchInfos[CostMsg.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldFlagApp, searchInfos[CostMsg.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldAppUser, searchInfos[CostMsg.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(CostMsg.FieldAppDate, searchInfos[CostMsg.FieldAppDate], SqlOperator.Between);
-        condition.AddCondition(CostMsg.FieldFinancialCenter, searchInfos[CostMsg.FieldFinancialCenter], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(CostMsg)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(CostMsg.FieldCostMsgNo, SqlOperator.Like),
+                new(CostMsg.FieldSourceType, SqlOperator.Equal),
+                new(CostMsg.FieldWaybillNo, SqlOperator.Like),
+                new(CostMsg.FieldSendMsgNode, SqlOperator.Equal),
+                new(CostMsg.FieldSendMsgContent, SqlOperator.Like),
+                new(CostMsg.FieldAttaPath, SqlOperator.Like),
+                new(CostMsg.FieldRecvMsgType, SqlOperator.Equal),
+                new(CostMsg.FieldRecvMsgAccount, SqlOperator.Equal),
+                new(CostMsg.FieldValueType, SqlOperator.Equal),
+                new(CostMsg.FieldSourceValue, SqlOperator.Between),
+                new(CostMsg.FieldActiveValue, SqlOperator.Between),
+                new(CostMsg.FieldStatusID, SqlOperator.Equal),
+                new(CostMsg.FieldCreationDate, SqlOperator.Between),
+                new(CostMsg.FieldCreatedBy, SqlOperator.Equal),
+                new(CostMsg.FieldLastUpdateDate, SqlOperator.Between),
+                new(CostMsg.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(CostMsg.FieldFlagApp, SqlOperator.Equal),
+                new(CostMsg.FieldAppUser, SqlOperator.Equal),
+                new(CostMsg.FieldAppDate, SqlOperator.Between),
+                new(CostMsg.FieldFinancialCenter, SqlOperator.Equal)
+            });
     }
 }

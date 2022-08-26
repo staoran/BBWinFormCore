@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -131,32 +131,33 @@ public class SegmentService : BaseMultiService<Segment, Segments>, IDynamicApiCo
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Segment.FieldSegmentNo, searchInfos[Segment.FieldSegmentNo], SqlOperator.Like);
-        condition.AddCondition(Segment.FieldSegmentType, searchInfos[Segment.FieldSegmentType], SqlOperator.Equal);
-        condition.AddCondition(Segment.FieldSegmentName, searchInfos[Segment.FieldSegmentName], SqlOperator.Like);
-        condition.AddCondition(Segment.FieldSegmentBeginNode, searchInfos[Segment.FieldSegmentBeginNode], SqlOperator.Equal);
-        condition.AddCondition(Segment.FieldSegmentEndNode, searchInfos[Segment.FieldSegmentEndNode], SqlOperator.Equal);
-        condition.AddCondition(Segment.FieldPlanBeginTime, searchInfos[Segment.FieldPlanBeginTime], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldExpectedHour, searchInfos[Segment.FieldExpectedHour], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldExpectedDistance, searchInfos[Segment.FieldExpectedDistance], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldExpectedOilWear, searchInfos[Segment.FieldExpectedOilWear], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldExpectedCharge, searchInfos[Segment.FieldExpectedCharge], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldExpectedPontage, searchInfos[Segment.FieldExpectedPontage], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldRemark, searchInfos[Segment.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(Segment.FieldCreationDate, searchInfos[Segment.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldCreatedBy, searchInfos[Segment.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Segment.FieldLastUpdateDate, searchInfos[Segment.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Segment.FieldLastUpdatedBy, searchInfos[Segment.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(Segment.FieldFlagApp, searchInfos[Segment.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(Segment.FieldAppUser, searchInfos[Segment.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(Segment.FieldAppDate, searchInfos[Segment.FieldAppDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(Segment)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Segment.FieldSegmentNo, SqlOperator.Like),
+                new(Segment.FieldSegmentType, SqlOperator.Equal),
+                new(Segment.FieldSegmentName, SqlOperator.Like),
+                new(Segment.FieldSegmentBeginNode, SqlOperator.Equal),
+                new(Segment.FieldSegmentEndNode, SqlOperator.Equal),
+                new(Segment.FieldPlanBeginTime, SqlOperator.Between),
+                new(Segment.FieldExpectedHour, SqlOperator.Between),
+                new(Segment.FieldExpectedDistance, SqlOperator.Between),
+                new(Segment.FieldExpectedOilWear, SqlOperator.Between),
+                new(Segment.FieldExpectedCharge, SqlOperator.Between),
+                new(Segment.FieldExpectedPontage, SqlOperator.Between),
+                new(Segment.FieldRemark, SqlOperator.Like),
+                new(Segment.FieldCreationDate, SqlOperator.Between),
+                new(Segment.FieldCreatedBy, SqlOperator.Equal),
+                new(Segment.FieldLastUpdateDate, SqlOperator.Between),
+                new(Segment.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(Segment.FieldFlagApp, SqlOperator.Equal),
+                new(Segment.FieldAppUser, SqlOperator.Equal),
+                new(Segment.FieldAppDate, SqlOperator.Between)
+            });
     }
 }

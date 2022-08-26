@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -128,25 +128,26 @@ public class BasicCostBillTypeService : BaseService<BasicCostBillType>, IDynamic
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(BasicCostBillType.FieldCostType, searchInfos[BasicCostBillType.FieldCostType], SqlOperator.Like);
-        condition.AddCondition(BasicCostBillType.FieldCostDesc, searchInfos[BasicCostBillType.FieldCostDesc], SqlOperator.Like);
-        condition.AddCondition(BasicCostBillType.FieldCtrl, searchInfos[BasicCostBillType.FieldCtrl], SqlOperator.Like);
-        condition.AddCondition(BasicCostBillType.FieldRemark, searchInfos[BasicCostBillType.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(BasicCostBillType.FieldUseType, searchInfos[BasicCostBillType.FieldUseType], SqlOperator.Equal);
-        condition.AddCondition(BasicCostBillType.FieldCreatedBy, searchInfos[BasicCostBillType.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicCostBillType.FieldCreationDate, searchInfos[BasicCostBillType.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(BasicCostBillType.FieldFlagApp, searchInfos[BasicCostBillType.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(BasicCostBillType.FieldAppUser, searchInfos[BasicCostBillType.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(BasicCostBillType.FieldAppDate, searchInfos[BasicCostBillType.FieldAppDate], SqlOperator.Between);
-        condition.AddCondition(BasicCostBillType.FieldLastUpdatedBy, searchInfos[BasicCostBillType.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicCostBillType.FieldLastUpdateDate, searchInfos[BasicCostBillType.FieldLastUpdateDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(BasicCostBillType)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(BasicCostBillType.FieldCostType, SqlOperator.Like),
+                new(BasicCostBillType.FieldCostDesc, SqlOperator.Like),
+                new(BasicCostBillType.FieldCtrl, SqlOperator.Like),
+                new(BasicCostBillType.FieldRemark, SqlOperator.Like),
+                new(BasicCostBillType.FieldUseType, SqlOperator.Equal),
+                new(BasicCostBillType.FieldCreatedBy, SqlOperator.Equal),
+                new(BasicCostBillType.FieldCreationDate, SqlOperator.Between),
+                new(BasicCostBillType.FieldFlagApp, SqlOperator.Equal),
+                new(BasicCostBillType.FieldAppUser, SqlOperator.Equal),
+                new(BasicCostBillType.FieldAppDate, SqlOperator.Between),
+                new(BasicCostBillType.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(BasicCostBillType.FieldLastUpdateDate, SqlOperator.Between)
+            });
     }
 }

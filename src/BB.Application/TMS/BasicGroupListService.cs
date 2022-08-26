@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -129,26 +129,27 @@ public class BasicGroupListService : BaseService<BasicGroupList>, IDynamicApiCon
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(BasicGroupList.FieldGroupName, searchInfos[BasicGroupList.FieldGroupName], SqlOperator.Like);
-        condition.AddCondition(BasicGroupList.FieldGroupType, searchInfos[BasicGroupList.FieldGroupType], SqlOperator.Equal);
-        condition.AddCondition(BasicGroupList.FieldCostType, searchInfos[BasicGroupList.FieldCostType], SqlOperator.Equal);
-        condition.AddCondition(BasicGroupList.FieldGroupContent, searchInfos[BasicGroupList.FieldGroupContent], SqlOperator.Like);
-        condition.AddCondition(BasicGroupList.FieldGroupExceptContent, searchInfos[BasicGroupList.FieldGroupExceptContent], SqlOperator.Like);
-        condition.AddCondition(BasicGroupList.FieldRemark, searchInfos[BasicGroupList.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(BasicGroupList.FieldCreationDate, searchInfos[BasicGroupList.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(BasicGroupList.FieldCreatedBy, searchInfos[BasicGroupList.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicGroupList.FieldLastUpdateDate, searchInfos[BasicGroupList.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(BasicGroupList.FieldLastUpdatedBy, searchInfos[BasicGroupList.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicGroupList.FieldFlagApp, searchInfos[BasicGroupList.FieldFlagApp], SqlOperator.Like);
-        condition.AddCondition(BasicGroupList.FieldAppUser, searchInfos[BasicGroupList.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(BasicGroupList.FieldAppDate, searchInfos[BasicGroupList.FieldAppDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(BasicGroupList)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(BasicGroupList.FieldGroupName, SqlOperator.Like),
+                new(BasicGroupList.FieldGroupType, SqlOperator.Equal),
+                new(BasicGroupList.FieldCostType, SqlOperator.Equal),
+                new(BasicGroupList.FieldGroupContent, SqlOperator.Like),
+                new(BasicGroupList.FieldGroupExceptContent, SqlOperator.Like),
+                new(BasicGroupList.FieldRemark, SqlOperator.Like),
+                new(BasicGroupList.FieldCreationDate, SqlOperator.Between),
+                new(BasicGroupList.FieldCreatedBy, SqlOperator.Equal),
+                new(BasicGroupList.FieldLastUpdateDate, SqlOperator.Between),
+                new(BasicGroupList.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(BasicGroupList.FieldFlagApp, SqlOperator.Like),
+                new(BasicGroupList.FieldAppUser, SqlOperator.Equal),
+                new(BasicGroupList.FieldAppDate, SqlOperator.Between)
+            });
     }
 }

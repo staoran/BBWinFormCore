@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -132,31 +132,32 @@ public class BasicCostTypeService : BaseService<BasicCostType>, IDynamicApiContr
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(BasicCostType.FieldCostType, searchInfos[BasicCostType.FieldCostType], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldCostTypeDesc, searchInfos[BasicCostType.FieldCostTypeDesc], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldCtrl, searchInfos[BasicCostType.FieldCtrl], SqlOperator.Between);
-        condition.AddCondition(BasicCostType.FieldUseYN, searchInfos[BasicCostType.FieldUseYN], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldUseType, searchInfos[BasicCostType.FieldUseType], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldPayNodeType, searchInfos[BasicCostType.FieldPayNodeType], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldRecvNodeType, searchInfos[BasicCostType.FieldRecvNodeType], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldPayPostType, searchInfos[BasicCostType.FieldPayPostType], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldRecvPostType, searchInfos[BasicCostType.FieldRecvPostType], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldCostYN, searchInfos[BasicCostType.FieldCostYN], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldRemark, searchInfos[BasicCostType.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(BasicCostType.FieldFlagApp, searchInfos[BasicCostType.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldAppUser, searchInfos[BasicCostType.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldAppDate, searchInfos[BasicCostType.FieldAppDate], SqlOperator.Between);
-        condition.AddCondition(BasicCostType.FieldCreatedBy, searchInfos[BasicCostType.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldCreationDate, searchInfos[BasicCostType.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(BasicCostType.FieldLastUpdatedBy, searchInfos[BasicCostType.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicCostType.FieldLastUpdateDate, searchInfos[BasicCostType.FieldLastUpdateDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(BasicCostType)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(BasicCostType.FieldCostType, SqlOperator.Equal),
+                new(BasicCostType.FieldCostTypeDesc, SqlOperator.Equal),
+                new(BasicCostType.FieldCtrl, SqlOperator.Between),
+                new(BasicCostType.FieldUseYN, SqlOperator.Equal),
+                new(BasicCostType.FieldUseType, SqlOperator.Equal),
+                new(BasicCostType.FieldPayNodeType, SqlOperator.Equal),
+                new(BasicCostType.FieldRecvNodeType, SqlOperator.Equal),
+                new(BasicCostType.FieldPayPostType, SqlOperator.Equal),
+                new(BasicCostType.FieldRecvPostType, SqlOperator.Equal),
+                new(BasicCostType.FieldCostYN, SqlOperator.Equal),
+                new(BasicCostType.FieldRemark, SqlOperator.Like),
+                new(BasicCostType.FieldFlagApp, SqlOperator.Equal),
+                new(BasicCostType.FieldAppUser, SqlOperator.Equal),
+                new(BasicCostType.FieldAppDate, SqlOperator.Between),
+                new(BasicCostType.FieldCreatedBy, SqlOperator.Equal),
+                new(BasicCostType.FieldCreationDate, SqlOperator.Between),
+                new(BasicCostType.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(BasicCostType.FieldLastUpdateDate, SqlOperator.Between)
+            });
     }
 }

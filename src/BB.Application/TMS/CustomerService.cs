@@ -1,11 +1,10 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Format;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -140,43 +139,66 @@ public class CustomerService : BaseMultiService<Customer, Customers>, IDynamicAp
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(Customer)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Customer.FieldCustomerCode, SqlOperator.Like),
+                new(Customer.FieldMnemonicCode, SqlOperator.Like),
+                new(Customer.FieldTranNode, SqlOperator.Equal),
+                new(Customer.FieldContactPerson, SqlOperator.Like),
+                new(Customer.FieldNativeName, SqlOperator.Like),
+                new(Customer.FieldAddress, SqlOperator.Like),
+                new(Customer.FieldAreaNo, SqlOperator.Equal),
+                new(Customer.FieldTel, SqlOperator.Like),
+                new(Customer.FieldMobile, SqlOperator.Like),
+                new(Customer.FieldBank, SqlOperator.Like),
+                new(Customer.FieldBankAccount, SqlOperator.Like),
+                new(Customer.FieldRemark, SqlOperator.Like),
+                new(Customer.FieldInUse, SqlOperator.Equal),
+                new(Customer.FieldPaymentType, SqlOperator.Equal),
+                new(Customer.FieldInvoiceFax, SqlOperator.Between),
+                new(Customer.FieldCommissionType, SqlOperator.Equal),
+                new(Customer.FieldCommissionRate, SqlOperator.Between),
+                new(Customer.FieldSalesDeputy, SqlOperator.Equal),
+                new(Customer.FieldProjectManager, SqlOperator.Equal),
+                new(Customer.FieldFlagInvoice, SqlOperator.Equal),
+                new(Customer.FieldSalesPerson, SqlOperator.Equal),
+                new(Customer.FieldCreationDate, SqlOperator.Between),
+                new(Customer.FieldCreatedBy, SqlOperator.Equal),
+                new(Customer.FieldLastUpdateDate, SqlOperator.Between),
+                new(Customer.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(Customer.FieldFlagApp, SqlOperator.Equal),
+                new(Customer.FieldAppUser, SqlOperator.Equal),
+                new(Customer.FieldAppDate, SqlOperator.Between)
+            });
+    }
+
+    /// <summary>
+    /// 构造查询条件
     /// </summary>
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override async Task<List<IConditionalModel>> GetConditionExc(Dictionary<string, string> searchInfos)
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Customer.FieldCustomerCode, searchInfos[Customer.FieldCustomerCode], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldMnemonicCode, searchInfos[Customer.FieldMnemonicCode], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldTranNode, searchInfos[Customer.FieldTranNode], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldContactPerson, searchInfos[Customer.FieldContactPerson], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldNativeName, searchInfos[Customer.FieldNativeName], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldAddress, searchInfos[Customer.FieldAddress], SqlOperator.Like);
-        bool areaNoLength = !searchInfos[Customer.FieldAreaNo].IsNullOrEmpty() && searchInfos[Customer.FieldAreaNo].Length < 6;
-        condition.AddCondition(Customer.FieldAreaNo, searchInfos[Customer.FieldAreaNo],
-            areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldTel, searchInfos[Customer.FieldTel], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldMobile, searchInfos[Customer.FieldMobile], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldBank, searchInfos[Customer.FieldBank], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldBankAccount, searchInfos[Customer.FieldBankAccount], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldRemark, searchInfos[Customer.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(Customer.FieldInUse, searchInfos[Customer.FieldInUse], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldPaymentType, searchInfos[Customer.FieldPaymentType], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldInvoiceFax, searchInfos[Customer.FieldInvoiceFax], SqlOperator.Between);
-        condition.AddCondition(Customer.FieldCommissionType, searchInfos[Customer.FieldCommissionType], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldCommissionRate, searchInfos[Customer.FieldCommissionRate], SqlOperator.Between);
-        condition.AddCondition(Customer.FieldSalesDeputy, searchInfos[Customer.FieldSalesDeputy], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldProjectManager, searchInfos[Customer.FieldProjectManager], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldFlagInvoice, searchInfos[Customer.FieldFlagInvoice], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldSalesPerson, searchInfos[Customer.FieldSalesPerson], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldCreationDate, searchInfos[Customer.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Customer.FieldCreatedBy, searchInfos[Customer.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldLastUpdateDate, searchInfos[Customer.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Customer.FieldLastUpdatedBy, searchInfos[Customer.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldFlagApp, searchInfos[Customer.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldAppUser, searchInfos[Customer.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(Customer.FieldAppDate, searchInfos[Customer.FieldAppDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        var condition = await base.GetConditionExc(searchInfos);
+        bool areaNoLength =
+            !searchInfos[Customer.FieldAreaNo].IsNullOrEmpty() && searchInfos[Customer.FieldAreaNo].Length < 6;
+        if (areaNoLength)
+        {
+            condition.ForEach(x =>
+            {
+                if (x is ConditionalModel { FieldName: Customer.FieldAreaNo } c)
+                {
+                    c.ConditionalType = ConditionalType.LikeLeft;
+                }
+            });
+        }
+
+        return condition;
     }
 }

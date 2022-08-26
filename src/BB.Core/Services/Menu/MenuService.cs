@@ -5,6 +5,9 @@ using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
+using BB.Tools.Entity;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Core.Services.Menu;
@@ -221,5 +224,22 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             menuList = await GetMenuNodesAsync(roleIDs, typeId);
         }
         return menuList;
+    }
+
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(MenuInfo)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(MenuInfo.FieldName, SqlOperator.Like ),
+                new(MenuInfo.FieldFunctionId, SqlOperator.Like ),
+                new(MenuInfo.FieldWinformType, SqlOperator.Like ),
+                new(MenuInfo.FieldUrl, SqlOperator.Like ),
+                new(MenuInfo.FieldVisible, SqlOperator.Equal )
+            });
     }
 }

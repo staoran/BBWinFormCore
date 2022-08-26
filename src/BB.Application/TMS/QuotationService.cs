@@ -1,10 +1,10 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -110,25 +110,26 @@ public class QuotationService : BaseMultiService<Quotation, Quotations>, IDynami
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Quotation.FieldQuotationNo, searchInfos[Quotation.FieldQuotationNo], SqlOperator.Like);
-        condition.AddCondition(Quotation.FieldQuotationDesc, searchInfos[Quotation.FieldQuotationDesc], SqlOperator.Like);
-        condition.AddCondition(Quotation.FieldCostType, searchInfos[Quotation.FieldCostType], SqlOperator.Equal);
-        condition.AddCondition(Quotation.FieldCargoTypePerYN, searchInfos[Quotation.FieldCargoTypePerYN], SqlOperator.Equal);
-        condition.AddCondition(Quotation.FieldRemark, searchInfos[Quotation.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(Quotation.FieldCreationDate, searchInfos[Quotation.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Quotation.FieldCreatedBy, searchInfos[Quotation.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Quotation.FieldLastUpdateDate, searchInfos[Quotation.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Quotation.FieldLastUpdatedBy, searchInfos[Quotation.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(Quotation.FieldFlagApp, searchInfos[Quotation.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(Quotation.FieldAppUser, searchInfos[Quotation.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(Quotation.FieldAppDate, searchInfos[Quotation.FieldAppDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(Quotation)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Quotation.FieldQuotationNo, SqlOperator.Like),
+                new(Quotation.FieldQuotationDesc, SqlOperator.Like),
+                new(Quotation.FieldCostType, SqlOperator.Equal),
+                new(Quotation.FieldCargoTypePerYN, SqlOperator.Equal),
+                new(Quotation.FieldRemark, SqlOperator.Like),
+                new(Quotation.FieldCreationDate, SqlOperator.Between),
+                new(Quotation.FieldCreatedBy, SqlOperator.Equal),
+                new(Quotation.FieldLastUpdateDate, SqlOperator.Between),
+                new(Quotation.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(Quotation.FieldFlagApp, SqlOperator.Equal),
+                new(Quotation.FieldAppUser, SqlOperator.Equal),
+                new(Quotation.FieldAppDate, SqlOperator.Between)
+            });
     }
 }

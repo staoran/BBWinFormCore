@@ -1,10 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Format;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -128,38 +127,61 @@ public class CustomersService : BaseService<Customers>, IDynamicApiController, I
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(Customers)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Customers.FieldISID, SqlOperator.Like),
+                new(Customers.FieldCustomerCode, SqlOperator.Like),
+                new(Customers.FieldTranNode, SqlOperator.Equal),
+                new(Customers.FieldContactPerson, SqlOperator.Like),
+                new(Customers.FieldNativeName, SqlOperator.Like),
+                new(Customers.FieldAddress, SqlOperator.Like),
+                new(Customers.FieldAreaNo, SqlOperator.Equal),
+                new(Customers.FieldTel, SqlOperator.Like),
+                new(Customers.FieldMobile, SqlOperator.Like),
+                new(Customers.FieldInsuranceRate, SqlOperator.Between),
+                new(Customers.FieldCoordinate, SqlOperator.Like),
+                new(Customers.FieldDefaultToNode, SqlOperator.Equal),
+                new(Customers.FieldDefaultToNodes, SqlOperator.Equal),
+                new(Customers.FieldDefaultToNodesName, SqlOperator.Like),
+                new(Customers.FieldCargoName, SqlOperator.Like),
+                new(Customers.FieldPackageType, SqlOperator.Equal),
+                new(Customers.FieldCargoUnit, SqlOperator.Like),
+                new(Customers.FieldPrice, SqlOperator.Between),
+                new(Customers.FieldPriceType, SqlOperator.Equal),
+                new(Customers.FieldCreationDate, SqlOperator.Between),
+                new(Customers.FieldCreatedBy, SqlOperator.Equal),
+                new(Customers.FieldLastUpdateDate, SqlOperator.Between),
+                new(Customers.FieldLastUpdatedBy, SqlOperator.Equal)
+            });
+    }
+
+    /// <summary>
+    /// 构造查询条件
     /// </summary>
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override async Task<List<IConditionalModel>> GetConditionExc(Dictionary<string, string> searchInfos)
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Customers.FieldISID, searchInfos[Customers.FieldISID], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldCustomerCode, searchInfos[Customers.FieldCustomerCode], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldTranNode, searchInfos[Customers.FieldTranNode], SqlOperator.Equal);
-        condition.AddCondition(Customers.FieldContactPerson, searchInfos[Customers.FieldContactPerson], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldNativeName, searchInfos[Customers.FieldNativeName], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldAddress, searchInfos[Customers.FieldAddress], SqlOperator.Like);
-        bool areaNoLength = !searchInfos[Customers.FieldAreaNo].IsNullOrEmpty() && searchInfos[Customers.FieldAreaNo].Length < 6;
-        condition.AddCondition(Customers.FieldAreaNo, searchInfos[Customers.FieldAreaNo],
-            areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
-        condition.AddCondition(Customers.FieldTel, searchInfos[Customers.FieldTel], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldMobile, searchInfos[Customers.FieldMobile], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldInsuranceRate, searchInfos[Customers.FieldInsuranceRate], SqlOperator.Between);
-        condition.AddCondition(Customers.FieldCoordinate, searchInfos[Customers.FieldCoordinate], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldDefaultToNode, searchInfos[Customers.FieldDefaultToNode], SqlOperator.Equal);
-        condition.AddCondition(Customers.FieldDefaultToNodes, searchInfos[Customers.FieldDefaultToNodes], SqlOperator.Equal);
-        condition.AddCondition(Customers.FieldDefaultToNodesName, searchInfos[Customers.FieldDefaultToNodesName], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldCargoName, searchInfos[Customers.FieldCargoName], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldPackageType, searchInfos[Customers.FieldPackageType], SqlOperator.Equal);
-        condition.AddCondition(Customers.FieldCargoUnit, searchInfos[Customers.FieldCargoUnit], SqlOperator.Like);
-        condition.AddCondition(Customers.FieldPrice, searchInfos[Customers.FieldPrice], SqlOperator.Between);
-        condition.AddCondition(Customers.FieldPriceType, searchInfos[Customers.FieldPriceType], SqlOperator.Equal);
-        condition.AddCondition(Customers.FieldCreationDate, searchInfos[Customers.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Customers.FieldCreatedBy, searchInfos[Customers.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Customers.FieldLastUpdateDate, searchInfos[Customers.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Customers.FieldLastUpdatedBy, searchInfos[Customers.FieldLastUpdatedBy], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        var condition = await base.GetConditionExc(searchInfos);
+        bool areaNoLength =
+            !searchInfos[Customers.FieldAreaNo].IsNullOrEmpty() && searchInfos[Customers.FieldAreaNo].Length < 6;
+        if (areaNoLength)
+        {
+            condition.ForEach(x =>
+            {
+                if (x is ConditionalModel { FieldName: Customers.FieldAreaNo } c)
+                {
+                    c.ConditionalType = ConditionalType.LikeLeft;
+                }
+            });
+        }
+
+        return condition;
     }
 }

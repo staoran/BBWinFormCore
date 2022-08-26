@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -135,31 +135,32 @@ public class QuotationsService : BaseService<Quotations>, IDynamicApiController,
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Quotations.FieldQuotationType, searchInfos[Quotations.FieldQuotationType], SqlOperator.Equal);
-        condition.AddCondition(Quotations.FieldFromGroups, searchInfos[Quotations.FieldFromGroups], SqlOperator.Like);
-        condition.AddCondition(Quotations.FieldToGroups, searchInfos[Quotations.FieldToGroups], SqlOperator.Like);
-        condition.AddCondition(Quotations.FieldMinCost, searchInfos[Quotations.FieldMinCost], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldMaxCost, searchInfos[Quotations.FieldMaxCost], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldFirstCost, searchInfos[Quotations.FieldFirstCost], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldFirstValue, searchInfos[Quotations.FieldFirstValue], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldMinValue, searchInfos[Quotations.FieldMinValue], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldMaxValue, searchInfos[Quotations.FieldMaxValue], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldUnitPrice, searchInfos[Quotations.FieldUnitPrice], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldUnitPricePer, searchInfos[Quotations.FieldUnitPricePer], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldMathConditional, searchInfos[Quotations.FieldMathConditional], SqlOperator.Like);
-        condition.AddCondition(Quotations.FieldMathContent, searchInfos[Quotations.FieldMathContent], SqlOperator.Like);
-        condition.AddCondition(Quotations.FieldRemark, searchInfos[Quotations.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(Quotations.FieldCreationDate, searchInfos[Quotations.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldCreatedBy, searchInfos[Quotations.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Quotations.FieldLastUpdateDate, searchInfos[Quotations.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Quotations.FieldLastUpdatedBy, searchInfos[Quotations.FieldLastUpdatedBy], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(Quotations)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Quotations.FieldQuotationType, SqlOperator.Equal),
+                new(Quotations.FieldFromGroups, SqlOperator.Like),
+                new(Quotations.FieldToGroups, SqlOperator.Like),
+                new(Quotations.FieldMinCost, SqlOperator.Between),
+                new(Quotations.FieldMaxCost, SqlOperator.Between),
+                new(Quotations.FieldFirstCost, SqlOperator.Between),
+                new(Quotations.FieldFirstValue, SqlOperator.Between),
+                new(Quotations.FieldMinValue, SqlOperator.Between),
+                new(Quotations.FieldMaxValue, SqlOperator.Between),
+                new(Quotations.FieldUnitPrice, SqlOperator.Between),
+                new(Quotations.FieldUnitPricePer, SqlOperator.Between),
+                new(Quotations.FieldMathConditional, SqlOperator.Like),
+                new(Quotations.FieldMathContent, SqlOperator.Like),
+                new(Quotations.FieldRemark, SqlOperator.Like),
+                new(Quotations.FieldCreationDate, SqlOperator.Between),
+                new(Quotations.FieldCreatedBy, SqlOperator.Equal),
+                new(Quotations.FieldLastUpdateDate, SqlOperator.Between),
+                new(Quotations.FieldLastUpdatedBy, SqlOperator.Equal)
+            });
     }
 }

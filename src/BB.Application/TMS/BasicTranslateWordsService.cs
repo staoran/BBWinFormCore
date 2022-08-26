@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -125,24 +125,25 @@ public class BasicTranslateWordsService : BaseService<BasicTranslateWords>, IDyn
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(BasicTranslateWords.FieldWordsInFront, searchInfos[BasicTranslateWords.FieldWordsInFront], SqlOperator.Like);
-        condition.AddCondition(BasicTranslateWords.FieldWordsBehind, searchInfos[BasicTranslateWords.FieldWordsBehind], SqlOperator.Like);
-        condition.AddCondition(BasicTranslateWords.FieldTranslateType, searchInfos[BasicTranslateWords.FieldTranslateType], SqlOperator.Equal);
-        condition.AddCondition(BasicTranslateWords.FieldCanSelectYN, searchInfos[BasicTranslateWords.FieldCanSelectYN], SqlOperator.Equal);
-        condition.AddCondition(BasicTranslateWords.FieldExampleStr, searchInfos[BasicTranslateWords.FieldExampleStr], SqlOperator.Like);
-        condition.AddCondition(BasicTranslateWords.FieldCancelYN, searchInfos[BasicTranslateWords.FieldCancelYN], SqlOperator.Equal);
-        condition.AddCondition(BasicTranslateWords.FieldRemark, searchInfos[BasicTranslateWords.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(BasicTranslateWords.FieldCreationDate, searchInfos[BasicTranslateWords.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(BasicTranslateWords.FieldCreatedBy, searchInfos[BasicTranslateWords.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(BasicTranslateWords.FieldLastUpdateDate, searchInfos[BasicTranslateWords.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(BasicTranslateWords.FieldLastUpdatedBy, searchInfos[BasicTranslateWords.FieldLastUpdatedBy], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(BasicTranslateWords)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(BasicTranslateWords.FieldWordsInFront, SqlOperator.Like),
+                new(BasicTranslateWords.FieldWordsBehind, SqlOperator.Like),
+                new(BasicTranslateWords.FieldTranslateType, SqlOperator.Equal),
+                new(BasicTranslateWords.FieldCanSelectYN, SqlOperator.Equal),
+                new(BasicTranslateWords.FieldExampleStr, SqlOperator.Like),
+                new(BasicTranslateWords.FieldCancelYN, SqlOperator.Equal),
+                new(BasicTranslateWords.FieldRemark, SqlOperator.Like),
+                new(BasicTranslateWords.FieldCreationDate, SqlOperator.Between),
+                new(BasicTranslateWords.FieldCreatedBy, SqlOperator.Equal),
+                new(BasicTranslateWords.FieldLastUpdateDate, SqlOperator.Between),
+                new(BasicTranslateWords.FieldLastUpdatedBy, SqlOperator.Equal)
+            });
     }
 }

@@ -324,7 +324,7 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     /// </summary>
     /// <param name="ouId"></param>
     /// <returns></returns>
-    private async Task<OUInfo> GetCompanyInfoAsycn(string ouId)
+    private async Task<OUInfo> GetCompanyInfoAsync(string ouId)
     {
         OUInfo info = await FindByIdAsync(ouId);
         if (info.Category == "公司")
@@ -333,7 +333,7 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
         }
         else
         {
-            return await GetCompanyInfoAsycn(info.PID);
+            return await GetCompanyInfoAsync(info.PID);
         }
     }
 }

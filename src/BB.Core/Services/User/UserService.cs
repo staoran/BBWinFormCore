@@ -11,6 +11,7 @@ using BB.Tools.Encrypt;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
+using BB.Tools.Utils;
 using FluentValidation;
 using Furion.EventBus;
 
@@ -584,5 +585,25 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         };
 
         return await UpdateAsync(ht);
+    }
+
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(UserInfo)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(UserInfo.FieldHandNo, SqlOperator.Like),
+                new(UserInfo.FieldName, SqlOperator.Like ),
+                new(UserInfo.FieldFullName, SqlOperator.Like ),
+                new(UserInfo.FieldNickname, SqlOperator.Like ),
+                new(UserInfo.FieldMobilePhone, SqlOperator.Like ),
+                new(UserInfo.FieldEmail, SqlOperator.Like ),
+                new(UserInfo.FieldGender, SqlOperator.Like ),
+                new(UserInfo.FieldQQ, SqlOperator.Like )
+            });
     }
 }

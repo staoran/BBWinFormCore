@@ -5,6 +5,9 @@ using BB.Core.Services.Base;
 using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Device;
+using BB.Tools.Entity;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Core.Services.BlackIP;
@@ -120,5 +123,20 @@ public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, I
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(BlackIpInfo)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(BlackIpInfo.FieldName, SqlOperator.Like),
+                new(BlackIpInfo.FieldAuthorizeType, SqlOperator.Equal ),
+                new(BlackIpInfo.FieldForbid, SqlOperator.Equal )
+            });
     }
 }

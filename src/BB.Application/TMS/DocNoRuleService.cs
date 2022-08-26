@@ -1,10 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Format;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -129,25 +128,26 @@ public class DocNoRuleService : BaseService<DocNoRule>, IDynamicApiController, I
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(DocNoRule.FieldDocCode, searchInfos[DocNoRule.FieldDocCode], SqlOperator.Like);
-        condition.AddCondition(DocNoRule.FieldRuleFormat, searchInfos[DocNoRule.FieldRuleFormat], SqlOperator.Like);
-        condition.AddCondition(DocNoRule.FieldNoLength, searchInfos[DocNoRule.FieldNoLength], SqlOperator.Like);
-        condition.AddCondition(DocNoRule.FieldResetZero, searchInfos[DocNoRule.FieldResetZero], SqlOperator.Equal);
-        condition.AddCondition(DocNoRule.FieldFlagSpilitNo, searchInfos[DocNoRule.FieldFlagSpilitNo], SqlOperator.Equal);
-        condition.AddCondition(DocNoRule.FieldFlagIncludeDocCode, searchInfos[DocNoRule.FieldFlagIncludeDocCode], SqlOperator.Equal);
-        condition.AddCondition(DocNoRule.FieldFlagLastMillisecond, searchInfos[DocNoRule.FieldFlagLastMillisecond], SqlOperator.Equal);
-        condition.AddCondition(DocNoRule.FieldCurrentValue, searchInfos[DocNoRule.FieldCurrentValue], SqlOperator.Like);
-        condition.AddCondition(DocNoRule.FieldCurrentYMD, searchInfos[DocNoRule.FieldCurrentYMD], SqlOperator.Like);
-        condition.AddCondition(DocNoRule.FieldCreationDate, searchInfos[DocNoRule.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(DocNoRule.FieldCreatedBy, searchInfos[DocNoRule.FieldCreatedBy], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(DocNoRule)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(DocNoRule.FieldDocCode, SqlOperator.Like),
+                new(DocNoRule.FieldRuleFormat, SqlOperator.Like),
+                new(DocNoRule.FieldNoLength, SqlOperator.Like),
+                new(DocNoRule.FieldResetZero, SqlOperator.Equal),
+                new(DocNoRule.FieldFlagSpilitNo, SqlOperator.Equal),
+                new(DocNoRule.FieldFlagIncludeDocCode, SqlOperator.Equal),
+                new(DocNoRule.FieldFlagLastMillisecond, SqlOperator.Equal),
+                new(DocNoRule.FieldCurrentValue, SqlOperator.Like),
+                new(DocNoRule.FieldCurrentYMD, SqlOperator.Like),
+                new(DocNoRule.FieldCreationDate, SqlOperator.Between),
+                new(DocNoRule.FieldCreatedBy, SqlOperator.Equal)
+            });
     }
 
     /// <summary>

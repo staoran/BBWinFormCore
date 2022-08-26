@@ -1,10 +1,10 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -66,28 +66,29 @@ public class MessageService : BaseMultiService<Message, Messages>, IDynamicApiCo
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Message.FieldMsgNo, searchInfos[Message.FieldMsgNo], SqlOperator.Like);
-        condition.AddCondition(Message.FieldMsgType, searchInfos[Message.FieldMsgType], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldWaybillNo, searchInfos[Message.FieldWaybillNo], SqlOperator.Like);
-        condition.AddCondition(Message.FieldSendMsgNode, searchInfos[Message.FieldSendMsgNode], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldSendMsgContent, searchInfos[Message.FieldSendMsgContent], SqlOperator.Like);
-        condition.AddCondition(Message.FieldRecvMsgNode, searchInfos[Message.FieldRecvMsgNode], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldDealStatus, searchInfos[Message.FieldDealStatus], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldAttaPath, searchInfos[Message.FieldAttaPath], SqlOperator.Like);
-        condition.AddCondition(Message.FieldCreationDate, searchInfos[Message.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Message.FieldCreatedBy, searchInfos[Message.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldLastUpdateDate, searchInfos[Message.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Message.FieldLastUpdatedBy, searchInfos[Message.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldFlagApp, searchInfos[Message.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldAppUser, searchInfos[Message.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(Message.FieldAppDate, searchInfos[Message.FieldAppDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(Message)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Message.FieldMsgNo, SqlOperator.Like),
+                new(Message.FieldMsgType, SqlOperator.Equal),
+                new(Message.FieldWaybillNo, SqlOperator.Like),
+                new(Message.FieldSendMsgNode, SqlOperator.Equal),
+                new(Message.FieldSendMsgContent, SqlOperator.Like),
+                new(Message.FieldRecvMsgNode, SqlOperator.Equal),
+                new(Message.FieldDealStatus, SqlOperator.Equal),
+                new(Message.FieldAttaPath, SqlOperator.Like),
+                new(Message.FieldCreationDate, SqlOperator.Between),
+                new(Message.FieldCreatedBy, SqlOperator.Equal),
+                new(Message.FieldLastUpdateDate, SqlOperator.Between),
+                new(Message.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(Message.FieldFlagApp, SqlOperator.Equal),
+                new(Message.FieldAppUser, SqlOperator.Equal),
+                new(Message.FieldAppDate, SqlOperator.Between)
+            });
     }
 }

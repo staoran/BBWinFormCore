@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -104,21 +104,22 @@ public class MessagesService : BaseService<Messages>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Messages.FieldMsgNo, searchInfos[Messages.FieldMsgNo], SqlOperator.Like);
-        condition.AddCondition(Messages.FieldDealStatus, searchInfos[Messages.FieldDealStatus], SqlOperator.Like);
-        condition.AddCondition(Messages.FieldDealContent, searchInfos[Messages.FieldDealContent], SqlOperator.Like);
-        condition.AddCondition(Messages.FieldAttaPath, searchInfos[Messages.FieldAttaPath], SqlOperator.Like);
-        condition.AddCondition(Messages.FieldCreationDate, searchInfos[Messages.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Messages.FieldCreatedBy, searchInfos[Messages.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Messages.FieldLastUpdateDate, searchInfos[Messages.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Messages.FieldLastUpdateBy, searchInfos[Messages.FieldLastUpdateBy], SqlOperator.Like);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(Messages)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Messages.FieldMsgNo, SqlOperator.Like),
+                new(Messages.FieldDealStatus, SqlOperator.Like),
+                new(Messages.FieldDealContent, SqlOperator.Like),
+                new(Messages.FieldAttaPath, SqlOperator.Like),
+                new(Messages.FieldCreationDate, SqlOperator.Between),
+                new(Messages.FieldCreatedBy, SqlOperator.Equal),
+                new(Messages.FieldLastUpdateDate, SqlOperator.Between),
+                new(Messages.FieldLastUpdateBy, SqlOperator.Like)
+            });
     }
 }

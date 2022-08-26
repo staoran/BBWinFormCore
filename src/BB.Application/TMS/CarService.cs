@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -134,45 +134,46 @@ public class CarService : BaseService<Car>, IDynamicApiController, ITransient
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(Car.FieldTranNode, searchInfos[Car.FieldTranNode], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldCarNo, searchInfos[Car.FieldCarNo], SqlOperator.Like);
-        condition.AddCondition(Car.FieldProperty, searchInfos[Car.FieldProperty], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldModel, searchInfos[Car.FieldModel], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldCarType, searchInfos[Car.FieldCarType], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldServiceRange, searchInfos[Car.FieldServiceRange], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldTrustLevel, searchInfos[Car.FieldTrustLevel], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldTargetPlace, searchInfos[Car.FieldTargetPlace], SqlOperator.Like);
-        condition.AddCondition(Car.FieldBuyDate, searchInfos[Car.FieldBuyDate], SqlOperator.Between);
-        condition.AddCondition(Car.FieldOperationNo, searchInfos[Car.FieldOperationNo], SqlOperator.Like);
-        condition.AddCondition(Car.FieldEngineNo, searchInfos[Car.FieldEngineNo], SqlOperator.Like);
-        condition.AddCondition(Car.FieldVIN, searchInfos[Car.FieldVIN], SqlOperator.Like);
-        condition.AddCondition(Car.FieldTonnage, searchInfos[Car.FieldTonnage], SqlOperator.Like);
-        condition.AddCondition(Car.FieldLong, searchInfos[Car.FieldLong], SqlOperator.Between);
-        condition.AddCondition(Car.FieldWidth, searchInfos[Car.FieldWidth], SqlOperator.Between);
-        condition.AddCondition(Car.FieldHeight, searchInfos[Car.FieldHeight], SqlOperator.Between);
-        condition.AddCondition(Car.FieldVolume, searchInfos[Car.FieldVolume], SqlOperator.Between);
-        condition.AddCondition(Car.FieldContact, searchInfos[Car.FieldContact], SqlOperator.Like);
-        condition.AddCondition(Car.FieldContactTel, searchInfos[Car.FieldContactTel], SqlOperator.Like);
-        condition.AddCondition(Car.FieldDriver, searchInfos[Car.FieldDriver], SqlOperator.Like);
-        condition.AddCondition(Car.FieldDriverCert, searchInfos[Car.FieldDriverCert], SqlOperator.Like);
-        condition.AddCondition(Car.FieldDriverMobile, searchInfos[Car.FieldDriverMobile], SqlOperator.Like);
-        condition.AddCondition(Car.FieldDriverTel, searchInfos[Car.FieldDriverTel], SqlOperator.Like);
-        condition.AddCondition(Car.FieldDriverHomeAddress, searchInfos[Car.FieldDriverHomeAddress], SqlOperator.Like);
-        condition.AddCondition(Car.FieldRemark, searchInfos[Car.FieldRemark], SqlOperator.Like);
-        condition.AddCondition(Car.FieldCreationDate, searchInfos[Car.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(Car.FieldCreatedBy, searchInfos[Car.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldLastUpdateDate, searchInfos[Car.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(Car.FieldLastUpdatedBy, searchInfos[Car.FieldLastUpdatedBy], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldFlagApp, searchInfos[Car.FieldFlagApp], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldAppUser, searchInfos[Car.FieldAppUser], SqlOperator.Equal);
-        condition.AddCondition(Car.FieldAppDate, searchInfos[Car.FieldAppDate], SqlOperator.Between);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(Car)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(Car.FieldTranNode, SqlOperator.Equal),
+                new(Car.FieldCarNo, SqlOperator.Like),
+                new(Car.FieldProperty, SqlOperator.Equal),
+                new(Car.FieldModel, SqlOperator.Equal),
+                new(Car.FieldCarType, SqlOperator.Equal),
+                new(Car.FieldServiceRange, SqlOperator.Equal),
+                new(Car.FieldTrustLevel, SqlOperator.Equal),
+                new(Car.FieldTargetPlace, SqlOperator.Like),
+                new(Car.FieldBuyDate, SqlOperator.Between),
+                new(Car.FieldOperationNo, SqlOperator.Like),
+                new(Car.FieldEngineNo, SqlOperator.Like),
+                new(Car.FieldVIN, SqlOperator.Like),
+                new(Car.FieldTonnage, SqlOperator.Like),
+                new(Car.FieldLong, SqlOperator.Between),
+                new(Car.FieldWidth, SqlOperator.Between),
+                new(Car.FieldHeight, SqlOperator.Between),
+                new(Car.FieldVolume, SqlOperator.Between),
+                new(Car.FieldContact, SqlOperator.Like),
+                new(Car.FieldContactTel, SqlOperator.Like),
+                new(Car.FieldDriver, SqlOperator.Like),
+                new(Car.FieldDriverCert, SqlOperator.Like),
+                new(Car.FieldDriverMobile, SqlOperator.Like),
+                new(Car.FieldDriverTel, SqlOperator.Like),
+                new(Car.FieldDriverHomeAddress, SqlOperator.Like),
+                new(Car.FieldRemark, SqlOperator.Like),
+                new(Car.FieldCreationDate, SqlOperator.Between),
+                new(Car.FieldCreatedBy, SqlOperator.Equal),
+                new(Car.FieldLastUpdateDate, SqlOperator.Between),
+                new(Car.FieldLastUpdatedBy, SqlOperator.Equal),
+                new(Car.FieldFlagApp, SqlOperator.Equal),
+                new(Car.FieldAppUser, SqlOperator.Equal),
+                new(Car.FieldAppDate, SqlOperator.Between)
+            });
     }
 }

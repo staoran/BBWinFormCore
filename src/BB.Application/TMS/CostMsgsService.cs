@@ -1,9 +1,9 @@
-using System.Collections.Specialized;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using BB.Tools.Format;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;
@@ -127,22 +127,23 @@ public class CostMsgsService : BaseService<CostMsgs>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 构造查询语句
+    /// 获取查询参数配置
     /// </summary>
-    /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override List<FieldConditionType> GetConditionTypes()
     {
-        var condition = new SearchCondition();
-        condition.AddCondition(CostMsgs.FieldCostMsgNo, searchInfos[CostMsgs.FieldCostMsgNo], SqlOperator.Like);
-        condition.AddCondition(CostMsgs.FieldStatusID, searchInfos[CostMsgs.FieldStatusID], SqlOperator.Equal);
-        condition.AddCondition(CostMsgs.FieldRecvMsgNode, searchInfos[CostMsgs.FieldRecvMsgNode], SqlOperator.Equal);
-        condition.AddCondition(CostMsgs.FieldRecvMsgContent, searchInfos[CostMsgs.FieldRecvMsgContent], SqlOperator.Like);
-        condition.AddCondition(CostMsgs.FieldAttaPath, searchInfos[CostMsgs.FieldAttaPath], SqlOperator.Like);
-        condition.AddCondition(CostMsgs.FieldCreationDate, searchInfos[CostMsgs.FieldCreationDate], SqlOperator.Between);
-        condition.AddCondition(CostMsgs.FieldCreatedBy, searchInfos[CostMsgs.FieldCreatedBy], SqlOperator.Equal);
-        condition.AddCondition(CostMsgs.FieldLastUpdateDate, searchInfos[CostMsgs.FieldLastUpdateDate], SqlOperator.Between);
-        condition.AddCondition(CostMsgs.FieldLastUpdatedBy, searchInfos[CostMsgs.FieldLastUpdatedBy], SqlOperator.Equal);
-        return condition.BuildConditionSql().Replace("Where", "");
+        return Cache.Instance.GetOrCreate($"{nameof(CostMsgs)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(CostMsgs.FieldCostMsgNo, SqlOperator.Like),
+                new(CostMsgs.FieldStatusID, SqlOperator.Equal),
+                new(CostMsgs.FieldRecvMsgNode, SqlOperator.Equal),
+                new(CostMsgs.FieldRecvMsgContent, SqlOperator.Like),
+                new(CostMsgs.FieldAttaPath, SqlOperator.Like),
+                new(CostMsgs.FieldCreationDate, SqlOperator.Between),
+                new(CostMsgs.FieldCreatedBy, SqlOperator.Equal),
+                new(CostMsgs.FieldLastUpdateDate, SqlOperator.Between),
+                new(CostMsgs.FieldLastUpdatedBy, SqlOperator.Equal)
+            });
     }
 }

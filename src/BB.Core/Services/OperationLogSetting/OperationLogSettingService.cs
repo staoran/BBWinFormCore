@@ -1,7 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
+using BB.Tools.Entity;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Core.Services.OperationLogSetting;
@@ -43,5 +47,20 @@ public class OperationLogSettingService : BaseService<OperationLogSettingInfo>, 
     {
         string condition = $"TableName = '{tableName}' and Forbid = 0 ";
         return await FindSingleAsync(condition);
+    }
+
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(OperationLogSettingInfo)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(OperationLogSettingInfo.FieldTableName, SqlOperator.Like),
+                new(OperationLogSettingInfo.FieldNote, SqlOperator.Like ),
+                new(OperationLogSettingInfo.FieldForbid, SqlOperator.Equal )
+            });
     }
 }

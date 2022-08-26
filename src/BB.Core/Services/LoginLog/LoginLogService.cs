@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
+using BB.Core.Services.User;
 using BB.Entity.Base;
 using BB.Entity.Security;
+using BB.Tools.Entity;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Core.Services.LoginLog;
 
 public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController, ITransient
 {
-    public LoginLogService(BaseRepository<LoginLogInfo> repository, IValidator<LoginLogInfo> validator) : base(repository, validator)
+    private readonly Lazy<UserRoleService> _userRoleService;
+
+    public LoginLogService(BaseRepository<LoginLogInfo> repository, IValidator<LoginLogInfo> validator,
+        Lazy<UserRoleService> userRoleService) : base(repository, validator)
     {
+        _userRoleService = userRoleService;
     }
 
     /// <summary>
@@ -116,5 +124,24 @@ public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController,
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(LoginLogInfo)}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+                new(LoginLogInfo.FieldLoginName, SqlOperator.Like),
+                new(LoginLogInfo.FieldFullName, SqlOperator.Like),
+                new(LoginLogInfo.FieldNote, SqlOperator.Like),
+                new(LoginLogInfo.FieldIPAddress, SqlOperator.Like),
+                new(LoginLogInfo.FieldMacAddress, SqlOperator.Like),
+                new(LoginLogInfo.FieldLastUpdated, SqlOperator.Between),
+                new(LoginLogInfo.FieldSystemTypeId, SqlOperator.Equal)
+            });
     }
 }
