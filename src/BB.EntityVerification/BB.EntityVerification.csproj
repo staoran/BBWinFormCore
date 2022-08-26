@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BB.Core\BB.Core.csproj" />
       <ProjectReference Include="..\BB.Entity\BB.Entity.csproj" />
       <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
     </ItemGroup>
