@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Security.Claims;
+using BB.Entity.Base;
+using BB.Entity.Security;
 using BB.Tools.Const;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.Validation;
 using Microsoft.Extensions.DependencyInjection;
+using SqlSugar.Extensions;
 
 namespace BB.Core.DbContext;
 
@@ -111,17 +115,14 @@ public static class SqlSugarDb
             IsAutoRemoveDataCache = true
         };
 
-        // 批量配置
-        connectionConfig.ForEach(c =>
+        // 批量配置 批量 AOP 
+        void Action(SqlSugarClient s) => connectionConfig.ForEach(c =>
         {
             c.ConfigureExternalServices = configureExternalServices;
             c.MoreSettings = moreSettings;
-        });
-
-        // 批量 AOP 
-        void Action(SqlSugarClient s) => connectionConfig.ForEach(c => 
             // 在循环中通过 ConfigId 获取作用域的 SqlSugar 实例，配置实例的 AOP 动作
-            ConfigAction(s.GetConnectionScope(c.ConfigId)));
+            ConfigAction(s.GetConnectionScope(c.ConfigId));
+        });
 
         // 单例注入 SqlSugar 和 工作单元
         services.AddSingleton<ISqlSugarClient>(new SqlSugarScope(connectionConfig, Action));
@@ -138,7 +139,9 @@ public static class SqlSugarDb
     {
         // 超时时间
         db.Ado.CommandTimeOut = 30;
-        
+
+        #region 数据过滤器
+
         // 数据过滤器
         db.Aop.DataExecuting = (oldValue, entityInfo) =>
         {
@@ -152,7 +155,7 @@ public static class SqlSugarDb
 
                 if (entityInfo.PropertyName is "CreatorId" or "CreatedBy" or "EditorId" or "LastUpdatedBy")
                 {
-                    var userId = App.User.FindFirstValue("UserId");
+                    var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
                     if (userId.IsNullOrEmpty())
                     {
                         throw Oops.Bah("登陆用户信息为空，请登陆后再操作！");
@@ -171,7 +174,7 @@ public static class SqlSugarDb
 
                 if (entityInfo.PropertyName is "EditorId" or "LastUpdatedBy")
                 {
-                    var userId = App.User.FindFirstValue("UserId");
+                    var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
                     if (userId.IsNullOrEmpty())
                     {
                         throw Oops.Bah("登陆用户信息为空，请登陆后再操作！");
@@ -193,24 +196,62 @@ public static class SqlSugarDb
             //properyDate.SetValue(entityInfo.EntityValue,1);
         };
 
+        #endregion
+
+        #region 查询过滤器
+
+        // 获取所有实体类型
+        var entityTypes = App.EffectiveTypes.Where(t => t.IsClass && t.IsPublic && !t.IsInterface
+                                                        && !t.IsAbstract && (t.BaseType == typeof(BaseEntity) ||
+                                                                             t.BaseType == typeof(BaseEntity<>))).ToList();
+
+        var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
+        var userCompanyId = App.User.FindFirstValue(nameof(LoginUserInfo.CompanyId));
+        // todo 用缓存，程序启动就缓存，精简 App.User 信息，尽量不在其中写角色和数据权限，就用 userId 配合缓存的权限，用滑动的缓存
+        var roles = App.User.FindFirstValue(nameof(LoginUserInfo.RoleIdList)).Split(",");
+        if (!userId.IsNullOrEmpty() && !roles.Contains(RoleInfo.SUPER_ADMIN_NAME))
+        {
+            // 循环配置查询过滤器
+            foreach (Type entityType in entityTypes)
+            {
+                // 获取 数据权限字段
+                var dataPermissionKey = entityType.GetFieldValue(nameof(BaseEntity.DataPermissionKey)).ObjToString();
+                if (dataPermissionKey.IsNullOrEmpty()) continue;
+
+                // 构建动态过滤语句
+                var lambda = DynamicExpressionParser.ParseLambda(entityType, typeof(bool), $"{dataPermissionKey} == @0",
+                    userCompanyId);
+                // 网点机构过滤
+                db.QueryFilter.Add(new TableFilterItem<object>(entityType, lambda));
+            }
+        }
+
+        #endregion
+
+        #region SQL 执行前修改
+
         // // SQL 执行前 修改SQL
         // db.Aop.OnExecutingChangeSql = (sql, pars) =>
         // {
-            // if (sql.StartsWith("UPDATE", StringComparison.CurrentCultureIgnoreCase))
-            // {
-            //     sql = sql.Replace("0001-01-01 00:00:00", "1900-01-01 00:00:00");
-            //     pars.Where(x => x.TypeName is "@EditTime" or "@LastUpdateDate")
-            //         .ForEach(x =>
-            //         {
-            //             if (x.Value is DateTime)
-            //             {
-            //                 x.Value = DateTime.Now;
-            //             }
-            //         });
-            // }
+        // if (sql.StartsWith("UPDATE", StringComparison.CurrentCultureIgnoreCase))
+        // {
+        //     sql = sql.Replace("0001-01-01 00:00:00", "1900-01-01 00:00:00");
+        //     pars.Where(x => x.TypeName is "@EditTime" or "@LastUpdateDate")
+        //         .ForEach(x =>
+        //         {
+        //             if (x.Value is DateTime)
+        //             {
+        //                 x.Value = DateTime.Now;
+        //             }
+        //         });
+        // }
             
-            // return new KeyValuePair<string, SugarParameter[]>(sql, pars);
+        // return new KeyValuePair<string, SugarParameter[]>(sql, pars);
         // };
+
+        #endregion
+
+        #region SQL 执行后日志
 
         // SQL 执行完事件
         db.Aop.OnLogExecuted = (sql, pars) =>
@@ -235,6 +276,10 @@ public static class SqlSugarDb
 #endif
         };
 
+        #endregion
+
+        #region SQL 执行时日志
+
         // SQL 执行前事件
         db.Aop.OnLogExecuting = (sql, pars) =>
         {
@@ -246,6 +291,10 @@ public static class SqlSugarDb
                 }
             }
         };
+
+        #endregion
+
+        #region SQL 错误日志
 
         // 执行 SQL 错误事件
         db.Aop.OnError = (exp) =>
@@ -259,6 +308,10 @@ public static class SqlSugarDb
 #endif
             //exp.sql exp.parameters 可以拿到参数和错误Sql             
         };
+
+        #endregion
+
+        #region SQL 差异日志
 
         // SQL 差异日志
         // db.Aop.OnDiffLogEvent = it =>
@@ -279,5 +332,7 @@ public static class SqlSugarDb
         //         // 开启线程安全检测
         //         db.CurrentConnectionConfig.Debugger = new SugarDebugger { EnableThreadSecurityValidation = true };
         // #endif
+
+        #endregion
     }
 }

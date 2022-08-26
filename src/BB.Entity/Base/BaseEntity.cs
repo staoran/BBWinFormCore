@@ -91,6 +91,13 @@ public class BaseEntity : INotifyPropertyChanged
     [Ignore]
     public string GetOptimisticLockKey => OptimisticLockKey;
 
+    /// <summary>
+    /// 获取数据权限字段
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    public string GetDataPermissionKey => DataPermissionKey;
+
     #region 定义字段名称相关常量
 
     /// <summary>
@@ -128,6 +135,12 @@ public class BaseEntity : INotifyPropertyChanged
     /// </summary>
     [NonSerialized]
     public const string OptimisticLockKey = "";
+
+    /// <summary>
+    /// 数据权限字段
+    /// </summary>
+    [NonSerialized]
+    public const string DataPermissionKey = "";
     
     #endregion
 
