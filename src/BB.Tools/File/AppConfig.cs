@@ -16,7 +16,7 @@ public sealed class AppConfig
     public AppConfig()
     {
         string webconfig = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web.Config");
-        string appConfig = AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName.Replace(".vshost", "");
+        string appConfig = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{AppDomain.CurrentDomain.FriendlyName}.dll.config");
 
         if (System.IO.File.Exists(webconfig))
         {
