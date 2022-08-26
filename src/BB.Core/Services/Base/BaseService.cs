@@ -571,7 +571,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <param name="condition">查询的条件</param>
     /// <returns></returns>
     [NonAction]
-    public virtual async Task<List<string>> GetFieldListAsync(string fieldName, string condition = "")
+    public virtual async Task<List<string>> GetFieldListAsync(string fieldName, string condition)
     {
         return await Repository.GetFieldListByConditionAsync(fieldName, condition);
     }
@@ -583,7 +583,7 @@ public class BaseService<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<List<string>> GetFieldListAsync([Required]string fieldName)
     {
-        return await GetFieldListAsync(fieldName, null);
+        return await GetFieldListAsync(fieldName, string.Empty);
     }
 
     /// <summary>
