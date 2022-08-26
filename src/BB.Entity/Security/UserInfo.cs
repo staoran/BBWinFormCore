@@ -443,6 +443,12 @@ public class UserInfo : BaseEntity
     [NonSerialized]
     public new const string OptimisticLockKey = FieldLastUpdateDate;
 
+    /// <summary>
+    /// 数据权限字段
+    /// </summary>
+    [NonSerialized]
+    public new const string DataPermissionKey = FieldCompanyId;
+
     [NonSerialized]
     public const string FieldID = "ID";
 

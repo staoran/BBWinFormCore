@@ -130,6 +130,12 @@ public class LoginLogInfo : BaseEntity
     [NonSerialized]
     public new const bool IsDesc = true;
 
+    /// <summary>
+    /// 数据权限字段
+    /// </summary>
+    [NonSerialized]
+    public new const string DataPermissionKey = FieldCompanyId;
+
     [NonSerialized]
     public const string FieldID = "ID";
 

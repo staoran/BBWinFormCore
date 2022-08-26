@@ -219,6 +219,12 @@ public class OUInfo : BaseEntity
     [NonSerialized]
     public new const string OptimisticLockKey = FieldLastUpdateDate;
 
+    /// <summary>
+    /// 数据权限字段
+    /// </summary>
+    [NonSerialized]
+    public new const string DataPermissionKey = FieldCompanyId;
+
     #region 列名
 
     [NonSerialized]
