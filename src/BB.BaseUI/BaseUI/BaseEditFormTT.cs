@@ -252,7 +252,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
         
         T1 entity = await ChildBll.NewEntityAsync(); // 数据在此初始化
         
-        string foreignKey = entity.GetField("ForeignKey").ObjToStr(); // 外键字段名称
+        string foreignKey = entity.GetFieldValue("ForeignKey").ObjToStr(); // 外键字段名称
         if (!ID.IsNullOrEmpty())
         {
             entity.SetProperty(foreignKey, ID); //明细表的外键

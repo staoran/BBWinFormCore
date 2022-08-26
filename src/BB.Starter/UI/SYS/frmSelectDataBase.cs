@@ -460,14 +460,14 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         var m = new ModuleImport();
         SetInfo(m);
 
-        if (m.MetadataImports == null || !m.MetadataImports.Any())
+        if (!m.MetadataImports.Any())
         {
             "主表字段未加载".ShowUxWarning();
             txtTable.Focus();
             return;
         }
 
-        if (!StringExtension.IsNullOrEmpty(m.ChildTableName) && !m.ChildMetadataImports.Any())
+        if (!string.IsNullOrEmpty(m.ChildTableName) && !m.ChildMetadataImports.Any())
         {
             "子表字段未加载".ShowUxWarning();
             txtChildTable.Focus();

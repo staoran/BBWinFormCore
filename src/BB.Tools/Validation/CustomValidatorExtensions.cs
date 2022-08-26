@@ -21,9 +21,9 @@ public static class CustomValidatorExtensions
         {
             if (member == null)
                 return string.Empty;
-            string dis =
+            string? dis =
                 member.GetAttribute<ColumnAttribute, string>(x => x.Display.IsNullOrEmpty() ? x.Name : x.Display);
-            return dis.IsNullOrEmpty() ? member.Name : dis;
+            return dis.IsNullOrEmpty() ? member.Name : dis!;
         };
 
     #region 同步验证扩展

@@ -560,8 +560,8 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
             return;
         }
 
-        string primaryKey =  ReflectionExtension.GetField(typeof(T),"PrimaryKey").ObjToStr();
-        if (StringExtension.IsNullOrEmpty(primaryKey))
+        string primaryKey =  typeof(T).GetFieldValue("PrimaryKey").ObjToStr();
+        if (string.IsNullOrEmpty(primaryKey))
         {
             throw new Exception("主表实体没有配置主键，无法进行查询");
         }
@@ -582,7 +582,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     {
         string id = GetFocusedRowCellPrimaryValue();
         var entity = winGridViewPager1.gridView1.GetFocusedRow().To<Car>();
-        if (StringExtension.IsNullOrEmpty(id))
+        if (string.IsNullOrEmpty(id))
         {
             "主键异常".ShowUxError();
             return;
@@ -706,7 +706,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     public string GetFocusedRowCellPrimaryValue()
     {
         string no = winGridViewPager1.gridView1.GetFocusedRowCellDisplayText(GetPrimaryKey());
-        if (StringExtension.IsNullOrEmpty(no))
+        if (string.IsNullOrEmpty(no))
         {
             "主键异常，可能是没有选中记录！".ShowErrorTip(winGridViewPager1);
         }
@@ -726,10 +726,10 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
             "主表实体没有找到[Key]特性配置的主键".ShowErrorTip(winGridViewPager1);
         }
 
-        string primaryKey = keyProp.GetAttribute<ColumnAttribute, string>(x => x.Name);
-        if (StringExtension.IsNullOrEmpty(primaryKey))
+        string? primaryKey = keyProp!.GetAttribute<ColumnAttribute, string>(x => x.Name);
+        if (string.IsNullOrEmpty(primaryKey))
         {
-            primaryKey = keyProp.Name;
+            primaryKey = keyProp!.Name;
         }
 
         return primaryKey;
@@ -842,7 +842,7 @@ public partial class BaseViewDock<T, IT, TE, T1, IT1> : BaseViewDock<T, IT, TE>
     /// </summary>
     protected virtual async Task BindDetail(string headerId)
     {
-        if (StringExtension.IsNullOrEmpty(headerId)) return;
+        if (string.IsNullOrEmpty(headerId)) return;
         List<T1> list = await _childBll.FindByForeignKeyAsync(headerId);
         winGridView2.DataSource = list; //new SortableBindingList<T1>(list);
         winGridView2.PrintTitle = $"{moduleName}明细报表";
@@ -896,7 +896,7 @@ public partial class BaseViewDock<T, IT, TE, T1, IT1> : BaseViewDock<T, IT, TE>
         }
 
         // 获取主键名称
-        string primaryKey =  ReflectionExtension.GetField(typeof(T),"PrimaryKey").ObjToStr();
+        string primaryKey =  typeof(T).GetFieldValue("PrimaryKey").ObjToStr();
         if (primaryKey.IsNullOrEmpty())
         {
             throw new Exception("主表实体没有配置主键，无法进行查询");

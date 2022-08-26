@@ -60,7 +60,7 @@ public static class ReflectionExtension
     /// <param name="obj">对象实例</param>
     /// <param name="name">字段名称</param>
     /// <returns></returns>
-    public static object? GetField(this object obj, string name)
+    public static object? GetFieldValue(this object obj, string name)
     {
         object? result = null;
         FieldInfo? fi = obj.GetType().GetField(name, bf);
@@ -77,7 +77,7 @@ public static class ReflectionExtension
     /// <param name="type">对象类型</param>
     /// <param name="name">字段名称</param>
     /// <returns></returns>
-    public static object? GetField(this Type type, string name)
+    public static object? GetFieldValue(this Type type, string name)
     {
         object? result = null;
         FieldInfo? fi = type.GetField(name, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
@@ -154,7 +154,7 @@ public static class ReflectionExtension
     /// <returns></returns>
     public static object? GetValue(this object obj, string constName)
     {
-        string constValue = GetField(obj, constName).ObjToStr();
+        string constValue = GetFieldValue(obj, constName).ObjToStr();
         if (constValue.IsNullOrEmpty())
             return null;
 
@@ -473,9 +473,23 @@ public static class ReflectionExtension
     /// <typeparam name="T">attributes类型</typeparam>
     /// <typeparam name="TResult">返回值类型</typeparam>
     /// <returns></returns>
-    public static TResult GetAttribute<T, TResult>(this MemberInfo member, Func<T, TResult> func) where T : Attribute
+    public static TResult? GetAttribute<T, TResult>(this MemberInfo member, Func<T, TResult> func) where T : Attribute
     {
         var attribute = member.GetCustomAttribute<T>();
+        return attribute != null ? func(attribute) : default;
+    }
+
+    /// <summary>
+    /// 获取指定成员的attributes内容
+    /// </summary>
+    /// <param name="propertyInfo">指定成员信息</param>
+    /// <param name="func">获取具体attributes内容的委托</param>
+    /// <typeparam name="T">attributes类型</typeparam>
+    /// <typeparam name="TResult">返回值类型</typeparam>
+    /// <returns></returns>
+    public static TResult? GetAttribute<T, TResult>(this PropertyInfo propertyInfo, Func<T, TResult> func) where T : Attribute
+    {
+        var attribute = propertyInfo.GetCustomAttribute<T>();
         return attribute != null ? func(attribute) : default;
     }
     

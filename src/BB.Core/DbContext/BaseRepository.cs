@@ -124,12 +124,12 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         Context = _dbBase;
         _loginUserInfo = App.User.Adapt<LoginUserInfo>();
         Type type = typeof(T);
-        _primaryKey = ReflectionExtension.GetField(type, nameof(BaseEntity.PrimaryKey)).ObjToStr();
-        _foreignKey = ReflectionExtension.GetField(type, nameof(BaseEntity.ForeignKey)).ObjToStr();
-        _tableName = ReflectionExtension.GetField(type, nameof(BaseEntity.DBTableName)).ObjToStr();
-        SortField = ReflectionExtension.GetField(type, nameof(BaseEntity.SortKey)).ObjToStr();
-        IsDescending = ReflectionExtension.GetField(type, nameof(BaseEntity.IsDesc)).ObjToBool();
-        OptimisticLockKey = ReflectionExtension.GetField(type, nameof(BaseEntity.OptimisticLockKey)).ObjToStr();
+        _primaryKey = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.PrimaryKey)).ObjToStr();
+        _foreignKey = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.ForeignKey)).ObjToStr();
+        _tableName = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.DBTableName)).ObjToStr();
+        SortField = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.SortKey)).ObjToStr();
+        IsDescending = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.IsDesc)).ObjToBool();
+        OptimisticLockKey = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.OptimisticLockKey)).ObjToStr();
     }
 
     #endregion
