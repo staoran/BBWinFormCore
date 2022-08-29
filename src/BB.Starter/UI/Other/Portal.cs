@@ -17,6 +17,7 @@ using BB.Updater.Core;
 using FluentValidation;
 using Furion;
 using Furion.Logging.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
 #if DEBUG
 // 控制台输出，需加入此库
@@ -42,7 +43,14 @@ public class Portal
     [STAThread]
     private static Task Main(string[] args)
     {
-        Serve.Run(silence: true);
+        Serve.Run(GenericRunOptions.DefaultSilence.ConfigureBuilder(builder =>
+            builder.ConfigureServices((_, collection) =>
+             collection.AddRemoteRequest(o=>
+                 o.AddHttpClient(string.Empty, client =>
+                     {
+                         client.BaseAddress = new Uri("https://localhost:5001/api/");
+                     }
+                )))));
 
         GlobalExceptionCapture(() =>
         {
