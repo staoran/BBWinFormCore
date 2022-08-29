@@ -223,7 +223,7 @@ public class OUInfo : BaseEntity
     /// 数据权限字段
     /// </summary>
     [NonSerialized]
-    public new const string DataPermissionKey = FieldCompanyId;
+    public new const string DataPermissionKey = nameof(CompanyId);
 
     #region 列名
 

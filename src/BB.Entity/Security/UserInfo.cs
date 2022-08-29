@@ -447,7 +447,7 @@ public class UserInfo : BaseEntity
     /// 数据权限字段
     /// </summary>
     [NonSerialized]
-    public new const string DataPermissionKey = FieldCompanyId;
+    public new const string DataPermissionKey = nameof(CompanyId);
 
     [NonSerialized]
     public const string FieldID = "ID";
