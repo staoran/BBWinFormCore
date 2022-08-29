@@ -7,7 +7,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.OU;
 
-public class OUUserService : BaseService<OUUserEntity>, ITransient
+public class OUUserService : BaseService<OUUserEntity>, IDynamicApiController, ITransient
 {
     public OUUserService(BaseRepository<OUUserEntity> repository, IValidator<OUUserEntity> validator) : base(repository, validator)
     {
