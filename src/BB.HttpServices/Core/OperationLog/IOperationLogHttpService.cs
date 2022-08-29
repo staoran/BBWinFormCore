@@ -7,17 +7,28 @@ namespace BB.HttpServices.Core.OperationLog;
 
 public interface IOperationLogHttpService : IHttpDispatchProxy, IBaseHttpService<OperationLogInfo>
 {
-    /// <summary>
-    /// 判断指定的表名称是否需要记录操作日志（是否在配置表里面，并是有效状态）
-    /// </summary>
-    /// <param name="tableName">表名称</param>
-    /// <returns></returns>
-    Task<RESTfulResult<bool>> IsTableNeedToLogAsync(string tableName);
 
     /// <summary>
-    /// 根据数据库表名称获取配置信息
+    /// 根据相关信息，写入用户的操作日志记录
     /// </summary>
-    /// <param name="tableName">数据库表名</param>
+    /// <param name="userId">操作用户</param>
+    /// <param name="tableName">操作表名称</param>
+    /// <param name="operationType">操作类型</param>
+    /// <param name="note">操作详细表述</param>
     /// <returns></returns>
-    Task<RESTfulResult<OperationLogSettingInfo>> FindByTableNameAsync(string tableName);
+    [Post("onOperationLog")]
+    Task<RESTfulResult<bool>> OnOperationLog(string userId, string tableName, string operationType, string note);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}operationLog/";
+        req.BaseAddress = builder.Uri;
+    }
 }

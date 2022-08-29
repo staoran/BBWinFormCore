@@ -2,7 +2,6 @@
 using BB.Entity.Security;
 using BB.HttpServices.Base;
 using BB.HttpServices.Core.Auth.dto;
-using Furion.FriendlyException;
 using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
@@ -29,13 +28,8 @@ public interface IAuthHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        if (req.BaseAddress == null)
-        {
-            throw Oops.Oh("请求 Uri 为空");
-        }
-        
-        var builder = new UriBuilder(req.BaseAddress);
-        var path = req.BaseAddress.AbsolutePath;
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
         builder.Path = $"{path}auth/";
         req.BaseAddress = builder.Uri;
     }

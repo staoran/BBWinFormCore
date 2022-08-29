@@ -12,6 +12,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// </summary>
 	/// <param name="companyId">公司ID（机构ID）</param>
 	/// <returns></returns>
+	[Get("rolesByCompany")]
 	Task<RESTfulResult<List<RoleInfo>>> GetRolesByCompanyAsync(string companyId);
 
 	/// <summary>
@@ -20,6 +21,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="roleName">角色名称</param>
 	/// <param name="companyId">公司ID</param>
 	/// <returns></returns>
+	[Get("roleByName")]
 	Task<RESTfulResult<RoleInfo>> GetRoleByNameAsync(string roleName, string companyId = null);
 
 	/// <summary>
@@ -28,6 +30,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="id">记录ID</param>
 	/// <param name="deleted">是否删除</param>
 	/// <returns></returns>
+	[Post("setDeletedFlag")]
 	Task<RESTfulResult<bool>> SetDeletedFlagAsync(object id, bool deleted = true);
 
 
@@ -36,6 +39,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// </summary>
 	/// <param name="menuId">菜单ID</param>
 	/// <param name="roleId">角色ID</param>
+	[Post("menu")]
 	Task AddMenuAsync(string menuId, int roleId);
 
 	/// <summary>
@@ -43,6 +47,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// </summary>
 	/// <param name="menuId">菜单ID</param>
 	/// <param name="roleId">角色ID</param>
+	[Delete("menu")]
 	Task RemoveMenuAsync(string menuId, int roleId);
 
 	/// <summary>
@@ -52,5 +57,19 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="newList">菜单列表</param>
 	/// <param name="systemType">系统类型</param>
 	/// <returns></returns>
+	[Post("editRoleMenus")]
 	Task<RESTfulResult<bool>> EditRoleMenusAsync(int roleId, List<string> newList, string systemType);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}role/";
+        req.BaseAddress = builder.Uri;
+    }
 }

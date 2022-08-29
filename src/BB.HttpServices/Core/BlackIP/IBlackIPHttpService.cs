@@ -12,6 +12,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// </summary>
     /// <param name="id">黑名单ID</param>
     /// <returns></returns>
+    [Get("userIdList")]
     Task<RESTfulResult<string>> GetUserIdListAsync(string id);
 
     /// <summary>
@@ -19,6 +20,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
+    [Get("simpleUserByBlackIp")]
     Task<RESTfulResult<List<SimpleUserInfo>>> GetSimpleUserByBlackIpAsync(string id);
 
     /// <summary>
@@ -27,6 +29,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="userId"></param>
     /// <param name="blackId"></param>
     /// <returns></returns>
+    [Post("user")]
     Task AddUserAsync(int userId, string blackId);
 
     /// <summary>
@@ -35,6 +38,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="userId"></param>
     /// <param name="blackId"></param>
     /// <returns></returns>
+    [Delete("user")]
     Task RemoveUserAsync(int userId, string blackId);
         
     /// <summary>
@@ -43,6 +47,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="userId">用户ID</param>
     /// <param name="type">授权类型</param>
     /// <returns></returns>
+    [Get("byUser")]
     Task<RESTfulResult<List<BlackIpInfo>>> FindByUserAsync(int userId, AuthrizeType type);
 
     /// <summary>
@@ -51,5 +56,19 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="ipAddress"></param>
     /// <param name="userId"></param>
     /// <returns></returns>
+    [Post("validateIpAccess")]
     Task<RESTfulResult<bool>> ValidateIpAccessAsync(string ipAddress, int userId);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}blackIP/";
+        req.BaseAddress = builder.Uri;
+    }
 }

@@ -14,6 +14,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="roleList">角色ID</param>
     /// <param name="typeId">系统类型ID</param>
     /// <returns></returns>
+    [Get("functions")]
     Task<RESTfulResult<List<FunctionInfo>>> GetFunctionsAsync(IEnumerable<int> roleList, string typeId);
 
     /// <summary>
@@ -22,6 +23,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="roleIDs">角色ID</param>
     /// <param name="typeId">系统类型ID</param>
     /// <returns></returns>
+    [Get("functionNodes")]
     Task<RESTfulResult<List<FunctionNodeInfo>>> GetFunctionNodesAsync(string roleIDs, string typeId);
 
     /// <summary>
@@ -29,6 +31,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// </summary>
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
+    [Get("functionsByRole")]
     Task<RESTfulResult<List<FunctionInfo>>> GetFunctionsByRoleAsync(int roleId);
 
     /// <summary>
@@ -37,6 +40,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="userId">用户ID</param>
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
+    [Get("functionsByUser")]
     Task<RESTfulResult<List<FunctionInfo>>> GetFunctionsByUserAsync(int userId, string typeId);
 
     /// <summary>
@@ -45,6 +49,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="userId">用户ID</param>
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
+    [Get("functionNodesByUser")]
     Task<RESTfulResult<List<FunctionNodeInfo>>> GetFunctionNodesByUserAsync(int userId, string typeId);
 
     /// <summary>
@@ -52,28 +57,33 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// </summary>
     /// <param name="typeId"></param>
     /// <returns></returns>
+    [Get("userFunctions")]
     Task<RESTfulResult<List<FunctionInfo>>> GetUserFunctionsAsync(string typeId);
 
     /// <summary>
     /// 获取树形结构的功能列表
     /// </summary>
     /// <param name="systemType">系统类型的OID</param>
+    [Get("tree")]
     Task<RESTfulResult<List<FunctionNodeInfo>>> GetTreeAsync(string systemType);
 
     /// <summary>
     /// 获取指定功能下面的树形列表
     /// </summary>
     /// <param name="mainId">指定功能ID</param>
+    [Get("treeById")]
     Task<RESTfulResult<List<FunctionNodeInfo>>> GetTreeByIdAsync(string mainId);
                        
     /// <summary>
     /// 根据角色获取树形结构的功能列表
     /// </summary>
+    [Get("treeWithRole")]
     Task<RESTfulResult<List<FunctionNodeInfo>>> GetTreeWithRoleAsync(string systemType, List<int> roleList);
 
     /// <summary>
     /// 根据角色获取树形结构的功能列表
     /// </summary>
+    [Get("treeWithUser")]
     Task<RESTfulResult<List<FunctionNodeInfo>>> GetTreeWithUserAsync(string systemType, int userId);
     
     /// <summary>
@@ -89,6 +99,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <returns></returns>
     /// <exception cref="DataException"></exception>
     /// <exception cref="Exception"></exception>
+    [Post("more")]
     Task<RESTfulResult<bool>> AddMore(FunctionInfo mainInfo, bool isAdd, bool isUpdate, bool isDelete, bool isExport, bool isImport, bool isView);
 
     /// <summary>
@@ -96,5 +107,19 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// </summary>
     /// <param name="mainId">节点ID</param>
     /// <returns></returns>
+    [Delete("withSubNode")]
     Task<RESTfulResult<bool>> DeleteWithSubNodeAsync(string mainId);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}function/";
+        req.BaseAddress = builder.Uri;
+    }
 }

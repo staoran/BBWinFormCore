@@ -13,6 +13,7 @@ public interface IProvinceHttpService : IHttpDispatchProxy, IBaseHttpService<Pro
     /// </summary>
     /// <param name="id">省份ID</param>
     /// <returns></returns>
+    [Get("nameById")]
     Task<RESTfulResult<string>> GetNameByIdAsync([Required] int id);
 
     /// <summary>
@@ -20,5 +21,19 @@ public interface IProvinceHttpService : IHttpDispatchProxy, IBaseHttpService<Pro
     /// </summary>
     /// <param name="name">省份名称</param>
     /// <returns></returns>
+    [Get("idByName")]
     Task<RESTfulResult<string>> GetIdByNameAsync([Required] string name);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}province/";
+        req.BaseAddress = builder.Uri;
+    }
 }

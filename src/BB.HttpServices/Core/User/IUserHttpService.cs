@@ -14,6 +14,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// <param name="idList">ID集合</param>
     /// <param name="expired">是否过期</param>
     /// <returns></returns>
+    [Post("batchExpire")]
     Task<RESTfulResult<bool>> BatchExpireAsync(List<int> idList, bool expired);
 
     /// <summary>
@@ -21,18 +22,21 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <param name="expired">是否禁用，true为禁用，否则为启用</param>
+    [Post("setExpire")]
     Task SetExpireAsync(int userId, bool expired);
 
     /// <summary>
     /// 取消用户的过期设置，变为正常状态
     /// </summary>
     /// <param name="userId">用户ID</param>
+    [Post("cancelExpire")]
     Task CancelExpireAsync(int userId);
 
     /// <summary>
     /// 获取所有用户的基本信息
     /// </summary>
     /// <returns></returns>
+    [Get("allSimpleUsers")]
     Task<RESTfulResult<List<SimpleUserInfo>>> GetSimpleUsersAsync();
 
     /// <summary>
@@ -40,6 +44,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="userIds">ID字符串,逗号分开</param>
     /// <returns></returns>
+    [Get("simpleUsers")]
     Task<RESTfulResult<List<SimpleUserInfo>>> GetSimpleUsersAsync(string userIds);
                
     /// <summary>
@@ -47,6 +52,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="ouId">部门ID</param>
     /// <returns></returns>
+    [Get("byDept")]
     Task<RESTfulResult<List<UserInfo>>> FindByDeptAsync(string ouId);
 
     /// <summary>
@@ -54,6 +60,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="companyId">公司门ID</param>
     /// <returns></returns>
+    [Get("byCompany")]
     Task<RESTfulResult<List<UserInfo>>> FindByCompanyAsync(string companyId);
 
     /// <summary>
@@ -61,6 +68,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="companyId">公司门ID</param>
     /// <returns></returns>
+    [Get("simpleUsersByCompany")]
     Task<RESTfulResult<List<SimpleUserInfo>>> FindSimpleUsersByCompanyAsync(string companyId);
 
     /// <summary>
@@ -68,6 +76,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="ouId">部门ID</param>
     /// <returns></returns>
+    [Get("simpleUsersByDept")]
     Task<RESTfulResult<List<SimpleUserInfo>>> FindSimpleUsersByDeptAsync(string ouId);
 
     /// <summary>
@@ -75,6 +84,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="userName">用户登录名称</param>
     /// <returns></returns>
+    [Get("userByName")]
     Task<RESTfulResult<UserInfo>> GetUserByNameAsync(string userName);
 
     /// <summary>
@@ -82,6 +92,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Get("nameById")]
     Task<RESTfulResult<string>> GetNameByIdAsync(int userId);
 
     /// <summary>
@@ -89,6 +100,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Get("fullNameByOpenId")]
     Task<RESTfulResult<string>> GetFullNameByOpenIdAsync(string userId);
 
     /// <summary>
@@ -96,6 +108,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Get("fullNameById")]
     Task<RESTfulResult<string>> GetFullNameByIdAsync(int userId);
 
     /// <summary>
@@ -103,6 +116,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="userName">用户登录名称</param>
     /// <returns></returns>
+    [Get("fullNameByName")]
     Task<RESTfulResult<string>> GetFullNameByNameAsync(string userName);
 
     /// <summary>
@@ -111,6 +125,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// <param name="userName">修改用户名</param>
     /// <param name="userPassword">用户密码（未加密）</param>
     /// <returns></returns>
+    [Post("modifyPassword")]
     Task<RESTfulResult<bool>> ModifyPasswordAsync(string userName, string userPassword);
 
     /// <summary>
@@ -118,6 +133,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="changeUserId">修改账号ID</param>
     /// <returns></returns>
+    [Post("resetPassword")]
     Task<RESTfulResult<bool>> ResetPasswordAsync(int changeUserId);
 
     /// <summary>
@@ -127,6 +143,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// <param name="ip">IP地址</param>
     /// <param name="macAddr">MAC地址</param>
     /// <returns></returns>
+    [Put("userLoginData")]
     Task<RESTfulResult<bool>> UpdateUserLoginDataAsync(int id, string ip, string macAddr);
 
     /// <summary>
@@ -134,6 +151,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="imagetype">图片枚举类型</param>
     /// <returns></returns>
+    [Get("personImageBytes")]
     Task<RESTfulResult<byte[]>> GetPersonImageBytesAsync(UserImageType imagetype, int userId);
 
     /// <summary>
@@ -143,6 +161,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// <param name="userId">用户ID</param>
     /// <param name="imageBytes">图片字节数组</param>
     /// <returns></returns>
+    [Put("personImageBytes")]
     Task<RESTfulResult<bool>> UpdatePersonImageBytesAsync(UserImageType imagetype, int userId, byte[] imageBytes);
 
     /// <summary>
@@ -151,6 +170,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// <param name="id">记录ID</param>
     /// <param name="deleted">是否删除</param>
     /// <returns></returns>
+    [Post("setDeletedFlag")]
     Task<RESTfulResult<bool>> SetDeletedFlagAsync(object id, bool deleted = true);
 
     /// <summary>
@@ -160,6 +180,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// <param name="unionId"></param>
     /// <param name="id">用户ID</param>
     /// <returns></returns>
+    [Post("bindUser")]
     Task BindUserAsync(string openid, string unionId, int id);
 
     /// <summary>
@@ -167,6 +188,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="openid">微信OpenID</param>
     /// <returns></returns>
+    [Get("byOpenId")]
     Task<RESTfulResult<UserInfo>> FindByOpenIdAsync(string openid);
 
     /// <summary>
@@ -174,6 +196,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="unionId">开放平台下唯一的UnionID</param>
     /// <returns></returns>
+    [Get("byUnionId")]
     Task<RESTfulResult<UserInfo>> FindByUnionIdAsync(string unionId);
 
     /// <summary>
@@ -181,6 +204,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="openid">微信企业微信的UserID</param>
     /// <returns></returns>
+    [Get("byCorpUserId")]
     Task<RESTfulResult<UserInfo>> FindByCorpUserIdAsync(string openid);
 
     /// <summary>
@@ -188,6 +212,7 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="openid">微信OpenID</param>
     /// <returns></returns>
+    [Post("isExistOpenId")]
     Task<RESTfulResult<bool>> IsExistOpenIdAsync(string openid);
 
     /// <summary>
@@ -195,5 +220,19 @@ public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// </summary>
     /// <param name="id">用户ID</param>
     /// <returns></returns>
+    [Post("cancelBindWechat")]
     Task<RESTfulResult<bool>> CancelBindWechatAsync(int id);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}user/";
+        req.BaseAddress = builder.Uri;
+    }
 }

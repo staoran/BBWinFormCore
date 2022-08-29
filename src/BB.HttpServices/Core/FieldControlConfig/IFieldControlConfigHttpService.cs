@@ -10,6 +10,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// 获取数据库的所有表名称
     /// </summary>
     /// <returns></returns>
+    [Get("tableNames")]
     Task<RESTfulResult<List<string>>> GetTableNames();
                        
     /// <summary>
@@ -17,6 +18,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// </summary>
     /// <param name="name">表名</param>
     /// <returns></returns>
+    [Get("tableKeyList")]
     Task<RESTfulResult<IEnumerable<string>>> GetTableKeyList(string name);
                        
     /// <summary>
@@ -24,6 +26,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// </summary>
     /// <param name="name">表名</param>
     /// <returns></returns>
+    [Get("tableIdentityList")]
     Task<RESTfulResult<List<string>>> GetTableIdentityList(string name);
                        
     /// <summary>
@@ -31,6 +34,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// </summary>
     /// <param name="name">表名</param>
     /// <returns></returns>
+    [Get("tableComment")]
     Task<RESTfulResult<string>> GetTableComment(string name);
                        
     /// <summary>
@@ -38,11 +42,26 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// </summary>
     /// <param name="name">表名</param>
     /// <returns></returns>
+    [Get("fieldControlConfigs")]
     Task<RESTfulResult<IEnumerable<Entity.Security.FieldControlConfig>>> GetFieldControlConfigs(string name);
 
     /// <summary>
     /// 获取数据库的全部表名称和注释
     /// </summary>
     /// <returns></returns>
+    [Get("tableNamesAndComments")]
     Task<RESTfulResult<IEnumerable<string>>> GetTableNamesAndComments();
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}fieldControlConfig/";
+        req.BaseAddress = builder.Uri;
+    }
 }

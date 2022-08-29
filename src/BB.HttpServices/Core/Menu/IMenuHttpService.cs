@@ -10,33 +10,39 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <summary>
     /// 获取所有的菜单列表
     /// </summary>
+    [Get("allMenu")]
     Task<RESTfulResult<List<MenuInfo>>> GetAllMenuAsync(string systemType);
 
     /// <summary>
     /// 获取树形结构的菜单列表
     /// </summary>
+    [Get("tree")]
     Task<RESTfulResult<List<MenuNodeInfo>>> GetTreeAsync(string systemType);
 
     /// <summary>
     /// 获取所有的菜单列表
     /// </summary>
+    [Get("allTree")]
     Task<RESTfulResult<List<MenuInfo>>> GetAllTreeAsync(string systemType);
 
     /// <summary>
     /// 获取第一级的菜单列表
     /// </summary>
+    [Get("topMenu")]
     Task<RESTfulResult<List<MenuInfo>>> GetTopMenuAsync(string systemType);
 
     /// <summary>
     /// 获取指定菜单下面的树形列表
     /// </summary>
     /// <param name="mainMenuId">指定菜单ID</param>
+    [Get("treeById")]
     Task<RESTfulResult<List<MenuNodeInfo>>> GetTreeByIdAsync(string mainMenuId);
 
     /// <summary>
     /// 根据指定的父ID获取其下面一级（仅限一级）的菜单列表
     /// </summary>
     /// <param name="pid">菜单父ID</param>
+    [Get("menuById")]
     Task<RESTfulResult<List<MenuInfo>>> GetMenuByIdAsync(string pid);
 
     /// <summary>
@@ -44,6 +50,7 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// </summary>
     /// <param name="name">菜单名</param>
     /// <param name="winFormType">模块地址</param>
+    [Post("transferMenu")]
     Task<RESTfulResult<bool>> AddTransferMenuAsync(string name, string winFormType);
 
 
@@ -58,6 +65,7 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <param name="roleIDs">角色ID字符串</param>
     /// <param name="typeId">系统类型</param>
     /// <returns></returns>
+    [Get("menuNodes")]
     Task<RESTfulResult<List<MenuNodeInfo>>> GetMenuNodesAsync(string roleIDs, string typeId);
 
     /// <summary>
@@ -66,6 +74,7 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <param name="roleId">角色ID</param>
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
+    [Get("menusByRole")]
     Task<RESTfulResult<List<MenuInfo>>> GetMenusByRole(int roleId, string typeId);
 
     /// <summary>
@@ -74,5 +83,19 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <param name="userId">用户ID</param>
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
+    [Get("menuNodesByUser")]
     Task<RESTfulResult<List<MenuNodeInfo>>> GetMenuNodesByUser(int userId, string typeId);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}menu/";
+        req.BaseAddress = builder.Uri;
+    }
 }

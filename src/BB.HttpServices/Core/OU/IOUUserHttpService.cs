@@ -12,6 +12,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// </summary>
     /// <param name="ouId">用户机构ID方式</param>
     /// <returns></returns>
+    [Get("simpleUsersByOu")]
     Task<RESTfulResult<List<SimpleUserInfo>>> GetSimpleUsersByOuAsync(string ouId);
 
     /// <summary>
@@ -19,6 +20,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// </summary>
     /// <param name="ouId">机构ID</param>
     /// <returns></returns>
+    [Get("usersByOu")]
     Task<RESTfulResult<List<UserInfo>>> GetUsersByOuAsync(string ouId);
 
     /// <summary>
@@ -26,5 +28,19 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <param name="ouId">机构ID</param>
+    [Delete("user")]
     Task RemoveUserAsync(int userId, string ouId);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}oUUser/";
+        req.BaseAddress = builder.Uri;
+    }
 }

@@ -12,6 +12,7 @@ public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttp
     /// </summary>
     /// <param name="tableName">表名称</param>
     /// <returns></returns>
+    [Post("isTableNeedToLog")]
     Task<RESTfulResult<bool>> IsTableNeedToLogAsync(string tableName);
 
     /// <summary>
@@ -19,5 +20,19 @@ public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttp
     /// </summary>
     /// <param name="tableName">数据库表名</param>
     /// <returns></returns>
+    [Get("byTableName")]
     Task<RESTfulResult<OperationLogSettingInfo>> FindByTableNameAsync(string tableName);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}operationLogSetting/";
+        req.BaseAddress = builder.Uri;
+    }
 }

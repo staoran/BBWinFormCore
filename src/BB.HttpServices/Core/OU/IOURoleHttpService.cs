@@ -13,6 +13,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="roleId">角色ID</param>
     /// <param name="newOuList">机构列表</param>
     /// <returns></returns>
+    [Post("editRoleOUs")]
     Task<RESTfulResult<bool>> EditRoleOUsAsync(int roleId, List<string> newOuList);
 
     /// <summary>
@@ -20,6 +21,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// </summary>
     /// <param name="ouId">机构的ID</param>
     /// <returns></returns>
+    [Get("rolesByOu")]
     Task<RESTfulResult<List<RoleInfo>>> GetRolesByOuAsync(string ouId);
 
     /// <summary>
@@ -27,6 +29,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// </summary>
     /// <param name="ouId">机构ID</param>
     /// <param name="roleId">角色ID</param>
+    [Post("oU")]
     Task AddOUAsync(string ouId, int roleId);
 
     /// <summary>
@@ -34,6 +37,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// </summary>
     /// <param name="ouId">机构ID</param>
     /// <param name="roleId">角色ID</param>
+    [Delete("ou")]
     Task RemoveOuAsync(string ouId, int roleId);
 
     /// <summary>
@@ -42,5 +46,19 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="ouId">机构ID</param>
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
+    [Post("ouInRole")]
     Task<RESTfulResult<bool>> OuInRoleAsync(string ouId, int roleId);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}oURole/";
+        req.BaseAddress = builder.Uri;
+    }
 }

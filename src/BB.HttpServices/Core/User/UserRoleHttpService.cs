@@ -114,6 +114,15 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     }
 
     /// <summary>
+    /// 获取管理员包含的用户基础信息列表
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<SimpleUserInfo>> GetAdminSimpleUsersAsync()
+    {
+        return (await _userRoleHttpService.GetAdminSimpleUsersAsync()).Data;        
+    }
+
+    /// <summary>
     /// 为角色指定新的人员列表
     /// </summary>
     /// <param name="roleId">角色ID</param>

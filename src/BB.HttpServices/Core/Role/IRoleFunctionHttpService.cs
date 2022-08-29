@@ -12,6 +12,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// </summary>
     /// <param name="functionId">对应功能ID</param>
     /// <returns></returns>
+    [Get("rolesByFunction")]
     Task<RESTfulResult<List<RoleInfo>>> GetRolesByFunctionAsync(string functionId);
 
     /// <summary>
@@ -19,6 +20,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// </summary>
     /// <param name="functionId">功能ID</param>
     /// <param name="roleId">角色ID</param>
+    [Post("function")]
     Task AddFunctionAsync(string functionId, int roleId);
 
     /// <summary>
@@ -26,6 +28,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// </summary>
     /// <param name="functionId">功能ID</param>
     /// <param name="roleId">角色ID</param>
+    [Delete("function")]
     Task RemoveFunctionAsync(string functionId, int roleId);
 
     /// <summary>
@@ -34,5 +37,19 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="roleId">角色ID</param>
     /// <param name="newFunctionList">功能列表</param>
     /// <returns></returns>
+    [Post("editRoleFunctions")]
     Task<RESTfulResult<bool>> EditRoleFunctionsAsync(int roleId, List<string> newFunctionList);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}roleFunction/";
+        req.BaseAddress = builder.Uri;
+    }
 }

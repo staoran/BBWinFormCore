@@ -13,6 +13,7 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     /// </summary>
     /// <param name="info">信息对象</param>
     /// <returns></returns>
+    [Post("saveParamater")]
     Task<RESTfulResult<bool>> SaveParamaterAsync(UserParameterInfo info);
 
     /// <summary>
@@ -21,5 +22,19 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     /// <param name="name">类名称</param>
     /// <param name="creator">用户标识</param>
     /// <returns></returns>
+    [Get("loadParameter")]
     Task<RESTfulResult<string>> LoadParameterAsync([Required] string name, string creator = null);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}userParameter/";
+        req.BaseAddress = builder.Uri;
+    }
 }

@@ -223,7 +223,7 @@ public interface IBaseHttpService<T>
     /// </summary>
     /// <param name="req"></param>
     [Interceptor(InterceptorTypes.Client)]
-    static void OnClientCreating(HttpClient req)
+    static void OnBaseClientCreating(HttpClient req)
     {
         if (req.BaseAddress == null)
         {
@@ -236,7 +236,7 @@ public interface IBaseHttpService<T>
     /// </summary>
     /// <param name="req"></param>
     [Interceptor(InterceptorTypes.Request)]
-    static void OnRequest(HttpRequestMessage req)
+    static void OnBaseRequest(HttpRequestMessage req)
     {
         if (req.RequestUri == null)
         {
@@ -249,7 +249,7 @@ public interface IBaseHttpService<T>
     /// </summary>
     /// <param name="res"></param>
     [Interceptor(InterceptorTypes.Response)]
-    static async void OnResponsing(HttpResponseMessage res)
+    static async void OnBaseResponsing(HttpResponseMessage res)
     {
         // // 读取流内容
         // var stream = await res.Content.ReadAsStreamAsync();
@@ -280,7 +280,7 @@ public interface IBaseHttpService<T>
     /// <param name="res"></param>
     /// <param name="errors"></param>
     [Interceptor(InterceptorTypes.Exception)]
-    static void OnException(HttpResponseMessage res, string errors)
+    static void OnBaseException(HttpResponseMessage res, string errors)
     {
         throw Oops.Bah(errors);
     }

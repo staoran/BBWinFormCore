@@ -12,6 +12,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="roleId">用户角色ID</param>
     /// <returns></returns>
+    [Get("simpleUsersByRole")]
     Task<RESTfulResult<List<SimpleUserInfo>>> GetSimpleUsersByRoleAsync(int roleId);
 
     /// <summary>
@@ -19,6 +20,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
+    [Get("usersByRole")]
     Task<RESTfulResult<List<UserInfo>>> GetUsersByRoleAsync(int roleId);
 
     /// <summary>
@@ -26,6 +28,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="userid">用户ID</param>
     /// <param name="roleList">角色列表</param>
+    [Put("roles")]
     Task UpdateRolesAsync(int userid, List<int> roleList);
 
     /// <summary>
@@ -33,6 +36,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <param name="roleId">角色ID</param>
+    [Post("user")]
     Task AddUserAsync(int userId, int roleId);
 
     /// <summary>
@@ -40,6 +44,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <param name="roleId">角色ID</param>
+    [Delete("user")]
     Task RemoveUserAsync(int userId, int roleId);
 
     /// <summary>
@@ -47,6 +52,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="userId">用户的ID</param>
     /// <returns></returns>
+    [Get("rolesByUser")]
     Task<RESTfulResult<List<RoleInfo>>> GetRolesByUserAsync(int userId);
 
     /// <summary>
@@ -55,6 +61,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userId">用户ID</param>
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
+    [Post("userInRole")]
     Task<RESTfulResult<bool>> UserInRoleAsync(int userId, int roleId);
 
     /// <summary>
@@ -62,6 +69,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Post("userIsCompanyAdmin")]
     Task<RESTfulResult<bool>> UserIsCompanyAdminAsync(int userId);
 
     /// <summary>
@@ -69,6 +77,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Post("userIsSuperAdmin")]
     Task<RESTfulResult<bool>> UserIsSuperAdminAsync(int userId);
 
     /// <summary>
@@ -76,7 +85,15 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Post("userIsAdmin")]
     Task<RESTfulResult<bool>> UserIsAdminAsync(int userId);
+
+    /// <summary>
+    /// 获取管理员包含的用户基础信息列表
+    /// </summary>
+    /// <returns></returns>
+    [Get("adminSimpleUsers")]
+    Task<RESTfulResult<List<SimpleUserInfo>>> GetAdminSimpleUsersAsync();
 
     /// <summary>
     /// 为角色指定新的人员列表
@@ -84,5 +101,19 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="roleId">角色ID</param>
     /// <param name="newUserList">人员列表</param>
     /// <returns></returns>
+    [Post("editRoleUsers")]
     Task<RESTfulResult<bool>> EditRoleUsersAsync(int roleId, List<int> newUserList);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}userRole/";
+        req.BaseAddress = builder.Uri;
+    }
 }

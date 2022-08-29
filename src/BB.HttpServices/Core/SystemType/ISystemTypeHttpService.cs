@@ -12,6 +12,7 @@ public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<S
     /// </summary>
     /// <param name="oid">系统OID</param>
     /// <returns></returns>
+    [Get("byOid")]
     Task<RESTfulResult<SystemTypeInfo>> FindByOidAsync(string oid);
 
     /// <summary>
@@ -21,5 +22,19 @@ public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<S
     /// <param name="typeId">类型ID</param>
     /// <param name="authorizeAmount">授权数量</param>
     /// <returns></returns>
+    [Post("verifySystem")]
     Task<RESTfulResult<bool>> VerifySystemAsync(string serialNumber, string typeId, int authorizeAmount);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}systemType/";
+        req.BaseAddress = builder.Uri;
+    }
 }

@@ -12,5 +12,19 @@ public interface IDocNoRuleHttpService : IHttpDispatchProxy, IBaseHttpService<Do
     /// </summary>
     /// <param name="docCode">单据字头</param>
     /// <returns></returns>
+    [Get("sNNo")]
     Task<RESTfulResult<string>> GetSNNoAsync(string docCode);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        builder.Path = $"{path}docNoRule/";
+        req.BaseAddress = builder.Uri;
+    }
 }
