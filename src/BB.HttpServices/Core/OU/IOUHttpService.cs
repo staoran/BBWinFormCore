@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OU;
 
-public interface IOUHttpService : IBaseHttpService<OUInfo>
+public interface IOUHttpService : IHttpDispatchProxy, IBaseHttpService<OUInfo>
 {
 
     /// <summary>

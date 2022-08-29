@@ -1,8 +1,9 @@
 ﻿using BB.Entity.TMS;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 
 namespace BB.HttpServices.TMS;
 
-public interface ICostBillHttpService : IBaseHttpService<CostBill>
+public interface ICostBillHttpService : IHttpDispatchProxy, IBaseHttpService<CostBill>
 {
 }

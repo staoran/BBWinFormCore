@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OperationLogSetting;
 
-public interface IOperationLogSettingHttpService : IBaseHttpService<OperationLogSettingInfo>
+public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttpService<OperationLogSettingInfo>
 {
     /// <summary>
     /// 判断指定的表名称是否需要记录操作日志（是否在配置表里面，并是有效状态）

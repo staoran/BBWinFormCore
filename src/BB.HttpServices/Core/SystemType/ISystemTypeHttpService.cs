@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.SystemType;
 
-public interface ISystemTypeHttpService : IBaseHttpService<SystemTypeInfo>
+public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<SystemTypeInfo>
 {
     /// <summary>
     /// 根据系统OID获取系统标识信息

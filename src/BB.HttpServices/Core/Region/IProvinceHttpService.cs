@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BB.Entity.Dictionary;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Region;
 
-public interface IProvinceHttpService : IBaseHttpService<ProvinceInfo>
+public interface IProvinceHttpService : IHttpDispatchProxy, IBaseHttpService<ProvinceInfo>
 {
     /// <summary>
     /// 根据省份ID获取名称

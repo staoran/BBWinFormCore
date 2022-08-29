@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BB.Entity.Dictionary;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Region;
 
-public interface IRegionHttpService : IBaseHttpService<RegionInfo>
+public interface IRegionHttpService : IHttpDispatchProxy, IBaseHttpService<RegionInfo>
 {
     /// <summary>
     /// 根据父级ID获取下级区域

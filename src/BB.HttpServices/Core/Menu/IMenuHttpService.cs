@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Menu;
 
-public interface IMenuHttpService : IBaseHttpService<MenuInfo>
+public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInfo>
 {
     /// <summary>
     /// 获取所有的菜单列表

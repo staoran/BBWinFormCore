@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BB.Entity.Dictionary;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.UserParameter;
 
-public interface IUserParameterHttpService : IBaseHttpService<UserParameterInfo>
+public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpService<UserParameterInfo>
 {
     /// <summary>
     /// 保存配置（插入或更新）到数据库

@@ -1,11 +1,12 @@
 ﻿using System.Data;
 using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Function;
 
-public interface IFunctionHttpService : IBaseHttpService<FunctionInfo>
+public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<FunctionInfo>
 {
     /// <summary>
     /// 根据角色ID列表和系统类型ID，获取对应的操作功能列表

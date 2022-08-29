@@ -1,10 +1,11 @@
 ﻿using BB.Entity.TMS;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.TMS;
 
-public interface IDocNoRuleHttpService : IBaseHttpService<DocNoRule>
+public interface IDocNoRuleHttpService : IHttpDispatchProxy, IBaseHttpService<DocNoRule>
 {
     /// <summary>
     /// 获取单据流水号

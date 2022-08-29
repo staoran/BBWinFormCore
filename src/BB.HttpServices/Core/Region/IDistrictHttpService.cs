@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BB.Entity.Dictionary;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Region;
 
-public interface IDistrictHttpService : IBaseHttpService<DistrictInfo>
+public interface IDistrictHttpService : IHttpDispatchProxy, IBaseHttpService<DistrictInfo>
 {
     /// <summary>
     /// 根据城市ID获取对应的地区列表

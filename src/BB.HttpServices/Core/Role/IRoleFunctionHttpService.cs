@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Role;
 
-public interface IRoleFunctionHttpService : IBaseHttpService<RoleFunction>
+public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<RoleFunction>
 {
     /// <summary>
     /// 获取对应功能的相关角色列表

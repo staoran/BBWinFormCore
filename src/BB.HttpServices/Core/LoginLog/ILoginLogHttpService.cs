@@ -1,11 +1,12 @@
 ﻿using BB.Entity.Base;
 using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.LoginLog;
 
-public interface ILoginLogHttpService : IBaseHttpService<LoginLogInfo>
+public interface ILoginLogHttpService : IHttpDispatchProxy, IBaseHttpService<LoginLogInfo>
 {
     /// <summary>
     /// 记录用户操作日志

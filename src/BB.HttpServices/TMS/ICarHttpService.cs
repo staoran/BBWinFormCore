@@ -1,8 +1,9 @@
 ﻿using BB.Entity.TMS;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 
 namespace BB.HttpServices.TMS;
 
-public interface ICarHttpService : IBaseHttpService<Car>
+public interface ICarHttpService : IHttpDispatchProxy, IBaseHttpService<Car>
 {
 }

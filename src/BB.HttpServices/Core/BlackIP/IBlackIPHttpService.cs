@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.BlackIP;
 
-public interface IBlackIPHttpService : IBaseHttpService<BlackIpInfo>
+public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<BlackIpInfo>
 {
     /// <summary>
     /// 根据黑名单ID获取对应的用户ID列表

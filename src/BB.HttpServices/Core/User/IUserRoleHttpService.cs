@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.User;
 
-public interface IUserRoleHttpService : IBaseHttpService<UserRoleEntity>
+public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<UserRoleEntity>
 {
     /// <summary>
     /// 通过用户角色ID方式获取对应的用户基本信息列表

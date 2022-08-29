@@ -1,11 +1,12 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using BB.Tools.Entity;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.User;
 
-public interface IUserHttpService : IBaseHttpService<UserInfo>
+public interface IUserHttpService : IHttpDispatchProxy, IBaseHttpService<UserInfo>
 {
     /// <summary>
     /// 批量设置过期

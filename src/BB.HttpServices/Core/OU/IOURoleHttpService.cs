@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OU;
 
-public interface IOURoleHttpService : IBaseHttpService<OURoleEntity>
+public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURoleEntity>
 {
     /// <summary>
     /// 为角色指定新的机构列表

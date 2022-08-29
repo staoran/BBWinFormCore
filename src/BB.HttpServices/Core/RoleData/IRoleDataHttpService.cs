@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.RoleData;
 
-public interface IRoleDataHttpService : IBaseHttpService<RoleDataInfo>
+public interface IRoleDataHttpService : IHttpDispatchProxy, IBaseHttpService<RoleDataInfo>
 {
     /// <summary>
     /// 获取用户所属角色对应的管理公司列表

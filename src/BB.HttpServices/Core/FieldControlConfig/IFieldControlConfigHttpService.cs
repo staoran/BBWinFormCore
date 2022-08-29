@@ -1,9 +1,10 @@
 ﻿using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.FieldControlConfig;
 
-public interface IFieldControlConfigHttpService : IBaseHttpService<Entity.Security.FieldControlConfig>
+public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpService<Entity.Security.FieldControlConfig>
 {
     /// <summary>
     /// 获取数据库的所有表名称

@@ -2,6 +2,7 @@
 using BB.Entity.Security;
 using BB.HttpServices.Base;
 using BB.HttpServices.Core.Auth.dto;
+using Furion.FriendlyException;
 using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
@@ -10,7 +11,7 @@ namespace BB.HttpServices.Core.Auth;
 /// <summary>
 /// 用户认证服务
 /// </summary>
-public interface IAuthHttpService : IBaseHttpService<UserInfo>
+public interface IAuthHttpService : IHttpDispatchProxy, IBaseHttpService<UserInfo>
 {
 
     /// <summary>
@@ -20,4 +21,22 @@ public interface IAuthHttpService : IBaseHttpService<UserInfo>
     /// <returns></returns>
     [Post("verifyUser")]
     Task<RESTfulResult<LoginUserInfo>> VerifyUserAsync([Body] LoginInput input);
+
+    /// <summary>
+    /// HttpClient 拦截
+    /// </summary>
+    /// <param name="req"></param>
+    [Interceptor(InterceptorTypes.Client)]
+    static void OnClientCreating(HttpClient req)
+    {
+        if (req.BaseAddress == null)
+        {
+            throw Oops.Oh("请求 Uri 为空");
+        }
+        
+        var builder = new UriBuilder(req.BaseAddress);
+        var path = req.BaseAddress.AbsolutePath;
+        builder.Path = $"{path}auth/";
+        req.BaseAddress = builder.Uri;
+    }
 }

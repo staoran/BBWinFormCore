@@ -7,14 +7,14 @@ using Furion.UnifyResult;
 
 namespace BB.HttpServices.Base;
 
-public interface IBaseHttpService<T> : IHttpDispatchProxy
+public interface IBaseHttpService<T>
 {
     /// <summary>
     /// 插入指定对象到数据库中
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行操作是否成功。</returns>
-    [Post(""), Client("local")]
+    [Post("")]
     Task<RESTfulResult<bool>> InsertAsync([Body] T obj);
 
     /// <summary>
@@ -22,7 +22,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="list">指定的对象集合</param>
     /// <returns>执行操作是否成功。</returns>
-    [Put("insertRange"), Client("local")]
+    [Put("insertRange")]
     Task<RESTfulResult<bool>> InsertRangeAsync([Body] List<T> list);
 
     /// <summary>
@@ -30,7 +30,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Put(""), Client("local")]
+    [Put("")]
     Task<RESTfulResult<bool>> UpdateAsync([Body]T obj);
 
     /// <summary>
@@ -38,7 +38,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="recordField">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Put("updateFields"), Client("local")]
+    [Put("updateFields")]
     Task<RESTfulResult<bool>> UpdateFieldsAsync(Hashtable recordField);
 
     /// <summary>
@@ -46,7 +46,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Post("insertUpdate"), Client("local")]
+    [Post("insertUpdate")]
     Task<RESTfulResult<bool>> InsertUpdateAsync([Body] T obj);
 
     /// <summary>
@@ -54,7 +54,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行插入成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Post("insertIfNew"), Client("local")]
+    [Post("insertIfNew")]
     Task<RESTfulResult<bool>> InsertIfNewAsync([Body] T obj);
 
     /// <summary>
@@ -62,7 +62,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="key">对象的ID值</param>
     /// <returns>存在则返回指定的对象,否则返回Null</returns>
-    [Get("findById"), Client("local")]
+    [Get("findById")]
     Task<RESTfulResult<T>> FindByIdAsync(object key);
 
     /// <summary>
@@ -71,7 +71,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
-    [Get("findByForeignKey"), Client("local")]
+    [Get("findByForeignKey")]
     Task<RESTfulResult<List<T>>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null);
 
     /// <summary>
@@ -80,7 +80,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
-    [Get("findIdByForeignKey"), Client("local")]
+    [Get("findIdByForeignKey")]
     Task<RESTfulResult<List<string>>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null);
 
     /// <summary>
@@ -88,7 +88,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="ids">主键数组</param>
     /// <returns>符合条件的对象列表</returns>
-    [Get("findByIDs"), Client("local")]
+    [Get("findByIDs")]
     Task<RESTfulResult<List<T>>> FindByIDsAsync(object[] ids);
 
     /// <summary>
@@ -96,7 +96,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="searchInfos">查询的条件</param>
     /// <returns>指定对象的集合</returns>
-    [Post("find"), Client("local")]
+    [Post("find")]
     Task<RESTfulResult<List<T>>> FindAsync(Dictionary<string, string> searchInfos);
 
     /// <summary>
@@ -104,7 +104,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
     /// <returns>指定对象的集合</returns>
-    [Get("all"), Client("local")]
+    [Get("all")]
     Task<RESTfulResult<List<T>>> GetAllAsync(string orderBy = "");
 
     /// <summary>
@@ -112,7 +112,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="info">分页实体信息</param>
     /// <returns>指定对象的集合</returns>
-    [Get("allByPage"), Client("local")]
+    [Get("allByPage")]
     Task<RESTfulResult<PageResult<T>>> GetAllAsync(PageInput info);
 
     /// <summary>
@@ -121,7 +121,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// <param name="fieldName">指定的属性名</param>
     /// <param name="key">指定的值</param>
     /// <returns>存在则返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Post("isExistKey"), Client("local")]
+    [Post("isExistKey")]
     Task<RESTfulResult<bool>> IsExistKeyAsync(string fieldName, object key);
 
     /// <summary>
@@ -130,7 +130,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// <param name="key">指定对象的ID</param>
     /// <param name="fieldName">字段名称</param>
     /// <returns></returns>
-    [Get("fieldValue"), Client("local")]
+    [Get("fieldValue")]
     Task<RESTfulResult<string>> GetFieldValueAsync(object key, string fieldName);
 
     /// <summary>
@@ -139,7 +139,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// <param name="key">指定对象的ID</param>
     /// <param name="fieldNameList">字段名称列表</param>
     /// <returns></returns>
-    [Get("fieldValueList"), Client("local")]
+    [Get("fieldValueList")]
     Task<RESTfulResult<Dictionary<string, string>>> GetFieldValueListAsync(string key, List<string> fieldNameList);
 
     /// <summary>
@@ -147,7 +147,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="fieldName">字段名称</param>
     /// <returns></returns>
-    [Get("fieldList"), Client("local")]
+    [Get("fieldList")]
     Task<RESTfulResult<List<string>>> GetFieldListAsync(string fieldName);
 
     /// <summary>
@@ -155,7 +155,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="key">指定对象的ID</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Delete(""), Client("local")]
+    [Delete("")]
     Task<RESTfulResult<bool>> DeleteAsync(object key);
 
     /// <summary>
@@ -163,7 +163,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="key">指定对象的ID</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    [Delete("deleteByIds"), Client("local")]
+    [Delete("deleteByIds")]
     Task<RESTfulResult<bool>> DeleteByIdsAsync(object[] key);
 
     /// <summary>
@@ -171,7 +171,7 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="searchInfos">分页搜索条件</param>
     /// <returns></returns>
-    [Post("getEntitiesByPage"), Client("local")]
+    [Post("getEntitiesByPage")]
     Task<RESTfulResult<PageResult<T>>> GetEntitiesByPageAsync(PaginatedSearchInfos searchInfos);
 
     /// <summary>
@@ -179,14 +179,14 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="key">主键</param>
     /// <returns></returns>
-    [Post("approve"), Client("local")]
+    [Post("approve")]
     Task<RESTfulResult<bool>> ApproveAsync(object key);
 
     /// <summary>
     /// 初始化一个实体
     /// </summary>
     /// <returns></returns>
-    [Get("newEntity"), Client("local")]
+    [Get("newEntity")]
     Task<RESTfulResult<T>> NewEntityAsync();
 
     /// <summary>
@@ -194,28 +194,28 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    [Get("permitDict"), Client("local")]
+    [Get("permitDict")]
     Task<RESTfulResult<Dictionary<string, int>>> GetPermitDictAsync();
 
     /// <summary>
     /// 获取表的字段名称和数据类型列表
     /// </summary>
     /// <returns></returns>
-    [Get("fieldTypeList"), Client("local")]
+    [Get("fieldTypeList")]
     Task<RESTfulResult<DataTable>> GetFieldTypeListAsync();
 
     /// <summary>
     /// 获取字段中文别名（用于界面显示）的字典集合
     /// </summary>
     /// <returns></returns>
-    [Get("columnNameAlias"), Client("local")]
+    [Get("columnNameAlias")]
     Task<RESTfulResult<Dictionary<string, string>>> GetColumnNameAliasAsync();
 
     /// <summary>
     /// 获取列表显示的字段（用于界面显示）
     /// </summary>
     /// <returns></returns>
-    [Post("displayColumns"), Client("local")]
+    [Post("displayColumns")]
     Task<RESTfulResult<string>> GetDisplayColumnsAsync();
 
     /// <summary>
@@ -225,6 +225,10 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
+        if (req.BaseAddress == null)
+        {
+            throw Oops.Oh("请求 Uri 为空");
+        }
     }
 
     /// <summary>
@@ -238,11 +242,6 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
         {
             throw Oops.Oh("请求 Uri 为空");
         }
-
-        var builder = new UriBuilder(req.RequestUri);
-        var path = req.RequestUri.AbsolutePath;
-        builder.Path = $"/{nameof(T).Replace("Info", "").Replace("Entity", "")}{path}";
-        req.RequestUri = builder.Uri;
     }
 
     /// <summary>
@@ -250,8 +249,29 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     /// </summary>
     /// <param name="res"></param>
     [Interceptor(InterceptorTypes.Response)]
-    static void OnResponsing(HttpResponseMessage res)
+    static async void OnResponsing(HttpResponseMessage res)
     {
+        // // 读取流内容
+        // var stream = await res.Content.ReadAsStreamAsync();
+        //
+        // var text = await new StreamReader(stream).ReadToEndAsync();
+        // // 释放流
+        // await stream.DisposeAsync();
+        //
+        // // 如果字符串为空，则返回默认值
+        // if (string.IsNullOrWhiteSpace(text)) return;
+        //
+        // // 解析 Json 序列化提供器
+        // var jsonSerializer = App.GetService(typeof(SystemTextJsonSerializerProvider), App.RootServices) as IJsonSerializerProvider;
+        //
+        // // 反序列化流
+        // var result = jsonSerializer.Deserialize<RESTfulResult<object>>(text);
+        //
+        // using var ms = new MemoryStream();
+        // DataContractSerializer dataContractSerializer = new(typeof(object));
+        // dataContractSerializer.WriteObject(ms, result.Data);
+        // ms.Position = 0;
+        // res.Content = new StreamContent(ms, (int)ms.Length);
     }
 
     /// <summary>
@@ -262,5 +282,6 @@ public interface IBaseHttpService<T> : IHttpDispatchProxy
     [Interceptor(InterceptorTypes.Exception)]
     static void OnException(HttpResponseMessage res, string errors)
     {
+        throw Oops.Bah(errors);
     }
 }

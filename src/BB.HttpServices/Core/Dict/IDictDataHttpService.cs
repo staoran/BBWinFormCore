@@ -1,11 +1,12 @@
 ﻿using BB.Entity.Dictionary;
 using BB.HttpServices.Base;
 using BB.Tools.Entity;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Dict;
 
-public interface IDictDataHttpService : IBaseHttpService<DictDataInfo>
+public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<DictDataInfo>
 {
     /// <summary>
     /// 根据字典类型ID获取所有该类型的字典列表集合

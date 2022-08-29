@@ -1,10 +1,11 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
+using Furion.RemoteRequest;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OU;
 
-public interface IOUUserHttpService : IBaseHttpService<OUUserEntity>
+public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUserEntity>
 {
     /// <summary>
     /// 通过用户机构ID方式获取对应的用户基本信息列表
