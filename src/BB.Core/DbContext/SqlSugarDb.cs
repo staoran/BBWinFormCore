@@ -116,16 +116,16 @@ public static class SqlSugarDb
         };
 
         // 批量配置 批量 AOP 
-        void Action(SqlSugarClient s) => connectionConfig.ForEach(c =>
+        connectionConfig.ForEach(c =>
         {
             c.ConfigureExternalServices = configureExternalServices;
             c.MoreSettings = moreSettings;
-            // 在循环中通过 ConfigId 获取作用域的 SqlSugar 实例，配置实例的 AOP 动作
-            ConfigAction(s.GetConnectionScope(c.ConfigId));
+            // // 在循环中通过 ConfigId 获取作用域的 SqlSugar 实例，配置实例的 AOP 动作
+            // ConfigAction(s.GetConnectionScope(c.ConfigId));
         });
 
         // 单例注入 SqlSugar 和 工作单元
-        services.AddSingleton<ISqlSugarClient>(new SqlSugarScope(connectionConfig, Action));
+        services.AddSingleton<ISqlSugarClient>(new SqlSugarScope(connectionConfig, ConfigAction));
         services.AddSingleton<IUnitOfWork, UnitOfWork>();
         // 作用域注入仓储
         services.AddScoped(typeof(BaseRepository<>));
@@ -200,29 +200,33 @@ public static class SqlSugarDb
 
         #region 查询过滤器
 
-        // 获取所有实体类型
-        var entityTypes = App.EffectiveTypes.Where(t => t.IsClass && t.IsPublic && !t.IsInterface
-                                                        && !t.IsAbstract && (t.BaseType == typeof(BaseEntity) ||
-                                                                             t.BaseType == typeof(BaseEntity<>))).ToList();
-
-        var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
-        var userCompanyId = App.User.FindFirstValue(nameof(LoginUserInfo.CompanyId));
-        // todo 用缓存，程序启动就缓存，精简 App.User 信息，尽量不在其中写角色和数据权限，就用 userId 配合缓存的权限，用滑动的缓存
-        var roles = App.User.FindFirstValue(nameof(LoginUserInfo.RoleIdList)).Split(",");
-        if (!userId.IsNullOrEmpty() && !roles.Contains(RoleInfo.SUPER_ADMIN_NAME))
+        var userId = App.User?.FindFirstValue(nameof(LoginUserInfo.ID));
+        if (!userId.IsNullOrEmpty())
         {
-            // 循环配置查询过滤器
-            foreach (Type entityType in entityTypes)
-            {
-                // 获取 数据权限字段
-                var dataPermissionKey = entityType.GetFieldValue(nameof(BaseEntity.DataPermissionKey)).ObjToString();
-                if (dataPermissionKey.IsNullOrEmpty()) continue;
+            // 获取所有实体类型
+            var entityTypes = App.EffectiveTypes.Where(t => t.IsClass && t.IsPublic && !t.IsInterface
+                                                            && !t.IsAbstract && (t.BaseType == typeof(BaseEntity) ||
+                                                                t.BaseType == typeof(BaseEntity<>))).ToList();
 
-                // 构建动态过滤语句
-                var lambda = DynamicExpressionParser.ParseLambda(entityType, typeof(bool), $"{dataPermissionKey} == @0",
-                    userCompanyId);
-                // 网点机构过滤
-                db.QueryFilter.Add(new TableFilterItem<object>(entityType, lambda));
+            var userCompanyId = App.User.FindFirstValue(nameof(LoginUserInfo.CompanyId));
+            // todo 用缓存，程序启动就缓存，精简 App.User 信息，尽量不在其中写角色和数据权限，就用 userId 配合缓存的权限，用滑动的缓存
+            // todo 每次查询都会循环，需优化
+            var roles = App.User.FindFirstValue(nameof(LoginUserInfo.RoleIdList)).Split(",");
+            if (!roles.Contains(RoleInfo.SUPER_ADMIN_NAME))
+            {
+                // 循环配置查询过滤器
+                foreach (Type entityType in entityTypes)
+                {
+                    // 获取 数据权限字段
+                    var dataPermissionKey = entityType.GetFieldValue(nameof(BaseEntity.DataPermissionKey)).ObjToString();
+                    if (dataPermissionKey.IsNullOrEmpty()) continue;
+
+                    // 构建动态过滤语句
+                    var lambda = DynamicExpressionParser.ParseLambda(entityType, typeof(bool), $"{dataPermissionKey} == @0",
+                        userCompanyId);
+                    // 网点机构过滤
+                    db.QueryFilter.Add(new TableFilterItem<object>(entityType, lambda));
+                }
             }
         }
 
