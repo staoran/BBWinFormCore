@@ -31,14 +31,14 @@ public class RibbonPageHelper
     /// <summary>
     /// 刷新菜单
     /// </summary>
-    public void RefreshMenu()
+    public async Task RefreshMenu()
     {
         for (var i = 0; i < _index; i++)
         {
             _control.Pages.RemoveAt(0);
         }
         _index = 0;
-        AddPages();
+        await AddPages();
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class RibbonPageHelper
     public async Task AddPages()
     {
         //约定菜单共有3级，第一级为大的类别，第二级为小模块分组，第三级为具体的菜单
-        List<MenuNodeInfo> menuList = (await App.GetService<IMenuHttpService>().GetTreeAsync(GB.SystemType)).Data;
+        List<MenuNodeInfo> menuList = await App.GetService<MenuHttpService>().GetTreeAsync(GB.SystemType);
         if (menuList.Count == 0) return;
 
         foreach(MenuNodeInfo firstInfo in menuList)
