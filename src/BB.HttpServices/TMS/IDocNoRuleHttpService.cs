@@ -1,7 +1,6 @@
 ﻿using BB.Entity.TMS;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.TMS;
 
@@ -13,7 +12,7 @@ public interface IDocNoRuleHttpService : IHttpDispatchProxy, IBaseHttpService<Do
     /// <param name="docCode">单据字头</param>
     /// <returns></returns>
     [Get("sNNo")]
-    Task<RESTfulResult<string>> GetSNNoAsync(string docCode);
+    Task<RESTfulResultControl<string>> GetSNNoAsync(string docCode);
 
     /// <summary>
     /// HttpClient 拦截
@@ -22,9 +21,9 @@ public interface IDocNoRuleHttpService : IHttpDispatchProxy, IBaseHttpService<Do
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}docNoRule/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}docNoRule/";
+        // req.BaseAddress = builder.Uri;
     }
 }

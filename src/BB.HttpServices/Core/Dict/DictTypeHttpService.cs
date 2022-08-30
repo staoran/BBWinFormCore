@@ -24,7 +24,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// <returns></returns>
     public async Task<Dictionary<string, string>> GetAllTypeAsync(string dictTypeId = "")
     {
-        return (await _httpService.GetAllTypeAsync(dictTypeId)).Data;
+        return (await _httpService.GetAllTypeAsync(dictTypeId)).Handling();
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// <returns></returns>
     public async Task<bool> CheckDuplicatedAsync(string name, string id)
     {
-        return (await _httpService.CheckDuplicatedAsync(name, id)).Data;
+        return (await _httpService.CheckDuplicatedAsync(name, id)).Handling();
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// <returns></returns>
     public async Task<List<DictTypeNodeInfo>> GetTreeAsync()
     {
-        return (await _httpService.GetTreeAsync()).Data;
+        return (await _httpService.GetTreeAsync()).Handling();
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// <returns></returns>
     public async Task<List<CListItem>> GetEndpointItemsAsync(List<DictTypeNodeInfo> nodeInfos = null, List<CListItem> items = null)
     {
-        return (await _httpService.GetEndpointItemsAsync(nodeInfos, items)).Data;
+        return (await _httpService.GetEndpointItemsAsync(nodeInfos, items)).Handling();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// <returns></returns>
     public async Task<List<DictTypeInfo>> GetTopItemsAsync()
     {
-        return (await _httpService.GetTopItemsAsync()).Data;
+        return (await _httpService.GetTopItemsAsync()).Handling();
     }
 
     /// <summary>
@@ -72,6 +72,6 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// <returns></returns>
     public async Task<List<DictTypeNodeInfo>> GetTreeByIdAsync([Required] string mainId)
     {
-        return (await _httpService.GetTreeByIdAsync(mainId)).Data;
+        return (await _httpService.GetTreeByIdAsync(mainId)).Handling();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Role;
 
@@ -13,7 +12,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="functionId">对应功能ID</param>
     /// <returns></returns>
     [Get("rolesByFunction")]
-    Task<RESTfulResult<List<RoleInfo>>> GetRolesByFunctionAsync(string functionId);
+    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByFunctionAsync(string functionId);
 
     /// <summary>
     /// 给指定角色添加功能点
@@ -38,7 +37,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="newFunctionList">功能列表</param>
     /// <returns></returns>
     [Post("editRoleFunctions")]
-    Task<RESTfulResult<bool>> EditRoleFunctionsAsync(int roleId, List<string> newFunctionList);
+    Task<RESTfulResultControl<bool>> EditRoleFunctionsAsync(int roleId, List<string> newFunctionList);
 
     /// <summary>
     /// HttpClient 拦截
@@ -47,9 +46,9 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}roleFunction/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}roleFunction/";
+        // req.BaseAddress = builder.Uri;
     }
 }

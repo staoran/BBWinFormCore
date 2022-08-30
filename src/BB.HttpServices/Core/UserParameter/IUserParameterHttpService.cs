@@ -2,7 +2,6 @@
 using BB.Entity.Dictionary;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.UserParameter;
 
@@ -14,7 +13,7 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     /// <param name="info">信息对象</param>
     /// <returns></returns>
     [Post("saveParamater")]
-    Task<RESTfulResult<bool>> SaveParamaterAsync(UserParameterInfo info);
+    Task<RESTfulResultControl<bool>> SaveParamaterAsync(UserParameterInfo info);
 
     /// <summary>
     /// 根据类名称和用户标识获取参数配置内容
@@ -23,7 +22,7 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     /// <param name="creator">用户标识</param>
     /// <returns></returns>
     [Get("loadParameter")]
-    Task<RESTfulResult<string>> LoadParameterAsync([Required] string name, string creator = null);
+    Task<RESTfulResultControl<string>> LoadParameterAsync([Required] string name, string creator = null);
 
     /// <summary>
     /// HttpClient 拦截
@@ -32,9 +31,9 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}userParameter/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}userParameter/";
+        // req.BaseAddress = builder.Uri;
     }
 }

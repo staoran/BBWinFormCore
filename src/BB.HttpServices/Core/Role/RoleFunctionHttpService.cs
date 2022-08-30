@@ -19,7 +19,7 @@ public class RoleFunctionHttpService : BaseHttpService<RoleFunction>
     /// <returns></returns>
     public async Task<List<RoleInfo>> GetRolesByFunctionAsync(string functionId)
     {
-        return (await _roleFunctionHttpService.GetRolesByFunctionAsync(functionId)).Data;
+        return (await _roleFunctionHttpService.GetRolesByFunctionAsync(functionId)).Handling();
     }
 
     /// <summary>
@@ -50,6 +50,6 @@ public class RoleFunctionHttpService : BaseHttpService<RoleFunction>
     /// <returns></returns>
     public async Task<bool> EditRoleFunctionsAsync(int roleId, List<string> newFunctionList)
     {
-        return (await _roleFunctionHttpService.EditRoleFunctionsAsync(roleId, newFunctionList)).Data;
+        return (await _roleFunctionHttpService.EditRoleFunctionsAsync(roleId, newFunctionList)).Handling();
     }
 }

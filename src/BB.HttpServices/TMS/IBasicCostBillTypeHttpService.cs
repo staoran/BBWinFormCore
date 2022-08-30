@@ -13,9 +13,9 @@ public interface IBasicCostBillTypeHttpService : IHttpDispatchProxy, IBaseHttpSe
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}basicCostBillType/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}basicCostBillType/";
+        // req.BaseAddress = builder.Uri;
     }
 }

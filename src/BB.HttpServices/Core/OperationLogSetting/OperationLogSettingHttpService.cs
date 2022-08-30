@@ -19,7 +19,7 @@ public class OperationLogSettingHttpService : BaseHttpService<OperationLogSettin
     /// <returns></returns>
     public async Task<bool> IsTableNeedToLogAsync(string tableName)
     {
-        return (await _operationLogSettingHttpService.IsTableNeedToLogAsync(tableName)).Data;
+        return (await _operationLogSettingHttpService.IsTableNeedToLogAsync(tableName)).Handling();
     }
 
     /// <summary>
@@ -29,6 +29,6 @@ public class OperationLogSettingHttpService : BaseHttpService<OperationLogSettin
     /// <returns></returns>
     public async Task<OperationLogSettingInfo> FindByTableNameAsync(string tableName)
     {
-        return (await _operationLogSettingHttpService.FindByTableNameAsync(tableName)).Data;
+        return (await _operationLogSettingHttpService.FindByTableNameAsync(tableName)).Handling();
     }
 }

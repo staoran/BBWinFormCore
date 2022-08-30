@@ -1,6 +1,5 @@
 ﻿using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.FieldControlConfig;
 
@@ -11,7 +10,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// </summary>
     /// <returns></returns>
     [Get("tableNames")]
-    Task<RESTfulResult<List<string>>> GetTableNames();
+    Task<RESTfulResultControl<List<string>>> GetTableNames();
                        
     /// <summary>
     /// 获取表的主键
@@ -19,7 +18,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("tableKeyList")]
-    Task<RESTfulResult<IEnumerable<string>>> GetTableKeyList(string name);
+    Task<RESTfulResultControl<IEnumerable<string>>> GetTableKeyList(string name);
                        
     /// <summary>
     /// 获取表的自增字段
@@ -27,7 +26,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("tableIdentityList")]
-    Task<RESTfulResult<List<string>>> GetTableIdentityList(string name);
+    Task<RESTfulResultControl<List<string>>> GetTableIdentityList(string name);
                        
     /// <summary>
     /// 获取表的注释
@@ -35,7 +34,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("tableComment")]
-    Task<RESTfulResult<string>> GetTableComment(string name);
+    Task<RESTfulResultControl<string>> GetTableComment(string name);
                        
     /// <summary>
     /// 获取表的控件配置模版
@@ -43,14 +42,14 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("fieldControlConfigs")]
-    Task<RESTfulResult<IEnumerable<Entity.Security.FieldControlConfig>>> GetFieldControlConfigs(string name);
+    Task<RESTfulResultControl<IEnumerable<Entity.Security.FieldControlConfig>>> GetFieldControlConfigs(string name);
 
     /// <summary>
     /// 获取数据库的全部表名称和注释
     /// </summary>
     /// <returns></returns>
     [Get("tableNamesAndComments")]
-    Task<RESTfulResult<IEnumerable<string>>> GetTableNamesAndComments();
+    Task<RESTfulResultControl<IEnumerable<string>>> GetTableNamesAndComments();
 
     /// <summary>
     /// HttpClient 拦截
@@ -59,9 +58,9 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}fieldControlConfig/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}fieldControlConfig/";
+        // req.BaseAddress = builder.Uri;
     }
 }

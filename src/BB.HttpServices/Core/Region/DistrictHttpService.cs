@@ -23,7 +23,7 @@ public class DistrictHttpService : BaseHttpService<DistrictInfo>
     /// <returns></returns>
      public async Task<List<DistrictInfo>> GetDistrictByCityAsync([Required] string cityId)
     {
-        return (await _httpService.GetDistrictByCityAsync(cityId)).Data;
+        return (await _httpService.GetDistrictByCityAsync(cityId)).Handling();
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class DistrictHttpService : BaseHttpService<DistrictInfo>
     /// <returns></returns>
      public async Task<List<DistrictInfo>> GetDistrictByCityNameAsync([Required] string cityName)
     {
-        return (await _httpService.GetDistrictByCityNameAsync(cityName)).Data;
+        return (await _httpService.GetDistrictByCityNameAsync(cityName)).Handling();
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class DistrictHttpService : BaseHttpService<DistrictInfo>
     /// <returns></returns>
     public async Task<string> GetNameByIdAsync([Required] int id)
     {
-        return (await _httpService.GetNameByIdAsync(id)).Data;
+        return (await _httpService.GetNameByIdAsync(id)).Handling();
     }
 
     /// <summary>
@@ -53,6 +53,6 @@ public class DistrictHttpService : BaseHttpService<DistrictInfo>
     /// <returns></returns>
     public async Task<string> GetIdByNameAsync([Required] string name)
     {
-        return (await _httpService.GetIdByNameAsync(name)).Data;
+        return (await _httpService.GetIdByNameAsync(name)).Handling();
     }
 }

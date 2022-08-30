@@ -21,7 +21,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <returns></returns>
     public async Task<List<FunctionInfo>> GetFunctionsAsync(IEnumerable<int> roleList, string typeId)
     {
-        return (await _functionHttpService.GetFunctionsAsync(roleList, typeId)).Data;
+        return (await _functionHttpService.GetFunctionsAsync(roleList, typeId)).Handling();
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <returns></returns>
     public async Task<List<FunctionNodeInfo>> GetFunctionNodesAsync(string roleIDs, string typeId)
     {
-        return (await _functionHttpService.GetFunctionNodesAsync(roleIDs, typeId)).Data;
+        return (await _functionHttpService.GetFunctionNodesAsync(roleIDs, typeId)).Handling();
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <returns></returns>
     public async Task<List<FunctionInfo>> GetFunctionsByRoleAsync(int roleId)
     {
-        return (await _functionHttpService.GetFunctionsByRoleAsync(roleId)).Data;
+        return (await _functionHttpService.GetFunctionsByRoleAsync(roleId)).Handling();
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <returns></returns>
     public async Task<List<FunctionInfo>> GetFunctionsByUserAsync(int userId, string typeId)
     {
-        return (await _functionHttpService.GetFunctionsByUserAsync(userId, typeId)).Data;
+        return (await _functionHttpService.GetFunctionsByUserAsync(userId, typeId)).Handling();
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <returns></returns>
     public async Task<List<FunctionNodeInfo>> GetFunctionNodesByUserAsync(int userId, string typeId)
     {
-        return (await _functionHttpService.GetFunctionNodesByUserAsync(userId, typeId)).Data;
+        return (await _functionHttpService.GetFunctionNodesByUserAsync(userId, typeId)).Handling();
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <returns></returns>
     public async Task<List<FunctionInfo>> GetUserFunctionsAsync(string typeId)
     {
-        return (await _functionHttpService.GetUserFunctionsAsync(typeId)).Data;
+        return (await _functionHttpService.GetUserFunctionsAsync(typeId)).Handling();
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <param name="systemType">系统类型的OID</param>
     public async Task<List<FunctionNodeInfo>> GetTreeAsync(string systemType)
     {
-        return (await _functionHttpService.GetTreeAsync(systemType)).Data;
+        return (await _functionHttpService.GetTreeAsync(systemType)).Handling();
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <param name="mainId">指定功能ID</param>
     public async Task<List<FunctionNodeInfo>> GetTreeByIdAsync(string mainId)
     {
-        return (await _functionHttpService.GetTreeByIdAsync(mainId)).Data;
+        return (await _functionHttpService.GetTreeByIdAsync(mainId)).Handling();
     }
                        
     /// <summary>
@@ -100,7 +100,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// </summary>
     public async Task<List<FunctionNodeInfo>> GetTreeWithRoleAsync(string systemType, List<int> roleList)
     {
-        return (await _functionHttpService.GetTreeWithRoleAsync(systemType, roleList)).Data;
+        return (await _functionHttpService.GetTreeWithRoleAsync(systemType, roleList)).Handling();
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// </summary>
     public async Task<List<FunctionNodeInfo>> GetTreeWithUserAsync(string systemType, int userId)
     {
-        return (await _functionHttpService.GetTreeWithUserAsync(systemType, userId)).Data;
+        return (await _functionHttpService.GetTreeWithUserAsync(systemType, userId)).Handling();
     }
     
     /// <summary>
@@ -126,7 +126,7 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <exception cref="Exception"></exception>
     public async Task<bool> AddMore(FunctionInfo mainInfo, bool isAdd, bool isUpdate, bool isDelete, bool isExport, bool isImport, bool isView)
     {
-        return (await _functionHttpService.AddMore(mainInfo, isAdd, isUpdate, isDelete, isExport, isImport, isView)).Data;
+        return (await _functionHttpService.AddMore(mainInfo, isAdd, isUpdate, isDelete, isExport, isImport, isView)).Handling();
     }
 
     /// <summary>
@@ -136,6 +136,6 @@ public class FunctionHttpService : BaseHttpService<FunctionInfo>
     /// <returns></returns>
     public async Task<bool> DeleteWithSubNodeAsync(string mainId)
     {
-        return (await _functionHttpService.DeleteWithSubNodeAsync(mainId)).Data;
+        return (await _functionHttpService.DeleteWithSubNodeAsync(mainId)).Handling();
     }
 }

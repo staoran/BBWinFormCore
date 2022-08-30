@@ -2,7 +2,6 @@
 using BB.Entity.Dictionary;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Region;
 
@@ -14,7 +13,7 @@ public interface IDistrictHttpService : IHttpDispatchProxy, IBaseHttpService<Dis
     /// <param name="cityId">城市ID</param>
     /// <returns></returns>
     [Get("districtByCity")]
-    Task<RESTfulResult<List<DistrictInfo>>> GetDistrictByCityAsync([Required] string cityId);
+    Task<RESTfulResultControl<List<DistrictInfo>>> GetDistrictByCityAsync([Required] string cityId);
 
     /// <summary>
     /// 根据城市名获取对应的行政区划
@@ -22,7 +21,7 @@ public interface IDistrictHttpService : IHttpDispatchProxy, IBaseHttpService<Dis
     /// <param name="cityName">城市名</param>
     /// <returns></returns>
     [Get("districtByCityName")]
-    Task<RESTfulResult<List<DistrictInfo>>> GetDistrictByCityNameAsync([Required] string cityName);
+    Task<RESTfulResultControl<List<DistrictInfo>>> GetDistrictByCityNameAsync([Required] string cityName);
 
     /// <summary>
     /// 根据行政区ID获取名称
@@ -30,7 +29,7 @@ public interface IDistrictHttpService : IHttpDispatchProxy, IBaseHttpService<Dis
     /// <param name="id">行政区ID</param>
     /// <returns></returns>
     [Get("nameById")]
-    Task<RESTfulResult<string>> GetNameByIdAsync([Required] int id);
+    Task<RESTfulResultControl<string>> GetNameByIdAsync([Required] int id);
 
     /// <summary>
     /// 根据名称获取对应的记录ID
@@ -38,7 +37,7 @@ public interface IDistrictHttpService : IHttpDispatchProxy, IBaseHttpService<Dis
     /// <param name="name">行政区名称</param>
     /// <returns></returns>
     [Get("idByName")]
-    Task<RESTfulResult<string>> GetIdByNameAsync([Required] string name);
+    Task<RESTfulResultControl<string>> GetIdByNameAsync([Required] string name);
 
     /// <summary>
     /// HttpClient 拦截
@@ -47,9 +46,9 @@ public interface IDistrictHttpService : IHttpDispatchProxy, IBaseHttpService<Dis
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}district/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}district/";
+        // req.BaseAddress = builder.Uri;
     }
 }

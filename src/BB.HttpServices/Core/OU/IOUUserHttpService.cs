@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OU;
 
@@ -13,7 +12,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// <param name="ouId">用户机构ID方式</param>
     /// <returns></returns>
     [Get("simpleUsersByOu")]
-    Task<RESTfulResult<List<SimpleUserInfo>>> GetSimpleUsersByOuAsync(string ouId);
+    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUsersByOuAsync(string ouId);
 
     /// <summary>
     /// 通过机构ID获取对应的用户列表
@@ -21,7 +20,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// <param name="ouId">机构ID</param>
     /// <returns></returns>
     [Get("usersByOu")]
-    Task<RESTfulResult<List<UserInfo>>> GetUsersByOuAsync(string ouId);
+    Task<RESTfulResultControl<List<UserInfo>>> GetUsersByOuAsync(string ouId);
 
     /// <summary>
     /// 在机构中移除指定的用户
@@ -38,9 +37,9 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}oUUser/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}oUUser/";
+        // req.BaseAddress = builder.Uri;
     }
 }

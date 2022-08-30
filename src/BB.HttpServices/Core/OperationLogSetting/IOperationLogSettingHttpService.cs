@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OperationLogSetting;
 
@@ -13,7 +12,7 @@ public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttp
     /// <param name="tableName">表名称</param>
     /// <returns></returns>
     [Post("isTableNeedToLog")]
-    Task<RESTfulResult<bool>> IsTableNeedToLogAsync(string tableName);
+    Task<RESTfulResultControl<bool>> IsTableNeedToLogAsync(string tableName);
 
     /// <summary>
     /// 根据数据库表名称获取配置信息
@@ -21,7 +20,7 @@ public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttp
     /// <param name="tableName">数据库表名</param>
     /// <returns></returns>
     [Get("byTableName")]
-    Task<RESTfulResult<OperationLogSettingInfo>> FindByTableNameAsync(string tableName);
+    Task<RESTfulResultControl<OperationLogSettingInfo>> FindByTableNameAsync(string tableName);
 
     /// <summary>
     /// HttpClient 拦截
@@ -30,9 +29,9 @@ public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttp
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}operationLogSetting/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}operationLogSetting/";
+        // req.BaseAddress = builder.Uri;
     }
 }

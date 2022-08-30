@@ -19,7 +19,7 @@ public class BlackIPHttpService : BaseHttpService<BlackIpInfo>
     /// <returns></returns>
     public async Task<string> GetUserIdListAsync(string id)
     {
-        return (await _blackIPHttpService.GetUserIdListAsync(id)).Data;
+        return (await _blackIPHttpService.GetUserIdListAsync(id)).Handling();
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class BlackIPHttpService : BaseHttpService<BlackIpInfo>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> GetSimpleUserByBlackIpAsync(string id)
     {
-        return (await _blackIPHttpService.GetSimpleUserByBlackIpAsync(id)).Data;
+        return (await _blackIPHttpService.GetSimpleUserByBlackIpAsync(id)).Handling();
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class BlackIPHttpService : BaseHttpService<BlackIpInfo>
     /// <returns></returns>
     public async Task<List<BlackIpInfo>> FindByUserAsync(int userId, AuthrizeType type)
     {
-        return (await _blackIPHttpService.FindByUserAsync(userId, type)).Data;
+        return (await _blackIPHttpService.FindByUserAsync(userId, type)).Handling();
     }
 
     /// <summary>
@@ -70,6 +70,6 @@ public class BlackIPHttpService : BaseHttpService<BlackIpInfo>
     /// <returns></returns>
     public async Task<bool> ValidateIpAccessAsync(string ipAddress, int userId)
     {
-        return (await _blackIPHttpService.ValidateIpAccessAsync(ipAddress, userId)).Data;
+        return (await _blackIPHttpService.ValidateIpAccessAsync(ipAddress, userId)).Handling();
     }
 }

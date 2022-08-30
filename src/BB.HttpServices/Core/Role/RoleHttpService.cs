@@ -22,7 +22,7 @@ public class RoleHttpService : BaseHttpService<RoleInfo>
 	/// <returns></returns>
 	public async Task<List<RoleInfo>> GetRolesByCompanyAsync(string companyId)
 	{
-		return (await _roleHttpService.GetRolesByCompanyAsync(companyId)).Data;
+		return (await _roleHttpService.GetRolesByCompanyAsync(companyId)).Handling();
 	}
 
 	/// <summary>
@@ -33,7 +33,7 @@ public class RoleHttpService : BaseHttpService<RoleInfo>
 	/// <returns></returns>
 	public async Task<RoleInfo> GetRoleByNameAsync(string roleName, string companyId = null)
 	{
-		return (await _roleHttpService.GetRoleByNameAsync(roleName, companyId)).Data;
+		return (await _roleHttpService.GetRoleByNameAsync(roleName, companyId)).Handling();
 	}
                        
 	/// <summary>
@@ -44,7 +44,7 @@ public class RoleHttpService : BaseHttpService<RoleInfo>
 	/// <returns></returns>
 	public async Task<bool> SetDeletedFlagAsync(object id, bool deleted = true)
 	{
-		return (await _roleHttpService.SetDeletedFlagAsync(id, deleted)).Data;
+		return (await _roleHttpService.SetDeletedFlagAsync(id, deleted)).Handling();
 	}
 
               
@@ -77,6 +77,6 @@ public class RoleHttpService : BaseHttpService<RoleInfo>
 	/// <returns></returns>
 	public async Task<bool> EditRoleMenusAsync(int roleId, List<string> newList, string systemType)
 	{
-		return (await _roleHttpService.EditRoleMenusAsync(roleId, newList, systemType)).Data;
+		return (await _roleHttpService.EditRoleMenusAsync(roleId, newList, systemType)).Handling();
 	}
 }

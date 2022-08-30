@@ -24,7 +24,7 @@ public class UserParameterHttpService : BaseHttpService<UserParameterInfo>
     /// <returns></returns>
     public async Task<bool> SaveParamaterAsync(UserParameterInfo info)
     {
-        return (await _httpService.SaveParamaterAsync(info)).Data;
+        return (await _httpService.SaveParamaterAsync(info)).Handling();
     }
 
     /// <summary>
@@ -36,6 +36,6 @@ public class UserParameterHttpService : BaseHttpService<UserParameterInfo>
     [HttpGet]
     public async Task<string> LoadParameterAsync([Required] string name, string creator = null)
     {
-        return (await _httpService.LoadParameterAsync(name, creator)).Data;
+        return (await _httpService.LoadParameterAsync(name, creator)).Handling();
     }
 }

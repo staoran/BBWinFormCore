@@ -22,6 +22,6 @@ public class DocNoRuleHttpService : BaseHttpService<DocNoRule>
     /// <returns></returns>
     public async Task<string> GetSNNoAsync(string docCode)
     {
-        return (await _httpService.GetSNNoAsync(docCode)).Data;
+        return (await _httpService.GetSNNoAsync(docCode)).Handling();
     }
 }

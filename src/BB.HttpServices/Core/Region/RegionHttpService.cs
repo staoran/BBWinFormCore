@@ -23,7 +23,7 @@ public class RegionHttpService : BaseHttpService<RegionInfo>
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetRegionsByParentIdAsync([Required] long parentId)
     {
-        return (await _httpService.GetRegionsByParentIdAsync(parentId)).Data;
+        return (await _httpService.GetRegionsByParentIdAsync(parentId)).Handling();
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class RegionHttpService : BaseHttpService<RegionInfo>
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllProvinceAsync()
     {
-        return (await _httpService.GetAllProvinceAsync()).Data;
+        return (await _httpService.GetAllProvinceAsync()).Handling();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class RegionHttpService : BaseHttpService<RegionInfo>
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllCityAsync()
     {
-        return (await _httpService.GetAllCityAsync()).Data;
+        return (await _httpService.GetAllCityAsync()).Handling();
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class RegionHttpService : BaseHttpService<RegionInfo>
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllDistrictAsync()
     {
-        return (await _httpService.GetAllDistrictAsync()).Data;
+        return (await _httpService.GetAllDistrictAsync()).Handling();
     }
 
     /// <summary>
@@ -59,6 +59,6 @@ public class RegionHttpService : BaseHttpService<RegionInfo>
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllRegionAsync()
     {
-        return (await _httpService.GetAllRegionAsync()).Data;
+        return (await _httpService.GetAllRegionAsync()).Handling();
     }
 }

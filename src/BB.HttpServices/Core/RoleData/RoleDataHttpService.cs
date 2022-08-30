@@ -19,7 +19,7 @@ public class RoleDataHttpService : BaseHttpService<RoleDataInfo>
     /// <returns></returns>
     public async Task<List<string>> GetBelongCompanysByUserAsync(int userId)
     {
-        return (await _roleDataHttpService.GetBelongCompanysByUserAsync(userId)).Data;
+        return (await _roleDataHttpService.GetBelongCompanysByUserAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class RoleDataHttpService : BaseHttpService<RoleDataInfo>
     /// <returns></returns>
     public async Task<List<string>> GetBelongDeptsByUserAsync(int userId)
     {
-        return (await _roleDataHttpService.GetBelongDeptsByUserAsync(userId)).Data;
+        return (await _roleDataHttpService.GetBelongDeptsByUserAsync(userId)).Handling();
     }
 
 
@@ -40,7 +40,7 @@ public class RoleDataHttpService : BaseHttpService<RoleDataInfo>
     /// <returns></returns>
     public async Task<List<RoleDataInfo>> FindByUserAsync(int userId)
     {
-        return (await _roleDataHttpService.FindByUserAsync(userId)).Data;
+        return (await _roleDataHttpService.FindByUserAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class RoleDataHttpService : BaseHttpService<RoleDataInfo>
     /// <returns></returns>
     public async Task<RoleDataInfo> FindByRoleIdAsync(int roleId)
     {
-        return (await _roleDataHttpService.FindByRoleIdAsync(roleId)).Data;
+        return (await _roleDataHttpService.FindByRoleIdAsync(roleId)).Handling();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class RoleDataHttpService : BaseHttpService<RoleDataInfo>
     /// <returns></returns>
     public async Task<bool> UpdateRoleDataAsync(int roleId, string belongCompanys, string belongDepts)
     {
-        return (await _roleDataHttpService.UpdateRoleDataAsync(roleId, belongCompanys, belongDepts)).Data;
+        return (await _roleDataHttpService.UpdateRoleDataAsync(roleId, belongCompanys, belongDepts)).Handling();
     }
 
     /// <summary>
@@ -72,6 +72,6 @@ public class RoleDataHttpService : BaseHttpService<RoleDataInfo>
     /// <returns></returns>
     public async Task<Dictionary<string, string>> GetRoleDataDictAsync(int roleId)
     {
-        return (await _roleDataHttpService.GetRoleDataDictAsync(roleId)).Data;
+        return (await _roleDataHttpService.GetRoleDataDictAsync(roleId)).Handling();
     }
 }

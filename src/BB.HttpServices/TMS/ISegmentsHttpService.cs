@@ -13,9 +13,9 @@ public interface ISegmentsHttpService : IHttpDispatchProxy, IBaseHttpService<Seg
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}segments/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}segments/";
+        // req.BaseAddress = builder.Uri;
     }
 }

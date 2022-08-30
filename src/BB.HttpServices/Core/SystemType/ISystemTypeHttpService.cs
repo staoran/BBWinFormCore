@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.SystemType;
 
@@ -13,7 +12,7 @@ public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<S
     /// <param name="oid">系统OID</param>
     /// <returns></returns>
     [Get("byOid")]
-    Task<RESTfulResult<SystemTypeInfo>> FindByOidAsync(string oid);
+    Task<RESTfulResultControl<SystemTypeInfo>> FindByOidAsync(string oid);
 
     /// <summary>
     /// 验证系统是否被授权注册
@@ -23,7 +22,7 @@ public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<S
     /// <param name="authorizeAmount">授权数量</param>
     /// <returns></returns>
     [Post("verifySystem")]
-    Task<RESTfulResult<bool>> VerifySystemAsync(string serialNumber, string typeId, int authorizeAmount);
+    Task<RESTfulResultControl<bool>> VerifySystemAsync(string serialNumber, string typeId, int authorizeAmount);
 
     /// <summary>
     /// HttpClient 拦截
@@ -32,9 +31,9 @@ public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<S
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}systemType/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}systemType/";
+        // req.BaseAddress = builder.Uri;
     }
 }

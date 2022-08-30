@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.BlackIP;
 
@@ -13,7 +12,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="id">黑名单ID</param>
     /// <returns></returns>
     [Get("userIdList")]
-    Task<RESTfulResult<string>> GetUserIdListAsync(string id);
+    Task<RESTfulResultControl<string>> GetUserIdListAsync(string id);
 
     /// <summary>
     /// 根据名单ID获取对应的用户列表
@@ -21,7 +20,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="id"></param>
     /// <returns></returns>
     [Get("simpleUserByBlackIp")]
-    Task<RESTfulResult<List<SimpleUserInfo>>> GetSimpleUserByBlackIpAsync(string id);
+    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUserByBlackIpAsync(string id);
 
     /// <summary>
     /// 新增黑用户
@@ -48,7 +47,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="type">授权类型</param>
     /// <returns></returns>
     [Get("byUser")]
-    Task<RESTfulResult<List<BlackIpInfo>>> FindByUserAsync(int userId, AuthrizeType type);
+    Task<RESTfulResultControl<List<BlackIpInfo>>> FindByUserAsync(int userId, AuthrizeType type);
 
     /// <summary>
     /// 检验IP的可访问性(白名单优先于黑名单），如果同时白名单、黑名名单都有同一IP，则也允许访问。
@@ -57,7 +56,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="userId"></param>
     /// <returns></returns>
     [Post("validateIpAccess")]
-    Task<RESTfulResult<bool>> ValidateIpAccessAsync(string ipAddress, int userId);
+    Task<RESTfulResultControl<bool>> ValidateIpAccessAsync(string ipAddress, int userId);
 
     /// <summary>
     /// HttpClient 拦截
@@ -66,9 +65,9 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}blackIP/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}blackIP/";
+        // req.BaseAddress = builder.Uri;
     }
 }

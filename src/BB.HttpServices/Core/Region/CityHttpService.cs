@@ -23,7 +23,7 @@ public class CityHttpService : BaseHttpService<CityInfo>
     /// <returns></returns>
     public async Task<List<CityInfo>> GetCitysByProvinceId([Required] string provinceId)
     {
-        return (await _httpService.GetCitysByProvinceId(provinceId)).Data;
+        return (await _httpService.GetCitysByProvinceId(provinceId)).Handling();
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class CityHttpService : BaseHttpService<CityInfo>
     /// <returns></returns>
     public async Task<List<CityInfo>> GetCitysByProvinceNameAsync([Required] string provinceName)
     {
-        return (await _httpService.GetCitysByProvinceNameAsync(provinceName)).Data;
+        return (await _httpService.GetCitysByProvinceNameAsync(provinceName)).Handling();
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class CityHttpService : BaseHttpService<CityInfo>
     /// <returns></returns>
     public async Task<string> GetNameByIdAsync([Required] int id)
     {
-        return (await _httpService.GetNameByIdAsync(id)).Data;
+        return (await _httpService.GetNameByIdAsync(id)).Handling();
     }
 
 
@@ -54,6 +54,6 @@ public class CityHttpService : BaseHttpService<CityInfo>
     /// <returns></returns>
     public async Task<string> GetIdByNameAsync([Required] string name)
     {
-        return (await _httpService.GetIdByNameAsync(name)).Data;
+        return (await _httpService.GetIdByNameAsync(name)).Handling();
     }
 }

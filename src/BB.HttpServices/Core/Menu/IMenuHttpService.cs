@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Menu;
 
@@ -11,39 +10,39 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// 获取所有的菜单列表
     /// </summary>
     [Get("allMenu")]
-    Task<RESTfulResult<List<MenuInfo>>> GetAllMenuAsync(string systemType);
+    Task<RESTfulResultControl<List<MenuInfo>>> GetAllMenuAsync(string systemType);
 
     /// <summary>
     /// 获取树形结构的菜单列表
     /// </summary>
     [Get("tree")]
-    Task<RESTfulResult<List<MenuNodeInfo>>> GetTreeAsync(string systemType);
+    Task<RESTfulResultControl<List<MenuNodeInfo>>> GetTreeAsync(string systemType);
 
     /// <summary>
     /// 获取所有的菜单列表
     /// </summary>
     [Get("allTree")]
-    Task<RESTfulResult<List<MenuInfo>>> GetAllTreeAsync(string systemType);
+    Task<RESTfulResultControl<List<MenuInfo>>> GetAllTreeAsync(string systemType);
 
     /// <summary>
     /// 获取第一级的菜单列表
     /// </summary>
     [Get("topMenu")]
-    Task<RESTfulResult<List<MenuInfo>>> GetTopMenuAsync(string systemType);
+    Task<RESTfulResultControl<List<MenuInfo>>> GetTopMenuAsync(string systemType);
 
     /// <summary>
     /// 获取指定菜单下面的树形列表
     /// </summary>
     /// <param name="mainMenuId">指定菜单ID</param>
     [Get("treeById")]
-    Task<RESTfulResult<List<MenuNodeInfo>>> GetTreeByIdAsync(string mainMenuId);
+    Task<RESTfulResultControl<List<MenuNodeInfo>>> GetTreeByIdAsync(string mainMenuId);
 
     /// <summary>
     /// 根据指定的父ID获取其下面一级（仅限一级）的菜单列表
     /// </summary>
     /// <param name="pid">菜单父ID</param>
     [Get("menuById")]
-    Task<RESTfulResult<List<MenuInfo>>> GetMenuByIdAsync(string pid);
+    Task<RESTfulResultControl<List<MenuInfo>>> GetMenuByIdAsync(string pid);
 
     /// <summary>
     /// 快速新增自动生成模块的菜单
@@ -51,7 +50,7 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <param name="name">菜单名</param>
     /// <param name="winFormType">模块地址</param>
     [Post("transferMenu")]
-    Task<RESTfulResult<bool>> AddTransferMenuAsync(string name, string winFormType);
+    Task<RESTfulResultControl<bool>> AddTransferMenuAsync(string name, string winFormType);
 
 
     /*
@@ -66,7 +65,7 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <param name="typeId">系统类型</param>
     /// <returns></returns>
     [Get("menuNodes")]
-    Task<RESTfulResult<List<MenuNodeInfo>>> GetMenuNodesAsync(string roleIDs, string typeId);
+    Task<RESTfulResultControl<List<MenuNodeInfo>>> GetMenuNodesAsync(string roleIDs, string typeId);
 
     /// <summary>
     /// 根据角色ID获取功能集合
@@ -75,7 +74,7 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
     [Get("menusByRole")]
-    Task<RESTfulResult<List<MenuInfo>>> GetMenusByRole(int roleId, string typeId);
+    Task<RESTfulResultControl<List<MenuInfo>>> GetMenusByRole(int roleId, string typeId);
 
     /// <summary>
     /// 根据用户ID，获取对应的菜单列表
@@ -84,7 +83,7 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
     [Get("menuNodesByUser")]
-    Task<RESTfulResult<List<MenuNodeInfo>>> GetMenuNodesByUser(int userId, string typeId);
+    Task<RESTfulResultControl<List<MenuNodeInfo>>> GetMenuNodesByUser(int userId, string typeId);
 
     /// <summary>
     /// HttpClient 拦截
@@ -93,9 +92,9 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}menu/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}menu/";
+        // req.BaseAddress = builder.Uri;
     }
 }

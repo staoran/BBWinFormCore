@@ -20,7 +20,7 @@ public class OURoleHttpService : BaseHttpService<OURoleEntity>
     /// <returns></returns>
     public async Task<bool> EditRoleOUsAsync(int roleId, List<string> newOuList)
     {
-	    return (await _ouRoleHttpService.EditRoleOUsAsync(roleId, newOuList)).Data;
+	    return (await _ouRoleHttpService.EditRoleOUsAsync(roleId, newOuList)).Handling();
     }
 
 	/// <summary>
@@ -30,7 +30,7 @@ public class OURoleHttpService : BaseHttpService<OURoleEntity>
 	/// <returns></returns>
 	public async Task<List<RoleInfo>> GetRolesByOuAsync(string ouId)
 	{
-		return (await _ouRoleHttpService.GetRolesByOuAsync(ouId)).Data;
+		return (await _ouRoleHttpService.GetRolesByOuAsync(ouId)).Handling();
 	}
 
 	/// <summary>
@@ -61,6 +61,6 @@ public class OURoleHttpService : BaseHttpService<OURoleEntity>
 	/// <returns></returns>
 	public async Task<bool> OuInRoleAsync(string ouId, int roleId)
 	{
-		return (await _ouRoleHttpService.OuInRoleAsync(ouId, roleId)).Data;
+		return (await _ouRoleHttpService.OuInRoleAsync(ouId, roleId)).Handling();
 	}
 }

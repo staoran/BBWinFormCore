@@ -33,7 +33,7 @@ public class LoginLogHttpService : BaseHttpService<LoginLogInfo>
     /// <returns></returns>
     public async Task<List<LoginLogInfo>> GetListAsync(DateTime lastUpdated)
     {
-        return (await _loginLogHttpService.GetListAsync(lastUpdated)).Data;
+        return (await _loginLogHttpService.GetListAsync(lastUpdated)).Handling();
     }
 
     /// <summary>
@@ -60,6 +60,6 @@ public class LoginLogHttpService : BaseHttpService<LoginLogInfo>
     /// <returns></returns>
     public async Task<LoginLogInfo> GetLastLoginInfoAsync(string userId)
     {
-        return (await _loginLogHttpService.GetLastLoginInfoAsync(userId)).Data;
+        return (await _loginLogHttpService.GetLastLoginInfoAsync(userId)).Handling();
     }
 }

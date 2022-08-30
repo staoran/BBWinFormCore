@@ -21,7 +21,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> BatchExpireAsync(List<int> idList, bool expired)
     {
-        return (await _userHttpService.BatchExpireAsync(idList, expired)).Data;
+        return (await _userHttpService.BatchExpireAsync(idList, expired)).Handling();
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> GetSimpleUsersAsync()
     {
-        return (await _userHttpService.GetSimpleUsersAsync()).Data;
+        return (await _userHttpService.GetSimpleUsersAsync()).Handling();
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> GetSimpleUsersAsync(string userIds)
     {
-        return (await _userHttpService.GetSimpleUsersAsync(userIds)).Data;
+        return (await _userHttpService.GetSimpleUsersAsync(userIds)).Handling();
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<List<UserInfo>> FindByDeptAsync(string ouId)
     {
-        return (await _userHttpService.FindByDeptAsync(ouId)).Data;
+        return (await _userHttpService.FindByDeptAsync(ouId)).Handling();
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<List<UserInfo>> FindByCompanyAsync(string companyId)
     {
-        return (await _userHttpService.FindByCompanyAsync(companyId)).Data;
+        return (await _userHttpService.FindByCompanyAsync(companyId)).Handling();
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> FindSimpleUsersByCompanyAsync(string companyId)
     {
-        return (await _userHttpService.FindSimpleUsersByCompanyAsync(companyId)).Data;
+        return (await _userHttpService.FindSimpleUsersByCompanyAsync(companyId)).Handling();
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> FindSimpleUsersByDeptAsync(string ouId)
     {
-        return (await _userHttpService.FindSimpleUsersByDeptAsync(ouId)).Data;
+        return (await _userHttpService.FindSimpleUsersByDeptAsync(ouId)).Handling();
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<UserInfo> GetUserByNameAsync(string userName)
     {
-        return (await _userHttpService.GetUserByNameAsync(userName)).Data;
+        return (await _userHttpService.GetUserByNameAsync(userName)).Handling();
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<string> GetNameByIdAsync(int userId)
     {
-        return (await _userHttpService.GetNameByIdAsync(userId)).Data;
+        return (await _userHttpService.GetNameByIdAsync(userId)).Handling();
     }
 
 
@@ -130,7 +130,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<string> GetFullNameByOpenIdAsync(string userId)
     {
-        return (await _userHttpService.GetFullNameByOpenIdAsync(userId)).Data;
+        return (await _userHttpService.GetFullNameByOpenIdAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<string> GetFullNameByIdAsync(int userId)
     {
-        return (await _userHttpService.GetFullNameByIdAsync(userId)).Data;
+        return (await _userHttpService.GetFullNameByIdAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<string> GetFullNameByNameAsync(string userName)
     {
-        return (await _userHttpService.GetFullNameByNameAsync(userName)).Data;
+        return (await _userHttpService.GetFullNameByNameAsync(userName)).Handling();
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> ModifyPasswordAsync(string userName, string userPassword)
     {
-        return (await _userHttpService.ModifyPasswordAsync(userName, userPassword)).Data;
+        return (await _userHttpService.ModifyPasswordAsync(userName, userPassword)).Handling();
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> ResetPasswordAsync(int changeUserId)
     {
-        return (await _userHttpService.ResetPasswordAsync(changeUserId)).Data;
+        return (await _userHttpService.ResetPasswordAsync(changeUserId)).Handling();
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> UpdateUserLoginDataAsync(int id, string ip, string macAddr)
     {
-        return (await _userHttpService.UpdateUserLoginDataAsync(id, ip, macAddr)).Data;
+        return (await _userHttpService.UpdateUserLoginDataAsync(id, ip, macAddr)).Handling();
     }
 
     /// <summary>
@@ -193,7 +193,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<byte[]> GetPersonImageBytesAsync(UserImageType imagetype, int userId)
     {
-        return (await _userHttpService.GetPersonImageBytesAsync(imagetype, userId)).Data;
+        return (await _userHttpService.GetPersonImageBytesAsync(imagetype, userId)).Handling();
     }
 
     /// <summary>
@@ -205,7 +205,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> UpdatePersonImageBytesAsync(UserImageType imagetype, int userId, byte[] imageBytes)
     {
-        return (await _userHttpService.UpdatePersonImageBytesAsync(imagetype, userId, imageBytes)).Data;
+        return (await _userHttpService.UpdatePersonImageBytesAsync(imagetype, userId, imageBytes)).Handling();
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> SetDeletedFlagAsync(object id, bool deleted = true)
     {
-        return (await _userHttpService.SetDeletedFlagAsync(id, deleted)).Data;
+        return (await _userHttpService.SetDeletedFlagAsync(id, deleted)).Handling();
     }
 
     /// <summary>
@@ -238,7 +238,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<UserInfo> FindByOpenIdAsync(string openid)
     {
-        return (await _userHttpService.FindByOpenIdAsync(openid)).Data;
+        return (await _userHttpService.FindByOpenIdAsync(openid)).Handling();
     }
 
     /// <summary>
@@ -248,7 +248,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<UserInfo> FindByUnionIdAsync(string unionId)
     {
-        return (await _userHttpService.FindByUnionIdAsync(unionId)).Data;
+        return (await _userHttpService.FindByUnionIdAsync(unionId)).Handling();
     }
 
     /// <summary>
@@ -258,7 +258,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<UserInfo> FindByCorpUserIdAsync(string openid)
     {
-        return (await _userHttpService.FindByCorpUserIdAsync(openid)).Data;
+        return (await _userHttpService.FindByCorpUserIdAsync(openid)).Handling();
     }
 
     /// <summary>
@@ -268,7 +268,7 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> IsExistOpenIdAsync(string openid)
     {
-        return (await _userHttpService.IsExistOpenIdAsync(openid)).Data;
+        return (await _userHttpService.IsExistOpenIdAsync(openid)).Handling();
     }
 
     /// <summary>
@@ -278,6 +278,6 @@ public class UserHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<bool> CancelBindWechatAsync(int id)
     {
-        return (await _userHttpService.CancelBindWechatAsync(id)).Data;
+        return (await _userHttpService.CancelBindWechatAsync(id)).Handling();
     }
 }

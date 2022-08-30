@@ -19,7 +19,7 @@ public class OUUserHttpService : BaseHttpService<OUUserEntity>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> GetSimpleUsersByOuAsync(string ouId)
     {
-        return (await _ouUserHttpService.GetSimpleUsersByOuAsync(ouId)).Data;
+        return (await _ouUserHttpService.GetSimpleUsersByOuAsync(ouId)).Handling();
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class OUUserHttpService : BaseHttpService<OUUserEntity>
     /// <returns></returns>
     public async Task<List<UserInfo>> GetUsersByOuAsync(string ouId)
     {
-        return (await _ouUserHttpService.GetUsersByOuAsync(ouId)).Data;
+        return (await _ouUserHttpService.GetUsersByOuAsync(ouId)).Handling();
     }
 
     /// <summary>

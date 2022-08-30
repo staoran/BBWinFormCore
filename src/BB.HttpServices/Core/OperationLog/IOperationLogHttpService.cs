@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OperationLog;
 
@@ -17,7 +16,7 @@ public interface IOperationLogHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="note">操作详细表述</param>
     /// <returns></returns>
     [Post("onOperationLog")]
-    Task<RESTfulResult<bool>> OnOperationLog(string userId, string tableName, string operationType, string note);
+    Task<RESTfulResultControl<bool>> OnOperationLog(string userId, string tableName, string operationType, string note);
 
     /// <summary>
     /// HttpClient 拦截
@@ -26,9 +25,9 @@ public interface IOperationLogHttpService : IHttpDispatchProxy, IBaseHttpService
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}operationLog/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}operationLog/";
+        // req.BaseAddress = builder.Uri;
     }
 }

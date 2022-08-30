@@ -21,7 +21,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetTopGroupAsync()
     {
-        return (await _ouHttpService.GetTopGroupAsync()).Data;
+        return (await _ouHttpService.GetTopGroupAsync()).Handling();
     }
                
     /// <summary>
@@ -31,7 +31,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetMyTopGroupAsync()
     {
-        return (await _ouHttpService.GetMyTopGroupAsync()).Data;
+        return (await _ouHttpService.GetMyTopGroupAsync()).Handling();
     }
         
     /// <summary>
@@ -40,7 +40,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetAllCompanyAsync(string groupId)
     {
-        return (await _ouHttpService.GetAllCompanyAsync(groupId)).Data;
+        return (await _ouHttpService.GetAllCompanyAsync(groupId)).Handling();
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetGroupCompanyAsync()
     {
-        return (await _ouHttpService.GetGroupCompanyAsync()).Data;
+        return (await _ouHttpService.GetGroupCompanyAsync()).Handling();
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUNodeInfo>> GetGroupCompanyTreeAsync()
     {
-        return (await _ouHttpService.GetGroupCompanyTreeAsync()).Data;
+        return (await _ouHttpService.GetGroupCompanyTreeAsync()).Handling();
     }
         
     /// <summary>
@@ -69,7 +69,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<bool> EditOuUsersAsync(string ouId, List<int> newUserList)
     {
-        return (await _ouHttpService.EditOuUsersAsync(ouId, newUserList)).Data;
+        return (await _ouHttpService.EditOuUsersAsync(ouId, newUserList)).Handling();
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetOUsByRoleAsync(int roleId)
     {
-        return (await _ouHttpService.GetOUsByRoleAsync(roleId)).Data;
+        return (await _ouHttpService.GetOUsByRoleAsync(roleId)).Handling();
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetOUsByUserAsync(int userId)
     {
-        return (await _ouHttpService.GetOUsByUserAsync(userId)).Data;
+        return (await _ouHttpService.GetOUsByUserAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetOusByCompanyAsync(string companyId)
     {
-        return (await _ouHttpService.GetOusByCompanyAsync(companyId)).Data;
+        return (await _ouHttpService.GetOusByCompanyAsync(companyId)).Handling();
     }
                         
     /// <summary>
@@ -119,7 +119,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<List<OUInfo>> GetAllOUsByParentAsync(string parentId)
     {
-        return (await _ouHttpService.GetAllOUsByParentAsync(parentId)).Data;
+        return (await _ouHttpService.GetAllOUsByParentAsync(parentId)).Handling();
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// </summary>
     public async Task<List<OUNodeInfo>> GetTreeAsync()
     {
-        return (await _ouHttpService.GetTreeAsync()).Data;
+        return (await _ouHttpService.GetTreeAsync()).Handling();
     }
 
     /// <summary>
@@ -136,7 +136,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <param name="mainOuid">指定机构ID</param>
     public async Task<List<OUNodeInfo>> GetTreeByIdAsync(string mainOuid)
     {
-        return (await _ouHttpService.GetTreeByIdAsync(mainOuid)).Data;
+        return (await _ouHttpService.GetTreeByIdAsync(mainOuid)).Handling();
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<string> GetNameAsync(string id)
     {
-        return (await _ouHttpService.GetNameAsync(id)).Data;
+        return (await _ouHttpService.GetNameAsync(id)).Handling();
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<OUInfo> FindByNameAsync(string name)
     {
-        return (await _ouHttpService.FindByNameAsync(name)).Data;
+        return (await _ouHttpService.FindByNameAsync(name)).Handling();
     }
                         
     /// <summary>
@@ -167,6 +167,6 @@ public class OUHttpService : BaseHttpService<OUInfo>
     /// <returns></returns>
     public async Task<bool> SetDeletedFlagAsync(object id, bool deleted = true)
     {
-        return (await _ouHttpService.SetDeletedFlagAsync(id, deleted)).Data;
+        return (await _ouHttpService.SetDeletedFlagAsync(id, deleted)).Handling();
     }
 }

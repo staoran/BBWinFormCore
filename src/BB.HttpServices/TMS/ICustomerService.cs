@@ -13,9 +13,9 @@ public interface ICustomerHttpService : IHttpDispatchProxy, IBaseHttpService<Cus
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}customer/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}customer/";
+        // req.BaseAddress = builder.Uri;
     }
 }

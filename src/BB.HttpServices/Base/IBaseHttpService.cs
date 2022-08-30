@@ -3,7 +3,6 @@ using System.Data;
 using BB.Tools.Entity;
 using Furion.FriendlyException;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Base;
 
@@ -15,7 +14,7 @@ public interface IBaseHttpService<T>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行操作是否成功。</returns>
     [Post("")]
-    Task<RESTfulResult<bool>> InsertAsync([Body] T obj);
+    Task<RESTfulResultControl<bool>> InsertAsync([Body] T obj);
 
     /// <summary>
     /// 插入指定对象集合到数据库中
@@ -23,7 +22,7 @@ public interface IBaseHttpService<T>
     /// <param name="list">指定的对象集合</param>
     /// <returns>执行操作是否成功。</returns>
     [Put("insertRange")]
-    Task<RESTfulResult<bool>> InsertRangeAsync([Body] List<T> list);
+    Task<RESTfulResultControl<bool>> InsertRangeAsync([Body] List<T> list);
 
     /// <summary>
     /// 更新对象属性到数据库中
@@ -31,7 +30,7 @@ public interface IBaseHttpService<T>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     [Put("")]
-    Task<RESTfulResult<bool>> UpdateAsync([Body]T obj);
+    Task<RESTfulResultControl<bool>> UpdateAsync([Body]T obj);
 
     /// <summary>
     /// 更新对象属性到数据库中
@@ -39,7 +38,7 @@ public interface IBaseHttpService<T>
     /// <param name="recordField">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     [Put("updateFields")]
-    Task<RESTfulResult<bool>> UpdateFieldsAsync(Hashtable recordField);
+    Task<RESTfulResultControl<bool>> UpdateFieldsAsync(Hashtable recordField);
 
     /// <summary>
     /// 插入或更新对象属性到数据库中
@@ -47,7 +46,7 @@ public interface IBaseHttpService<T>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     [Post("insertUpdate")]
-    Task<RESTfulResult<bool>> InsertUpdateAsync([Body] T obj);
+    Task<RESTfulResultControl<bool>> InsertUpdateAsync([Body] T obj);
 
     /// <summary>
     /// 如果不存在记录，则插入对象属性到数据库中
@@ -55,7 +54,7 @@ public interface IBaseHttpService<T>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行插入成功返回<c>true</c>，否则为<c>false</c>。</returns>
     [Post("insertIfNew")]
-    Task<RESTfulResult<bool>> InsertIfNewAsync([Body] T obj);
+    Task<RESTfulResultControl<bool>> InsertIfNewAsync([Body] T obj);
 
     /// <summary>
     /// 查询数据库,检查是否存在指定ID的对象
@@ -63,7 +62,7 @@ public interface IBaseHttpService<T>
     /// <param name="key">对象的ID值</param>
     /// <returns>存在则返回指定的对象,否则返回Null</returns>
     [Get("findById")]
-    Task<RESTfulResult<T>> FindByIdAsync(object key);
+    Task<RESTfulResultControl<T>> FindByIdAsync(object key);
 
     /// <summary>
     /// 通过外键获取表数据
@@ -72,7 +71,7 @@ public interface IBaseHttpService<T>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
     [Get("findByForeignKey")]
-    Task<RESTfulResult<List<T>>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null);
+    Task<RESTfulResultControl<List<T>>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null);
 
     /// <summary>
     /// 通过外键获取表ID
@@ -81,7 +80,7 @@ public interface IBaseHttpService<T>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
     [Get("findIdByForeignKey")]
-    Task<RESTfulResult<List<string>>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null);
+    Task<RESTfulResultControl<List<string>>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null);
 
     /// <summary>
     /// 根据多个主键获取对象列表
@@ -89,7 +88,7 @@ public interface IBaseHttpService<T>
     /// <param name="ids">主键数组</param>
     /// <returns>符合条件的对象列表</returns>
     [Get("findByIDs")]
-    Task<RESTfulResult<List<T>>> FindByIDsAsync(object[] ids);
+    Task<RESTfulResultControl<List<T>>> FindByIDsAsync(object[] ids);
 
     /// <summary>
     /// 根据条件查询数据库,并返回对象集合
@@ -97,7 +96,7 @@ public interface IBaseHttpService<T>
     /// <param name="searchInfos">查询的条件</param>
     /// <returns>指定对象的集合</returns>
     [Post("find")]
-    Task<RESTfulResult<List<T>>> FindAsync(Dictionary<string, string> searchInfos);
+    Task<RESTfulResultControl<List<T>>> FindAsync(Dictionary<string, string> searchInfos);
 
     /// <summary>
     /// 返回当前模块所有数据
@@ -105,7 +104,7 @@ public interface IBaseHttpService<T>
     /// <param name="orderBy">自定义排序语句，如 Name Desc；如不指定，则使用默认排</param>
     /// <returns>指定对象的集合</returns>
     [Get("all")]
-    Task<RESTfulResult<List<T>>> GetAllAsync(string orderBy = "");
+    Task<RESTfulResultControl<List<T>>> GetAllAsync(string orderBy = "");
 
     /// <summary>
     /// 返回数据库所有的对象集合(用于分页数据显示)
@@ -113,7 +112,7 @@ public interface IBaseHttpService<T>
     /// <param name="info">分页实体信息</param>
     /// <returns>指定对象的集合</returns>
     [Get("allByPage")]
-    Task<RESTfulResult<PageResult<T>>> GetAllAsync(PageInput info);
+    Task<RESTfulResultControl<PageResult<T>>> GetAllAsync(PageInput info);
 
     /// <summary>
     /// 查询数据库,检查是否存在指定键值的对象
@@ -122,7 +121,7 @@ public interface IBaseHttpService<T>
     /// <param name="key">指定的值</param>
     /// <returns>存在则返回<c>true</c>，否则为<c>false</c>。</returns>
     [Post("isExistKey")]
-    Task<RESTfulResult<bool>> IsExistKeyAsync(string fieldName, object key);
+    Task<RESTfulResultControl<bool>> IsExistKeyAsync(string fieldName, object key);
 
     /// <summary>
     /// 根据主键和字段名称，获取对应字段的内容
@@ -131,7 +130,7 @@ public interface IBaseHttpService<T>
     /// <param name="fieldName">字段名称</param>
     /// <returns></returns>
     [Get("fieldValue")]
-    Task<RESTfulResult<string>> GetFieldValueAsync(object key, string fieldName);
+    Task<RESTfulResultControl<string>> GetFieldValueAsync(object key, string fieldName);
 
     /// <summary>
     /// 根据主键和字段名称，获取对应字段的内容
@@ -140,7 +139,7 @@ public interface IBaseHttpService<T>
     /// <param name="fieldNameList">字段名称列表</param>
     /// <returns></returns>
     [Get("fieldValueList")]
-    Task<RESTfulResult<Dictionary<string, string>>> GetFieldValueListAsync(string key, List<string> fieldNameList);
+    Task<RESTfulResultControl<Dictionary<string, string>>> GetFieldValueListAsync(string key, List<string> fieldNameList);
 
     /// <summary>
     /// 获取字段列表
@@ -148,7 +147,7 @@ public interface IBaseHttpService<T>
     /// <param name="fieldName">字段名称</param>
     /// <returns></returns>
     [Get("fieldList")]
-    Task<RESTfulResult<List<string>>> GetFieldListAsync(string fieldName);
+    Task<RESTfulResultControl<List<string>>> GetFieldListAsync(string fieldName);
 
     /// <summary>
     /// 根据指定对象的ID,从数据库中删除指定对象
@@ -156,7 +155,7 @@ public interface IBaseHttpService<T>
     /// <param name="key">指定对象的ID</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     [Delete("")]
-    Task<RESTfulResult<bool>> DeleteAsync(object key);
+    Task<RESTfulResultControl<bool>> DeleteAsync(object key);
 
     /// <summary>
     /// 根据指定对象的ID,从数据库中删除指定对象
@@ -164,7 +163,7 @@ public interface IBaseHttpService<T>
     /// <param name="key">指定对象的ID</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     [Delete("deleteByIds")]
-    Task<RESTfulResult<bool>> DeleteByIdsAsync(object[] key);
+    Task<RESTfulResultControl<bool>> DeleteByIdsAsync(object[] key);
 
     /// <summary>
     /// 根据条件获取分页实体数据
@@ -172,7 +171,7 @@ public interface IBaseHttpService<T>
     /// <param name="searchInfos">分页搜索条件</param>
     /// <returns></returns>
     [Post("getEntitiesByPage")]
-    Task<RESTfulResult<PageResult<T>>> GetEntitiesByPageAsync(PaginatedSearchInfos searchInfos);
+    Task<RESTfulResultControl<PageResult<T>>> GetEntitiesByPageAsync(PaginatedSearchInfos searchInfos);
 
     /// <summary>
     /// 通用审批
@@ -180,14 +179,14 @@ public interface IBaseHttpService<T>
     /// <param name="key">主键</param>
     /// <returns></returns>
     [Post("approve")]
-    Task<RESTfulResult<bool>> ApproveAsync(object key);
+    Task<RESTfulResultControl<bool>> ApproveAsync(object key);
 
     /// <summary>
     /// 初始化一个实体
     /// </summary>
     /// <returns></returns>
     [Get("newEntity")]
-    Task<RESTfulResult<T>> NewEntityAsync();
+    Task<RESTfulResultControl<T>> NewEntityAsync();
 
     /// <summary>
     /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
@@ -195,28 +194,28 @@ public interface IBaseHttpService<T>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
     [Get("permitDict")]
-    Task<RESTfulResult<Dictionary<string, int>>> GetPermitDictAsync();
+    Task<RESTfulResultControl<Dictionary<string, int>>> GetPermitDictAsync();
 
     /// <summary>
     /// 获取表的字段名称和数据类型列表
     /// </summary>
     /// <returns></returns>
     [Get("fieldTypeList")]
-    Task<RESTfulResult<DataTable>> GetFieldTypeListAsync();
+    Task<RESTfulResultControl<DataTable>> GetFieldTypeListAsync();
 
     /// <summary>
     /// 获取字段中文别名（用于界面显示）的字典集合
     /// </summary>
     /// <returns></returns>
     [Get("columnNameAlias")]
-    Task<RESTfulResult<Dictionary<string, string>>> GetColumnNameAliasAsync();
+    Task<RESTfulResultControl<Dictionary<string, string>>> GetColumnNameAliasAsync();
 
     /// <summary>
     /// 获取列表显示的字段（用于界面显示）
     /// </summary>
     /// <returns></returns>
     [Post("displayColumns")]
-    Task<RESTfulResult<string>> GetDisplayColumnsAsync();
+    Task<RESTfulResultControl<string>> GetDisplayColumnsAsync();
 
     /// <summary>
     /// HttpClient 拦截
@@ -229,6 +228,11 @@ public interface IBaseHttpService<T>
         {
             throw Oops.Oh("请求 Uri 为空");
         }
+        var builder = new UriBuilder(req.BaseAddress!);
+        var path = req.BaseAddress!.AbsolutePath;
+        var name = typeof(T).Name.Replace("Info", string.Empty).Replace("Entity", string.Empty);
+        builder.Path = $"{path}{string.Concat(name.First().ToString().ToLower(), name.AsSpan(1))}/";
+        req.BaseAddress = builder.Uri;
     }
 
     /// <summary>

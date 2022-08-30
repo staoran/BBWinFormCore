@@ -3,7 +3,6 @@ using BB.Entity.Security;
 using BB.HttpServices.Base;
 using BB.HttpServices.Core.Auth.dto;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Auth;
 
@@ -19,7 +18,7 @@ public interface IAuthHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     /// <param name="input">用户登录输入参数</param>
     /// <returns></returns>
     [Post("verifyUser")]
-    Task<RESTfulResult<LoginUserInfo>> VerifyUserAsync([Body] LoginInput input);
+    Task<RESTfulResultControl<LoginUserInfo>> VerifyUserAsync([Body] LoginInput input);
 
     /// <summary>
     /// HttpClient 拦截
@@ -30,7 +29,7 @@ public interface IAuthHttpService : IHttpDispatchProxy, IBaseHttpService<UserInf
     {
         var builder = new UriBuilder(req.BaseAddress!);
         var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}auth/";
+        builder.Path = $"{path.Replace("user", "auth")}";
         req.BaseAddress = builder.Uri;
     }
 }

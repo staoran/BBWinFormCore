@@ -13,9 +13,9 @@ public interface ICostMsgHttpService : IHttpDispatchProxy, IBaseHttpService<Cost
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}costMsg/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}costMsg/";
+        // req.BaseAddress = builder.Uri;
     }
 }

@@ -23,7 +23,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns></returns>
     public async Task<List<DictDataInfo>> FindByTypeIdAsync(string dictTypeId)
     {
-        return (await _httpService.FindByTypeIdAsync(dictTypeId)).Data;
+        return (await _httpService.FindByTypeIdAsync(dictTypeId)).Handling();
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns></returns>
     public async Task<List<DictDataInfo>> FindByDictTypeAsync(string dictTypeName)
     {
-        return (await _httpService.FindByDictTypeAsync(dictTypeName)).Data;
+        return (await _httpService.FindByDictTypeAsync(dictTypeName)).Handling();
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns></returns>
     public async Task<List<DictDataInfo>> FindByDictCodeAsync(string dictCode)
     {
-        return (await _httpService.FindByDictCodeAsync(dictCode)).Data;
+        return (await _httpService.FindByDictCodeAsync(dictCode)).Handling();
     }
         
     /// <summary>
@@ -52,7 +52,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns></returns>
     public async Task<Dictionary<string, string>> GetAllDictAsync()
     {
-        return (await _httpService.GetAllDictAsync()).Data;
+        return (await _httpService.GetAllDictAsync()).Handling();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns></returns>
     public async Task<Dictionary<string, string>> GetDictByTypeIdAsync(string dictTypeId)
     {
-        return (await _httpService.GetDictByTypeIdAsync(dictTypeId)).Data;
+        return (await _httpService.GetDictByTypeIdAsync(dictTypeId)).Handling();
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns></returns>
     public async Task<Dictionary<string, string>> GetDictByDictTypeAsync(string dictTypeName)
     {
-        return (await _httpService.GetDictByDictTypeAsync(dictTypeName)).Data;
+        return (await _httpService.GetDictByDictTypeAsync(dictTypeName)).Handling();
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns></returns>
     public async Task<List<CListItem>> GetDictListItemByDictTypeAsync(string dictTypeName)
     {
-        return (await _httpService.GetDictListItemByDictTypeAsync(dictTypeName)).Data;
+        return (await _httpService.GetDictListItemByDictTypeAsync(dictTypeName)).Handling();
     }
                 
     /// <summary>
@@ -93,6 +93,6 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// <returns>字典对应的名称</returns>
     public async Task<string> GetDictNameAsync(string dictTypeName, string dictValue)
     {
-        return (await _httpService.GetDictNameAsync(dictTypeName, dictValue)).Data;
+        return (await _httpService.GetDictNameAsync(dictTypeName, dictValue)).Handling();
     }
 }

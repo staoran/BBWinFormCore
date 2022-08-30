@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.Role;
 
@@ -13,7 +12,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="companyId">公司ID（机构ID）</param>
 	/// <returns></returns>
 	[Get("rolesByCompany")]
-	Task<RESTfulResult<List<RoleInfo>>> GetRolesByCompanyAsync(string companyId);
+	Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByCompanyAsync(string companyId);
 
 	/// <summary>
 	/// 根据角色名称查找角色对象
@@ -22,7 +21,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="companyId">公司ID</param>
 	/// <returns></returns>
 	[Get("roleByName")]
-	Task<RESTfulResult<RoleInfo>> GetRoleByNameAsync(string roleName, string companyId = null);
+	Task<RESTfulResultControl<RoleInfo>> GetRoleByNameAsync(string roleName, string companyId = null);
 
 	/// <summary>
 	/// 设置删除标志
@@ -31,7 +30,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="deleted">是否删除</param>
 	/// <returns></returns>
 	[Post("setDeletedFlag")]
-	Task<RESTfulResult<bool>> SetDeletedFlagAsync(object id, bool deleted = true);
+	Task<RESTfulResultControl<bool>> SetDeletedFlagAsync(object id, bool deleted = true);
 
 
 	/// <summary>
@@ -58,7 +57,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="systemType">系统类型</param>
 	/// <returns></returns>
 	[Post("editRoleMenus")]
-	Task<RESTfulResult<bool>> EditRoleMenusAsync(int roleId, List<string> newList, string systemType);
+	Task<RESTfulResultControl<bool>> EditRoleMenusAsync(int roleId, List<string> newList, string systemType);
 
     /// <summary>
     /// HttpClient 拦截
@@ -67,9 +66,9 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}role/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}role/";
+        // req.BaseAddress = builder.Uri;
     }
 }

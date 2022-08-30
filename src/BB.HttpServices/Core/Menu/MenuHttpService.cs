@@ -17,7 +17,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// </summary>
     public async Task<List<MenuInfo>> GetAllMenuAsync(string systemType)
     {
-        return (await _menuHttpService.GetAllMenuAsync(systemType)).Data;
+        return (await _menuHttpService.GetAllMenuAsync(systemType)).Handling();
     }
                 
     /// <summary>
@@ -25,7 +25,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// </summary>
     public async Task<List<MenuNodeInfo>> GetTreeAsync(string systemType)
     {
-        return (await _menuHttpService.GetTreeAsync(systemType)).Data;
+        return (await _menuHttpService.GetTreeAsync(systemType)).Handling();
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// </summary>
     public async Task<List<MenuInfo>> GetAllTreeAsync(string systemType)
     {
-        return (await _menuHttpService.GetAllTreeAsync(systemType)).Data;
+        return (await _menuHttpService.GetAllTreeAsync(systemType)).Handling();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// </summary>
     public async Task<List<MenuInfo>> GetTopMenuAsync(string systemType)
     {
-        return (await _menuHttpService.GetTopMenuAsync(systemType)).Data;
+        return (await _menuHttpService.GetTopMenuAsync(systemType)).Handling();
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// <param name="mainMenuId">指定菜单ID</param>
     public async Task<List<MenuNodeInfo>> GetTreeByIdAsync(string mainMenuId)
     {
-        return (await _menuHttpService.GetTreeByIdAsync(mainMenuId)).Data;
+        return (await _menuHttpService.GetTreeByIdAsync(mainMenuId)).Handling();
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// <param name="pid">菜单父ID</param>
     public async Task<List<MenuInfo>> GetMenuByIdAsync(string pid)
     {
-        return (await _menuHttpService.GetMenuByIdAsync(pid)).Data;
+        return (await _menuHttpService.GetMenuByIdAsync(pid)).Handling();
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// <param name="winFormType">模块地址</param>
     public async Task<bool> AddTransferMenuAsync(string name, string winFormType)
     {
-        return (await _menuHttpService.AddTransferMenuAsync(name, winFormType)).Data;
+        return (await _menuHttpService.AddTransferMenuAsync(name, winFormType)).Handling();
     }
 
 
@@ -86,7 +86,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// <returns></returns>
     public async Task<List<MenuNodeInfo>> GetMenuNodesAsync(string roleIDs, string typeId)
     {
-        return (await _menuHttpService.GetMenuNodesAsync(roleIDs, typeId)).Data;
+        return (await _menuHttpService.GetMenuNodesAsync(roleIDs, typeId)).Handling();
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// <returns></returns>
     public async Task<List<MenuInfo>> GetMenusByRole(int roleId, string typeId)
     {
-        return (await _menuHttpService.GetMenusByRole(roleId, typeId)).Data;
+        return (await _menuHttpService.GetMenusByRole(roleId, typeId)).Handling();
     }
 
     /// <summary>
@@ -108,6 +108,6 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// <returns></returns>
     public async Task<List<MenuNodeInfo>> GetMenuNodesByUser(int userId, string typeId)
     {
-        return (await _menuHttpService.GetMenuNodesByUser(userId, typeId)).Data;
+        return (await _menuHttpService.GetMenuNodesByUser(userId, typeId)).Handling();
     }
 }

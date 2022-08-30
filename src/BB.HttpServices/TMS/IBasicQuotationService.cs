@@ -13,9 +13,9 @@ public interface IBasicQuotationHttpService : IHttpDispatchProxy, IBaseHttpServi
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}basicQuotation/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}basicQuotation/";
+        // req.BaseAddress = builder.Uri;
     }
 }

@@ -21,7 +21,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行操作是否成功。</returns>
     public async Task<bool> InsertAsync(T obj)
     {
-        return (await _baseHttpService.InsertAsync(obj)).Data;
+        return (await _baseHttpService.InsertAsync(obj)).Handling();
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行操作是否成功。</returns>
     public async Task<bool> InsertRangeAsync(List<T> list)
     {
-        return (await _baseHttpService.InsertRangeAsync(list)).Data;
+        return (await _baseHttpService.InsertRangeAsync(list)).Handling();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public async Task<bool> UpdateAsync(T obj)
     {
-        return (await _baseHttpService.UpdateAsync(obj)).Data;
+        return (await _baseHttpService.UpdateAsync(obj)).Handling();
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public async Task<bool> UpdateFieldsAsync(Hashtable recordField)
     {
-        return (await _baseHttpService.UpdateFieldsAsync(recordField)).Data;
+        return (await _baseHttpService.UpdateFieldsAsync(recordField)).Handling();
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public async Task<bool> InsertUpdateAsync(T obj)
     {
-        return (await _baseHttpService.InsertUpdateAsync(obj)).Data;
+        return (await _baseHttpService.InsertUpdateAsync(obj)).Handling();
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行插入成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public async Task<bool> InsertIfNewAsync(T obj)
     {
-        return (await _baseHttpService.InsertIfNewAsync(obj)).Data;
+        return (await _baseHttpService.InsertIfNewAsync(obj)).Handling();
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>存在则返回指定的对象,否则返回Null</returns>
     public async Task<T> FindByIdAsync(object key)
     {
-        return (await _baseHttpService.FindByIdAsync(key)).Data;
+        return (await _baseHttpService.FindByIdAsync(key)).Handling();
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>数据列表</returns>
     public async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
     {
-        return (await _baseHttpService.FindByForeignKeyAsync(foreignKeyId, foreignKeyName)).Data;
+        return (await _baseHttpService.FindByForeignKeyAsync(foreignKeyId, foreignKeyName)).Handling();
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>ID列表</returns>
     public async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
     {
-        return (await _baseHttpService.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName)).Data;
+        return (await _baseHttpService.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName)).Handling();
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>符合条件的对象列表</returns>
     public async Task<List<T>> FindByIDsAsync(object[] ids)
     {
-        return (await _baseHttpService.FindByIDsAsync(ids)).Data;
+        return (await _baseHttpService.FindByIDsAsync(ids)).Handling();
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>指定对象的集合</returns>
     public async Task<List<T>> FindAsync(Dictionary<string, string> searchInfos)
     {
-        return (await _baseHttpService.FindAsync(searchInfos)).Data;
+        return (await _baseHttpService.FindAsync(searchInfos)).Handling();
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>指定对象的集合</returns>
     public async Task<List<T>> GetAllAsync(string orderBy = "")
     {
-        return (await _baseHttpService.GetAllAsync(orderBy)).Data;
+        return (await _baseHttpService.GetAllAsync(orderBy)).Handling();
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>指定对象的集合</returns>
     public async Task<PageResult<T>> GetAllAsync(PageInput info)
     {
-        return (await _baseHttpService.GetAllAsync(info)).Data;
+        return (await _baseHttpService.GetAllAsync(info)).Handling();
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>存在则返回<c>true</c>，否则为<c>false</c>。</returns>
     public async Task<bool> IsExistKeyAsync(string fieldName, object key)
     {
-        return (await _baseHttpService.IsExistKeyAsync(fieldName, key)).Data;
+        return (await _baseHttpService.IsExistKeyAsync(fieldName, key)).Handling();
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<string> GetFieldValueAsync(object key, string fieldName)
     {
-        return (await _baseHttpService.GetFieldValueAsync(key, fieldName)).Data;
+        return (await _baseHttpService.GetFieldValueAsync(key, fieldName)).Handling();
     }
 
     /// <summary>
@@ -176,7 +176,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<Dictionary<string, string>> GetFieldValueListAsync(string key, List<string> fieldNameList)
     {
-        return (await _baseHttpService.GetFieldValueListAsync(key, fieldNameList)).Data;
+        return (await _baseHttpService.GetFieldValueListAsync(key, fieldNameList)).Handling();
     }
     
     /// <summary>
@@ -186,7 +186,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<List<string>> GetFieldListAsync(string fieldName)
     {
-        return (await _baseHttpService.GetFieldListAsync(fieldName)).Data;
+        return (await _baseHttpService.GetFieldListAsync(fieldName)).Handling();
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public async Task<bool> DeleteAsync(object key)
     {
-        return (await _baseHttpService.DeleteAsync(key)).Data;
+        return (await _baseHttpService.DeleteAsync(key)).Handling();
     }
 
     /// <summary>
@@ -206,7 +206,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
     public async Task<bool> DeleteByIdsAsync(object[] key)
     {
-        return (await _baseHttpService.DeleteByIdsAsync(key)).Data;
+        return (await _baseHttpService.DeleteByIdsAsync(key)).Handling();
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<PageResult<T>> GetEntitiesByPageAsync(PaginatedSearchInfos searchInfos)
     {
-        return (await _baseHttpService.GetEntitiesByPageAsync(searchInfos)).Data;
+        return (await _baseHttpService.GetEntitiesByPageAsync(searchInfos)).Handling();
     }
 
     /// <summary>
@@ -226,7 +226,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<bool> ApproveAsync(object key)
     {
-        return (await _baseHttpService.ApproveAsync(key)).Data;
+        return (await _baseHttpService.ApproveAsync(key)).Handling();
     }
 
     /// <summary>
@@ -235,7 +235,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<T> NewEntityAsync()
     {
-        return (await _baseHttpService.NewEntityAsync()).Data;
+        return (await _baseHttpService.NewEntityAsync()).Handling();
     }
 
     /// <summary>
@@ -245,7 +245,7 @@ public class BaseHttpService<T> : ITransient
     /// <exception cref="NotSupportedException"></exception>
     public async Task<Dictionary<string, int>> GetPermitDictAsync()
     {
-        return (await _baseHttpService.GetPermitDictAsync()).Data;
+        return (await _baseHttpService.GetPermitDictAsync()).Handling();
     }
 
     /// <summary>
@@ -254,7 +254,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<DataTable> GetFieldTypeListAsync()
     {
-        return (await _baseHttpService.GetFieldTypeListAsync()).Data;
+        return (await _baseHttpService.GetFieldTypeListAsync()).Handling();
     }
 
     /// <summary>
@@ -263,7 +263,7 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<Dictionary<string, string>> GetColumnNameAliasAsync()
     {
-        return (await _baseHttpService.GetColumnNameAliasAsync()).Data;
+        return (await _baseHttpService.GetColumnNameAliasAsync()).Handling();
     }
 
     /// <summary>
@@ -272,6 +272,6 @@ public class BaseHttpService<T> : ITransient
     /// <returns></returns>
     public async Task<string> GetDisplayColumnsAsync()
     {
-        return (await _baseHttpService.GetDisplayColumnsAsync()).Data;
+        return (await _baseHttpService.GetDisplayColumnsAsync()).Handling();
     }
 }

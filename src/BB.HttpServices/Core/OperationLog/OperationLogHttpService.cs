@@ -22,6 +22,6 @@ public class OperationLogHttpService : BaseHttpService<OperationLogInfo>
     /// <returns></returns>
     public async Task<bool> OnOperationLog(string userId, string tableName, string operationType, string note)
     {
-        return (await _operationLogHttpService.OnOperationLog(userId, tableName, operationType, note)).Data;
+        return (await _operationLogHttpService.OnOperationLog(userId, tableName, operationType, note)).Handling();
     }
 }

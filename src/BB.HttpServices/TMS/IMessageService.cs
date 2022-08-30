@@ -13,9 +13,9 @@ public interface IMessageHttpService : IHttpDispatchProxy, IBaseHttpService<Mess
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}message/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}message/";
+        // req.BaseAddress = builder.Uri;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.OU;
 
@@ -14,7 +13,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="newOuList">机构列表</param>
     /// <returns></returns>
     [Post("editRoleOUs")]
-    Task<RESTfulResult<bool>> EditRoleOUsAsync(int roleId, List<string> newOuList);
+    Task<RESTfulResultControl<bool>> EditRoleOUsAsync(int roleId, List<string> newOuList);
 
     /// <summary>
     /// 根据机构的ID获取对应的角色列表
@@ -22,7 +21,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="ouId">机构的ID</param>
     /// <returns></returns>
     [Get("rolesByOu")]
-    Task<RESTfulResult<List<RoleInfo>>> GetRolesByOuAsync(string ouId);
+    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByOuAsync(string ouId);
 
     /// <summary>
     /// 给指定角色添加机构
@@ -47,7 +46,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
     [Post("ouInRole")]
-    Task<RESTfulResult<bool>> OuInRoleAsync(string ouId, int roleId);
+    Task<RESTfulResultControl<bool>> OuInRoleAsync(string ouId, int roleId);
 
     /// <summary>
     /// HttpClient 拦截
@@ -56,9 +55,9 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}oURole/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}oURole/";
+        // req.BaseAddress = builder.Uri;
     }
 }

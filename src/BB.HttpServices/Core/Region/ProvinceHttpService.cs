@@ -23,7 +23,7 @@ public class ProvinceHttpService : BaseHttpService<ProvinceInfo>
     /// <returns></returns>
     public async Task<string> GetNameByIdAsync([Required] int id)
     {
-        return (await _httpService.GetNameByIdAsync(id)).Data;
+        return (await _httpService.GetNameByIdAsync(id)).Handling();
     }
 
     /// <summary>
@@ -33,6 +33,6 @@ public class ProvinceHttpService : BaseHttpService<ProvinceInfo>
     /// <returns></returns>
     public async Task<string> GetIdByNameAsync([Required] string name)
     {
-        return (await _httpService.GetIdByNameAsync(name)).Data;
+        return (await _httpService.GetIdByNameAsync(name)).Handling();
     }
 }

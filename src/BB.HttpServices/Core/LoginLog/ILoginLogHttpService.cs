@@ -2,7 +2,6 @@
 using BB.Entity.Security;
 using BB.HttpServices.Base;
 using Furion.RemoteRequest;
-using Furion.UnifyResult;
 
 namespace BB.HttpServices.Core.LoginLog;
 
@@ -25,7 +24,7 @@ public interface ILoginLogHttpService : IHttpDispatchProxy, IBaseHttpService<Log
     /// <param name="lastUpdated">最后更新日前</param>
     /// <returns></returns>
     [Get("list")]
-    Task<RESTfulResult<List<LoginLogInfo>>> GetListAsync(DateTime lastUpdated);
+    Task<RESTfulResultControl<List<LoginLogInfo>>> GetListAsync(DateTime lastUpdated);
 
     /// <summary>
     /// 如果目标不存在则插入，否则判断更新时间，如果目标较旧则更新
@@ -46,7 +45,7 @@ public interface ILoginLogHttpService : IHttpDispatchProxy, IBaseHttpService<Log
     /// <param name="userId">登录用户ID</param>
     /// <returns></returns>
     [Get("lastLoginInfo")]
-    Task<RESTfulResult<LoginLogInfo>> GetLastLoginInfoAsync(string userId);
+    Task<RESTfulResultControl<LoginLogInfo>> GetLastLoginInfoAsync(string userId);
 
     /// <summary>
     /// HttpClient 拦截
@@ -55,9 +54,9 @@ public interface ILoginLogHttpService : IHttpDispatchProxy, IBaseHttpService<Log
     [Interceptor(InterceptorTypes.Client)]
     static void OnClientCreating(HttpClient req)
     {
-        var builder = new UriBuilder(req.BaseAddress!);
-        var path = req.BaseAddress!.AbsolutePath;
-        builder.Path = $"{path}loginLog/";
-        req.BaseAddress = builder.Uri;
+        // var builder = new UriBuilder(req.BaseAddress!);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // builder.Path = $"{path}loginLog/";
+        // req.BaseAddress = builder.Uri;
     }
 }

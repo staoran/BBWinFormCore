@@ -21,6 +21,6 @@ public class AuthHttpService : BaseHttpService<UserInfo>
     /// <returns></returns>
     public async Task<LoginUserInfo> VerifyUserAsync(LoginInput input)
     {
-        return (await _authHttpService.VerifyUserAsync(input)).Data;
+        return (await _authHttpService.VerifyUserAsync(input)).Handling();
     }
 }

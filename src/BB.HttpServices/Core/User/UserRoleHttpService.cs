@@ -19,7 +19,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> GetSimpleUsersByRoleAsync(int roleId)
     {
-        return (await _userRoleHttpService.GetSimpleUsersByRoleAsync(roleId)).Data;
+        return (await _userRoleHttpService.GetSimpleUsersByRoleAsync(roleId)).Handling();
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<List<UserInfo>> GetUsersByRoleAsync(int roleId)
     {
-        return (await _userRoleHttpService.GetUsersByRoleAsync(roleId)).Data;
+        return (await _userRoleHttpService.GetUsersByRoleAsync(roleId)).Handling();
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<List<RoleInfo>> GetRolesByUserAsync(int userId)
     {
-        return (await _userRoleHttpService.GetRolesByUserAsync(userId)).Data;
+        return (await _userRoleHttpService.GetRolesByUserAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<bool> UserInRoleAsync(int userId, int roleId)
     {
-        return (await _userRoleHttpService.UserInRoleAsync(userId, roleId)).Data;
+        return (await _userRoleHttpService.UserInRoleAsync(userId, roleId)).Handling();
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<bool> UserIsCompanyAdminAsync(int userId)
     {
-        return (await _userRoleHttpService.UserIsCompanyAdminAsync(userId)).Data;
+        return (await _userRoleHttpService.UserIsCompanyAdminAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<bool> UserIsSuperAdminAsync(int userId)
     {
-        return (await _userRoleHttpService.UserIsSuperAdminAsync(userId)).Data;
+        return (await _userRoleHttpService.UserIsSuperAdminAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<bool> UserIsAdminAsync(int userId)
     {
-        return (await _userRoleHttpService.UserIsAdminAsync(userId)).Data;
+        return (await _userRoleHttpService.UserIsAdminAsync(userId)).Handling();
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> GetAdminSimpleUsersAsync()
     {
-        return (await _userRoleHttpService.GetAdminSimpleUsersAsync()).Data;        
+        return (await _userRoleHttpService.GetAdminSimpleUsersAsync()).Handling();        
     }
 
     /// <summary>
@@ -130,6 +130,6 @@ public class UserRoleHttpService : BaseHttpService<UserRoleEntity>
     /// <returns></returns>
     public async Task<bool> EditRoleUsersAsync(int roleId, List<int> newUserList)
     {
-        return (await _userRoleHttpService.EditRoleUsersAsync(roleId, newUserList)).Data;
+        return (await _userRoleHttpService.EditRoleUsersAsync(roleId, newUserList)).Handling();
     }
 }

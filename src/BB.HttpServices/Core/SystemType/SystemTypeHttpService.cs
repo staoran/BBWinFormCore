@@ -19,7 +19,7 @@ public class SystemTypeHttpService : BaseHttpService<SystemTypeInfo>
     /// <returns></returns>
     public async Task<SystemTypeInfo> FindByOidAsync(string oid)
     {
-        return (await _systemTypeHttpService.FindByOidAsync(oid)).Data;
+        return (await _systemTypeHttpService.FindByOidAsync(oid)).Handling();
     }
 
     /// <summary>
@@ -31,6 +31,6 @@ public class SystemTypeHttpService : BaseHttpService<SystemTypeInfo>
     /// <returns></returns>
     public async Task<bool> VerifySystemAsync(string serialNumber, string typeId, int authorizeAmount)
     {
-        return (await _systemTypeHttpService.VerifySystemAsync(serialNumber, typeId, authorizeAmount)).Data;
+        return (await _systemTypeHttpService.VerifySystemAsync(serialNumber, typeId, authorizeAmount)).Handling();
     }
 }

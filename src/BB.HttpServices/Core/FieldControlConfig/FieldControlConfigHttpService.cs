@@ -17,7 +17,7 @@ public class FieldControlConfigHttpService : BaseHttpService<Entity.Security.Fie
     /// <returns></returns>
     public async Task<List<string>> GetTableNames()
     {
-        return (await _fieldControlConfigHttpService.GetTableNames()).Data;
+        return (await _fieldControlConfigHttpService.GetTableNames()).Handling();
     }
                        
     /// <summary>
@@ -27,7 +27,7 @@ public class FieldControlConfigHttpService : BaseHttpService<Entity.Security.Fie
     /// <returns></returns>
     public async Task<IEnumerable<string>> GetTableKeyList(string name)
     {
-        return (await _fieldControlConfigHttpService.GetTableKeyList(name)).Data;
+        return (await _fieldControlConfigHttpService.GetTableKeyList(name)).Handling();
     }
                        
     /// <summary>
@@ -37,7 +37,7 @@ public class FieldControlConfigHttpService : BaseHttpService<Entity.Security.Fie
     /// <returns></returns>
     public async Task<List<string>> GetTableIdentityList(string name)
     {
-        return (await _fieldControlConfigHttpService.GetTableIdentityList(name)).Data;
+        return (await _fieldControlConfigHttpService.GetTableIdentityList(name)).Handling();
     }
                        
     /// <summary>
@@ -47,7 +47,7 @@ public class FieldControlConfigHttpService : BaseHttpService<Entity.Security.Fie
     /// <returns></returns>
     public async Task<string> GetTableComment(string name)
     {
-        return (await _fieldControlConfigHttpService.GetTableComment(name)).Data;
+        return (await _fieldControlConfigHttpService.GetTableComment(name)).Handling();
     }
                        
     /// <summary>
@@ -57,7 +57,7 @@ public class FieldControlConfigHttpService : BaseHttpService<Entity.Security.Fie
     /// <returns></returns>
     public async Task<IEnumerable<Entity.Security.FieldControlConfig>> GetFieldControlConfigs(string name)
     {
-        return (await _fieldControlConfigHttpService.GetFieldControlConfigs(name)).Data;
+        return (await _fieldControlConfigHttpService.GetFieldControlConfigs(name)).Handling();
     }
 
     /// <summary>
@@ -66,6 +66,6 @@ public class FieldControlConfigHttpService : BaseHttpService<Entity.Security.Fie
     /// <returns></returns>
     public async Task<IEnumerable<string>> GetTableNamesAndComments()
     {
-        return (await _fieldControlConfigHttpService.GetTableNamesAndComments()).Data;
+        return (await _fieldControlConfigHttpService.GetTableNamesAndComments()).Handling();
     }
 }
