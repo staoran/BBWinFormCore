@@ -100,8 +100,8 @@ public class Startup : AppStartup
 
         app.UseHttpsRedirection();
 
-        if(env.IsDevelopment())
-            app.UseHttpLogging();    // 必须在 UseStaticFiles 和 UseRouting 之间
+        // if(env.IsDevelopment())
+        //     app.UseHttpLogging();    // 必须在 UseStaticFiles 和 UseRouting 之间
 
         app.UseRouting();
 
