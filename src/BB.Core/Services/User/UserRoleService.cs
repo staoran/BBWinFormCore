@@ -86,7 +86,7 @@ public class UserRoleService : BaseService<UserRoleEntity>, IDynamicApiControlle
     {
         return await Repository.Db
             .Queryable<RoleInfo, UserRoleEntity>((r, ur) => r.ID == ur.RoleId)
-            .Where((_, ur) => ur.UserId == userId).ToListAsync();
+            .Where((r, ur) => ur.UserId == userId).ToListAsync();
     }
 
     /// <summary>

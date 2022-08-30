@@ -52,7 +52,7 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     public async Task<List<DictDataInfo>> FindByDictCodeAsync(string dictCode)
     {
         return await Repository.Db.Queryable<DictDataInfo, DictTypeInfo>((dd, dt) => dd.ID == dt.ID)
-            .Where((_, dt) => dt.Code == dictCode)
+            .Where((dd, dt) => dt.Code == dictCode)
             .Select<DictDataInfo>()
             .ToListAsync();
     }

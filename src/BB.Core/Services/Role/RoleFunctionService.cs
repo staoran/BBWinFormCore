@@ -22,7 +22,7 @@ public class RoleFunctionService : BaseService<RoleFunction>, IDynamicApiControl
     public async Task<List<RoleInfo>> GetRolesByFunctionAsync(string functionId)
     {
         return await Repository.Db.Queryable<RoleInfo, RoleFunction>((r, rf) => r.ID == rf.RoleId)
-            .Where((_, rf) => rf.FunctionId == functionId).ToListAsync();
+            .Where((r, rf) => rf.FunctionId == functionId).ToListAsync();
     }
 
     /// <summary>

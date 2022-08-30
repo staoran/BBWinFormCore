@@ -38,7 +38,7 @@ public class OURoleService : BaseService<OURoleEntity>, IDynamicApiController, I
 	public async Task<List<RoleInfo>> GetRolesByOuAsync(string ouId)
 	{
 		return await Repository.Db.Queryable<RoleInfo, OURoleEntity>((u, ou) => u.ID == ou.RoleId)
-			.Where((_, ou) => ou.OUId == ouId).ToListAsync();
+			.Where((u, ou) => ou.OUId == ouId).ToListAsync();
 	}
 
 	/// <summary>
