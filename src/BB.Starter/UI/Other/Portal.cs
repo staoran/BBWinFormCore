@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using BB.BaseUI.BaseUI;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
@@ -44,13 +46,24 @@ public class Portal
     private static Task Main(string[] args)
     {
         Serve.Run(GenericRunOptions.DefaultSilence.ConfigureBuilder(builder =>
-            builder.ConfigureServices((_, collection) =>
-             collection.AddRemoteRequest(o=>
-                 o.AddHttpClient(string.Empty, client =>
-                     {
-                         client.BaseAddress = new Uri("https://localhost:5001/api/");
-                     }
-                )))));
+            builder.ConfigureServices((_, services) => services
+                .AddJsonOptions(options =>
+                    {
+                        // 驼峰命名
+                        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                        // 时间格式化
+                        options.JsonSerializerOptions.Converters.AddDateFormatString("yyyy-MM-dd HH:mm:ss");
+                        // 忽略循环引用
+                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    })
+                 .AddRemoteRequest()
+                 .AddHttpClient(string.Empty, client =>
+                 {
+                     client.BaseAddress = new Uri("https://localhost:5001/api/");
+                     // client.DefaultRequestHeaders.Add("Accept", "");
+                     // client.DefaultRequestHeaders.Add("User-Agent", "");
+                 })
+            )));
 
         GlobalExceptionCapture(() =>
         {
