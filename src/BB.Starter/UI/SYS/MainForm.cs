@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
-using BB.BaseUI.BaseUI;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.BaseUI.WinForm;
+using BB.Security.UI;
 using BB.Starter.UI.Other;
 using BB.Starter.UI.Settings;
 using BB.Tools.Const;
@@ -16,6 +16,7 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraTabbedMdi;
 using Furion;
 using Furion.Logging.Extensions;
+using Logon = BB.BaseUI.BaseUI.Logon;
 
 namespace BB.Starter.UI.SYS;
 
@@ -511,12 +512,12 @@ public partial class MainForm : RibbonForm
 
     private void tool_Dict_ItemClick(object sender, ItemClickEventArgs e)
     {
-        ChildWinManagement.PopDialogForm(typeof(FrmDictionary));
+        // ChildWinManagement.PopDialogForm(typeof(FrmDictionary));
     }
 
     private void tool_City_ItemClick(object sender, ItemClickEventArgs e)
     {
-        ChildWinManagement.PopDialogForm(typeof(FrmCityDistrict));
+        // ChildWinManagement.PopDialogForm(typeof(FrmCityDistrict));
     }
 
     private void tool_Security_ItemClick(object sender, ItemClickEventArgs e)
@@ -603,11 +604,11 @@ public partial class MainForm : RibbonForm
         ChildWinManagement.LoadMdiForm(this, typeof(BindTest));
     }
 
-    private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+    private async void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
     {
         SplashScreenHelper.Show();
         barButtonItem2_ItemClick(sender, e);
-        _ribbonHelper.RefreshMenu();
+        await _ribbonHelper.RefreshMenu();
         //根据权限屏蔽静态构建的菜单对象
         InitAuthorizedUi();
         "菜单刷新成功！".ShowSuccessTip(this);
