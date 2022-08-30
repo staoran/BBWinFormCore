@@ -13,9 +13,9 @@
 
     <ItemGroup>
         <PackageReference Include="FastExpressionCompiler" Version="3.3.3" />
-        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.2.13" />
-        <PackageReference Include="Furion.Extras.Logging.Serilog" Version="4.2.13" />
-        <PackageReference Include="Furion.Pure" Version="4.2.13" />
+        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.3.4" />
+        <PackageReference Include="Furion.Extras.Logging.Serilog" Version="4.3.4" />
+        <PackageReference Include="Furion.Pure" Version="4.3.4" />
         <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
         <PackageReference Include="SqlSugarCore" Version="5.1.2.3" />
         <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.19" />

@@ -64,7 +64,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BB.BaseUI\BB.BaseUI.csproj" />
-      <ProjectReference Include="..\BB.EntityVerification\BB.EntityVerification.csproj" />
       <ProjectReference Include="..\BB.HttpServices\BB.HttpServices.csproj" />
       <ProjectReference Include="..\BB.Security\BB.Security.csproj" />
       <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />
