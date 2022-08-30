@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Data;
 using BB.Tools.Entity;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
+using Furion.DataEncryption;
 using Furion.FriendlyException;
 using Furion.RemoteRequest;
 
@@ -240,11 +243,19 @@ public interface IBaseHttpService<T>
     /// </summary>
     /// <param name="req"></param>
     [Interceptor(InterceptorTypes.Request)]
-    static void OnBaseRequest(HttpRequestMessage req)
+    static async void OnBaseRequest(HttpRequestMessage req)
     {
         if (req.RequestUri == null)
         {
             throw Oops.Oh("请求 Uri 为空");
+        }
+
+        var token = await Cache.Instance.GetAsync<string>("access-token");
+        if (!token.IsNullOrEmpty())
+        {
+            req.Headers.Add("Authorization", $"Bearer {token}");
+            var xtoken = await Cache.Instance.GetAsync<string>("x-access-token");
+            req.Headers.Add("X-Authorization", $"Bearer {xtoken}");
         }
     }
 
@@ -255,6 +266,29 @@ public interface IBaseHttpService<T>
     [Interceptor(InterceptorTypes.Response)]
     static async void OnBaseResponsing(HttpResponseMessage res)
     {
+        if ((int)res.StatusCode >= 400)
+        {
+            throw Oops.Bah("请求不成功");
+        }
+        if (res.Headers.TryGetValues("access-token", out var token))
+        {
+            var enumerable = token.ToList();
+            if (enumerable.Any())
+            {
+                // token 的默认过期时间是 20 分钟，缓存不设过期，因为续期需要原始 token
+                await Cache.Instance.SetAsync("access-token", enumerable.First());
+            }
+        }
+        if (res.Headers.TryGetValues("x-access-token", out var xtoken))
+        {
+            var enumerable = xtoken.ToList();
+            if (enumerable.Any())
+            {
+                var st = JWTEncryption.SecurityReadJwtToken(enumerable.First());
+                // token 的默认过期时间是 30 天
+                await Cache.Instance.SetAsync("x-access-token", enumerable.First(), null, null, st.ValidTo);
+            }
+        }
         // // 读取流内容
         // var stream = await res.Content.ReadAsStreamAsync();
         //
