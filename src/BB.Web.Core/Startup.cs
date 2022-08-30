@@ -27,6 +27,18 @@ public class Startup : AppStartup
         TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();
         // 开启目标类型映射继承
         TypeAdapterConfig.GlobalSettings.AllowImplicitDestinationInheritance = true;
+        
+        // 注册日志监视器，默认读取 Logging:Monitor 下配置，支持传入参数自定义
+        services.AddMonitorLogging();
+
+        // 注册文件日志服务
+        services.AddFileLogging(options =>
+        {
+            options.FileNameRule = s => string.Format(s, DateTime.Now);
+        });
+
+        // 注册数据库日志服务
+        // services.AddDatabaseLogging<DbLoggingWriter>();
 
         // DB
         services.AddSqlSugarDb();
@@ -89,7 +101,7 @@ public class Startup : AppStartup
         app.UseHttpsRedirection();
 
         if(env.IsDevelopment())
-            app.UseSerilogRequestLogging();    // 必须在 UseStaticFiles 和 UseRouting 之间
+            app.UseHttpLogging();    // 必须在 UseStaticFiles 和 UseRouting 之间
 
         app.UseRouting();
 
