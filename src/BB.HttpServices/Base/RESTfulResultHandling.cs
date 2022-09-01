@@ -1,5 +1,5 @@
-﻿using Furion.FriendlyException;
-using Furion.JsonSerialization;
+﻿using System.Text.Json;
+using Furion.FriendlyException;
 using Furion.UnifyResult;
 
 namespace BB.HttpServices.Base;
@@ -12,7 +12,12 @@ public class RESTfulResultControl<T> : RESTfulResult<T>
         {
             return Data;
         }
-        
-        throw Oops.Bah(JSON.Serialize(Errors), Data, Extras, Errors);
+
+        throw Errors switch
+        {
+            JsonElement errors => Oops.Bah(errors.GetRawText()).WithData(Extras).WithData(Errors),
+            string => Oops.Bah(Errors).WithData(Extras).WithData(Errors),
+            _ => Oops.Bah(Errors.ToString()).WithData(Extras).WithData(Errors)
+        };
     }
 }
