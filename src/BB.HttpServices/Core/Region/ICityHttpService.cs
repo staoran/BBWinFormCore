@@ -13,7 +13,7 @@ public interface ICityHttpService : IHttpDispatchProxy, IBaseHttpService<CityInf
     /// <param name="provinceId">省份ID</param>
     /// <returns></returns>
     [Get("citysByProvinceId")]
-    Task<RESTfulResultControl<List<CityInfo>>> GetCitysByProvinceId([Required] string provinceId);
+    Task<RESTfulResultControl<List<CityInfo>>> GetCitysByProvinceId([QueryString][Required] string provinceId);
 
     /// <summary>
     /// 根据省份名称获取对应的城市列表
@@ -21,7 +21,7 @@ public interface ICityHttpService : IHttpDispatchProxy, IBaseHttpService<CityInf
     /// <param name="provinceName">省份名称</param>
     /// <returns></returns>
     [Get("citysByProvinceName")]
-    Task<RESTfulResultControl<List<CityInfo>>> GetCitysByProvinceNameAsync([Required] string provinceName);
+    Task<RESTfulResultControl<List<CityInfo>>> GetCitysByProvinceNameAsync([QueryString][Required] string provinceName);
 
     /// <summary>
     /// 根据城市ID获取名称
@@ -29,7 +29,7 @@ public interface ICityHttpService : IHttpDispatchProxy, IBaseHttpService<CityInf
     /// <param name="id">城市ID</param>
     /// <returns></returns>
     [Get("nameById")]
-    Task<RESTfulResultControl<string>> GetNameByIdAsync([Required] int id);
+    Task<RESTfulResultControl<string>> GetNameByIdAsync([QueryString][Required] int id);
 
     /// <summary>
     /// 根据名称获取对应的记录ID
@@ -37,7 +37,7 @@ public interface ICityHttpService : IHttpDispatchProxy, IBaseHttpService<CityInf
     /// <param name="name">城市名称</param>
     /// <returns></returns>
     [Get("idByName")]
-    Task<RESTfulResultControl<string>> GetIdByNameAsync([Required] string name);
+    Task<RESTfulResultControl<string>> GetIdByNameAsync([QueryString][Required] string name);
 
     /// <summary>
     /// HttpClient 拦截

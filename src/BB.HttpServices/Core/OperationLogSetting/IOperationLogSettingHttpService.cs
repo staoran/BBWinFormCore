@@ -12,7 +12,7 @@ public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttp
     /// <param name="tableName">表名称</param>
     /// <returns></returns>
     [Post("isTableNeedToLog")]
-    Task<RESTfulResultControl<bool>> IsTableNeedToLogAsync(string tableName);
+    Task<RESTfulResultControl<bool>> IsTableNeedToLogAsync([QueryString]string tableName);
 
     /// <summary>
     /// 根据数据库表名称获取配置信息
@@ -20,7 +20,7 @@ public interface IOperationLogSettingHttpService : IHttpDispatchProxy, IBaseHttp
     /// <param name="tableName">数据库表名</param>
     /// <returns></returns>
     [Get("byTableName")]
-    Task<RESTfulResultControl<OperationLogSettingInfo>> FindByTableNameAsync(string tableName);
+    Task<RESTfulResultControl<OperationLogSettingInfo>> FindByTableNameAsync([QueryString]string tableName);
 
     /// <summary>
     /// HttpClient 拦截

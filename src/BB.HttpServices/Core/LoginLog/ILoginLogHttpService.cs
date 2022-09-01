@@ -16,7 +16,7 @@ public interface ILoginLogHttpService : IHttpDispatchProxy, IBaseHttpService<Log
     /// <param name="macAddr">Mac地址</param>
     /// <param name="note">备注说明</param>
     [Post("loginLog")]
-    Task AddLoginLogAsync(LoginUserInfo info, string systemType, string ip, string macAddr, string note);
+    Task AddLoginLogAsync([Body]LoginUserInfo info, [QueryString]string systemType, [QueryString]string ip, [QueryString]string macAddr, [QueryString]string note);
 
     /// <summary>
     /// 根据最后更新日前的数据获取数据
@@ -24,14 +24,14 @@ public interface ILoginLogHttpService : IHttpDispatchProxy, IBaseHttpService<Log
     /// <param name="lastUpdated">最后更新日前</param>
     /// <returns></returns>
     [Get("list")]
-    Task<RESTfulResultControl<List<LoginLogInfo>>> GetListAsync(DateTime lastUpdated);
+    Task<RESTfulResultControl<List<LoginLogInfo>>> GetListAsync([QueryString]DateTime lastUpdated);
 
     /// <summary>
     /// 如果目标不存在则插入，否则判断更新时间，如果目标较旧则更新
     /// </summary>
     /// <param name="infoList"></param>
     [Post("orUpdate")]
-    Task InsertOrUpdateAsync(List<LoginLogInfo> infoList);
+    Task InsertOrUpdateAsync([Body]List<LoginLogInfo> infoList);
 
     /// <summary>
     /// 删除一个月前的数据
@@ -45,7 +45,7 @@ public interface ILoginLogHttpService : IHttpDispatchProxy, IBaseHttpService<Log
     /// <param name="userId">登录用户ID</param>
     /// <returns></returns>
     [Get("lastLoginInfo")]
-    Task<RESTfulResultControl<LoginLogInfo>> GetLastLoginInfoAsync(string userId);
+    Task<RESTfulResultControl<LoginLogInfo>> GetLastLoginInfoAsync([QueryString]string userId);
 
     /// <summary>
     /// HttpClient 拦截

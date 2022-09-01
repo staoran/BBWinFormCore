@@ -12,7 +12,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="companyId">公司ID（机构ID）</param>
 	/// <returns></returns>
 	[Get("rolesByCompany")]
-	Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByCompanyAsync(string companyId);
+	Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByCompanyAsync([QueryString]string companyId);
 
 	/// <summary>
 	/// 根据角色名称查找角色对象
@@ -21,7 +21,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="companyId">公司ID</param>
 	/// <returns></returns>
 	[Get("roleByName")]
-	Task<RESTfulResultControl<RoleInfo>> GetRoleByNameAsync(string roleName, string companyId = null);
+	Task<RESTfulResultControl<RoleInfo>> GetRoleByNameAsync([QueryString]string roleName, [QueryString]string companyId = null);
 
 	/// <summary>
 	/// 设置删除标志
@@ -30,7 +30,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="deleted">是否删除</param>
 	/// <returns></returns>
 	[Post("setDeletedFlag")]
-	Task<RESTfulResultControl<bool>> SetDeletedFlagAsync(object id, bool deleted = true);
+	Task<RESTfulResultControl<bool>> SetDeletedFlagAsync([QueryString]object id, [QueryString]bool deleted = true);
 
 
 	/// <summary>
@@ -39,7 +39,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="menuId">菜单ID</param>
 	/// <param name="roleId">角色ID</param>
 	[Post("menu")]
-	Task AddMenuAsync(string menuId, int roleId);
+	Task AddMenuAsync([QueryString]string menuId, [QueryString]int roleId);
 
 	/// <summary>
 	/// 为指定角色移除对应菜单
@@ -47,7 +47,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="menuId">菜单ID</param>
 	/// <param name="roleId">角色ID</param>
 	[Delete("menu")]
-	Task RemoveMenuAsync(string menuId, int roleId);
+	Task RemoveMenuAsync([QueryString]string menuId, [QueryString]int roleId);
 
 	/// <summary>
 	/// 为角色指定新的菜单列表
@@ -57,7 +57,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="systemType">系统类型</param>
 	/// <returns></returns>
 	[Post("editRoleMenus")]
-	Task<RESTfulResultControl<bool>> EditRoleMenusAsync(int roleId, List<string> newList, string systemType);
+	Task<RESTfulResultControl<bool>> EditRoleMenusAsync([QueryString]int roleId, [Body]List<string> newList, [QueryString]string systemType);
 
     /// <summary>
     /// HttpClient 拦截

@@ -13,7 +13,7 @@ public interface IRegionHttpService : IHttpDispatchProxy, IBaseHttpService<Regio
     /// <param name="parentId">父级ID</param>
     /// <returns></returns>
     [Get("regionsByParentId")]
-    Task<RESTfulResultControl<List<RegionInfo>>> GetRegionsByParentIdAsync([Required] long parentId);
+    Task<RESTfulResultControl<List<RegionInfo>>> GetRegionsByParentIdAsync([QueryString][Required] long parentId);
 
     /// <summary>
     /// 获取所有省

@@ -12,7 +12,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="roleId">用户角色ID</param>
     /// <returns></returns>
     [Get("simpleUsersByRole")]
-    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUsersByRoleAsync(int roleId);
+    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUsersByRoleAsync([QueryString]int roleId);
 
     /// <summary>
     /// 通过角色ID获取对应的用户列表
@@ -20,7 +20,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
     [Get("usersByRole")]
-    Task<RESTfulResultControl<List<UserInfo>>> GetUsersByRoleAsync(int roleId);
+    Task<RESTfulResultControl<List<UserInfo>>> GetUsersByRoleAsync([QueryString]int roleId);
 
     /// <summary>
     /// 更新用户的角色列表
@@ -28,7 +28,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userid">用户ID</param>
     /// <param name="roleList">角色列表</param>
     [Put("roles")]
-    Task UpdateRolesAsync(int userid, List<int> roleList);
+    Task UpdateRolesAsync([QueryString]int userid, [Body]List<int> roleList);
 
     /// <summary>
     /// 给指定角色添加用户
@@ -36,7 +36,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userId">用户ID</param>
     /// <param name="roleId">角色ID</param>
     [Post("user")]
-    Task AddUserAsync(int userId, int roleId);
+    Task AddUserAsync([QueryString]int userId, [QueryString]int roleId);
 
     /// <summary>
     /// 从角色的用户列表中移除指定的用户
@@ -44,7 +44,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userId">用户ID</param>
     /// <param name="roleId">角色ID</param>
     [Delete("user")]
-    Task RemoveUserAsync(int userId, int roleId);
+    Task RemoveUserAsync([QueryString]int userId, [QueryString]int roleId);
 
     /// <summary>
     /// 根据用户的ID获取对应的角色列表
@@ -52,7 +52,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userId">用户的ID</param>
     /// <returns></returns>
     [Get("rolesByUser")]
-    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByUserAsync(int userId);
+    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByUserAsync([QueryString]int userId);
 
     /// <summary>
     /// 判断用户ID是否在指定的角色中
@@ -61,7 +61,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
     [Post("userInRole")]
-    Task<RESTfulResultControl<bool>> UserInRoleAsync(int userId, int roleId);
+    Task<RESTfulResultControl<bool>> UserInRoleAsync([QueryString]int userId, [QueryString]int roleId);
 
     /// <summary>
     /// 判断用户是否为公司管理员
@@ -69,7 +69,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
     [Post("userIsCompanyAdmin")]
-    Task<RESTfulResultControl<bool>> UserIsCompanyAdminAsync(int userId);
+    Task<RESTfulResultControl<bool>> UserIsCompanyAdminAsync([QueryString]int userId);
 
     /// <summary>
     /// 判断用户是否为超级管理员
@@ -77,7 +77,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
     [Post("userIsSuperAdmin")]
-    Task<RESTfulResultControl<bool>> UserIsSuperAdminAsync(int userId);
+    Task<RESTfulResultControl<bool>> UserIsSuperAdminAsync([QueryString]int userId);
 
     /// <summary>
     /// 判断用户是否为管理员，超级管理员、公司级别的系统管理员均通过。
@@ -85,7 +85,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
     [Post("userIsAdmin")]
-    Task<RESTfulResultControl<bool>> UserIsAdminAsync(int userId);
+    Task<RESTfulResultControl<bool>> UserIsAdminAsync([QueryString]int userId);
 
     /// <summary>
     /// 获取管理员包含的用户基础信息列表
@@ -101,7 +101,7 @@ public interface IUserRoleHttpService : IHttpDispatchProxy, IBaseHttpService<Use
     /// <param name="newUserList">人员列表</param>
     /// <returns></returns>
     [Post("editRoleUsers")]
-    Task<RESTfulResultControl<bool>> EditRoleUsersAsync(int roleId, List<int> newUserList);
+    Task<RESTfulResultControl<bool>> EditRoleUsersAsync([QueryString]int roleId, [Body]List<int> newUserList);
 
     /// <summary>
     /// HttpClient 拦截

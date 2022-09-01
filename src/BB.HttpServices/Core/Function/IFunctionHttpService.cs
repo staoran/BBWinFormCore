@@ -14,7 +14,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="typeId">系统类型ID</param>
     /// <returns></returns>
     [Get("functions")]
-    Task<RESTfulResultControl<List<FunctionInfo>>> GetFunctionsAsync(IEnumerable<int> roleList, string typeId);
+    Task<RESTfulResultControl<List<FunctionInfo>>> GetFunctionsAsync([QueryString]IEnumerable<int> roleList, [QueryString]string typeId);
 
     /// <summary>
     /// 根据角色ID字符串（逗号分开)和系统类型ID，获取对应的操作功能列表
@@ -23,7 +23,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="typeId">系统类型ID</param>
     /// <returns></returns>
     [Get("functionNodes")]
-    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetFunctionNodesAsync(string roleIDs, string typeId);
+    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetFunctionNodesAsync([QueryString]string roleIDs, [QueryString]string typeId);
 
     /// <summary>
     /// 根据角色ID获取对应的操作功能列表
@@ -31,7 +31,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
     [Get("functionsByRole")]
-    Task<RESTfulResultControl<List<FunctionInfo>>> GetFunctionsByRoleAsync(int roleId);
+    Task<RESTfulResultControl<List<FunctionInfo>>> GetFunctionsByRoleAsync([QueryString]int roleId);
 
     /// <summary>
     /// 根据用户ID，获取对应的功能列表
@@ -40,7 +40,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
     [Get("functionsByUser")]
-    Task<RESTfulResultControl<List<FunctionInfo>>> GetFunctionsByUserAsync(int userId, string typeId);
+    Task<RESTfulResultControl<List<FunctionInfo>>> GetFunctionsByUserAsync([QueryString]int userId, [QueryString]string typeId);
 
     /// <summary>
     /// 根据用户ID，获取对应的功能列表
@@ -49,7 +49,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
     [Get("functionNodesByUser")]
-    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetFunctionNodesByUserAsync(int userId, string typeId);
+    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetFunctionNodesByUserAsync([QueryString]int userId, [QueryString]string typeId);
 
     /// <summary>
     /// 获取当前用户在指定系统类型下的功能集合
@@ -57,33 +57,33 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="typeId"></param>
     /// <returns></returns>
     [Get("userFunctions")]
-    Task<RESTfulResultControl<List<FunctionInfo>>> GetUserFunctionsAsync(string typeId);
+    Task<RESTfulResultControl<List<FunctionInfo>>> GetUserFunctionsAsync([QueryString]string typeId);
 
     /// <summary>
     /// 获取树形结构的功能列表
     /// </summary>
     /// <param name="systemType">系统类型的OID</param>
     [Get("tree")]
-    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeAsync(string systemType);
+    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeAsync([QueryString]string systemType);
 
     /// <summary>
     /// 获取指定功能下面的树形列表
     /// </summary>
     /// <param name="mainId">指定功能ID</param>
     [Get("treeById")]
-    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeByIdAsync(string mainId);
+    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeByIdAsync([QueryString]string mainId);
                        
     /// <summary>
     /// 根据角色获取树形结构的功能列表
     /// </summary>
     [Get("treeWithRole")]
-    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeWithRoleAsync(string systemType, List<int> roleList);
+    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeWithRoleAsync([QueryString]string systemType, [QueryString]List<int> roleList);
 
     /// <summary>
     /// 根据角色获取树形结构的功能列表
     /// </summary>
     [Get("treeWithUser")]
-    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeWithUserAsync(string systemType, int userId);
+    Task<RESTfulResultControl<List<FunctionNodeInfo>>> GetTreeWithUserAsync([QueryString]string systemType, [QueryString]int userId);
     
     /// <summary>
     /// 批量新增功能权限
@@ -99,7 +99,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <exception cref="DataException"></exception>
     /// <exception cref="Exception"></exception>
     [Post("more")]
-    Task<RESTfulResultControl<bool>> AddMore(FunctionInfo mainInfo, bool isAdd, bool isUpdate, bool isDelete, bool isExport, bool isImport, bool isView);
+    Task<RESTfulResultControl<bool>> AddMore([Body]FunctionInfo mainInfo, [QueryString]bool isAdd, [QueryString]bool isUpdate, [QueryString]bool isDelete, [QueryString]bool isExport, [QueryString]bool isImport, [QueryString]bool isView);
 
     /// <summary>
     /// 删除指定节点及其子节点。如果该节点含有子节点，子节点也会一并删除
@@ -107,7 +107,7 @@ public interface IFunctionHttpService : IHttpDispatchProxy, IBaseHttpService<Fun
     /// <param name="mainId">节点ID</param>
     /// <returns></returns>
     [Delete("withSubNode")]
-    Task<RESTfulResultControl<bool>> DeleteWithSubNodeAsync(string mainId);
+    Task<RESTfulResultControl<bool>> DeleteWithSubNodeAsync([QueryString]string mainId);
 
     /// <summary>
     /// HttpClient 拦截

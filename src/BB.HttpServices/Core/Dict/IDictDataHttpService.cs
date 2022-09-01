@@ -13,7 +13,7 @@ public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
     [Get("findByTypeId")]
-    Task<RESTfulResultControl<List<DictDataInfo>>> FindByTypeIdAsync(string dictTypeId);
+    Task<RESTfulResultControl<List<DictDataInfo>>> FindByTypeIdAsync([QueryString]string dictTypeId);
 
     /// <summary>
     /// 根据字典类型名称获取所有该类型的字典列表集合
@@ -21,7 +21,7 @@ public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// <param name="dictTypeName">字典类型名称</param>
     /// <returns></returns>
     [Get("findByDictType")]
-    Task<RESTfulResultControl<List<DictDataInfo>>> FindByDictTypeAsync(string dictTypeName);
+    Task<RESTfulResultControl<List<DictDataInfo>>> FindByDictTypeAsync([QueryString]string dictTypeName);
 
     /// <summary>
     /// 根据字典类型代码获取所有该类型的字典列表集合
@@ -29,7 +29,7 @@ public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// <param name="dictCode">字典类型代码</param>
     /// <returns></returns>
     [Get("findByDictCode")]
-    Task<RESTfulResultControl<List<DictDataInfo>>> FindByDictCodeAsync(string dictCode);
+    Task<RESTfulResultControl<List<DictDataInfo>>> FindByDictCodeAsync([QueryString]string dictCode);
 
     /// <summary>
     /// 获取所有的字典列表集合(Key为名称，Value为值）
@@ -44,7 +44,7 @@ public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
     [Get("dictByTypeId")]
-    Task<RESTfulResultControl<Dictionary<string, string>>> GetDictByTypeIdAsync(string dictTypeId);
+    Task<RESTfulResultControl<Dictionary<string, string>>> GetDictByTypeIdAsync([QueryString]string dictTypeId);
 
     /// <summary>
     /// 根据字典类型名称获取所有该类型的字典列表集合(Key为名称，Value为值）
@@ -52,7 +52,7 @@ public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// <param name="dictTypeName">字典类型名称</param>
     /// <returns></returns>
     [Get("dictByDictType")]
-    Task<RESTfulResultControl<Dictionary<string, string>>> GetDictByDictTypeAsync(string dictTypeName);
+    Task<RESTfulResultControl<Dictionary<string, string>>> GetDictByDictTypeAsync([QueryString]string dictTypeName);
 
     /// <summary>
     /// 根据字典类型获取对应的CListItem集合
@@ -60,7 +60,7 @@ public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// <param name="dictTypeName"></param>
     /// <returns></returns>
     [Get("dictListItemByDictType")]
-    Task<RESTfulResultControl<List<CListItem>>> GetDictListItemByDictTypeAsync(string dictTypeName);
+    Task<RESTfulResultControl<List<CListItem>>> GetDictListItemByDictTypeAsync([QueryString]string dictTypeName);
 
     /// <summary>
     /// 根据字典类型名称和字典Value值（即字典编码），解析成字典对应的名称
@@ -69,7 +69,7 @@ public interface IDictDataHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// <param name="dictValue">字典Value值，即字典编码</param>
     /// <returns>字典对应的名称</returns>
     [Get("dictName")]
-    Task<RESTfulResultControl<string>> GetDictNameAsync(string dictTypeName, string dictValue);
+    Task<RESTfulResultControl<string>> GetDictNameAsync([QueryString]string dictTypeName, [QueryString]string dictValue);
 
     /// <summary>
     /// HttpClient 拦截

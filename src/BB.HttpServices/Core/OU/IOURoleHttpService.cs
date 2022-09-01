@@ -13,7 +13,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="newOuList">机构列表</param>
     /// <returns></returns>
     [Post("editRoleOUs")]
-    Task<RESTfulResultControl<bool>> EditRoleOUsAsync(int roleId, List<string> newOuList);
+    Task<RESTfulResultControl<bool>> EditRoleOUsAsync([QueryString]int roleId, [Body]List<string> newOuList);
 
     /// <summary>
     /// 根据机构的ID获取对应的角色列表
@@ -21,7 +21,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="ouId">机构的ID</param>
     /// <returns></returns>
     [Get("rolesByOu")]
-    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByOuAsync(string ouId);
+    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByOuAsync([QueryString]string ouId);
 
     /// <summary>
     /// 给指定角色添加机构
@@ -29,7 +29,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="ouId">机构ID</param>
     /// <param name="roleId">角色ID</param>
     [Post("oU")]
-    Task AddOUAsync(string ouId, int roleId);
+    Task AddOUAsync([QueryString]string ouId, [QueryString]int roleId);
 
     /// <summary>
     /// 从角色机构列表中，移除指定的机构
@@ -37,7 +37,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="ouId">机构ID</param>
     /// <param name="roleId">角色ID</param>
     [Delete("ou")]
-    Task RemoveOuAsync(string ouId, int roleId);
+    Task RemoveOuAsync([QueryString]string ouId, [QueryString]int roleId);
 
     /// <summary>
     /// 判断机构是否在指定的角色中
@@ -46,7 +46,7 @@ public interface IOURoleHttpService : IHttpDispatchProxy, IBaseHttpService<OURol
     /// <param name="roleId">角色ID</param>
     /// <returns></returns>
     [Post("ouInRole")]
-    Task<RESTfulResultControl<bool>> OuInRoleAsync(string ouId, int roleId);
+    Task<RESTfulResultControl<bool>> OuInRoleAsync([QueryString]string ouId, [QueryString]int roleId);
 
     /// <summary>
     /// HttpClient 拦截

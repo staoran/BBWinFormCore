@@ -12,7 +12,7 @@ public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<S
     /// <param name="oid">系统OID</param>
     /// <returns></returns>
     [Get("byOid")]
-    Task<RESTfulResultControl<SystemTypeInfo>> FindByOidAsync(string oid);
+    Task<RESTfulResultControl<SystemTypeInfo>> FindByOidAsync([QueryString]string oid);
 
     /// <summary>
     /// 验证系统是否被授权注册
@@ -22,7 +22,7 @@ public interface ISystemTypeHttpService : IHttpDispatchProxy, IBaseHttpService<S
     /// <param name="authorizeAmount">授权数量</param>
     /// <returns></returns>
     [Post("verifySystem")]
-    Task<RESTfulResultControl<bool>> VerifySystemAsync(string serialNumber, string typeId, int authorizeAmount);
+    Task<RESTfulResultControl<bool>> VerifySystemAsync([QueryString]string serialNumber, [QueryString]string typeId, [QueryString]int authorizeAmount);
 
     /// <summary>
     /// HttpClient 拦截

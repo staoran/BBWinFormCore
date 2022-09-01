@@ -12,7 +12,7 @@ public interface IDocNoRuleHttpService : IHttpDispatchProxy, IBaseHttpService<Do
     /// <param name="docCode">单据字头</param>
     /// <returns></returns>
     [Get("sNNo")]
-    Task<RESTfulResultControl<string>> GetSNNoAsync(string docCode);
+    Task<RESTfulResultControl<string>> GetSNNoAsync([QueryString]string docCode);
 
     /// <summary>
     /// HttpClient 拦截

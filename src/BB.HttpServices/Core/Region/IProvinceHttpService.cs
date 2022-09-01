@@ -13,7 +13,7 @@ public interface IProvinceHttpService : IHttpDispatchProxy, IBaseHttpService<Pro
     /// <param name="id">省份ID</param>
     /// <returns></returns>
     [Get("nameById")]
-    Task<RESTfulResultControl<string>> GetNameByIdAsync([Required] int id);
+    Task<RESTfulResultControl<string>> GetNameByIdAsync([QueryString][Required] int id);
 
     /// <summary>
     /// 根据名称获取对应的记录ID
@@ -21,7 +21,7 @@ public interface IProvinceHttpService : IHttpDispatchProxy, IBaseHttpService<Pro
     /// <param name="name">省份名称</param>
     /// <returns></returns>
     [Get("idByName")]
-    Task<RESTfulResultControl<string>> GetIdByNameAsync([Required] string name);
+    Task<RESTfulResultControl<string>> GetIdByNameAsync([QueryString][Required] string name);
 
     /// <summary>
     /// HttpClient 拦截

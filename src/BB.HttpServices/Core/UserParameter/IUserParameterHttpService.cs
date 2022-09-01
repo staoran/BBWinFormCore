@@ -13,7 +13,7 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     /// <param name="info">信息对象</param>
     /// <returns></returns>
     [Post("saveParamater")]
-    Task<RESTfulResultControl<bool>> SaveParamaterAsync(UserParameterInfo info);
+    Task<RESTfulResultControl<bool>> SaveParamaterAsync([Body]UserParameterInfo info);
 
     /// <summary>
     /// 根据类名称和用户标识获取参数配置内容
@@ -22,7 +22,7 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     /// <param name="creator">用户标识</param>
     /// <returns></returns>
     [Get("loadParameter")]
-    Task<RESTfulResultControl<string>> LoadParameterAsync([Required] string name, string creator = null);
+    Task<RESTfulResultControl<string>> LoadParameterAsync([QueryString][Required] string name, [QueryString]string creator = null);
 
     /// <summary>
     /// HttpClient 拦截

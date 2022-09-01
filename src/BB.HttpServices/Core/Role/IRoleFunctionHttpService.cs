@@ -12,7 +12,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="functionId">对应功能ID</param>
     /// <returns></returns>
     [Get("rolesByFunction")]
-    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByFunctionAsync(string functionId);
+    Task<RESTfulResultControl<List<RoleInfo>>> GetRolesByFunctionAsync([QueryString]string functionId);
 
     /// <summary>
     /// 给指定角色添加功能点
@@ -20,7 +20,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="functionId">功能ID</param>
     /// <param name="roleId">角色ID</param>
     [Post("function")]
-    Task AddFunctionAsync(string functionId, int roleId);
+    Task AddFunctionAsync([QueryString]string functionId, [QueryString]int roleId);
 
     /// <summary>
     /// 从角色操作功能列表中，移除对应的功能
@@ -28,7 +28,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="functionId">功能ID</param>
     /// <param name="roleId">角色ID</param>
     [Delete("function")]
-    Task RemoveFunctionAsync(string functionId, int roleId);
+    Task RemoveFunctionAsync([QueryString]string functionId, [QueryString]int roleId);
 
     /// <summary>
     /// 为角色指定新的操作功能列表
@@ -37,7 +37,7 @@ public interface IRoleFunctionHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="newFunctionList">功能列表</param>
     /// <returns></returns>
     [Post("editRoleFunctions")]
-    Task<RESTfulResultControl<bool>> EditRoleFunctionsAsync(int roleId, List<string> newFunctionList);
+    Task<RESTfulResultControl<bool>> EditRoleFunctionsAsync([QueryString]int roleId, [Body]List<string> newFunctionList);
 
     /// <summary>
     /// HttpClient 拦截

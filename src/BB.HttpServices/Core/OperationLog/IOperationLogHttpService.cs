@@ -16,7 +16,7 @@ public interface IOperationLogHttpService : IHttpDispatchProxy, IBaseHttpService
     /// <param name="note">操作详细表述</param>
     /// <returns></returns>
     [Post("onOperationLog")]
-    Task<RESTfulResultControl<bool>> OnOperationLog(string userId, string tableName, string operationType, string note);
+    Task<RESTfulResultControl<bool>> OnOperationLog([QueryString]string userId, [QueryString]string tableName, [QueryString]string operationType, [QueryString]string note);
 
     /// <summary>
     /// HttpClient 拦截

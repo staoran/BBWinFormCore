@@ -12,7 +12,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// <param name="ouId">用户机构ID方式</param>
     /// <returns></returns>
     [Get("simpleUsersByOu")]
-    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUsersByOuAsync(string ouId);
+    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUsersByOuAsync([QueryString]string ouId);
 
     /// <summary>
     /// 通过机构ID获取对应的用户列表
@@ -20,7 +20,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// <param name="ouId">机构ID</param>
     /// <returns></returns>
     [Get("usersByOu")]
-    Task<RESTfulResultControl<List<UserInfo>>> GetUsersByOuAsync(string ouId);
+    Task<RESTfulResultControl<List<UserInfo>>> GetUsersByOuAsync([QueryString]string ouId);
 
     /// <summary>
     /// 在机构中移除指定的用户
@@ -28,7 +28,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// <param name="userId">用户ID</param>
     /// <param name="ouId">机构ID</param>
     [Delete("user")]
-    Task RemoveUserAsync(int userId, string ouId);
+    Task RemoveUserAsync([QueryString]int userId, [QueryString]string ouId);
 
     /// <summary>
     /// HttpClient 拦截

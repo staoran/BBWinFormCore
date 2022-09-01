@@ -18,7 +18,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("tableKeyList")]
-    Task<RESTfulResultControl<IEnumerable<string>>> GetTableKeyList(string name);
+    Task<RESTfulResultControl<IEnumerable<string>>> GetTableKeyList([QueryString]string name);
                        
     /// <summary>
     /// 获取表的自增字段
@@ -26,7 +26,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("tableIdentityList")]
-    Task<RESTfulResultControl<List<string>>> GetTableIdentityList(string name);
+    Task<RESTfulResultControl<List<string>>> GetTableIdentityList([QueryString]string name);
                        
     /// <summary>
     /// 获取表的注释
@@ -34,7 +34,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("tableComment")]
-    Task<RESTfulResultControl<string>> GetTableComment(string name);
+    Task<RESTfulResultControl<string>> GetTableComment([QueryString]string name);
                        
     /// <summary>
     /// 获取表的控件配置模版
@@ -42,7 +42,7 @@ public interface IFieldControlConfigHttpService : IHttpDispatchProxy, IBaseHttpS
     /// <param name="name">表名</param>
     /// <returns></returns>
     [Get("fieldControlConfigs")]
-    Task<RESTfulResultControl<IEnumerable<Entity.Security.FieldControlConfig>>> GetFieldControlConfigs(string name);
+    Task<RESTfulResultControl<IEnumerable<Entity.Security.FieldControlConfig>>> GetFieldControlConfigs([QueryString]string name);
 
     /// <summary>
     /// 获取数据库的全部表名称和注释

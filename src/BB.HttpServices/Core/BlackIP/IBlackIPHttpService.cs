@@ -12,7 +12,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="id">黑名单ID</param>
     /// <returns></returns>
     [Get("userIdList")]
-    Task<RESTfulResultControl<string>> GetUserIdListAsync(string id);
+    Task<RESTfulResultControl<string>> GetUserIdListAsync([QueryString]string id);
 
     /// <summary>
     /// 根据名单ID获取对应的用户列表
@@ -20,7 +20,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="id"></param>
     /// <returns></returns>
     [Get("simpleUserByBlackIp")]
-    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUserByBlackIpAsync(string id);
+    Task<RESTfulResultControl<List<SimpleUserInfo>>> GetSimpleUserByBlackIpAsync([QueryString]string id);
 
     /// <summary>
     /// 新增黑用户
@@ -29,7 +29,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="blackId"></param>
     /// <returns></returns>
     [Post("user")]
-    Task AddUserAsync(int userId, string blackId);
+    Task AddUserAsync([QueryString]int userId, [QueryString]string blackId);
 
     /// <summary>
     /// 移除黑用户
@@ -38,7 +38,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="blackId"></param>
     /// <returns></returns>
     [Delete("user")]
-    Task RemoveUserAsync(int userId, string blackId);
+    Task RemoveUserAsync([QueryString]int userId, [QueryString]string blackId);
         
     /// <summary>
     /// 根据用户ID和授权类型获取列表
@@ -47,7 +47,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="type">授权类型</param>
     /// <returns></returns>
     [Get("byUser")]
-    Task<RESTfulResultControl<List<BlackIpInfo>>> FindByUserAsync(int userId, AuthrizeType type);
+    Task<RESTfulResultControl<List<BlackIpInfo>>> FindByUserAsync([QueryString]int userId, [QueryString]AuthrizeType type);
 
     /// <summary>
     /// 检验IP的可访问性(白名单优先于黑名单），如果同时白名单、黑名名单都有同一IP，则也允许访问。
@@ -56,7 +56,7 @@ public interface IBlackIPHttpService : IHttpDispatchProxy, IBaseHttpService<Blac
     /// <param name="userId"></param>
     /// <returns></returns>
     [Post("validateIpAccess")]
-    Task<RESTfulResultControl<bool>> ValidateIpAccessAsync(string ipAddress, int userId);
+    Task<RESTfulResultControl<bool>> ValidateIpAccessAsync([QueryString]string ipAddress, [QueryString]int userId);
 
     /// <summary>
     /// HttpClient 拦截
