@@ -9,6 +9,7 @@ using BB.BaseUI.BaseUI;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.BaseUI.WinForm;
+using BB.HttpServices.Base;
 using BB.Starter.UI.SYS;
 using BB.Tools.Const;
 using BB.Tools.Encrypt;
@@ -52,9 +53,12 @@ public class Portal
                         // 驼峰命名
                         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                         // 时间格式化
-                        options.JsonSerializerOptions.Converters.AddDateFormatString("yyyy-MM-dd HH:mm:ss");
+                        options.JsonSerializerOptions.Converters.AddDateFormatString("yyyy-MM-dd HH:mm:ss.fff");
                         // 忽略循环引用
                         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                        // 自定义反序列化
+                        options.JsonSerializerOptions.Converters.Add(new ConverterBoolean());
+                        options.JsonSerializerOptions.Converters.Add(new ConverterObject());
                     })
                  .AddRemoteRequest()
                  .AddHttpClient(string.Empty, client =>
