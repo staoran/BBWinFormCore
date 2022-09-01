@@ -1021,11 +1021,11 @@ public partial class WinGridView : XtraUserControl
     {
         if (!DesignMode)
         {
-            LicenseCheckResult result = LicenseTool.CheckLicense();
-            if (result.IsValided)
-            {
-                    
-            }
+            // LicenseCheckResult result = LicenseTool.CheckLicense();
+            // if (result.IsValided)
+            // {
+            //         
+            // }
             contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             gridControl1.MouseClick += dataGridView1_MouseClick;
             gridControl1.MouseDoubleClick += dataGridView1_MouseDoubleClick;

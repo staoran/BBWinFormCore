@@ -1131,11 +1131,12 @@ public partial class WinGridViewPager : XtraUserControl
             pager.ExportCurrent += pager_ExportCurrent;
             pager.ExportAll += pager_ExportAll;
 
-            LicenseCheckResult result = LicenseTool.CheckLicense();
-            if (result.IsValided)
-            {
-                    
-            }
+            // // 许可校验
+            // LicenseCheckResult result = LicenseTool.CheckLicense();
+            // if (result.IsValided)
+            // {
+            //         
+            // }
             contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             gridControl1.MouseClick += dataGridView1_MouseClick;
             gridControl1.MouseDoubleClick += dataGridView1_MouseDoubleClick;
