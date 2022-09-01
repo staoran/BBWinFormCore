@@ -5,6 +5,10 @@
 /// </summary>
 public class PageResult<T> : PagerInfo
 {
+    public PageResult()
+    {
+    }
+
     public PageResult(IEnumerable<T> rows)
     {
         IEnumerable<T> enumerable = rows.ToList();
