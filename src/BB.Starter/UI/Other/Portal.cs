@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -24,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 #if DEBUG
 // 控制台输出，需加入此库
+using System.Runtime.InteropServices;
 #endif
 
 namespace BB.Starter.UI.Other;
@@ -44,7 +44,7 @@ public class Portal
     /// 应用程序的主入口点。
     /// </summary>
     [STAThread]
-    private static Task Main(string[] args)
+    private static void Main(string[] args)
     {
         Serve.Run(GenericRunOptions.DefaultSilence.ConfigureBuilder(builder =>
             builder.ConfigureServices((_, services) => services
@@ -116,7 +116,6 @@ public class Portal
             FreeConsole();
 #endif
         });
-        return Task.CompletedTask;
     }
 
     /// <summary>
