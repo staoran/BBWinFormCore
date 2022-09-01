@@ -227,10 +227,6 @@ public interface IBaseHttpService<T>
     [Interceptor(InterceptorTypes.Client)]
     static void OnBaseClientCreating(HttpClient req)
     {
-        if (req.BaseAddress == null)
-        {
-            throw Oops.Oh("请求 Uri 为空");
-        }
         var builder = new UriBuilder(req.BaseAddress!);
         var path = req.BaseAddress!.AbsolutePath;
         var name = typeof(T).Name.Replace("Info", string.Empty).Replace("Entity", string.Empty);
@@ -241,14 +237,16 @@ public interface IBaseHttpService<T>
     /// <summary>
     /// 请求之前拦截
     /// </summary>
+    /// <param name="client"></param>
     /// <param name="req"></param>
     [Interceptor(InterceptorTypes.Request)]
-    static async void OnBaseRequest(HttpRequestMessage req)
+    static async void OnBaseRequest(HttpClient client, HttpRequestMessage req)
     {
-        if (req.RequestUri == null)
-        {
-            throw Oops.Oh("请求 Uri 为空");
-        }
+        // var builder = new UriBuilder(, UriKind.RelativeOrAbsolute);
+        // var path = req.BaseAddress!.AbsolutePath;
+        // var name = typeof(T).Name.Replace("Info", string.Empty).Replace("Entity", string.Empty);
+        // builder.Path = $"{path}{string.Concat(name.First().ToString().ToLower(), name.AsSpan(1))}/";
+        // req.BaseAddress = builder.Uri;
 
         var token = await Cache.Instance.GetAsync<string>("access-token");
         if (!token.IsNullOrEmpty())
@@ -262,9 +260,10 @@ public interface IBaseHttpService<T>
     /// <summary>
     /// 请求成功拦截
     /// </summary>
+    /// <param name="client"></param>
     /// <param name="res"></param>
     [Interceptor(InterceptorTypes.Response)]
-    static async void OnBaseResponsing(HttpResponseMessage res)
+    static async void OnBaseResponsing(HttpClient client, HttpResponseMessage res)
     {
         if ((int)res.StatusCode >= 400)
         {
@@ -315,10 +314,11 @@ public interface IBaseHttpService<T>
     /// <summary>
     /// 请求异常拦截
     /// </summary>
+    /// <param name="client"></param>
     /// <param name="res"></param>
     /// <param name="errors"></param>
     [Interceptor(InterceptorTypes.Exception)]
-    static void OnBaseException(HttpResponseMessage res, string errors)
+    static void OnBaseException(HttpClient client, HttpResponseMessage res, string errors)
     {
         throw Oops.Bah(errors);
     }
