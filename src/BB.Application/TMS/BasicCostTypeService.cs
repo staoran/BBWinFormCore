@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 费用类型 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("费用与账单")]
 public class BasicCostTypeService : BaseService<BasicCostType>, IDynamicApiController, ITransient
 {
     public BasicCostTypeService(BaseRepository<BasicCostType> repository, IValidator<BasicCostType> validator) : base(repository, validator)

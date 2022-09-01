@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 公式定义 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("线路与报价")]
 public class BasicTranslateWordsService : BaseService<BasicTranslateWords>, IDynamicApiController, ITransient
 {
     public BasicTranslateWordsService(BaseRepository<BasicTranslateWords> repository, IValidator<BasicTranslateWords> validator) : base(repository, validator)

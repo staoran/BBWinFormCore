@@ -17,6 +17,7 @@ using Furion.EventBus;
 
 namespace BB.Core.Services.User;
 
+[ApiDescriptionSettings("用户与机构")]
 public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransient
 {
     private const string SimpleUserColumnString = "ID,Name,Password,FullName,HandNo,MobilePhone,Email,Dept_ID,Company_ID";

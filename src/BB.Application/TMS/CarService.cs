@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 车辆档案 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("运输基础资料")]
 public class CarService : BaseService<Car>, IDynamicApiController, ITransient
 {
     public CarService(BaseRepository<Car> repository, IValidator<Car> validator) : base(repository, validator)

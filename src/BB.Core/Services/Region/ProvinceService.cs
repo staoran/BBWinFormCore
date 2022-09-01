@@ -11,6 +11,7 @@ namespace BB.Core.Services.Region;
 /// <summary>
 /// 中国省份业务对象类
 /// </summary>
+[ApiDescriptionSettings("基础资料")]
 public class ProvinceService : BaseService<ProvinceInfo>, IDynamicApiController, ITransient
 {
     public ProvinceService(BaseRepository<ProvinceInfo> repository, IValidator<ProvinceInfo> validator) : base(repository, validator)

@@ -12,6 +12,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 费用调整 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("费用与账单")]
 public class CostMsgService : BaseMultiService<CostMsg, CostMsgs>, IDynamicApiController, ITransient
 {
     public CostMsgService(BaseRepository<CostMsg> repository, BaseRepository<CostMsgs> childRepository, IValidator<CostMsg> validator, IValidator<CostMsgs> childValidator)

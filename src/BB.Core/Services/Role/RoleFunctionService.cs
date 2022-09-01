@@ -8,6 +8,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.Role;
 
+[ApiDescriptionSettings("权限")]
 public class RoleFunctionService : BaseService<RoleFunction>, IDynamicApiController, ITransient
 {
     public RoleFunctionService(BaseRepository<RoleFunction> repository, IValidator<RoleFunction> validator) : base(repository, validator)

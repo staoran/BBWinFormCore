@@ -11,6 +11,7 @@ namespace BB.Core.Services.Region;
 /// <summary>
 /// 行政区域
 /// </summary>
+[ApiDescriptionSettings("基础资料")]
 public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITransient
 {
     public RegionService(BaseRepository<RegionInfo> repository, IValidator<RegionInfo> validator) : base(repository, validator)

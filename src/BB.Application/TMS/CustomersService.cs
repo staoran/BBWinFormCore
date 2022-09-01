@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 客户收货人 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("客户基础资料")]
 public class CustomersService : BaseService<Customers>, IDynamicApiController, ITransient
 {
     public CustomersService(BaseRepository<Customers> repository, IValidator<Customers> validator) : base(repository, validator)

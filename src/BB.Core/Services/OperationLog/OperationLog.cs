@@ -13,6 +13,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.OperationLog;
 
+[ApiDescriptionSettings("日志")]
 public class OperationLog : BaseService<OperationLogInfo>, IDynamicApiController, ITransient
 {
     private readonly UserService _userService;

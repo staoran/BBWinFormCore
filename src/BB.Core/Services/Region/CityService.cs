@@ -11,6 +11,7 @@ namespace BB.Core.Services.Region;
 /// <summary>
 /// 城市业务对象类
 /// </summary>
+[ApiDescriptionSettings("基础资料")]
 public class CityService : BaseService<CityInfo>, IDynamicApiController, ITransient
 {
     public CityService(BaseRepository<CityInfo> repository, IValidator<CityInfo> validator) : base(repository, validator)

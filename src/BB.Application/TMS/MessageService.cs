@@ -12,6 +12,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 消息记录 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("问题异常")]
 public class MessageService : BaseMultiService<Message, Messages>, IDynamicApiController, ITransient
 {
     public MessageService(BaseRepository<Message> repository, BaseRepository<Messages> childRepository, IValidator<Message> validator, IValidator<Messages> childValidator)

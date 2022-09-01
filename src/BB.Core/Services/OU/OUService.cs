@@ -13,6 +13,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.OU;
 
+[ApiDescriptionSettings("用户与机构")]
 public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
 {
     private readonly UserRoleService _userRoleService;

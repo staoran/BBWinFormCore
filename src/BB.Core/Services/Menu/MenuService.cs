@@ -12,6 +12,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.Menu;
 
+[ApiDescriptionSettings("权限")]
 public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransient
 {
     private readonly UserRoleService _userRoleService;

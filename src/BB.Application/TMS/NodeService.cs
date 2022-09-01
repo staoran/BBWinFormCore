@@ -12,6 +12,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 网点资料 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("运输基础资料")]
 public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController, ITransient
 {
     private readonly DocNoRuleService _docNoRuleService;

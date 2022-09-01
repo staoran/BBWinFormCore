@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 区域分组 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("线路与报价")]
 public class BasicGroupListService : BaseService<BasicGroupList>, IDynamicApiController, ITransient
 {
     public BasicGroupListService(BaseRepository<BasicGroupList> repository, IValidator<BasicGroupList> validator) : base(repository, validator)

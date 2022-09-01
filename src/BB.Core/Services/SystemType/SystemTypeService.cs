@@ -9,6 +9,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.SystemType;
 
+[ApiDescriptionSettings("基础资料")]
 public class SystemTypeService : BaseService<SystemTypeInfo>, IDynamicApiController, ITransient
 {
     private readonly RoleService _roleService;

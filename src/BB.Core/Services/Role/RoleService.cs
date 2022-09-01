@@ -11,6 +11,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.Role;
 
+[ApiDescriptionSettings("权限")]
 public class RoleService : BaseService<RoleInfo>, IDynamicApiController, ITransient
 {
 	/// <summary>

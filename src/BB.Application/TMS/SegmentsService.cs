@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 线路报价明细 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("线路与报价")]
 public class SegmentsService : BaseService<Segments>, IDynamicApiController, ITransient
 {
     public SegmentsService(BaseRepository<Segments> repository, IValidator<Segments> validator) : base(repository, validator)

@@ -12,6 +12,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 承运商资料 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("运输基础资料")]
 public class LogisticCompanyService : BaseService<LogisticCompany>, IDynamicApiController, ITransient
 {
     public LogisticCompanyService(BaseRepository<LogisticCompany> repository, IValidator<LogisticCompany> validator) : base(repository, validator)

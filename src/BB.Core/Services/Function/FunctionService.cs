@@ -14,6 +14,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.Function;
 
+[ApiDescriptionSettings("权限")]
 public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController, ITransient
 {
     private readonly UserRoleService _userRoleService;

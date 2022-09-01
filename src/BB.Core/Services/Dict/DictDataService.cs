@@ -11,6 +11,7 @@ namespace BB.Core.Services.Dict;
 /// <summary>
 /// 字典数据对象
 /// </summary>
+[ApiDescriptionSettings("基础资料")]
 public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController, ITransient
 {
     public DictDataService(BaseRepository<DictDataInfo> repository, IValidator<DictDataInfo> validator) : base(repository, validator)

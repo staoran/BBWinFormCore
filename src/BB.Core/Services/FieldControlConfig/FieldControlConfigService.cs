@@ -7,6 +7,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.FieldControlConfig;
 
+[ApiDescriptionSettings("基础资料")]
 public class FieldControlConfigService : BaseService<Entity.Security.FieldControlConfig>, IDynamicApiController, ITransient
 {
     public FieldControlConfigService(BaseRepository<Entity.Security.FieldControlConfig> repository, IValidator<Entity.Security.FieldControlConfig> validator) : base(repository, validator)

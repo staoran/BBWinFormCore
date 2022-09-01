@@ -11,6 +11,7 @@ namespace BB.Core.Services.UserParameter;
 /// <summary>
 /// 用户参数配置
 /// </summary>
+[ApiDescriptionSettings("用户与机构")]
 public class UserParameterService : BaseService<UserParameterInfo>, IDynamicApiController, ITransient
 {
     public UserParameterService(BaseRepository<UserParameterInfo> repository, IValidator<UserParameterInfo> validator) : base(repository, validator)

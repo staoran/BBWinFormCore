@@ -12,6 +12,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.BlackIP;
 
+[ApiDescriptionSettings("权限")]
 public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, ITransient
 {
     private readonly UserService _userService;

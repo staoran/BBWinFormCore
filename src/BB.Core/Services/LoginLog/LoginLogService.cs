@@ -13,6 +13,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.LoginLog;
 
+[ApiDescriptionSettings("日志")]
 public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController, ITransient
 {
     private readonly Lazy<UserRoleService> _userRoleService;

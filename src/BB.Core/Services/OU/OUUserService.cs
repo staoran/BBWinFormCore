@@ -7,6 +7,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.OU;
 
+[ApiDescriptionSettings("用户与机构")]
 public class OUUserService : BaseService<OUUserEntity>, IDynamicApiController, ITransient
 {
     public OUUserService(BaseRepository<OUUserEntity> repository, IValidator<OUUserEntity> validator) : base(repository, validator)

@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 公式报价 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("线路与报价")]
 public class BasicQuotationService : BaseMultiService<BasicQuotation, BasicQuotations>, IDynamicApiController, ITransient
 {
     public BasicQuotationService(BaseRepository<BasicQuotation> repository, BaseRepository<BasicQuotations> childRepository, IValidator<BasicQuotation> validator, IValidator<BasicQuotations> childValidator)

@@ -12,6 +12,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 预付金管理 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("费用与账单")]
 public class CostBillService : BaseService<CostBill>, IDynamicApiController, ITransient
 {
     public CostBillService(BaseRepository<CostBill> repository, IValidator<CostBill> validator) : base(repository, validator)

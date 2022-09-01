@@ -10,6 +10,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.OperationLogSetting;
 
+[ApiDescriptionSettings("日志")]
 public class OperationLogSettingService : BaseService<OperationLogSettingInfo>, IDynamicApiController, ITransient
 {
     public OperationLogSettingService(BaseRepository<OperationLogSettingInfo> repository, IValidator<OperationLogSettingInfo> validator) : base(repository, validator)

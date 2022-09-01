@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 网点区域 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("运输基础资料")]
 public class NodesService : BaseService<Nodes>, IDynamicApiController, ITransient
 {
     public NodesService(BaseRepository<Nodes> repository, IValidator<Nodes> validator) : base(repository, validator)

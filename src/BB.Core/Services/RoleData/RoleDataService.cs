@@ -9,6 +9,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.RoleData;
 
+[ApiDescriptionSettings("权限")]
 public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController, ITransient
 {
     private readonly UserRoleService _userRoleService;

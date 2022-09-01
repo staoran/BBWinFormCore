@@ -11,6 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 单号规则 业务逻辑类
 /// </summary>
+[ApiDescriptionSettings("业务基础资料")]
 public class DocNoRuleService : BaseService<DocNoRule>, IDynamicApiController, ITransient
 {
     public DocNoRuleService(BaseRepository<DocNoRule> repository, IValidator<DocNoRule> validator) : base(repository, validator)

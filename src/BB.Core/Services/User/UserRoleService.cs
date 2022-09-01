@@ -8,6 +8,7 @@ using FluentValidation;
 
 namespace BB.Core.Services.User;
 
+[ApiDescriptionSettings("用户与机构")]
 public class UserRoleService : BaseService<UserRoleEntity>, IDynamicApiController, ITransient
 {
     public UserRoleService(BaseRepository<UserRoleEntity> repository, IValidator<UserRoleEntity> validator) : base(repository, validator)
