@@ -4,9 +4,9 @@ namespace BB.Starter.UI.SplashScreen;
 
 public class Splasher
 {
-    private static Form _mSplashForm = null;
-    private static ISplashForm _mSplashInterface = null;
-    private static Thread _mSplashThread = null;
+    private static Form? _mSplashForm;
+    private static ISplashForm? _mSplashInterface;
+    private static Thread? _mSplashThread;
     private static string _mTempStatus = string.Empty;
 
     /// <summary>
@@ -67,19 +67,20 @@ public class Splasher
         }
         catch (Exception)
         {
+            // ignored
         }
+
         _mSplashThread = null;
         _mSplashForm = null;
     }
 
     private static void CreateInstance(Type formType)
     {
-
-        object obj = formType.InvokeMember(null,
+        object? obj = formType.InvokeMember(string.Empty,
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
             BindingFlags.Instance | BindingFlags.CreateInstance, null, null, null);
-        _mSplashForm = obj as Form;
+        _mSplashForm = obj as Form ?? throw new Exception("Splash Form is null");
         _mSplashInterface = obj as ISplashForm;
         if (_mSplashForm == null)
         {
