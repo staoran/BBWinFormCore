@@ -284,17 +284,17 @@ public static class SqlSugarDb
 
         #region SQL 执行时日志
 
-        // SQL 执行前事件
-        db.Aop.OnLogExecuting = (sql, pars) =>
-        {
-            if (sql.StartsWith("SELECT", StringComparison.CurrentCultureIgnoreCase))
-            {
-                if (ValidateUtil.HasInjectionData(sql))
-                {
-                    throw Oops.Oh("SQL注入攻击：" + sql);
-                }
-            }
-        };
+        // // SQL 执行前事件
+        // db.Aop.OnLogExecuting = (sql, pars) =>
+        // {
+        //     if (sql.StartsWith("SELECT", StringComparison.CurrentCultureIgnoreCase))
+        //     {
+        //         if (ValidateUtil.HasInjectionData(sql))
+        //         {
+        //             throw Oops.Oh("SQL注入攻击：" + sql);
+        //         }
+        //     }
+        // };
 
         #endregion
 
