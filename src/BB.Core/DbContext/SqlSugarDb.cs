@@ -10,7 +10,6 @@ using BB.Tools.Const;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
-using BB.Tools.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar.Extensions;
 
@@ -208,11 +207,11 @@ public static class SqlSugarDb
                                                             && !t.IsAbstract && (t.BaseType == typeof(BaseEntity) ||
                                                                 t.BaseType == typeof(BaseEntity<>))).ToList();
 
-            var userCompanyId = App.User.FindFirstValue(nameof(LoginUserInfo.CompanyId));
+            var userCompanyId = App.User?.FindFirstValue(nameof(LoginUserInfo.CompanyId));
             // todo 用缓存，程序启动就缓存，精简 App.User 信息，尽量不在其中写角色和数据权限，就用 userId 配合缓存的权限，用滑动的缓存
             // todo 每次查询都会循环，需优化
-            var roles = App.User.FindFirstValue(nameof(LoginUserInfo.RoleIdList)).Split(",");
-            if (!roles.Contains(RoleInfo.SUPER_ADMIN_NAME))
+            var roles = App.User?.FindFirstValue(nameof(LoginUserInfo.RoleIdList))?.Split(",");
+            if (roles != null && !roles.Contains(RoleInfo.SUPER_ADMIN_NAME) && !userCompanyId.IsNullOrEmpty())
             {
                 // 循环配置查询过滤器
                 foreach (Type entityType in entityTypes)
@@ -223,7 +222,7 @@ public static class SqlSugarDb
 
                     // 构建动态过滤语句
                     var lambda = DynamicExpressionParser.ParseLambda(entityType, typeof(bool), $"{dataPermissionKey} == @0",
-                        userCompanyId);
+                        userCompanyId!);
                     // 网点机构过滤
                     db.QueryFilter.Add(new TableFilterItem<object>(entityType, lambda));
                 }

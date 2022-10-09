@@ -36,7 +36,10 @@ public class BaseMultiService<T, T1> : BaseService<T>, ITransient
     public override async Task<bool> InsertAsync(T obj)
     {
         await CheckEntityAsync(OperationType.Add, obj);
-        obj.ChildTableList?.ForEach(x => CheckEntityAsync(OperationType.Add, x));
+        if (obj.ChildTableList != null)
+        {
+            await Parallel.ForEachAsync(obj.ChildTableList, async (x, _) => await CheckEntityAsync(OperationType.Add, x));
+        }
 
         return await Repository.Db.InsertNav(obj)
             .Include(x => x.ChildTableList)

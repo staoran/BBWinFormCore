@@ -5,12 +5,13 @@ namespace BB.Core.Filter;
 
 public class ObjectModelBinder : IModelBinder
 {
-    public async Task BindModelAsync(ModelBindingContext bindingContext)
+    public Task BindModelAsync(ModelBindingContext bindingContext)
     {
         var val = bindingContext.ValueProvider.GetValue(
             bindingContext.ModelName
         );
         bindingContext.Model = val.FirstValue;
         bindingContext.Result = ModelBindingResult.Success(bindingContext.Model);
+        return Task.CompletedTask;
     }
 }
