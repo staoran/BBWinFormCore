@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BB.Tools.Entity;
+using BB.Tools.Format;
 
 namespace BB.Core.DbContext;
 
@@ -51,7 +52,7 @@ public static class ConditionalModelExtensions
                     {
                         // 如果有逗号分隔，转数组后，取有效值做相应运算
                         var values = value.Split(",");
-                        if (!values[0].IsNullOrEmpty())
+                        if (!values[0].IsNullOrEmpty() && values[0].IsDateTime())
                         {
                             conditionalModels.Add(new ConditionalModel()
                             {
@@ -60,7 +61,7 @@ public static class ConditionalModelExtensions
                                 FieldValue = values[0]
                             });
                         }
-                        if (!values[1].IsNullOrEmpty())
+                        if (!values[1].IsNullOrEmpty() && values[1].IsDateTime())
                         {
                             conditionalModels.Add(new ConditionalModel()
                             {
@@ -72,28 +73,45 @@ public static class ConditionalModelExtensions
                     }
                     else
                     {
-                        // 如果没有逗号分隔，默认按最小值处理，做大于等于运算
-                        conditionalModels.Add(new ConditionalModel()
+                        if ( value.IsDateTime())
                         {
-                            FieldName = fieldConditionType.FieldName,
-                            ConditionalType = ConditionalType.GreaterThanOrEqual,
-                            FieldValue = value
-                        });
+                            // 如果没有逗号分隔，默认按最小值处理，做大于等于运算
+                            conditionalModels.Add(new ConditionalModel()
+                            {
+                                FieldName = fieldConditionType.FieldName,
+                                ConditionalType = ConditionalType.GreaterThanOrEqual,
+                                FieldValue = value
+                            });
+                        }
                     }
                 }
                 else
                 {
-                    conditionalModels.Add(new ConditionalModel()
+                    if (value.IsDateTime())
                     {
-                        FieldName = fieldConditionType.FieldName,
-                        ConditionalType = fieldConditionType.SqlOperator.ToConditionalType(),
-                        FieldValue = value
-                    });
+                        conditionalModels.Add(new ConditionalModel()
+                        {
+                            FieldName = fieldConditionType.FieldName,
+                            ConditionalType = fieldConditionType.SqlOperator.ToConditionalType(),
+                            FieldValue = value
+                        });
+                    }
                 }
             }
         }
 
         return conditionalModels;
+    }
+
+    /// <summary>
+    /// 是时间日期，并且合法(大于1900年)
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    private static bool IsDateTime(this string str)
+    {
+        var date = str.ObjToDateNull();
+        return date == null || date > new DateTime(1900, 1, 1);
     }
 
     /// <summary>
