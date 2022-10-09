@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Filter;
@@ -111,37 +113,19 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     }
 
     /// <summary>
-    /// 构造一个简单用户信息类集合
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    [NonAction]
-    private async Task<List<SimpleUserInfo>> FillSimpleUsersAsync(string sql)
-    {
-        return await Repository.Db.SqlQueryable<UserInfo>(sql).Select<SimpleUserInfo>().ToListAsync();
-    }
-
-    /// <summary>
     /// 根据查询条件获取简单用户对象列表
     /// </summary>
-    /// <param name="condition">查询条件</param>
+    /// <param name="expression">查询条件</param>
     /// <returns></returns>
     [NonAction]
-    public async Task<List<SimpleUserInfo>> FindSimpleUsersAsync(string condition)
+    public async Task<List<SimpleUserInfo>> FindSimpleUsersAsync(Expression<Func<UserInfo,bool>> expression)
     {
-        //串连条件语句为一个完整的Sql语句
-        string sql = $"Select {SimpleUserColumnString} From {Repository.TableName} Where Deleted = 0 ";
-        if (!string.IsNullOrEmpty(condition))
-        {
-            sql += $" AND {condition} ";
-        }
-        string orderBy = Repository.SortField.IsNullOrEmpty() ? string.Empty : $"{Repository.SortField} {(Repository.IsDescending ? "desc" : "asc")}";
-        if (!string.IsNullOrEmpty(condition))
-        {
-            sql += $" Order by {orderBy}";
-        }
-
-        return await FillSimpleUsersAsync(sql);
+        return await Repository.AsQueryable()
+            .WhereIF(expression != null, expression)
+            .Where(x => !x.Deleted)
+            .OrderByIF(Repository.SortField.IsNullOrEmpty(), $"{Repository.SortField} {(Repository.IsDescending ? "desc" : "asc")}")
+            .Select<SimpleUserInfo>(SimpleUserColumnString)
+            .ToListAsync();
     }
 
     /// <summary>
@@ -161,8 +145,8 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> GetSimpleUsersAsync(string userIds)
     {
-        string condition = $" ID In ({userIds})";
-        return await FindSimpleUsersAsync(condition);
+        var ids = userIds.Split(",");
+        return await FindSimpleUsersAsync(x => ids.Contains(x.ID.ToString()));
     }
                
     /// <summary>
@@ -172,8 +156,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<UserInfo>> FindByDeptAsync(string ouId)
     {
-        string condition = $"Dept_ID='{ouId}' ";
-        return await FindAsync(condition);
+        return await FindAsync(x => x.DeptId == ouId);
     }
 
     /// <summary>
@@ -183,8 +166,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<UserInfo>> FindByCompanyAsync(string companyId)
     {
-        string condition = $"Company_ID='{companyId}' ";
-        return await FindAsync(condition);
+        return await FindAsync(x => x.CompanyId == companyId);
     }
 
     /// <summary>
@@ -194,8 +176,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> FindSimpleUsersByCompanyAsync(string companyId)
     {
-        string condition = $"Company_ID='{companyId}' ";
-        return await FindSimpleUsersAsync(condition);
+        return await FindSimpleUsersAsync(x => x.CompanyId == companyId);
     }
 
     /// <summary>
@@ -205,8 +186,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<SimpleUserInfo>> FindSimpleUsersByDeptAsync(string ouId)
     {
-        string condition = $"Dept_ID='{ouId}' ";
-        return await FindSimpleUsersAsync(condition);
+        return await FindSimpleUsersAsync(x => x.DeptId == ouId);
     }
 
     /// <summary>
@@ -219,8 +199,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         UserInfo info = null;
         if (!string.IsNullOrEmpty(userName))
         {
-            string condition = $"Name ='{userName}' ";
-            info = await FindSingleAsync(condition);
+            info = await FindSingleAsync(x => x.Name == userName);
         }
         return info;
     }
@@ -243,13 +222,14 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<string> GetFullNameByOpenIdAsync(string userId)
     {
-        string result = "";
         if (!string.IsNullOrWhiteSpace(userId))
         {
-            string sql = $"Select FullName FROM T_ACL_User WHERE  OpenID ='{userId}'";
-            result = await SqlValueListAsync(sql);
+            return await Repository.AsQueryable()
+                .Where(x => x.OpenId == userId)
+                .Select(x => x.FullName)
+                .FirstAsync();
         }
-        return result;
+        return string.Empty;
     }
 
     /// <summary>
@@ -259,8 +239,10 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<string> GetFullNameByIdAsync(int userId)
     {
-        string sql = $"Select FullName from {Repository.TableName} Where ID={userId}";
-        return await SqlValueListAsync(sql);
+        return await Repository.AsQueryable()
+            .Where(x => x.ID == userId)
+            .Select(x => x.FullName)
+            .FirstAsync();
     }
 
     /// <summary>
@@ -270,8 +252,10 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<string> GetFullNameByNameAsync(string userName)
     {
-        string sql = $"Select FullName from {Repository.TableName} Where Name='{userName}' ";
-        return await SqlValueListAsync(sql);
+        return await Repository.AsQueryable()
+            .Where(x => x.Name == userName)
+            .Select(x => x.FullName)
+            .FirstAsync();
     }
 
     /// <summary>
@@ -393,13 +377,16 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// 根据个人图片枚举类型获取图片数据
     /// </summary>
     /// <param name="imagetype">图片枚举类型</param>
+    /// <param name="userId"></param>
     /// <returns></returns>
     public async Task<byte[]> GetPersonImageBytesAsync(UserImageType imagetype, int userId)
     {
         string fieldName = GetFieldNameByImageType(imagetype);
 
-        string sql = $"Select {fieldName} from {Repository.TableName} where Id = {userId} ";
-        return await Repository.Db.Ado.SqlQuerySingleAsync<byte[]>(sql);
+        return await Repository.AsQueryable()
+            .Where(x => x.ID == userId)
+            .Select<byte[]>(fieldName)
+            .FirstAsync();
     }
 
     /// <summary>
@@ -441,9 +428,8 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     public async Task<bool> UpdatePersonImageBytesAsync(UserImageType imagetype, int userId, byte[] imageBytes)
     {
         string fieldName = GetFieldNameByImageType(imagetype);
-
-        string sql = $"update {Repository.TableName} set {fieldName}=@image where Id = {userId} ";
-        return await Repository.Db.Ado.ExecuteCommandAsync(sql, new SugarParameter("@image", imageBytes)) > 0;
+        return await UpdateFieldsAsync(new Hashtable()
+            { { fieldName, imageBytes }, { UserInfo.PrimaryKey, userId } });
     }
 
     /// <summary>
@@ -454,9 +440,8 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<bool> SetDeletedFlagAsync(object id, bool deleted = true)
     {
-        int intDeleted = deleted ? 1 : 0;
-        string sql = $"Update {Repository.TableName} Set Deleted={intDeleted} Where ID = {id} ";
-        return await Repository.SqlExecuteAsync(sql) > 0;
+        return await UpdateFieldsAsync(new Hashtable()
+            { { UserInfo.FieldDeleted, deleted ? 1 : 0 }, { UserInfo.PrimaryKey, id } });
     }
 
     /// <summary>
@@ -468,8 +453,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task BindUserAsync(string openid, string unionId, int id)
     {
-        string condition = $"OpenId='{openid}' AND ID <> {id} ";
-        bool isDuplicatedErr = await IsExistRecordAsync(condition);
+        bool isDuplicatedErr = await IsExistRecordAsync(x => x.OpenId == openid && x.ID != id);
         if (!isDuplicatedErr)
         {
             UserInfo info = await FindByIdAsync(id);
@@ -516,8 +500,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         UserInfo result = null;
         if (!string.IsNullOrEmpty(openid))
         {
-            string condition = $"OpenId='{openid}' ";
-            result = await FindSingleAsync(condition);
+            result = await FindSingleAsync(x => x.OpenId == openid);
         }
         return result;
     }
@@ -532,8 +515,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         UserInfo result = null;
         if (!string.IsNullOrEmpty(unionId))
         {
-            string condition = $"UnionId='{unionId}' ";
-            result = await FindSingleAsync(condition);
+            result = await FindSingleAsync(x => x.UnionId == unionId);
         }
         return result;
     }
@@ -548,8 +530,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         UserInfo result = null;
         if (!string.IsNullOrEmpty(openid))
         {
-            string condition = $"CorpUserId='{openid}' ";
-            result = await FindSingleAsync(condition);
+            result = await FindSingleAsync(x => x.CorpUserId == openid);
         }
         return result;
     }
@@ -564,8 +545,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         bool result = false;
         if (!string.IsNullOrEmpty(openid))
         {
-            string condition = $"OpenId='{openid}' ";
-            result = await IsExistRecordAsync(condition);
+            result = await IsExistRecordAsync(x => x.OpenId == openid);
         }
         return result;
     }
