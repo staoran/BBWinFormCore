@@ -793,26 +793,6 @@ public static class StringExtension
         }
         return new List<string>(split);
     }
-
-    /// <summary>
-    /// 二进制序列化到一个文件
-    /// </summary>
-    /// <param name="val"></param>
-    /// <param name="filePath">存储序列化数据的文件路径</param>
-    public static void Serialize(this string val, string filePath)
-    {
-        try
-        {
-            Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-            IFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, val);
-            stream.Close();
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
     
     /// <summary>
     /// 将字符串转换为合适的大小写
