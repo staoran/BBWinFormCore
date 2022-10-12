@@ -837,9 +837,15 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <returns>数据列表</returns>
     public virtual async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName)
     {
-        foreignKeyName ??= ForeignKey;
         if (foreignKeyName.IsNullOrEmpty())
-            throw new ArgumentException("没有指定有效的外键名称");
+        {
+            if (ForeignKey.IsNullOrEmpty())
+            {
+                throw new ArgumentException("没有指定有效的外键名称");
+            }
+            foreignKeyName = ForeignKey;
+        }
+
         var condition = $"{foreignKeyName} = '{foreignKeyId}'";
         return await FindAsync(condition);
     }
@@ -852,9 +858,15 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <returns>ID列表</returns>
     public virtual async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName)
     {
-        foreignKeyName ??= ForeignKey;
         if (foreignKeyName.IsNullOrEmpty())
-            throw new ArgumentException("没有指定有效的外键名称");
+        {
+            if (ForeignKey.IsNullOrEmpty())
+            {
+                throw new ArgumentException("没有指定有效的外键名称");
+            }
+            foreignKeyName = ForeignKey;
+        }
+
         var condition = $"{foreignKeyName} = '{foreignKeyId}'";
         return await GetFieldListByConditionAsync(_primaryKey, condition);
     }

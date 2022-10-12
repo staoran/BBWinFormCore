@@ -385,7 +385,7 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     /// <returns>数据列表</returns>
     [QueryParameters]
     [ApiDescriptionSettings(KeepVerb = true)]
-    public virtual async Task<List<T>> FindByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, [Required]string foreignKeyName)
+    public virtual async Task<List<T>> FindByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, string foreignKeyName)
     {
         return await Repository.FindByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
@@ -398,7 +398,7 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     /// <returns>ID列表</returns>
     [QueryParameters]
     [ApiDescriptionSettings(KeepVerb = true)]
-    public virtual async Task<List<string>> FindIdByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, [Required]string foreignKeyName)
+    public virtual async Task<List<string>> FindIdByForeignKeyAsync([ModelBinder(typeof(ObjectModelBinder))][Required]object foreignKeyId, string foreignKeyName)
     {
         return await Repository.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName);
     }
