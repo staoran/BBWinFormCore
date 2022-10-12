@@ -469,6 +469,8 @@ public static class DataBinderTools
             edit.DataBindings.Clear();
             var b = new Binding("EditValue", dataSource, bindField)
             {
+                DataSourceNullValue = string.Empty,
+                NullValue = string.Empty,
                 DataSourceUpdateMode = CustomerDataSourceUpdateMode
             };
             edit.DataBindings.Add(b);
@@ -495,6 +497,7 @@ public static class DataBinderTools
             var b = new Binding("EditValue", dataSource, bindField, true)
             {
                 DataSourceUpdateMode = CustomerDataSourceUpdateMode,
+                DataSourceNullValue = string.Empty,
                 NullValue = "N"
             };
             edit.DataBindings.Add(b);
@@ -519,7 +522,8 @@ public static class DataBinderTools
             var b = new Binding("SelectedValue", dataSource, bindField)
             {
                 DataSourceUpdateMode = CustomerDataSourceUpdateMode,
-                NullValue = ""
+                NullValue = string.Empty,
+                DataSourceNullValue = string.Empty,
             };
             edit.DataBindings.Add(b);
         }
@@ -542,6 +546,8 @@ public static class DataBinderTools
             edit.DataBindings.Clear();
             var b = new Binding("EditValue", dataSource, bindField)
             {
+                NullValue = string.Empty,
+                DataSourceNullValue = string.Empty,
                 DataSourceUpdateMode = CustomerDataSourceUpdateMode
             };
             edit.DataBindings.Add(b);
@@ -565,7 +571,9 @@ public static class DataBinderTools
             edit.DataBindings.Clear();
             var b = new Binding("EditValue", dataSource, bindField)
             {
-                DataSourceUpdateMode = CustomerDataSourceUpdateMode
+                DataSourceUpdateMode = CustomerDataSourceUpdateMode,
+                NullValue = "N",
+                DataSourceNullValue = string.Empty,
             };
             edit.DataBindings.Add(b);
         }
@@ -588,6 +596,8 @@ public static class DataBinderTools
             edit.DataBindings.Clear();
             var b = new Binding("EditValue", dataSource, bindField, true)
             {
+                NullValue = Const.DEFAULT_MINIMUM_TIME,
+                DataSourceNullValue = string.Empty,
                 DataSourceUpdateMode = CustomerDataSourceUpdateMode
             };
             edit.DataBindings.Add(b);
@@ -625,6 +635,8 @@ public static class DataBinderTools
             edit.DataBindings.Clear();
             var b = new Binding("EditValue", dataSource, bindField, true)
             {
+                NullValue = Const.DEFAULT_MINIMUM_TIME,
+                DataSourceNullValue = string.Empty,
                 DataSourceUpdateMode = CustomerDataSourceUpdateMode
             };
             edit.DataBindings.Add(b);
@@ -646,7 +658,7 @@ public static class DataBinderTools
     /// <summary>
     /// 数据绑定的控件的值改变事件
     /// </summary>
-    public static void OnBindingEditValueChange(object sender, EventArgs e)
+    private static void OnBindingEditValueChange(object? sender, EventArgs e)
     {
         try
         {
@@ -684,8 +696,9 @@ public static class DataBinderTools
                 case ComboBoxEdit comboBoxEdit:
                     if (comboBoxEdit.DataBindings.Count <= 0) return; //无绑定数据源.
                     bindingObj = comboBoxEdit.DataBindings[0].DataSource; //取绑定的对象.
-                    if(comboBoxEdit.DataBindings[0].DataSourceNullValue is DBNull)
-                        comboBoxEdit.DataBindings[0].DataSourceNullValue = string.Empty;
+                    // if(comboBoxEdit.DataBindings[0].DataSourceNullValue is DBNull)
+                    //     comboBoxEdit.DataBindings[0].DataSourceNullValue = null;
+                    
                     if (bindingObj != null)
                     {
                         string bindingField =
@@ -724,16 +737,13 @@ public static class DataBinderTools
     {
         try
         {
-            object temp = null;
-            if (value != DBNull.Value) temp = value;
-
             if (bindingControl.DataBindings.Count > 0)
             {
                 object dataSource = bindingControl.DataBindings[0].DataSource;
                 string field = bindingControl.DataBindings[0].BindingMemberInfo.BindingField;
-                if (dataSource is DataTable)
+                if (dataSource is DataTable table)
                 {
-                    (dataSource as DataTable).Rows[0][field] = value;
+                    table.Rows[0][field] = value;
                 }
                 else
                 {
@@ -760,7 +770,6 @@ public static class DataBinderTools
     {
         try
         {
-            if (obj == null) return;
             Type type = obj.GetType();
             System.Reflection.PropertyInfo[] pinfo = type.GetProperties();
             foreach (System.Reflection.PropertyInfo info in pinfo)
@@ -788,7 +797,6 @@ public static class DataBinderTools
     {
         try
         {
-            if (prop == null ) return;
             if (prop.PropertyType.ToString() == "System.String")
             {
             }
