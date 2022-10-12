@@ -12,6 +12,7 @@ using BB.HttpServices.Base;
 using BB.Starter.UI.SYS;
 using BB.Tools.Const;
 using BB.Tools.Encrypt;
+using BB.Tools.Entity;
 using BB.Tools.Format;
 using BB.Tools.Utils;
 using BB.Tools.Validation;
@@ -49,6 +50,8 @@ public class Portal
         Serve.Run(GenericRunOptions.DefaultSilence.ConfigureBuilder(builder =>
             builder.ConfigureServices((_, services) => services
                 .AddValidatorsFromAssemblies(App.Assemblies)
+                .AddTransient(typeof(Lazy<>))
+                .AddTransient(typeof(LazilyResolved<>))
                 .AddJsonOptions(options =>
                     {
                         // 驼峰命名

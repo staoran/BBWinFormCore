@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmBasicTranslateWords : BaseViewDock<BasicTranslateWords, BasicTranslateWordsHttpService, FrmEditBasicTranslateWords>
 {
-    public FrmBasicTranslateWords(BasicTranslateWordsHttpService bll, FrmEditBasicTranslateWords baseForm) : base(bll, baseForm)
+    public FrmBasicTranslateWords(BasicTranslateWordsHttpService bll, LazilyResolved<FrmEditBasicTranslateWords> baseForm) : base(bll, baseForm)
     {
         moduleName = "公式定义";
 

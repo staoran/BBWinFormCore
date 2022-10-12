@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, BasicCostBillTypeHttpService, FrmEditBasicCostBillType>
 {
-    public FrmBasicCostBillType(BasicCostBillTypeHttpService bll, FrmEditBasicCostBillType baseForm) : base(bll, baseForm)
+    public FrmBasicCostBillType(BasicCostBillTypeHttpService bll, LazilyResolved<FrmEditBasicCostBillType> baseForm) : base(bll, baseForm)
     {
         moduleName = "预付金操作类型";
 

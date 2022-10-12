@@ -23,7 +23,7 @@ namespace BB.TMS.UI;
 // public partial class FrmBasicQuotation : BaseViewDesigner
 public partial class FrmBasicQuotation : BaseViewDock<BasicQuotation, BasicQuotationHttpService, FrmEditBasicQuotation, BasicQuotations, BasicQuotationsHttpService>
 {
-    public FrmBasicQuotation(BasicQuotationHttpService bll, BasicQuotationsHttpService childBll, FrmEditBasicQuotation baseForm) : base(bll, childBll, baseForm)
+    public FrmBasicQuotation(BasicQuotationHttpService bll, BasicQuotationsHttpService childBll, LazilyResolved<FrmEditBasicQuotation> baseForm) : base(bll, childBll, baseForm)
     {
         moduleName = "公式报价";
 

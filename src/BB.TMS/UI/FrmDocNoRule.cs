@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmDocNoRule : BaseViewDock<DocNoRule, DocNoRuleHttpService, FrmEditDocNoRule>
 {
-    public FrmDocNoRule(DocNoRuleHttpService bll, FrmEditDocNoRule baseForm) : base(bll, baseForm)
+    public FrmDocNoRule(DocNoRuleHttpService bll, LazilyResolved<FrmEditDocNoRule> baseForm) : base(bll, baseForm)
     {
         moduleName = "单号规则";
 

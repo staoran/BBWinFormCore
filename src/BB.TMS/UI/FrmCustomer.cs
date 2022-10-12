@@ -23,7 +23,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmCustomer : BaseViewDock<Customer, CustomerHttpService, FrmEditCustomer, Customers, CustomersHttpService>
 {
-    public FrmCustomer(CustomerHttpService bll, CustomersHttpService childBll, FrmEditCustomer baseForm) : base(bll, childBll, baseForm)
+    public FrmCustomer(CustomerHttpService bll, CustomersHttpService childBll, LazilyResolved<FrmEditCustomer> baseForm) : base(bll, childBll, baseForm)
     {
         moduleName = "客户资料";
 

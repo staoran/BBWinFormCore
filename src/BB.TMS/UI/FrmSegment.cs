@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmSegment : BaseViewDock<Segment, SegmentHttpService, FrmEditSegment, Segments, SegmentsHttpService>
 {
-    public FrmSegment(SegmentHttpService bll, SegmentsHttpService childBll, FrmEditSegment baseForm) : base(bll, childBll, baseForm)
+    public FrmSegment(SegmentHttpService bll, SegmentsHttpService childBll, LazilyResolved<FrmEditSegment> baseForm) : base(bll, childBll, baseForm)
     {
         moduleName = "线路管理";
         InitializeComponent();

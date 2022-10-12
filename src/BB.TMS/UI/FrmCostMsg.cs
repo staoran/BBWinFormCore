@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmCostMsg : BaseViewDock<CostMsg, CostMsgHttpService, FrmEditCostMsg, CostMsgs, CostMsgsHttpService>
 {
-    public FrmCostMsg(CostMsgHttpService bll, CostMsgsHttpService childBll, FrmEditCostMsg baseForm) : base(bll, childBll, baseForm)
+    public FrmCostMsg(CostMsgHttpService bll, CostMsgsHttpService childBll, LazilyResolved<FrmEditCostMsg> baseForm) : base(bll, childBll, baseForm)
     {
         moduleName = "费用调整";
 

@@ -6,7 +6,7 @@ namespace BB.Tools.Entity;
 /// 懒加载
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class LazilyResolved<T> : Lazy<T>
+public class LazilyResolved<T> : Lazy<T> where T : notnull
 {
     //Lazy<T> 是一个非常好的延迟加载的特性，
     //可以在使用到该变量的时候才真正进行参数实例化和一系列控制反转的操作。

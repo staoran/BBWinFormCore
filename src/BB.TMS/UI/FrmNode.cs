@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmNode : BaseViewDock<Node, NodeHttpService, FrmEditNode, Nodes, NodesHttpService>
 {
-    public FrmNode(NodeHttpService bll, NodesHttpService childBll, FrmEditNode baseForm) : base(bll, childBll, baseForm)
+    public FrmNode(NodeHttpService bll, NodesHttpService childBll, LazilyResolved<FrmEditNode> baseForm) : base(bll, childBll, baseForm)
     {
         moduleName = "网点资料";
 

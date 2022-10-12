@@ -29,7 +29,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     protected string moduleName;
     
     protected readonly IT _bll;
-    protected readonly TE _baseForm;
+    protected readonly LazilyResolved<TE> _baseForm;
     protected BarButtonItem addButton;
     protected BarButtonItem editButton;
     protected BarButtonItem checkButton;
@@ -52,7 +52,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     protected NameValueCollection? _treeCondition;
 
-    public BaseViewDock(IT bll, TE baseForm)
+    public BaseViewDock(IT bll, LazilyResolved<TE> baseForm)
     {
         InitializeComponent();
 
@@ -536,14 +536,14 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 
         if (!string.IsNullOrEmpty(id))
         {
-            _baseForm.ID = id;
-            _baseForm.IdList = idList;
+            _baseForm.Value.ID = id;
+            _baseForm.Value.IdList = idList;
 
             // 保存成功后事件
-            _baseForm.OnDataSaved += edit_OnDataSaved;
-            _baseForm.InitFunction(LoginUserInfo, FunctionDict); //给子窗体赋值用户权限信息
+            _baseForm.Value.OnDataSaved += edit_OnDataSaved;
+            _baseForm.Value.InitFunction(LoginUserInfo, FunctionDict); //给子窗体赋值用户权限信息
 
-            if (DialogResult.OK == _baseForm.ShowDialog())
+            if (DialogResult.OK == _baseForm.Value.ShowDialog())
             {
                 // BindData();
             }
@@ -747,7 +747,7 @@ public partial class BaseViewDock<T, IT, TE, T1, IT1> : BaseViewDock<T, IT, TE>
 {
     private readonly IT1 _childBll;
 
-    public BaseViewDock(IT bll, IT1 childBll, TE baseForm) : base(bll, baseForm)
+    public BaseViewDock(IT bll, IT1 childBll, LazilyResolved<TE> baseForm) : base(bll, baseForm)
     {
         _childBll = childBll;
     }

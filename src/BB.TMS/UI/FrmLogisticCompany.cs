@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, LogisticCompanyHttpService, FrmEditLogisticCompany>
 {
-    public FrmLogisticCompany(LogisticCompanyHttpService bll, FrmEditLogisticCompany baseForm) : base(bll, baseForm)
+    public FrmLogisticCompany(LogisticCompanyHttpService bll, LazilyResolved<FrmEditLogisticCompany> baseForm) : base(bll, baseForm)
     {
         moduleName = "问题件";
 

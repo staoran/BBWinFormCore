@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmBasicGroupList : BaseViewDock<BasicGroupList, BasicGroupListHttpService, FrmEditBasicGroupList>
 {
-    public FrmBasicGroupList(BasicGroupListHttpService bll, FrmEditBasicGroupList baseForm) : base(bll, baseForm)
+    public FrmBasicGroupList(BasicGroupListHttpService bll, LazilyResolved<FrmEditBasicGroupList> baseForm) : base(bll, baseForm)
     {
         moduleName = "区域分组";
 

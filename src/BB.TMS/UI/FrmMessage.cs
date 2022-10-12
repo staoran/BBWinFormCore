@@ -24,7 +24,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmMessage : BaseViewDock<Message, MessageHttpService, FrmEditMessage, Messages, MessagesHttpService>
 {
-    public FrmMessage(MessageHttpService bll, MessagesHttpService childBll, FrmEditMessage baseForm) : base(bll, childBll, baseForm)
+    public FrmMessage(MessageHttpService bll, MessagesHttpService childBll, LazilyResolved<FrmEditMessage> baseForm) : base(bll, childBll, baseForm)
     {
         moduleName = "问题件";
 

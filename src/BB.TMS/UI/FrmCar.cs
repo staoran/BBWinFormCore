@@ -23,7 +23,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
 {
-    public FrmCar(CarHttpService bll, FrmEditCar baseForm) : base(bll, baseForm)
+    public FrmCar(CarHttpService bll, LazilyResolved<FrmEditCar> baseForm) : base(bll, baseForm)
     {
         moduleName = "车辆档案";
         InitializeComponent();

@@ -22,7 +22,7 @@ namespace BB.TMS.UI;
 /// </summary>
 public partial class FrmQuotation : BaseViewDock<Quotation, QuotationHttpService, FrmEditQuotation, Quotations, QuotationsHttpService>
 {
-    public FrmQuotation(QuotationHttpService bll, QuotationsHttpService childBll, FrmEditQuotation baseForm) : base(bll, childBll, baseForm)
+    public FrmQuotation(QuotationHttpService bll, QuotationsHttpService childBll, LazilyResolved<FrmEditQuotation> baseForm) : base(bll, childBll, baseForm)
     {
         moduleName = "普通报价";
         
