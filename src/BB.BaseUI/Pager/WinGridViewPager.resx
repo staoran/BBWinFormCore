@@ -121,7 +121,7 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="menu_Add.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menu_Add.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAAd1JREFUOE+Fk8tLG1EYxT8UKcmquBSyCNmYrW0C3k3/j7qVtn9AF1IQGpXqzoXM
@@ -135,7 +135,7 @@
         X3fafGBTM09E9ACR8oOKfVGlzgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="menu_Edit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menu_Edit.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAAexJREFUOE+lk81LlFEYxR8UTFBxEVq5E8ZoW7ZyM+A/INoq00KoxVDRptqJLQoM
@@ -149,7 +149,7 @@
         z2rV60G/K6es8590S8Nnqr22JEfOdo5E/gK/7oJ/PETX0wAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="menu_Delete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menu_Delete.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAAWxJREFUOE+tUbtKA0EUvZAihVZaaBd0CSKKghEUg2ZCxHSmUAu1iBh8FDYprERY
@@ -161,7 +161,7 @@
         817imkfxP5IFMtexXbX+CqIfRiVVkuSK0ncAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="menu_Refresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menu_Refresh.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAAW5JREFUOE+VkrFrwkAUxvMfSKZsBsesKrhEjIoEHFSQgLuCiy4OFYdCpAScmq62
@@ -173,7 +173,7 @@
         8pOTQmy1ZW0vvj+L42Wm5QEpyg+eZCyF6BLFJQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="menu_CopyInfo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menu_CopyInfo.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAAmBJREFUOE+Vk/tPUmEcxs/6pb+pv4Bl2WVWZq5CRGtmZStbIjMEc4m3ArIhoDht
@@ -189,7 +189,7 @@
         ZTl02YjCagN/aQUVXRCUq2UpB0X9BoZnCaEUaH5NAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="menu_SetColumn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menu_SetColumn.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAASlJREFUOE+1kcFKAlEYhe8b9Ay9hdBzuAmD2uSiTW3c1CLCspW0alvRQihcqLUQ
@@ -200,7 +200,7 @@
         A3mZakAlpf+DsS+aTi/+t8mWsAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="menu_Print.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menu_Print.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAAqpJREFUOE99k+9LE3Ecx0/IPyDyQYKPJCIdPvEHCEZPhKgH4oNZILpKIzUfBfpI

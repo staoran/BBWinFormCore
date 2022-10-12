@@ -140,7 +140,7 @@
     <value>187, 19</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="menuTree_ExpandAll.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menuTree_ExpandAll.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAGmSURBVDhPfZNJTgJREIbrIO44AnGvcaABwYVxI5cw8QTuFKeAQ3CMEybuPAKyMSxMnIg7gdAY
@@ -153,7 +153,7 @@
         DUD8NcAjiW98OnolMEeAlQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="menuTree_Clapase.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menuTree_Clapase.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhEAAQAIU3AObm5iEhIQYGBtPT0/j4+O7u7vLy8tfX1/7+/t3d3fz8/AICAvv7+/X19f39/fb2
         9uvr6+/v7+zs7NXV1eLi4hcXF9/f3wUFBSIiIhsbGxEREePj4/Pz8yAgIBwcHBgYGA8PDxkZGeDg4PT0
@@ -164,7 +164,7 @@
         GAQ4FDBBQcWEASTMChDgYsHPuwrz6hUYEAA7
 </value>
   </data>
-  <data name="menuTree_Refresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="menuTree_Refresh.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAMrSURBVDhPddJ/TMxxHMfx17kuua6dO7vTdX5UqKSl
