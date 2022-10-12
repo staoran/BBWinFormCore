@@ -25,8 +25,7 @@ public class DocNoRuleValidator : AbstractValidator<DocNoRule>
     public DocNoRuleValidator(OperationType operationType)
     {
         // 单据字头
-        RuleFor(x => x.DocCode).IsUpLetterNum(true, 2)
-            .IsUnique(u => u.ISID).IsAddOrEdit().IsGo();
+        RuleFor(x => x.DocCode).IsUpLetterNum(true, 2).IsGo();
         // 编码规则
         RuleFor(x => x.RuleFormat).Length(0, 50).IsGo();
         // 创建日期

@@ -69,11 +69,5 @@ public class CarValidator : AbstractValidator<Car>
         RuleFor(x => x.Remark).IsLength(false, 50).IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.CarNo).IsUnique().IsAdd().IsGo();;
-
-        #endregion
     }
 }

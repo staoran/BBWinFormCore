@@ -73,12 +73,5 @@ public class CustomerValidator : AbstractValidator<Customer>
         RuleFor(x => x.AppUser).IsLength(false, 20);
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.CustomerCode).IsUnique().IsAdd().IsGo();;
-        RuleFor(x => x.MnemonicCode).IsUnique().IsAddOrEdit().IsGo();;
-
-        #endregion
     }
 }

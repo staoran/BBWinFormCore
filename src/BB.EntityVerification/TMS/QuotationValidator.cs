@@ -49,11 +49,5 @@ public class QuotationValidator : AbstractValidator<Quotation>
         RuleFor(x => x.TranNodeNO).IsLength(true, 50).IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.QuotationDesc).IsUnique().IsAddOrEdit().IsGo();;
-
-        #endregion
     }
 }

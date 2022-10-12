@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.Entity", "BB.Entity\BB.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.EntityVerification", "BB.EntityVerification\BB.EntityVerification.csproj", "{14ED0DF2-02A3-44E0-96E6-4C7A9993FBA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.EntityVerificationCore", "BB.EntityVerificationCore\BB.EntityVerificationCore.csproj", "{9541ADEA-AB77-4505-8708-4E5489CBE890}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{14ED0DF2-02A3-44E0-96E6-4C7A9993FBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14ED0DF2-02A3-44E0-96E6-4C7A9993FBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14ED0DF2-02A3-44E0-96E6-4C7A9993FBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9541ADEA-AB77-4505-8708-4E5489CBE890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9541ADEA-AB77-4505-8708-4E5489CBE890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9541ADEA-AB77-4505-8708-4E5489CBE890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9541ADEA-AB77-4505-8708-4E5489CBE890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

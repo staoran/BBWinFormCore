@@ -61,11 +61,5 @@ public class SegmentValidator : AbstractValidator<Segment>
         RuleFor(x => x.AppUser).IsLength(false, 20);
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.SegmentName).IsUnique().IsAddOrEdit().IsGo();
-
-        #endregion
     }
 }

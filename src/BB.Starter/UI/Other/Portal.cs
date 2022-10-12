@@ -48,6 +48,7 @@ public class Portal
     {
         Serve.Run(GenericRunOptions.DefaultSilence.ConfigureBuilder(builder =>
             builder.ConfigureServices((_, services) => services
+                .AddValidatorsFromAssemblies(App.Assemblies)
                 .AddJsonOptions(options =>
                     {
                         // 驼峰命名

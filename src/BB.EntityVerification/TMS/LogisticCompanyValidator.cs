@@ -73,12 +73,5 @@ public class LogisticCompanyValidator : AbstractValidator<LogisticCompany>
         RuleFor(x => x.CancelUser).IsLength(false, 20).IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.LogisticName).IsUnique().IsAddOrEdit().IsGo();;
-        RuleFor(x => x.ZJM).IsUnique().IsAddOrEdit().IsGo();;
-
-        #endregion
     }
 }

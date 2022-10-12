@@ -47,11 +47,5 @@ public class BasicCostBillTypeValidator : AbstractValidator<BasicCostBillType>
         RuleFor(x => x.LastUpdateDate).IsEmpty().IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.CostDesc).IsUnique().IsAddOrEdit().IsGo();;
-
-        #endregion
     }
 }

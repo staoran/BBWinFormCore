@@ -49,11 +49,5 @@ public class BasicTranslateWordsValidator : AbstractValidator<BasicTranslateWord
         RuleFor(x => x.LastUpdatedBy).IsLength(true, 50).IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.WordsInFront).IsUnique().IsAddOrEdit().IsGo();;
-
-        #endregion
     }
 }

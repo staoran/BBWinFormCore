@@ -10,7 +10,7 @@ using FluentValidation.Internal;
 using FluentValidation.Validators;
 using Furion;
 
-namespace BB.EntityVerification;
+namespace BB.EntityVerificationCore;
 
 /// <summary>
 /// 是否唯一验证

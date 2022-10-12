@@ -105,11 +105,5 @@ public class NodeValidator : AbstractValidator<Node>
         RuleFor(x => x.BlackList).IsLength(false, 2147483647).IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.TranNodeName).IsUnique().IsAddOrEdit().IsGo();
-
-        #endregion
     }
 }

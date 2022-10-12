@@ -45,11 +45,5 @@ public class BasicGroupListValidator : AbstractValidator<BasicGroupList>
         RuleFor(x => x.AppUser).IsLength(false, 20).IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.GroupName).IsUnique().IsAddOrEdit().IsGo();;
-
-        #endregion
     }
 }

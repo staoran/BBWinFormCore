@@ -55,12 +55,5 @@ public class BasicCostTypeValidator : AbstractValidator<BasicCostType>
         RuleFor(x => x.LastUpdateDate).IsEmpty().IsGo();
 
         #endregion
-
-        #region 参数值唯一性验证
-
-        RuleFor(x => x.CostType).IsUnique().IsAdd().IsGo();;
-        RuleFor(x => x.CostTypeDesc).IsUnique().IsAddOrEdit().IsGo();;
-
-        #endregion
     }
 }

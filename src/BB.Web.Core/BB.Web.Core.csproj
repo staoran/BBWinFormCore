@@ -13,6 +13,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\BB.Application\BB.Application.csproj" />
+        <ProjectReference Include="..\BB.EntityVerificationCore\BB.EntityVerificationCore.csproj" />
         <ProjectReference Include="..\BB.EntityVerification\BB.EntityVerification.csproj" />
     </ItemGroup>
 
