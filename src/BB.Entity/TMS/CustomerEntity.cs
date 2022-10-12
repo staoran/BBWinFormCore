@@ -1,6 +1,7 @@
 using System.Runtime.Serialization;
 using BB.Entity.Base;
 using BB.Tools.Entity;
+using SqlSugar;
 
 namespace BB.Entity.TMS;
 
@@ -275,6 +276,20 @@ public sealed class Customer : BaseEntity<Customers>
     /// </summary>
     [NonSerialized]
     public new const string OptimisticLockKey = FieldLastUpdateDate;
+
+    /// <summary>
+    /// 子表数据
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    [Navigate(NavigateType.OneToMany, ChildForeignKey)]
+    public new List<Customers>? ChildTableList { get; set; }
+
+    /// <summary>
+    /// 子表外键
+    /// </summary>
+    [NonSerialized]
+    public new const string ChildForeignKey = Customers.ForeignKey;
 
     #region 列名
     /// <summary>

@@ -455,6 +455,20 @@ public sealed class Node : BaseEntity<Nodes>
     [NonSerialized]
     public new const string OptimisticLockKey = FieldLastUpdateDate;
 
+    /// <summary>
+    /// 子表数据
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    [Navigate(NavigateType.OneToMany, ChildForeignKey)]
+    public new List<Nodes>? ChildTableList { get; set; }
+
+    /// <summary>
+    /// 子表外键
+    /// </summary>
+    [NonSerialized]
+    public new const string ChildForeignKey = Nodes.ForeignKey;
+
     #region 列名
     /// <summary>
     /// 自增ID
