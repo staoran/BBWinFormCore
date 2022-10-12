@@ -1869,8 +1869,6 @@ public static class GridExtension
     {
         // 定义集合 
         List<T> ts = new List<T>();
-        //定义一个临时变量 
-        string tempName = string.Empty;
         //遍历DataTable中所有的数据行 
         foreach (DataRow dr in dt.Rows)
         {
@@ -1880,12 +1878,11 @@ public static class GridExtension
             //遍历该对象的所有属性 
             foreach (PropertyInfo pi in propertys)
             {
-                tempName = pi.Name;//将属性名称赋值给临时变量 
                 //检查DataTable是否包含此列（列名==对象的属性名）  
-                if (dt.Columns.Contains(tempName))
+                if (pi.CanWrite && dt.Columns.Contains(pi.Name))
                 {
                     //取值 
-                    object value = dr[tempName];
+                    object value = dr[pi.Name];
                     //如果非空，则赋给对象的属性 
                     if (value != DBNull.Value)
                     {
