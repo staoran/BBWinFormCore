@@ -10,6 +10,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using Furion;
 using Furion.Logging.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BB.Starter.UI.Other;
 
@@ -166,7 +167,7 @@ public class RibbonPageHelper
         }
         catch (Exception ex)
         {
-            
+            $"加载模块【{typeName}】失败，请检查书写是否正确。{ex.Message}".ShowErrorTip();
             $"加载模块【{typeName}】失败，请检查书写是否正确。".LogError(ex);
         }
     }
@@ -176,6 +177,7 @@ public class RibbonPageHelper
     /// </summary>
     /// <param name="mainDialog">主窗体对象</param>
     /// <param name="formType">待显示的窗体类型</param>
+    /// <param name="isShowDialog"></param>
     /// <returns></returns>
     public static Form LoadMdiForm(Form mainDialog, Type formType, bool isShowDialog)
     {
@@ -194,10 +196,15 @@ public class RibbonPageHelper
             }
         }
 
+        // var serviceScopeFactory = App.GetService<IServiceScopeFactory>();
+        // using var scope = serviceScopeFactory.CreateScope();
+        // var services = scope.ServiceProvider;
+
         //没有在多文档中找到或者是模态窗口，需要初始化属性
         if (!bFound || isShowDialog)
         {
-            tableForm = (Form)Activator.CreateInstance(formType);
+            // tableForm = (Form)Activator.CreateInstance(formType);
+            tableForm = (Form)App.GetService(formType);
 
             //如果窗体集成了IFunction接口(第一次创建需要设置)
             IFunction function = tableForm as IFunction;
