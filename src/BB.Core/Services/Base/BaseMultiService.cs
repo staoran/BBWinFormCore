@@ -15,7 +15,7 @@ namespace BB.Core.Services.Base;
 /// </summary>
 /// <typeparam name="T">主表实体</typeparam>
 /// <typeparam name="T1">子表实体</typeparam>
-public class BaseMultiService<T, T1> : BaseService<T>, ITransient
+public class BaseMultiService<T, T1> : BaseService<T>
     where T : BaseEntity<T1>, new()
     where T1 : BaseEntity, new()
 {

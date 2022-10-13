@@ -173,7 +173,11 @@ public sealed class Quotation : BaseEntity<Quotations>
     [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
-    public new List<Quotations>? ChildTableList { get; set; }
+    public new List<Quotations>? ChildTableList
+    {
+        get => base.ChildTableList;
+        set => base.ChildTableList = value;
+    }
 
     /// <summary>
     /// 子表外键

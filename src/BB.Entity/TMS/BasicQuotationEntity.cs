@@ -228,7 +228,11 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
-    public new List<BasicQuotations>? ChildTableList { get; set; }
+    public new List<BasicQuotations>? ChildTableList
+    {
+        get => base.ChildTableList;
+        set => base.ChildTableList = value;
+    }
 
     /// <summary>
     /// 子表外键

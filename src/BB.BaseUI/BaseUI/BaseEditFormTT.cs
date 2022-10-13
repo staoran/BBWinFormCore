@@ -180,7 +180,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
         #region 新增数据
 
         var dt = gridControl1.DataSource as DataTable;
-        TempInfo.ChildTableList = dt.ToList<T1>();
+        TempInfo.ChildTableList = dt?.ToList<T1>();
 
         bool succeed = await Bll.InsertAsync(TempInfo);
         if (succeed)
@@ -207,7 +207,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
         #region 更新数据
 
         var dt = gridControl1.DataSource as DataTable;
-        TempInfo.ChildTableList = dt.ToList<T1>();
+        TempInfo.ChildTableList = dt?.ToList<T1>();
 
         bool succeed = await Bll.UpdateAsync(TempInfo);
         if (succeed)

@@ -283,7 +283,11 @@ public sealed class Customer : BaseEntity<Customers>
     [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
-    public new List<Customers>? ChildTableList { get; set; }
+    public new List<Customers>? ChildTableList
+    {
+        get => base.ChildTableList;
+        set => base.ChildTableList = value;
+    }
 
     /// <summary>
     /// 子表外键

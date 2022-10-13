@@ -461,7 +461,11 @@ public sealed class Node : BaseEntity<Nodes>
     [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
-    public new List<Nodes>? ChildTableList { get; set; }
+    public new List<Nodes>? ChildTableList
+    {
+        get => base.ChildTableList;
+        set => base.ChildTableList = value;
+    }
 
     /// <summary>
     /// 子表外键

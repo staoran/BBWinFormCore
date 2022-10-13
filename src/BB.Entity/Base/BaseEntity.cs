@@ -16,14 +16,12 @@ public class BaseEntity<T> : BaseEntity where T : BaseEntity
     /// <summary>
     /// 获取子表外键
     /// </summary>
-    [DataMember]
     [Ignore]
     public string GetChildForeignKey => ChildForeignKey;
 
     /// <summary>
     /// 子表数据
     /// </summary>
-    [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
     public List<T>? ChildTableList { get; set; }

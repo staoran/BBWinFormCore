@@ -228,7 +228,11 @@ public sealed class CostMsg : BaseEntity<CostMsgs>
     [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
-    public new List<CostMsgs>? ChildTableList { get; set; }
+    public new List<CostMsgs>? ChildTableList
+    {
+        get => base.ChildTableList;
+        set => base.ChildTableList = value;
+    }
 
     /// <summary>
     /// 子表外键

@@ -213,7 +213,11 @@ public sealed class Segment : BaseEntity<Segments>
     [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
-    public new List<Segments>? ChildTableList { get; set; }
+    public new List<Segments>? ChildTableList
+    {
+        get => base.ChildTableList;
+        set => base.ChildTableList = value;
+    }
 
     /// <summary>
     /// 子表外键
