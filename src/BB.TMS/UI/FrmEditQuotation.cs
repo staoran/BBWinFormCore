@@ -39,8 +39,6 @@ public partial class FrmEditQuotation : BaseEditForm<Quotation, QuotationHttpSer
     {
         #region 列初始化
 
-        gridView1.Columns.Clear();
-        gridView1.CreateColumn("Operate", "操作", 60).CreateButtonEdit(repositoryBtn_ButtonClick);
         gridView1.CreateColumn(Quotations.FieldQuotationNo, "报价编号", 100).Visible = false;
         gridView1.CreateColumn(Quotations.FieldQuotationType, "报价类型", 100).CreateComboBoxEdit().BindDictItems("计价方式");
         gridView1.CreateColumn(Quotations.FieldFromGroups, "起始组", 100).CreateTextEdit();

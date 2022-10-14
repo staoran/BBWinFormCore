@@ -37,11 +37,11 @@ public static class GridExtension
     /// 初始化GridView对象
     /// </summary>
     /// <param name="gridView">GridView对象</param>
-    /// <param name="gridType">Grid类型，默认为可添加新项目</param>
+    /// <param name="gridType">Grid类型，默认为不显示新行</param>
     /// <param name="checkBoxSelect">是否出现勾选列</param>
     /// <param name="editorShowMode">编辑器显示模式</param>
     /// <param name="viewCaption">GridView标题</param>
-    public static void InitGridView(this GridView gridView, GridType gridType = GridType.NewItem, bool checkBoxSelect = false, 
+    public static void InitGridView(this GridView gridView, GridType gridType = GridType.EditOnly, bool checkBoxSelect = false, 
         EditorShowMode editorShowMode = EditorShowMode.Default, string viewCaption = "")
     {
         // gridView.OptionsDetail.AllowOnlyOneMasterRowExpanded = true; // 只允许展开一行
@@ -64,13 +64,28 @@ public static class GridExtension
         gridView.Appearance.EvenRow.BackColor = Color.FromArgb(239, 243, 250); // 偶数行背景色
         gridView.Appearance.EvenRow.BorderColor = Color.FromArgb(199, 209, 228); // 偶数行边框颜色
 
-        if (gridType == GridType.NewItem)
-        {
-            gridView.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
-        }
-        else if (gridType == GridType.ReadOnly)
+        if (gridType == GridType.ReadOnly)
         {
             gridView.OptionsBehavior.Editable = false;
+        }
+        else
+        {
+            if (gridType == GridType.NewItem)
+            {
+                gridView.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
+            }
+            else if (gridType == GridType.EditOnly)
+            {
+                gridView.OptionsView.NewItemRowPosition = NewItemRowPosition.None;
+            }
+
+            gridView.GridControl.Enter += (sender, args) =>
+            {
+                if (gridView.RowCount == 0)
+                {
+                    gridView.AddNewRow();
+                }
+            };
         }
 
         if (checkBoxSelect)
@@ -92,6 +107,32 @@ public static class GridExtension
 
         gridView.CustomColumnDisplayText += gridView_CustomColumnDisplayText;
         gridView.InvalidRowException += gridView_InvalidRowException;
+    }
+
+    /// <summary>
+    /// 初始化 GridView Columns
+    /// </summary>
+    /// <param name="gridView">GridView对象</param>
+    /// <param name="buttonClick"></param>
+    public static void InitGridColumns(this GridView gridView, ButtonPressedEventHandler buttonClick)
+    {
+        gridView.Columns.Clear();
+
+        gridView.CreateColumn("Operate", "操作", 60).CreateButtonEdit(new[]
+        {
+            new EditorButton()
+            {
+                Kind = ButtonPredefines.Plus,
+                Caption = "新增",
+                Tag = "add"
+            },
+            new EditorButton()
+            {
+                Kind = ButtonPredefines.Delete,
+                Caption = "删除",
+                Tag = "delete"
+            }
+        }, buttonClick);
     }
 
     /// <summary>
@@ -519,8 +560,9 @@ public static class GridExtension
     /// 创建GridView的列编辑为ButtonEdit
     /// </summary>
     /// <param name="gridColumn">GridColumn列对象</param>
+    /// <param name="buttonClick"></param>
     /// <returns></returns>
-    public static RepositoryItemButtonEdit CreateButtonEdit(this GridColumn gridColumn, ButtonPressedEventHandler buttonClick = null)
+    public static RepositoryItemButtonEdit CreateButtonEdit(this GridColumn gridColumn, ButtonPressedEventHandler buttonClick)
     {
         RepositoryItemButtonEdit repositoryBtn = new RepositoryItemButtonEdit();
         repositoryBtn.Name = gridColumn.FieldName;
@@ -530,15 +572,13 @@ public static class GridExtension
         repositoryBtn.TextEditStyle = TextEditStyles.HideTextEditor;
         repositoryBtn.ButtonsStyle = BorderStyles.UltraFlat;
         repositoryBtn.Buttons.Clear();
-        repositoryBtn.Buttons.AddRange(new []
-        {
+        repositoryBtn.Buttons.Add(
             new EditorButton()
             {
                 Kind = ButtonPredefines.Delete,
                 Caption = "删除",
                 Tag = "delete"
-            }
-        });
+            });
         repositoryBtn.ButtonClick += buttonClick;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryBtn);
         gridColumn.ColumnEdit = repositoryBtn;
@@ -549,8 +589,10 @@ public static class GridExtension
     /// 创建GridView的列编辑为ButtonEdit
     /// </summary>
     /// <param name="gridColumn">GridColumn列对象</param>
+    /// <param name="buttons"></param>
+    /// <param name="buttonClick"></param>
     /// <returns></returns>
-    public static RepositoryItemButtonEdit CreateButtonEdit(this GridColumn gridColumn, Dictionary<object, string> dicButtons, ButtonPressedEventHandler buttonClick)
+    public static RepositoryItemButtonEdit CreateButtonEdit(this GridColumn gridColumn, EditorButton[] buttons, ButtonPressedEventHandler buttonClick)
     {
         RepositoryItemButtonEdit repositoryBtn = new RepositoryItemButtonEdit();
         repositoryBtn.Name = gridColumn.FieldName;
@@ -560,15 +602,7 @@ public static class GridExtension
         repositoryBtn.TextEditStyle = TextEditStyles.HideTextEditor;
         repositoryBtn.ButtonsStyle = BorderStyles.UltraFlat;
         repositoryBtn.Buttons.Clear();
-        EditorButton btn = null;
-        foreach (KeyValuePair<object, string> item in dicButtons)
-        {
-            btn = new EditorButton();
-            btn.Kind = ButtonPredefines.Glyph;
-            btn.Caption = item.Value;
-            btn.Tag = item.Key;
-            repositoryBtn.Buttons.Add(btn);
-        }
+        repositoryBtn.Buttons.AddRange(buttons);
         repositoryBtn.ButtonClick += buttonClick;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryBtn);
         gridColumn.ColumnEdit = repositoryBtn;

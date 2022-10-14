@@ -38,8 +38,6 @@ public partial class FrmEditCostMsg : BaseEditForm<CostMsg, CostMsgHttpService, 
     {
         #region 列初始化
 
-        gridView1.Columns.Clear();
-        gridView1.CreateColumn("Operate", "操作", 60).CreateButtonEdit(repositoryBtn_ButtonClick);
         gridView1.CreateColumn(CostMsgs.FieldCostMsgNo, "费用调整编号", 100).CreateTextEdit();
         gridView1.CreateColumn(CostMsgs.FieldStatusID, "单据状态", 100).CreateComboBoxEdit().BindDictItems("费用调整状态");
         gridView1.CreateColumn(CostMsgs.FieldRecvMsgNode, "回复网点", 100).CreateComboBoxEdit().BindDictItems(GB.AllOuDict);

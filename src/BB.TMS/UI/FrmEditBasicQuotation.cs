@@ -38,8 +38,6 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     {
         #region 列初始化
 
-        gridView1.Columns.Clear();
-        gridView1.CreateColumn("Operate", "操作", 60).CreateButtonEdit(repositoryBtn_ButtonClick);
         gridView1.CreateColumn(BasicQuotations.FieldQuotationNo, "报价编号", 100).Visible = false;
         gridView1.CreateColumn(BasicQuotations.FieldMathConditional, "条件范围", 100).CreateTextEdit();
         gridView1.CreateColumn(BasicQuotations.FieldMathContent, "条件公式", 100).CreateTextEdit();

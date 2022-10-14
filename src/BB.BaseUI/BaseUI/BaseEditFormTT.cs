@@ -87,6 +87,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
 
         // 初始化
         gridView1.InitGridView();
+        gridView1.InitGridColumns(repositoryBtn_ButtonClick);
 
         #endregion
 
@@ -341,6 +342,10 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
         if (e.Button.Kind == ButtonPredefines.Delete)
         {
             gridView1.DeleteRow(gridView1.FocusedRowHandle);
+        }
+        if (e.Button.Kind == ButtonPredefines.Plus)
+        {
+            gridView1.AddNewRow();
         }
     }
 

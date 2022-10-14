@@ -38,8 +38,6 @@ public partial class FrmEditSegment : BaseEditForm<Segment, SegmentHttpService, 
     {
         #region 列初始化
 
-        gridView1.Columns.Clear();
-        gridView1.CreateColumn("Operate", "操作", 60).CreateButtonEdit(repositoryBtn_ButtonClick);
         gridView1.CreateColumn(Segments.FieldSegmentNo, "线路编号", 100).Visible = false;
         gridView1.CreateColumn(Segments.FieldCostType, "费用类型", 100).CreateComboBoxEdit().BindDictItems(GB.AllCostType);
         gridView1.CreateColumn(Segments.FieldQuotationNo, "报价编号", 100).CreateSearchLookUpEdit();
@@ -128,7 +126,7 @@ public partial class FrmEditSegment : BaseEditForm<Segment, SegmentHttpService, 
     protected override void repositoryBtn_ButtonClick(object sender, ButtonPressedEventArgs e)
     {
         base.repositoryBtn_ButtonClick(sender, e);
-                                    }
+    }
 
     #endregion
 

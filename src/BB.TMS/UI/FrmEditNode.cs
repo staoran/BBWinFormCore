@@ -39,8 +39,6 @@ public partial class FrmEditNode : BaseEditForm<Node, NodeHttpService,  Nodes, N
     {
         #region 列初始化
 
-        gridView1.Columns.Clear();
-        gridView1.CreateColumn("Operate", "操作", 60).CreateButtonEdit(repositoryBtn_ButtonClick);
         gridView1.CreateColumn(Nodes.FieldTranNodeNO, "网点ID", 100).Visible = false;
         gridView1.CreateColumn(Nodes.FieldTranNodeAreaName, "区域名称", 100).CreateTextEdit();
         gridView1.CreateColumn(Nodes.FieldTranNodeAreaDesc, "区域详情", 100).CreateTextEdit();
