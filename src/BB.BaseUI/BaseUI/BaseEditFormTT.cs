@@ -32,6 +32,14 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     /// </summary>
     protected readonly IT1 ChildBll;
 
+    /// <summary>
+    /// 子表初始数据
+    /// </summary>
+    private T1? _childNewEntity;
+
+    /// <summary>
+    /// 子表验证接口
+    /// </summary>
     private readonly IValidator<T1> _childValidator;
 
     /// <summary>
@@ -250,20 +258,20 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     protected virtual async void gridView1_InitNewRow(object s, InitNewRowEventArgs e)
     {
         if (s is not ColumnView view) throw new Exception("行数据获取异常");
+
+        _childNewEntity ??= await ChildBll.NewEntityAsync(); // 数据在此初始化
         
-        T1 entity = await ChildBll.NewEntityAsync(); // 数据在此初始化
-        
-        string foreignKey = entity.GetFieldValue("ForeignKey").ObjToStr(); // 外键字段名称
+        string foreignKey = _childNewEntity.GetFieldValue("ForeignKey").ObjToStr(); // 外键字段名称
         if (!ID.IsNullOrEmpty())
         {
-            entity.SetProperty(foreignKey, ID); //明细表的外键
+            _childNewEntity.SetProperty(foreignKey, ID); //明细表的外键
         }
         // if (!foreignKey.IsNullOrEmpty() && _tempInfo != null)
         // {
         //     object? primaryValue = _tempInfo.GetProperty(foreignKey); // 从主表中拿到对应的值
         //     entity.SetProperty(foreignKey, primaryValue); //明细表的外键
         // }
-        view.EntityToRow(e.RowHandle, entity);
+        view.EntityToRow(e.RowHandle, _childNewEntity);
         // 此处加入新增列的数据初始化
         // gridView1.SetRowCellValue(e.RowHandle, "ISID", Guid.NewGuid().ToString()); //明细表ID
         //gridView1.SetRowCellValue(e.RowHandle, "Apply_ID", tempInfo.Apply_ID);
