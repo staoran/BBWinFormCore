@@ -238,6 +238,7 @@ public static class GridExtension
             AutoHeight = false,
             NullText = ""
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryItem);
         gridColumn.ColumnEdit = repositoryItem;
         return repositoryItem;
@@ -256,6 +257,7 @@ public static class GridExtension
             AutoHeight = false,
             NullText = ""
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryItem);
         gridColumn.ColumnEdit = repositoryItem;
         return repositoryItem;
@@ -273,6 +275,7 @@ public static class GridExtension
             Name = gridColumn.FieldName,
             AutoHeight = false
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         GridView repositoryItemGridLookUpEditView = new GridView
         {
             FocusRectStyle = DrawFocusRectStyle.RowFocus
@@ -300,6 +303,7 @@ public static class GridExtension
             // 禁用文本输入
             TextEditStyle = textEditStyles
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryItem);
         gridColumn.ColumnEdit = repositoryItem;
         return repositoryItem;
@@ -318,6 +322,7 @@ public static class GridExtension
             AutoHeight = false,
             TextEditStyle = TextEditStyles.DisableTextEditor
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryItem);
         gridColumn.ColumnEdit = repositoryItem;
         return repositoryItem;
@@ -336,6 +341,7 @@ public static class GridExtension
             AutoHeight = false,
             TextEditStyle = TextEditStyles.DisableTextEditor
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryItem);
         gridColumn.ColumnEdit = repositoryItem;
         return repositoryItem;
@@ -354,6 +360,7 @@ public static class GridExtension
             Name = gridColumn.FieldName,
             AutoHeight = false
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryItem);
         gridColumn.ColumnEdit = repositoryItem;
         repositoryItem.CloseUpKey = new KeyShortcut(Keys.Space);
@@ -373,6 +380,7 @@ public static class GridExtension
             Name = gridColumn.FieldName,
             AutoHeight = false
         };
+        repositoryItem.KeyUp += OnRepositoryItemOnKeyUp;
         gridColumn.View.GridControl.RepositoryItems.Add(repositoryItem);
         gridColumn.ColumnEdit = repositoryItem;
         repositoryItem.CloseUpKey = new KeyShortcut(Keys.Space);
@@ -778,6 +786,19 @@ public static class GridExtension
             gridColumn.CreateTextEdit().PasswordChar = passwordChar;
         }
         return gridColumn;
+    }
+
+    /// <summary>
+    /// 键盘按下，自动弹出选框
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    static void OnRepositoryItemOnKeyUp(object? sender, KeyEventArgs args)
+    {
+        if (args.KeyCode == Keys.Tab && sender is PopupBaseEdit popupBaseEdit)
+        {
+            popupBaseEdit.ShowPopup();
+        }
     }
 
     #endregion

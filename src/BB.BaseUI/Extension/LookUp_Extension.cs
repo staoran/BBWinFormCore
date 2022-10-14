@@ -111,6 +111,8 @@ namespace BB.BaseUI.Extension;
          lookup.Properties.SearchMode = SearchMode.AutoComplete;
          lookup.Properties.TextEditStyle = TextEditStyles.Standard;
 
+         lookup.KeyUp += OnRepositoryItemOnKeyUp;
+
          return dataSource;
      }
 
@@ -138,6 +140,8 @@ namespace BB.BaseUI.Extension;
          }
          lookup.Properties.ImmediatePopup = true;
          lookup.Properties.TextEditStyle = TextEditStyles.Standard;
+
+         lookup.KeyUp += OnRepositoryItemOnKeyUp;
 
          return dataSource;
      }
@@ -189,7 +193,6 @@ namespace BB.BaseUI.Extension;
      }
 
      #endregion
-    
 
      #region CustomGridLookUpEdit控件
 
@@ -250,6 +253,8 @@ namespace BB.BaseUI.Extension;
          combo.Properties.DataSource = dt;
          combo.Properties.PopulateViewColumns();
          combo.Properties.View.Columns[valueName].Visible = false;
+
+         combo.KeyUp += OnRepositoryItemOnKeyUp;
 
          if (!string.IsNullOrEmpty(defaultValue))
          {
@@ -395,6 +400,19 @@ namespace BB.BaseUI.Extension;
      }
 
      #endregion
+
+     /// <summary>
+     /// 下拉控件，键盘按下，自动弹出选框
+     /// </summary>
+     /// <param name="sender"></param>
+     /// <param name="args"></param>
+     static void OnRepositoryItemOnKeyUp(object? sender, KeyEventArgs args)
+     {
+         if (args.KeyCode == Keys.Tab && sender is PopupBaseEdit popupBaseEdit)
+         {
+             popupBaseEdit.ShowPopup();
+         }
+     }
 
      /// <summary>
      /// 为LookUpEdit添加删除按钮

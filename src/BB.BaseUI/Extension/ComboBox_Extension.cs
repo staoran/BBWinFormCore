@@ -278,8 +278,20 @@ public static class ComboBoxExtension
         return list;
     }
 
-
     #region ComboBoxEdit控件
+
+    /// <summary>
+    /// 下拉控件，键盘按下，自动弹出选框
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    static void OnRepositoryItemOnKeyUp(object? sender, KeyEventArgs args)
+    {
+        if (args.KeyCode == Keys.Tab && sender is PopupBaseEdit popupBaseEdit)
+        {
+            popupBaseEdit.ShowPopup();
+        }
+    }
 
     /// <summary>
     /// 获取下拉列表的值
@@ -429,6 +441,8 @@ public static class ComboBoxExtension
 
         if (!freeInput)
             combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+        
+        combo.KeyUp += OnRepositoryItemOnKeyUp;
             
         combo.Properties.EndUpdate();//可以加快
 
@@ -476,6 +490,8 @@ public static class ComboBoxExtension
 
         if (!freeInput)
             combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+        
+        combo.KeyUp += OnRepositoryItemOnKeyUp;
 
         combo.Properties.EndUpdate();//可以加快
 
@@ -516,6 +532,8 @@ public static class ComboBoxExtension
 
         if (!freeInput)
             combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+        
+        combo.KeyUp += OnRepositoryItemOnKeyUp;
 
         combo.Properties.EndUpdate();//可以加快
     }
@@ -538,6 +556,8 @@ public static class ComboBoxExtension
 
         if (!freeInput)
             combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+        
+        combo.KeyUp += OnRepositoryItemOnKeyUp;
             
         combo.Properties.EndUpdate();//可以加快
     }
@@ -620,6 +640,8 @@ public static class ComboBoxExtension
         {
             combo.SetComboBoxItem(defaultValue);
         }
+        
+        combo.KeyUp += OnRepositoryItemOnKeyUp;
 
         combo.Properties.EndUpdate();//可以加快
     }
