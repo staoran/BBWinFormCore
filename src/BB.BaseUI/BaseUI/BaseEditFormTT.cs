@@ -25,7 +25,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     /// <summary>
     /// 是否检查子表为空
     /// </summary>
-    private readonly bool _isCheckChildNull;
+    protected readonly bool IsCheckChildNull;
 
     /// <summary>
     /// 子表业务逻辑
@@ -35,12 +35,12 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     /// <summary>
     /// 子表初始数据
     /// </summary>
-    private T1? _childNewEntity;
+    protected T1? ChildNewEntity;
 
     /// <summary>
     /// 子表验证接口
     /// </summary>
-    private readonly IValidator<T1> _childValidator;
+    protected readonly IValidator<T1> ChildValidator;
 
     /// <summary>
     /// 无参构造函数,默认不检查子表是否为空
@@ -49,9 +49,9 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     {
         InitializeComponent();
 
-        _isCheckChildNull = typeof(T).GetCustomAttribute<IsChildListNullAttribute>().IsNotNull();
+        IsCheckChildNull = typeof(T).GetCustomAttribute<IsChildListNullAttribute>().IsNotNull();
         ChildBll = childBll;
-        _childValidator = childValidator;
+        ChildValidator = childValidator;
 
         Shown += BaseEditForm_Shown;
     }
@@ -118,7 +118,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
 
         #endregion
     }
-    
+
     /// <summary>
     /// 数据显示的函数
     /// </summary>
@@ -238,7 +238,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     public override async Task<bool> CheckInput()
     {
         var allowEmpty = true;
-        if (_isCheckChildNull && gridView1.RowCount == 0)
+        if (IsCheckChildNull && gridView1.RowCount == 0)
         {
             
             "明细不可为空".ShowErrorTip(this);
@@ -259,19 +259,19 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     {
         if (s is not ColumnView view) throw new Exception("行数据获取异常");
 
-        _childNewEntity ??= await ChildBll.NewEntityAsync(); // 数据在此初始化
+        ChildNewEntity ??= await ChildBll.NewEntityAsync(); // 数据在此初始化
         
-        string foreignKey = _childNewEntity.GetFieldValue("ForeignKey").ObjToStr(); // 外键字段名称
+        string foreignKey = ChildNewEntity.GetFieldValue("ForeignKey").ObjToStr(); // 外键字段名称
         if (!ID.IsNullOrEmpty())
         {
-            _childNewEntity.SetProperty(foreignKey, ID); //明细表的外键
+            ChildNewEntity.SetProperty(foreignKey, ID); //明细表的外键
         }
         // if (!foreignKey.IsNullOrEmpty() && _tempInfo != null)
         // {
         //     object? primaryValue = _tempInfo.GetProperty(foreignKey); // 从主表中拿到对应的值
         //     entity.SetProperty(foreignKey, primaryValue); //明细表的外键
         // }
-        view.EntityToRow(e.RowHandle, _childNewEntity);
+        view.EntityToRow(e.RowHandle, ChildNewEntity);
         // 此处加入新增列的数据初始化
         // gridView1.SetRowCellValue(e.RowHandle, "ISID", Guid.NewGuid().ToString()); //明细表ID
         //gridView1.SetRowCellValue(e.RowHandle, "Apply_ID", tempInfo.Apply_ID);
@@ -286,11 +286,12 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     /// <param name="e"></param>
     protected virtual async void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)
     {
-        if (sender is not ColumnView view) throw new Exception("行数据获取异常");
+        if (sender is not GridView view) throw new Exception("表格获取异常");
+        if (e.Row == null) return;
 
         view.ClearColumnErrors();
         var entity = view.RowToModel<T1>(e.RowHandle);
-        view.ProcessValidationResults(e, await _childValidator.ValidateAsync(entity));
+        view.ProcessValidationResults(e, await ChildValidator.ValidateAsync(entity));
     }
 
     /// <summary>

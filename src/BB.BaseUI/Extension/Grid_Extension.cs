@@ -106,6 +106,7 @@ public static class GridExtension
         }
 
         gridView.CustomColumnDisplayText += gridView_CustomColumnDisplayText;
+        // 数据行验证失败时
         gridView.InvalidRowException += gridView_InvalidRowException;
     }
 
@@ -178,7 +179,7 @@ public static class GridExtension
     /// <param name="e"></param>
     static void gridView_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
     {
-        e.ErrorText.ShowUxError();
+        e.ErrorText.ShowErrorTip();
         // 禁止显示错误消息对话框
         e.ExceptionMode = ExceptionMode.NoAction;
     }
@@ -1715,7 +1716,7 @@ public static class GridExtension
         foreach (PropertyInfo p in (typeof(T)).GetProperties())
         {
             var value = dr.GetRowCellValue(rowHandle, p.Name);
-            if (value is DBNull) { continue; }
+            if (value is DBNull || !p.CanWrite) { continue; }
             p.SetValue(model, value, null);
         }
         return model;
