@@ -51,7 +51,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// 获取所有字典类型的终结点数据
     /// </summary>
     /// <returns></returns>
-    public async Task<List<CListItem>> GetEndpointItemsAsync(List<DictTypeNodeInfo> nodeInfos = null, List<CListItem> items = null)
+    public async Task<List<CListItem>> GetEndpointItemsAsync(List<DictTypeNodeInfo>? nodeInfos = null, List<CListItem>? items = null)
     {
         return (await _httpService.GetEndpointItemsAsync(nodeInfos, items)).Handling();
     }

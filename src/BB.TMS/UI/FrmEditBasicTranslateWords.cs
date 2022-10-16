@@ -24,7 +24,7 @@ public partial class FrmEditBasicTranslateWords : BaseEditForm<BasicTranslateWor
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEditTest1Car_Load(object sender, EventArgs e)
+    private void FrmEditTest1Car_Load(object? sender, EventArgs e)
     {
     }
 
@@ -34,7 +34,7 @@ public partial class FrmEditBasicTranslateWords : BaseEditForm<BasicTranslateWor
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtTranslateType.BindDictItems("公式关键字类型", null, true, false);
+        txtTranslateType.BindDictItems("公式关键字类型", "", true, false);
         txtCanSelectYN.BindDictItems("是,否", false);
         txtCancelYN.BindDictItems("是,否", false);
         txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);

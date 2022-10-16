@@ -75,7 +75,7 @@ public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmCar_Shown(object sender, EventArgs e)
+    private void FrmCar_Shown(object? sender, EventArgs e)
     {
     }
 
@@ -100,10 +100,10 @@ public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
     {
         #region 查询表单初始化
 
-        txtProperty.BindDictItems("车辆性质", null, true, false);
-        txtModel.BindDictItems("车型", null, true, false);
-        txtCarType.BindDictItems("车体状况", null, true, false);
-        txtServiceRange.BindDictItems("服务范围", null, true, false);
+        txtProperty.BindDictItems("车辆性质", "", true, false);
+        txtModel.BindDictItems("车型", "", true, false);
+        txtCarType.BindDictItems("车体状况", "", true, false);
+        txtServiceRange.BindDictItems("服务范围", "", true, false);
 
         #endregion
 
@@ -191,7 +191,7 @@ public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView1_DataSourceChanged(sender, e);
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)

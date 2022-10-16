@@ -56,7 +56,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation Check(this Validation validation, Func<bool> checkFactory, bool checkNull = false,
-        int max = 0, string errorText = null)
+        int max = 0, string? errorText = null)
     {
         if (checkNull && !validation.NotNullOrEmpty().IsValid) return validation;
 
@@ -318,7 +318,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsHexString(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsHexString(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的十六进制字符串");
@@ -348,7 +348,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsInt(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsInt(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是整数");
@@ -363,7 +363,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsIp(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsIp(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的IP地址");
@@ -483,7 +483,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsPort(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsPort(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? ResourceKey.ParameterCheckPort);
@@ -498,7 +498,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsPostCode(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => ValidateUtil.IsPostCode(validation.Value.ObjToStr()),
             checkNull, max, errorText ?? "{0}不是合法的邮政编码");
@@ -513,7 +513,7 @@ public static class ArgumentCheck
     /// <param name="argumentName">参数名称</param>
     /// <returns>Validation对象</returns>
     public static Validation IsRequireLen(this Validation validation, bool checkNull = false, int requireLength = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         return Check(validation, () => validation.ObjToStr().Length == requireLength, checkNull, requireLength,
             errorText ?? string.Format(ResourceKey.ParameterCheckStringLength, validation.ArgumentName, requireLength));
@@ -528,7 +528,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation IsSerializable(this Validation validation, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         Type type = validation.Value.GetType();
         return Check(validation, () => type.IsSerializable,
@@ -560,7 +560,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation NotEqual(this Validation validation, object equalObj, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         object data = validation.Value;
         return Check(validation, () => data != equalObj, checkNull, max,
@@ -604,7 +604,7 @@ public static class ArgumentCheck
     /// <param name="errorText">错误提示</param>
     /// <returns>Validation对象</returns>
     public static Validation RegexMatch(this Validation validation, string pattern, bool checkNull = false, int max = 0,
-        string errorText = null)
+        string? errorText = null)
     {
         string input = validation.Value.ObjToStr();
         return Check(validation, () => Regex.IsMatch(input, pattern),

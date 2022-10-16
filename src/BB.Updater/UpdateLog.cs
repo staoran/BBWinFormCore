@@ -38,7 +38,7 @@ public class Log
                                   + ex.Message + Environment.NewLine
                                   + ex.Source + Environment.NewLine
                                   + ex.StackTrace + Environment.NewLine
-                                  + ex.TargetSite.Name;
+                                  + ex.TargetSite?.Name;
         Write(msg);
     }
 }

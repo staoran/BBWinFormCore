@@ -104,7 +104,7 @@ public class RegisterHotKeyHelper
     /// <summary>
     /// 热键处理事件
     /// </summary>
-    public event HotKeyPass HotKey;
+    public event HotKeyPass? HotKey;
 
     private class HotKeyWndProc : NativeWindow
     {

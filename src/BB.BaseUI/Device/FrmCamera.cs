@@ -17,12 +17,12 @@ public partial class FrmCamera : BaseForm
         InitializeComponent();
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         DialogResult = DialogResult.OK;
     }
 
-    private void btnCapture_Click(object sender, EventArgs e)
+    private void btnCapture_Click(object? sender, EventArgs e)
     {
         CameraImage = cameraControl1.TakeSnapshot();
         pictureEdit1.Image = CameraImage;

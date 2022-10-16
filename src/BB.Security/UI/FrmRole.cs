@@ -52,7 +52,7 @@ public partial class FrmRole : BaseForm
         _roleFunctionBll = roleFunctionBll;
     }
 
-    private async void FrmRole_Load(object sender, EventArgs e)
+    private async void FrmRole_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -328,7 +328,7 @@ public partial class FrmRole : BaseForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void treeView1_MouseDown(object sender, MouseEventArgs e)
+    private void treeView1_MouseDown(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Right)
         {
@@ -342,7 +342,7 @@ public partial class FrmRole : BaseForm
         base.OnMouseDown(e);
     }
 
-    private async void menu_Delete_Click(object sender, EventArgs e)
+    private async void menu_Delete_Click(object? sender, EventArgs e)
     {
         TreeNode node = treeView1.SelectedNode;
         if (node is { Tag: { } })
@@ -373,7 +373,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private void menu_Add_Click(object sender, EventArgs e)
+    private void menu_Add_Click(object? sender, EventArgs e)
     {
         //跳转到第一个页面
         xtraTabControl1.SelectedTabPageIndex = 0;
@@ -406,12 +406,12 @@ public partial class FrmRole : BaseForm
         txtSortCode.Text = "";
     }
 
-    private async void menu_Update_Click(object sender, EventArgs e)
+    private async void menu_Update_Click(object? sender, EventArgs e)
     {
         await RefreshTreeView();
     }
 
-    private void menu_ExpandAll_Click(object sender, EventArgs e)
+    private void menu_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeView1.ExpandAll();
     }
@@ -462,7 +462,7 @@ public partial class FrmRole : BaseForm
         return info;
     }
 
-    private async void btnSave_Click(object sender, EventArgs e)
+    private async void btnSave_Click(object? sender, EventArgs e)
     {
         #region 验证用户输入
         if (txtName.Text == "")
@@ -584,7 +584,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private async void btnEditUser_Click(object sender, EventArgs e)
+    private async void btnEditUser_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -612,7 +612,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private async void btnRemoveUser_Click(object sender, EventArgs e)
+    private async void btnRemoveUser_Click(object? sender, EventArgs e)
     {
         if (lvwUser.SelectedItem != null)
         {
@@ -655,7 +655,7 @@ public partial class FrmRole : BaseForm
             }
         }
     }
-    private async void btnEditOU_Click(object sender, EventArgs e)
+    private async void btnEditOU_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -693,7 +693,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private async void btnRemoveOU_Click(object sender, EventArgs e)
+    private async void btnRemoveOU_Click(object? sender, EventArgs e)
     {
         if (lvwOU.SelectedItem != null)
         {
@@ -710,7 +710,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private async void btnEditFunction_Click(object sender, EventArgs e)
+    private async void btnEditFunction_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -728,22 +728,22 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private void btnAdd_Click(object sender, EventArgs e)
+    private void btnAdd_Click(object? sender, EventArgs e)
     {
         menu_Add_Click(sender, e);
     }
 
-    private void btnDelete_Click(object sender, EventArgs e)
+    private void btnDelete_Click(object? sender, EventArgs e)
     {
         menu_Delete_Click(sender, e);
     }
 
-    private void menu_Collapse_Click(object sender, EventArgs e)
+    private void menu_Collapse_Click(object? sender, EventArgs e)
     {
         treeView1.CollapseAll();
     }
 
-    private async void btnSaveFunction_Click(object sender, EventArgs e)
+    private async void btnSaveFunction_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -774,7 +774,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private async void btnRefreshFunction_Click(object sender, EventArgs e)
+    private async void btnRefreshFunction_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -918,7 +918,7 @@ public partial class FrmRole : BaseForm
         }
     }
         
-    private async void btnSaveRoleData_Click(object sender, EventArgs e)
+    private async void btnSaveRoleData_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -949,7 +949,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private async void btnRefreshRoleData_Click(object sender, EventArgs e)
+    private async void btnRefreshRoleData_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -961,7 +961,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private void chkAllRoleData_CheckedChanged(object sender, EventArgs e)
+    private void chkAllRoleData_CheckedChanged(object? sender, EventArgs e)
     {
         foreach (TreeNode node in treeRoleData.Nodes)
         {
@@ -978,7 +978,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private void chkFunctionSelectAll_CheckedChanged(object sender, EventArgs e)
+    private void chkFunctionSelectAll_CheckedChanged(object? sender, EventArgs e)
     {
         foreach (TreeNode node in treeFunction.Nodes)
         {
@@ -986,17 +986,17 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private async void function_Refresh_Click(object sender, EventArgs e)
+    private async void function_Refresh_Click(object? sender, EventArgs e)
     {
         await InitTreeFunction();
     }
 
-    private void function_Collapse_Click(object sender, EventArgs e)
+    private void function_Collapse_Click(object? sender, EventArgs e)
     {
         treeFunction.CollapseAll();
     }
 
-    private void function_ExpandAll_Click(object sender, EventArgs e)
+    private void function_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeFunction.ExpandAll();
     }

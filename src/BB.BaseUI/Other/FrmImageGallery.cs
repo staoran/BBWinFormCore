@@ -82,7 +82,7 @@ public partial class FrmImageGallery : BaseForm
         txtEmbedIcon.Image = imageCollection1.Images[0];
     }
 
-    private void FrmImageGallery_Load(object sender, EventArgs e)
+    private void FrmImageGallery_Load(object? sender, EventArgs e)
     {
         BindData();
     }
@@ -119,7 +119,7 @@ public partial class FrmImageGallery : BaseForm
     /// <summary>
     /// 触发查询图标
     /// </summary>
-    private void txtFileName_KeyUp(object sender, KeyEventArgs e)
+    private void txtFileName_KeyUp(object? sender, KeyEventArgs e)
     {
         if(e.KeyCode == Keys.Enter)
         {
@@ -130,7 +130,7 @@ public partial class FrmImageGallery : BaseForm
     /// <summary>
     /// 查询图标
     /// </summary>
-    private void btnSearch_Click(object sender, EventArgs e)
+    private void btnSearch_Click(object? sender, EventArgs e)
     {
         BindData(txtFileName.Text.Trim());
     }
@@ -189,7 +189,7 @@ public partial class FrmImageGallery : BaseForm
         return result;
     }
 
-    private void txtEmbedIcon_Click(object sender, EventArgs e)
+    private void txtEmbedIcon_Click(object? sender, EventArgs e)
     {
         if(txtEmbedIcon.Image != null)
         {

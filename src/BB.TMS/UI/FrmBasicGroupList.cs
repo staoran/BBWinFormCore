@@ -63,7 +63,7 @@ public partial class FrmBasicGroupList : BaseViewDock<BasicGroupList, BasicGroup
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmBasicGroupList_Shown(object sender, EventArgs e)
+    private void FrmBasicGroupList_Shown(object? sender, EventArgs e)
     {
     }
 
@@ -87,7 +87,7 @@ public partial class FrmBasicGroupList : BaseViewDock<BasicGroupList, BasicGroup
     {
         #region 查询表单初始化
 
-        txtGroupType.BindDictItems("分组类型", null, true, false);
+        txtGroupType.BindDictItems("分组类型", "", true, false);
         txtCostType.BindDictItems(GB.AllCostType, null, true, false);
         txtFlagApp.BindDictItems(GB.YesOrNo, null, true, false);
 
@@ -153,7 +153,7 @@ public partial class FrmBasicGroupList : BaseViewDock<BasicGroupList, BasicGroup
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView1_DataSourceChanged(sender, e);
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)

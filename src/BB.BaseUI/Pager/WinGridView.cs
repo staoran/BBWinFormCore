@@ -300,7 +300,7 @@ public partial class WinGridView : XtraUserControl
         InitializeComponent();
     }
 
-    private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+    private void contextMenuStrip1_Opening(object? sender, CancelEventArgs e)
     {
         menu_Add.Visible = (OnAddNew != null && ShowAddMenu);
         menu_Delete.Visible = (OnDeleteSelected != null && ShowDeleteMenu);
@@ -473,13 +473,13 @@ public partial class WinGridView : XtraUserControl
             _printTitle = JsonLanguage.Default.GetString(value);
     }
 
-    private async void btnExport_Click(object sender, EventArgs e)
+    private void btnExport_Click(object? sender, EventArgs e)
     {
         _isExportAllPage = true;
         ExportToExcel();
     }
 
-    private void btnExportCurrent_Click(object sender, EventArgs e)
+    private void btnExportCurrent_Click(object? sender, EventArgs e)
     {
         _isExportAllPage = false;
         ExportToExcel();
@@ -535,7 +535,7 @@ public partial class WinGridView : XtraUserControl
     /// <summary>
     /// 使用背景线程导出Excel文档
     /// </summary>
-    private void bg_DoWork(object sender, DoWorkEventArgs e)
+    private void bg_DoWork(object? sender, DoWorkEventArgs e)
     {
         DataTable table = new DataTable();
         if (AllToExport != null && _isExportAllPage)
@@ -611,7 +611,7 @@ public partial class WinGridView : XtraUserControl
 
     //show a message to the user when the background worker has finished
     //and re-enable the export buttons
-    private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    private void bg_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
     {
         if (OnEndExport != null)
         {
@@ -627,7 +627,7 @@ public partial class WinGridView : XtraUserControl
     #endregion
 
     #region 菜单操作
-    private void menu_Delete_Click(object sender, EventArgs e)
+    private void menu_Delete_Click(object? sender, EventArgs e)
     {
         if (OnDeleteSelected != null && ShowDeleteMenu)
         {
@@ -635,7 +635,7 @@ public partial class WinGridView : XtraUserControl
         }
     }
 
-    private void menu_Refresh_Click(object sender, EventArgs e)
+    private void menu_Refresh_Click(object? sender, EventArgs e)
     {
         if (OnRefresh != null)
         {
@@ -643,7 +643,7 @@ public partial class WinGridView : XtraUserControl
         }
     }
 
-    private void menu_Edit_Click(object sender, EventArgs e)
+    private void menu_Edit_Click(object? sender, EventArgs e)
     {
         if (OnEditSelected != null && ShowEditMenu)
         {
@@ -651,12 +651,12 @@ public partial class WinGridView : XtraUserControl
         }
     }
 
-    private void menu_Print_Click(object sender, EventArgs e)
+    private void menu_Print_Click(object? sender, EventArgs e)
     {
         PrintGV.Print_GridView(gridView1, _printTitle);
     } 
 
-    private void menu_Add_Click(object sender, EventArgs e)
+    private void menu_Add_Click(object? sender, EventArgs e)
     {
         if (OnAddNew != null && ShowAddMenu)
         {
@@ -664,13 +664,13 @@ public partial class WinGridView : XtraUserControl
         }
     }
 
-    private void menu_Export_Click(object sender, EventArgs e)
+    private void menu_Export_Click(object? sender, EventArgs e)
     {
         _isExportAllPage = false;
         ExportToExcel();
     }
 
-    private void menu_CopyInfo_Click(object sender, EventArgs e)
+    private void menu_CopyInfo_Click(object? sender, EventArgs e)
     {
         int[] selectedRow = gridView1.GetSelectedRows();
         if (selectedRow == null || selectedRow.Length == 0)
@@ -718,7 +718,7 @@ public partial class WinGridView : XtraUserControl
         Clipboard.SetText(sbHeader + "\r\n" + sb);
     }
 
-    private void menu_SetColumn_Click(object sender, EventArgs e)
+    private void menu_SetColumn_Click(object? sender, EventArgs e)
     {
         FrmSelectColumnDisplay dlg = new FrmSelectColumnDisplay();
         dlg.DisplayColumNames = _displayColumns;
@@ -729,7 +729,7 @@ public partial class WinGridView : XtraUserControl
 
     #endregion
        
-    private void gridView1_DataSourceChanged(object sender, EventArgs e)
+    private void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         #region 修改别名及可见
             
@@ -946,14 +946,14 @@ public partial class WinGridView : XtraUserControl
         return list;
     }
 
-    private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+    private void dataGridView1_MouseClick(object? sender, MouseEventArgs e)
     {
         if (OnGridViewMouseClick != null)
         {
             OnGridViewMouseClick(sender, e);
         }
     }
-    private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
+    private void dataGridView1_MouseDoubleClick(object? sender, MouseEventArgs e)
     {
         if (OnGridViewMouseDoubleClick != null)
         {
@@ -1017,7 +1017,7 @@ public partial class WinGridView : XtraUserControl
         }
     }
 
-    private void WinGridView_Load(object sender, EventArgs e)
+    private void WinGridView_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -1044,7 +1044,7 @@ public partial class WinGridView : XtraUserControl
         }
     }
 
-    private void menu_ColumnWidth_Click(object sender, EventArgs e)
+    private void menu_ColumnWidth_Click(object? sender, EventArgs e)
     {
         BestFitColumnWith = !BestFitColumnWith;
         ShowWidthStatus();

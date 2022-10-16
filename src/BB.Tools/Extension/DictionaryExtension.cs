@@ -163,16 +163,16 @@ public static class DictionaryExtension
     /// <param name="itemName">Xml项节点名称</param>
     /// <param name="overwrite">如果字典中已存在此键值，是否覆盖</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
-    private static void FillInternal<TKey, TValue>(this IDictionary<TKey, TValue> dict, string xml, string rootName,
-        string itemName, bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    private static void FillInternal<TKey, TValue>(this IDictionary<TKey, TValue?> dict, string xml, string rootName,
+        string itemName, bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null)
     {
         XDocument doc = XDocument.Parse(xml);
-        XElement root = doc.Element(rootName);
+        XElement? root = doc.Element(rootName);
         if (root == null) return;
         foreach (var item in root.Elements(itemName))
         {
 
-            var key = item.To(t => t.Attribute("name").Value, default(TKey));
+            var key = item.To(t => t.Attribute("name")?.Value, default(TKey));
             var value = item.To(t => t.Value, default(TValue));
             if (predicate != null && !predicate(dict, key, value)) continue;
             if (overwrite)
@@ -198,9 +198,9 @@ public static class DictionaryExtension
     /// <param name="overwrite">如果字典中已存在此键值，是否覆盖</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static IDictionary<TKey, TValue> Fill<TKey, TValue>(this IDictionary<TKey, TValue> dict, string xml,
+    public static IDictionary<TKey, TValue?> Fill<TKey, TValue>(this IDictionary<TKey, TValue?> dict, string xml,
         string rootName, string itemName, bool overwrite,
-        Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+        Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null)
     {
         if (dict == null) return dict;
         if (string.IsNullOrWhiteSpace(xml)) return dict;
@@ -229,11 +229,11 @@ public static class DictionaryExtension
     /// <param name="overwrite">如果字典中已存在此键值，是否覆盖</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static Dictionary<TKey, TValue> Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
+    public static Dictionary<TKey, TValue>? Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
         string rootName, string itemName, bool overwrite,
-        Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+        Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null) where TKey : notnull
     {
-        return Fill((IDictionary<TKey, TValue>)dict, xml, rootName, itemName, overwrite, predicate) as
+        return Fill((IDictionary<TKey, TValue?>)dict, xml, rootName, itemName, overwrite, predicate) as
             Dictionary<TKey, TValue>;
     }
 
@@ -249,8 +249,8 @@ public static class DictionaryExtension
     /// <param name="overwrite">如果字典中已存在此键值，是否覆盖</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static IDictionary<TKey, TValue> Fill<TKey, TValue>(this IDictionary<TKey, TValue> dict, string xml,
-        string itemName, bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static IDictionary<TKey, TValue?> Fill<TKey, TValue>(this IDictionary<TKey, TValue?> dict, string xml,
+        string itemName, bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null)
     {
         return Fill(dict, xml, string.Concat(itemName, "s"), itemName, overwrite, predicate);
     }
@@ -266,10 +266,10 @@ public static class DictionaryExtension
     /// <param name="overwrite">如果字典中已存在此键值，是否覆盖</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static Dictionary<TKey, TValue> Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
-        string itemName, bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static Dictionary<TKey, TValue>? Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
+        string itemName, bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null) where TKey : notnull
     {
-        return Fill((IDictionary<TKey, TValue>)dict, xml, itemName, overwrite, predicate) as Dictionary<TKey, TValue>;
+        return Fill((IDictionary<TKey, TValue?>)dict, xml, itemName, overwrite, predicate) as Dictionary<TKey, TValue>;
     }
 
     /// <summary>
@@ -282,8 +282,8 @@ public static class DictionaryExtension
     /// <param name="itemName">Xml项节点名称</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static IDictionary<TKey, TValue> Fill<TKey, TValue>(this IDictionary<TKey, TValue> dict, string xml,
-        string itemName, Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static IDictionary<TKey, TValue?> Fill<TKey, TValue>(this IDictionary<TKey, TValue?> dict, string xml,
+        string itemName, Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null)
     {
         return Fill(dict, xml, string.Concat(itemName, "s"), itemName, true, predicate);
     }
@@ -298,10 +298,10 @@ public static class DictionaryExtension
     /// <param name="itemName">Xml项节点名称</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static Dictionary<TKey, TValue> Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
-        string itemName, Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static Dictionary<TKey, TValue>? Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
+        string itemName, Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null) where TKey : notnull
     {
-        return Fill((IDictionary<TKey, TValue>)dict, xml, itemName, predicate) as Dictionary<TKey, TValue>;
+        return Fill((IDictionary<TKey, TValue?>)dict, xml, itemName, predicate) as Dictionary<TKey, TValue>;
     }
 
     /// <summary>
@@ -314,8 +314,8 @@ public static class DictionaryExtension
     /// <param name="overwrite">如果字典中已存在此键值，是否覆盖</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static IDictionary<TKey, TValue> Fill<TKey, TValue>(this IDictionary<TKey, TValue> dict, string xml,
-        bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static IDictionary<TKey, TValue?> Fill<TKey, TValue>(this IDictionary<TKey, TValue?> dict, string xml,
+        bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null)
     {
         return Fill(dict, xml, "param", overwrite, predicate);
     }
@@ -330,10 +330,10 @@ public static class DictionaryExtension
     /// <param name="overwrite">如果字典中已存在此键值，是否覆盖</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static Dictionary<TKey, TValue> Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
-        bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static Dictionary<TKey, TValue>? Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
+        bool overwrite, Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null) where TKey : notnull
     {
-        return Fill((IDictionary<TKey, TValue>)dict, xml, overwrite, predicate) as Dictionary<TKey, TValue>;
+        return Fill((IDictionary<TKey, TValue?>)dict, xml, overwrite, predicate) as Dictionary<TKey, TValue>;
     }
 
     /// <summary>
@@ -345,8 +345,8 @@ public static class DictionaryExtension
     /// <param name="xml">xml字符串</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static IDictionary<TKey, TValue> Fill<TKey, TValue>(this IDictionary<TKey, TValue> dict, string xml,
-        Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static IDictionary<TKey, TValue?> Fill<TKey, TValue>(this IDictionary<TKey, TValue?> dict, string xml,
+        Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null)
     {
         return Fill(dict, xml, true, predicate);
     }
@@ -361,10 +361,10 @@ public static class DictionaryExtension
     /// <param name="xml">xml字符串</param>
     /// <param name="predicate">字典项目检测条件，返回true则添加到字典中，返回false则忽略</param>
     /// <returns>填充完毕后的字典</returns>
-    public static Dictionary<TKey, TValue> Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
-        Func<IDictionary<TKey, TValue>, TKey, TValue, bool> predicate = null)
+    public static Dictionary<TKey, TValue>? Fill<TKey, TValue>(this Dictionary<TKey, TValue> dict, string xml,
+        Func<IDictionary<TKey, TValue>, TKey, TValue, bool>? predicate = null) where TKey : notnull
     {
-        return Fill((IDictionary<TKey, TValue>)dict, xml, predicate) as Dictionary<TKey, TValue>;
+        return Fill((IDictionary<TKey, TValue?>)dict, xml, predicate) as Dictionary<TKey, TValue>;
     }
 
 

@@ -25,7 +25,7 @@ public partial class CompanyControl : XtraUserControl
         txtCompany.EditValueChanged += txtCompany_EditValueChanged;
     }
 
-    void txtCompany_EditValueChanged(object sender, EventArgs e)
+    void txtCompany_EditValueChanged(object? sender, EventArgs e)
     {
         if (EditValueChanged != null)
         {
@@ -113,7 +113,7 @@ public partial class CompanyControl : XtraUserControl
         set => txtCompany.EditValue = value;
     }
 
-    private void CompanyControl_Load(object sender, EventArgs e)
+    private void CompanyControl_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -121,7 +121,7 @@ public partial class CompanyControl : XtraUserControl
         }
     }
 
-    private void btnRefresh_Click(object sender, EventArgs e)
+    private void btnRefresh_Click(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {

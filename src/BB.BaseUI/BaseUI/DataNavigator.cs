@@ -3,7 +3,7 @@
 /// <summary>
 /// 位置变化代理
 /// </summary>
-public delegate void PostionChangedEventHandler(object sender, EventArgs e);
+public delegate void PostionChangedEventHandler(object? sender, EventArgs e);
 
 /// <summary>
 /// 记录导航控件
@@ -40,22 +40,22 @@ public partial class DataNavigator : DevExpress.XtraEditors.XtraUserControl
         InitializeComponent();            
     }
 
-    private void btnFirst_Click(object sender, EventArgs e)
+    private void btnFirst_Click(object? sender, EventArgs e)
     {
         ChangePosition(0);
     }
 
-    private void btnPrevious_Click(object sender, EventArgs e)
+    private void btnPrevious_Click(object? sender, EventArgs e)
     {
         ChangePosition(_mCurrentIndex - 1);
     }
 
-    private void btnNext_Click(object sender, EventArgs e)
+    private void btnNext_Click(object? sender, EventArgs e)
     {
         ChangePosition(_mCurrentIndex + 1);
     }
 
-    private void btnLast_Click(object sender, EventArgs e)
+    private void btnLast_Click(object? sender, EventArgs e)
     {
         ChangePosition(IdList.Count - 1);
     }
@@ -93,7 +93,7 @@ public partial class DataNavigator : DevExpress.XtraEditors.XtraUserControl
         }
     }
 
-    private void DataNavigator_Load(object sender, EventArgs e)
+    private void DataNavigator_Load(object? sender, EventArgs e)
     {
     }
 }

@@ -16,7 +16,7 @@ public partial class Login : DevExpress.XtraEditors.XtraForm
         txtUserName.Focus();
     }
 
-    private async void btnLogin_Click(object sender, EventArgs e)
+    private async void btnLogin_Click(object? sender, EventArgs e)
     {
         #region 检查验证
         if (txtUserName.Text.Length == 0)
@@ -42,13 +42,13 @@ public partial class Login : DevExpress.XtraEditors.XtraForm
     }
 
 
-    private void labelControl1_Click(object sender, EventArgs e)
+    private void labelControl1_Click(object? sender, EventArgs e)
     {
         DialogResult = DialogResult.Cancel;
         Application.Exit();
     }
 
-    private void Login_KeyUp(object sender, KeyEventArgs e)
+    private void Login_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -56,7 +56,7 @@ public partial class Login : DevExpress.XtraEditors.XtraForm
         }
     }
 
-    private void txtUserName_KeyUp(object sender, KeyEventArgs e)
+    private void txtUserName_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -64,7 +64,7 @@ public partial class Login : DevExpress.XtraEditors.XtraForm
         }
     }
 
-    private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+    private void txtPassword_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -72,7 +72,7 @@ public partial class Login : DevExpress.XtraEditors.XtraForm
         }
     }
 
-    private void txtRole_KeyUp(object sender, KeyEventArgs e)
+    private void txtRole_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -80,7 +80,7 @@ public partial class Login : DevExpress.XtraEditors.XtraForm
         }
     }
 
-    private void btnExit_Click(object sender, EventArgs e)
+    private void btnExit_Click(object? sender, EventArgs e)
     {
         DialogResult = DialogResult.Cancel;
         Close(); 

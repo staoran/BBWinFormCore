@@ -18,12 +18,12 @@ public partial class CameraDialog : BaseForm
         Disposed += CameraDialog_Disposed;
     }
 
-    void CameraDialog_Disposed(object sender, EventArgs e)
+    void CameraDialog_Disposed(object? sender, EventArgs e)
     {
         _camera.Close();
     }
 
-    private void CameraDialog_Load(object sender, EventArgs e)
+    private void CameraDialog_Load(object? sender, EventArgs e)
     {
         const int photoWidth = 226;
         const int photoHeight = 280;
@@ -49,7 +49,7 @@ public partial class CameraDialog : BaseForm
         }
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         Photo = _camera.GrabImage();
     }

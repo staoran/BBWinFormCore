@@ -152,7 +152,7 @@ public partial class FirefoxDialog : DevExpress.XtraEditors.XtraUserControl
 	#endregion
 
 	#region Dialog Buttons
-	private void btnOK_Click(object sender, EventArgs e)
+	private void btnOK_Click(object? sender, EventArgs e)
 	{
 		bool result = Apply();
 		if (result)
@@ -168,12 +168,12 @@ public partial class FirefoxDialog : DevExpress.XtraEditors.XtraUserControl
 		}
 	}
 
-	private void btnCancel_Click(object sender, EventArgs e)
+	private void btnCancel_Click(object? sender, EventArgs e)
 	{
 		Close();
 	}
 
-	private void btnApply_Click(object sender, EventArgs e)
+	private void btnApply_Click(object? sender, EventArgs e)
 	{
 		bool result = Apply();
 		if (result)

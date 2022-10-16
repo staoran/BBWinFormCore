@@ -9,7 +9,7 @@ public partial class FrmSettings : BaseForm
         InitializeComponent();
     }
 
-    private void FrmSettings_Load(object sender, EventArgs e)
+    private void FrmSettings_Load(object? sender, EventArgs e)
     {
         firefoxDialog1.ImageList = imageList1;
 

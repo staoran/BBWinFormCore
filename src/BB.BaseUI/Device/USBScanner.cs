@@ -45,7 +45,7 @@ public class UsbScanner
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void timer_Tick(object sender, EventArgs e)
+    private void timer_Tick(object? sender, EventArgs e)
     {
         //约定条码最少5位
         if (_scanCode.Length >= 5)
@@ -68,7 +68,7 @@ public class UsbScanner
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void hostCtrl_KeyUp(object sender, KeyEventArgs e)
+    private void hostCtrl_KeyUp(object? sender, KeyEventArgs e)
     {
         _timer.Stop();
         _scanCode = _scanCode + (char)e.KeyValue;

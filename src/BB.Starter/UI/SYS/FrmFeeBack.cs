@@ -21,7 +21,7 @@ public partial class FrmFeeBack : BaseForm
         txtAdvise.Dispose();//显式关闭空间，防止错误出现
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         #region 检查地址
         DialogResult = DialogResult.None;

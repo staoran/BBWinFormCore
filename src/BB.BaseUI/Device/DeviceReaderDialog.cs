@@ -69,7 +69,7 @@ public partial class DeviceReaderDialog : BaseForm
         }
     }
 
-    private void DeviceReaderDialog_Load(object sender, EventArgs e)
+    private void DeviceReaderDialog_Load(object? sender, EventArgs e)
     {
         if (!Readonly)
         {
@@ -77,7 +77,7 @@ public partial class DeviceReaderDialog : BaseForm
         }
     }
 
-    void DeviceReaderDialog_KeyDown(object sender, KeyEventArgs e)
+    void DeviceReaderDialog_KeyDown(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {

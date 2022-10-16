@@ -28,7 +28,7 @@ public partial class PageReport : PropertyPage
         if (parameter != null)
         {
             EnableOtherReport(false);
-            string reportFile = parameter.CarSendReportFile;
+            string? reportFile = parameter.CarSendReportFile;
             if (reportFile == "BB.CarDispatch.CarSendBill2.rdlc")
             {
                 radReport.SelectedIndex = 0;                    
@@ -65,14 +65,7 @@ public partial class PageReport : PropertyPage
             if (parameter != null)
             {                    
                 int otherType = 2;//2代表其他类型
-                if (radReport.SelectedIndex < otherType)
-                {
-                    parameter.CarSendReportFile = radReport.Properties.Items[radReport.SelectedIndex].Value.ToString();
-                }
-                else
-                {
-                    parameter.CarSendReportFile = txtOtherReport.Text;
-                }
+                parameter.CarSendReportFile = radReport.SelectedIndex < otherType ? radReport.Properties.Items[radReport.SelectedIndex].Value.ToString() : txtOtherReport.Text;
                 _settings.SaveSettings<ReportParameter>(parameter);
             }
             result = true;
@@ -86,12 +79,12 @@ public partial class PageReport : PropertyPage
         return result;
     }
 
-    private void PageSetting_Load(object sender, EventArgs e)
+    private void PageSetting_Load(object? sender, EventArgs e)
     {
 
     }
 
-    private void radReport_SelectedIndexChanged(object sender, EventArgs e)
+    private void radReport_SelectedIndexChanged(object? sender, EventArgs e)
     {
         int otherType = 2;//2代表其他类型
         bool isOtherType = (radReport.SelectedIndex == otherType);

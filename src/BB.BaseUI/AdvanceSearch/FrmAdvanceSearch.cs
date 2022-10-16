@@ -175,7 +175,7 @@ public partial class FrmAdvanceSearch : BaseForm
     /// <summary>
     /// 处理数据查询后的事件触发
     /// </summary>
-    public virtual void ProcessDataSearch(object sender, EventArgs e)
+    public virtual void ProcessDataSearch(object? sender, EventArgs e)
     {
         if (_dtAdvance == null) return;
         var searchCondition = new NameValueCollection();
@@ -207,7 +207,7 @@ public partial class FrmAdvanceSearch : BaseForm
     /// <summary>
     /// 数据清除后的操作
     /// </summary>
-    public virtual void ProcessDataClear(object sender, EventArgs e)
+    public virtual void ProcessDataClear(object? sender, EventArgs e)
     {
         if(DataClear != null)
         {
@@ -217,12 +217,12 @@ public partial class FrmAdvanceSearch : BaseForm
         }
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         ProcessDataSearch(null, null);
     }
 
-    private void FrmAdvanceSearch_Load(object sender, EventArgs e)
+    private void FrmAdvanceSearch_Load(object? sender, EventArgs e)
     {
         BindData();
     }
@@ -345,12 +345,12 @@ public partial class FrmAdvanceSearch : BaseForm
         ProcessDataSearch(null, null);
     }
 
-    private void ctxMenuSetData_Click(object sender, EventArgs e)
+    private void ctxMenuSetData_Click(object? sender, EventArgs e)
     {
         gridControl1_MouseDoubleClick(null, null);
     }
 
-    private void ctxMenuClearData_Click(object sender, EventArgs e)
+    private void ctxMenuClearData_Click(object? sender, EventArgs e)
     {
         int[] rowSelected = gridView1.GetSelectedRows();
         if (rowSelected.Length == 0) return;
@@ -362,7 +362,7 @@ public partial class FrmAdvanceSearch : BaseForm
         }
     }
 
-    private void gridControl1_DataSourceChanged(object sender, EventArgs e)
+    private void gridControl1_DataSourceChanged(object? sender, EventArgs e)
     {
         if (gridView1.Columns.Count > 0)
         {
@@ -375,7 +375,7 @@ public partial class FrmAdvanceSearch : BaseForm
         }
     }
 
-    private void gridControl1_MouseDoubleClick(object sender, MouseEventArgs e)
+    private void gridControl1_MouseDoubleClick(object? sender, MouseEventArgs e)
     {
         int[] rowSelected = gridView1.GetSelectedRows();
         if (rowSelected.Length == 0) return;
@@ -426,7 +426,7 @@ public partial class FrmAdvanceSearch : BaseForm
         }
     }
 
-    private void gridControl1_KeyUp(object sender, KeyEventArgs e)
+    private void gridControl1_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {

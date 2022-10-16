@@ -17,7 +17,7 @@ internal partial class FrmQueryNumericEdit : FrmQueryBase
     /// <summary>
     /// 提供给控件回车执行查询的操作
     /// </summary>
-    private void SearchControl_KeyUp(object sender, KeyEventArgs e)
+    private void SearchControl_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -26,12 +26,12 @@ internal partial class FrmQueryNumericEdit : FrmQueryBase
         }
     }
 
-    private void btnClear_Click(object sender, EventArgs e)
+    private void btnClear_Click(object? sender, EventArgs e)
     {
         ProcessDataClear(FieldName);
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         //判断输入的内容是否为空，来决定是否匹配日期
         if (txtStart.Text.Length > 0)
@@ -48,7 +48,7 @@ internal partial class FrmQueryNumericEdit : FrmQueryBase
         ProcessDataSearch(null, null);
     }
 
-    private void FrmQueryNumericEdit_Load(object sender, EventArgs e)
+    private void FrmQueryNumericEdit_Load(object? sender, EventArgs e)
     {
         txtStart.Text = "";
         txtEnd.Text = "";

@@ -49,7 +49,7 @@ public partial class BaseEditForm : BaseForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void dataNavigator1_PositionChanged(object sender, EventArgs e)
+    private async void dataNavigator1_PositionChanged(object? sender, EventArgs e)
     {
         ID = IdList[dataNavigator1.CurrentIndex];
         await DisplayData();
@@ -91,7 +91,7 @@ public partial class BaseEditForm : BaseForm
         #endregion
     }
 
-    private async void BaseEditForm_Shown(object sender, EventArgs e)
+    private async void BaseEditForm_Shown(object? sender, EventArgs e)
     {
         dataNavigator1.IdList = IdList;
         dataNavigator1.CurrentIndex = IdList.IndexOf(ID);
@@ -109,7 +109,7 @@ public partial class BaseEditForm : BaseForm
         //DisplayData();
     }
 
-    private void BaseEditForm_Load(object sender, EventArgs e)
+    private void BaseEditForm_Load(object? sender, EventArgs e)
     {
     }
  
@@ -331,23 +331,23 @@ public partial class BaseEditForm : BaseForm
 
         return await Task.FromResult(result.IsValid);
     }
-    private async void btnAdd_Click(object sender, EventArgs e)
+    private async void btnAdd_Click(object? sender, EventArgs e)
     {
         await SaveEntity(false);
     }
 
-    private async void btnOK_Click(object sender, EventArgs e)
+    private async void btnOK_Click(object? sender, EventArgs e)
     {
         await SaveEntity(true);
     }
 
-    private void btnCancel_Click(object sender, EventArgs e)
+    private void btnCancel_Click(object? sender, EventArgs e)
     {
         DialogResult = DialogResult.Cancel;
         Close();
     }
 
-    private void picPrint_Click(object sender, EventArgs e)
+    private void picPrint_Click(object? sender, EventArgs e)
     {
         PrintFormHelper.Print(this);
     }

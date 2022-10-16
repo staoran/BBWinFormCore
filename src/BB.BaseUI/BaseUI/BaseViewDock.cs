@@ -145,7 +145,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual async void View_Shown(object sender, EventArgs e)
+    protected virtual async void View_Shown(object? sender, EventArgs e)
     {
         InitTree();
         await BindData();
@@ -249,7 +249,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected virtual void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected virtual void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)
         {
@@ -264,7 +264,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件刷新操作
     /// </summary>
-    protected virtual async void winGridViewPager1_OnRefresh(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnRefresh(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -272,7 +272,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件删除操作
     /// </summary>
-    protected virtual async void winGridViewPager1_OnDeleteSelected(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnDeleteSelected(object? sender, EventArgs e)
     {
         await DeleteData();
     }
@@ -280,7 +280,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件编辑项操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnEditSelected(object sender, EventArgs e)
+    protected virtual void winGridViewPager1_OnEditSelected(object? sender, EventArgs e)
     {
         EditData();
     }
@@ -288,7 +288,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件新增操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnAddNew(object sender, EventArgs e)
+    protected virtual void winGridViewPager1_OnAddNew(object? sender, EventArgs e)
     {
         AddData();
     }
@@ -296,7 +296,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件全部导出操作前的操作
     /// </summary>
-    protected virtual async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnStartExport(object? sender, EventArgs e)
     {
         Dictionary<string,string> condition = GetQueryCondition();
         winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
@@ -305,7 +305,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 分页控件翻页的操作
     /// </summary>
-    protected virtual async void winGridViewPager1_OnPageChanged(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnPageChanged(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -329,7 +329,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 查询数据操作
     /// </summary>
-    protected virtual async void btnSearch_Click(object sender, EventArgs e)
+    protected virtual async void btnSearch_Click(object? sender, EventArgs e)
     {
         // 必须重置查询条件，否则可能会使用高级查询条件了
         _advanceCondition = null;
@@ -340,7 +340,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 清空查询条件
     /// </summary>
-    protected virtual void btnClear_Click(object sender, EventArgs e)
+    protected virtual void btnClear_Click(object? sender, EventArgs e)
     {
         layoutControl1.ClearPanelEditValue();
     }
@@ -348,7 +348,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 新增数据操作
     /// </summary>
-    protected virtual void btnAddNew_Click(object sender, EventArgs e)
+    protected virtual void btnAddNew_Click(object? sender, EventArgs e)
     {
         AddData();
     }
@@ -356,7 +356,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 审核数据操作
     /// </summary>
-    protected virtual async void btnCheck_Click(object sender, EventArgs e)
+    protected virtual async void btnCheck_Click(object? sender, EventArgs e)
     {
         await CheckData();
     }
@@ -366,7 +366,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual async void btnAdvanceSearch_Click(object sender, EventArgs e)
+    protected virtual async void btnAdvanceSearch_Click(object? sender, EventArgs e)
     {
         await AdvanceSearch();
     }
@@ -374,7 +374,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 提供给控件回车执行查询的操作
     /// </summary>
-    protected virtual void SearchControl_KeyUp(object sender, KeyEventArgs e)
+    protected virtual void SearchControl_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -385,7 +385,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 导入Excel的操作
     /// </summary>
-    protected virtual void btnImport_Click(object sender, EventArgs e)
+    protected virtual void btnImport_Click(object? sender, EventArgs e)
     {
         ImportData();
     }
@@ -395,7 +395,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual async void ExcelData_OnRefreshData(object sender, EventArgs e)
+    protected virtual async void ExcelData_OnRefreshData(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -403,7 +403,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// <summary>
     /// 导出Excel的操作
     /// </summary>
-    protected virtual void btnExport_Click(object sender, EventArgs e)
+    protected virtual void btnExport_Click(object? sender, EventArgs e)
     {
         ExportData();
     }
@@ -413,7 +413,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual async void edit_OnDataSaved(object sender, EventArgs e)
+    protected virtual async void edit_OnDataSaved(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -423,7 +423,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void chkTableDirection_CheckedChanged(object sender, EventArgs e)
+    private void chkTableDirection_CheckedChanged(object? sender, EventArgs e)
     {
         splitContainer1.Horizontal = !((BarToggleSwitchItem)sender).Checked;
     }
@@ -433,7 +433,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void chkHideTree_CheckedChanged(object sender, EventArgs e)
+    protected virtual void chkHideTree_CheckedChanged(object? sender, EventArgs e)
     {
         var panelVis = ((BarToggleSwitchItem)sender).Checked ? SplitPanelVisibility.Panel2 : SplitPanelVisibility.Both;
         splitContainerControl1.PanelVisibility = panelVis;
@@ -476,7 +476,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void menuTree_ExpandAll_Click(object sender, EventArgs e)
+    protected virtual void menuTree_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeView1.ExpandAll();
     }
@@ -486,7 +486,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void menuTree_Clapase_Click(object sender, EventArgs e)
+    protected virtual void menuTree_Clapase_Click(object? sender, EventArgs e)
     {
         treeView1.CollapseAll();
     }
@@ -496,7 +496,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void menuTree_Refresh_Click(object sender, EventArgs e)
+    protected virtual void menuTree_Refresh_Click(object? sender, EventArgs e)
     {
         InitTree();
     }
@@ -813,7 +813,7 @@ public partial class BaseViewDock<T, IT, TE, T1, IT1> : BaseViewDock<T, IT, TE>
     /// <summary>
     /// 列表选择或者移动行焦点的触发事件操作
     /// </summary>
-    protected virtual void gridView1_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+    protected virtual async void gridView1_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
     {
         //获取主表表头ID
         if (sender is not GridView gv || gv.Columns.Count == 0) return;
@@ -827,14 +827,14 @@ public partial class BaseViewDock<T, IT, TE, T1, IT1> : BaseViewDock<T, IT, TE>
         // string headerId = gv.GetRowCellDisplayText(e.FocusedRowHandle, primaryKey); // 另一种获取方式
         // // string headerId = winGridViewPager1.gridView1.GetFocusedRowCellDisplayText(primaryKey);
         // BindDetail(headerId);
-        BindDetail(GetFocusedRowCellPrimaryValue());
+        await BindDetail(GetFocusedRowCellPrimaryValue());
     }
 
     #region 从表明细列表
 
-    protected virtual void winGridView2_OnRefresh(object sender, EventArgs e)
+    protected virtual async void winGridView2_OnRefresh(object? sender, EventArgs e)
     {
-        BindDetail(GetFocusedRowCellPrimaryValue());
+        await BindDetail(GetFocusedRowCellPrimaryValue());
     }
 
     /// <summary>
@@ -851,7 +851,7 @@ public partial class BaseViewDock<T, IT, TE, T1, IT1> : BaseViewDock<T, IT, TE>
     /// <summary>
     /// 明细表数据源变更时
     /// </summary>
-    protected virtual void gridView2_DataSourceChanged(object sender, EventArgs e)
+    protected virtual void gridView2_DataSourceChanged(object? sender, EventArgs e)
     {
         // 绑定数据后，分配各列的宽度
         if (winGridView2.gridView1.Columns.Count > 0 && winGridView2.gridView1.RowCount > 0)

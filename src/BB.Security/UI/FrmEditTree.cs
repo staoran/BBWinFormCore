@@ -49,7 +49,7 @@ public partial class FrmEditTree : BaseForm
         _ouUserBll = ouUserBll;
     }
 
-    private async void FrmEditTree_Load(object sender, EventArgs e)
+    private async void FrmEditTree_Load(object? sender, EventArgs e)
     {
         await RefreshTreeView();
     }
@@ -260,7 +260,7 @@ public partial class FrmEditTree : BaseForm
         }
     }
 
-    private async void btnOK_Click(object sender, EventArgs e)
+    private async void btnOK_Click(object? sender, EventArgs e)
     {
         foreach (TreeNode node in treeView1.Nodes)
         {
@@ -335,7 +335,7 @@ public partial class FrmEditTree : BaseForm
         #endregion
     }
 
-    private void chkAll_CheckedChanged(object sender, EventArgs e)
+    private void chkAll_CheckedChanged(object? sender, EventArgs e)
     {
         foreach (TreeNode node in treeView1.Nodes)
         {

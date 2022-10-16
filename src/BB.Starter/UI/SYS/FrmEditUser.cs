@@ -29,7 +29,7 @@ public partial class FrmEditUser : BaseEditForm
         SystemTypeHttpService systemTypeHttpService, FunctionHttpService functionHttpService)
     {
         InitializeComponent();
-        this._userHttpService = userHttpService;
+        _userHttpService = userHttpService;
         _ouHttpService = ouHttpService;
         _userRoleHttpService = userUserRoleHttpService;
         _systemTypeHttpService = systemTypeHttpService;
@@ -253,7 +253,7 @@ public partial class FrmEditUser : BaseEditForm
         return false;
     }
 
-    private void txtIdentityCard_Validated(object sender, EventArgs e)
+    private void txtIdentityCard_Validated(object? sender, EventArgs e)
     {
         if (txtIdentityCard.Text.Trim().Length > 0)
         {

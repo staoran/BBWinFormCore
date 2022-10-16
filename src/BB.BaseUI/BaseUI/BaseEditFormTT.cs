@@ -56,7 +56,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
         Shown += BaseEditForm_Shown;
     }
 
-    private void BaseEditForm_Shown(object sender, EventArgs e)
+    private void BaseEditForm_Shown(object? sender, EventArgs e)
     {
         #region 一些其他设置方法的案例，包括单元格中按钮弹出选择框
 

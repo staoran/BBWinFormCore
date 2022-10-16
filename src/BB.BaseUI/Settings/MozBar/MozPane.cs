@@ -774,7 +774,7 @@ public class MozPane : ScrollableControlWithScrollEvents , ISupportInitialize
 		bgBrush.Dispose();
 	}
 
-	private void OnParentChanged(object sender, EventArgs e)
+	private void OnParentChanged(object? sender, EventArgs e)
 	{
 		if (Parent != null)
 		{
@@ -782,7 +782,7 @@ public class MozPane : ScrollableControlWithScrollEvents , ISupportInitialize
 		}
 	}
 
-	private void OnParentVisibleChanged(object sender, EventArgs e)
+	private void OnParentVisibleChanged(object? sender, EventArgs e)
 	{
 		if (sender != Parent)
 		{

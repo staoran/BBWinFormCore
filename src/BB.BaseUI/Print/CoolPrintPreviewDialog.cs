@@ -102,7 +102,7 @@ public partial class CoolPrintPreviewDialog : Form
 
     #region ** main commands
 
-    void _btnPrint_Click(object sender, EventArgs e)
+    void _btnPrint_Click(object? sender, EventArgs e)
     {
         using (var dlg = new PrintDialog())
         {
@@ -125,7 +125,7 @@ public partial class CoolPrintPreviewDialog : Form
             }
         }
     }
-    void _btnPageSetup_Click(object sender, EventArgs e)
+    void _btnPageSetup_Click(object? sender, EventArgs e)
     {
         using (var dlg = new PageSetupDialog())
         {
@@ -142,7 +142,7 @@ public partial class CoolPrintPreviewDialog : Form
 
     #region ** zoom
 
-    void _btnZoom_ButtonClick(object sender, EventArgs e)
+    void _btnZoom_ButtonClick(object? sender, EventArgs e)
     {
         _preview.ZoomMode = _preview.ZoomMode == ZoomMode.ActualSize
             ? ZoomMode.FullPage
@@ -203,27 +203,27 @@ public partial class CoolPrintPreviewDialog : Form
 
     #region ** page navigation
 
-    void _btnFirst_Click(object sender, EventArgs e)
+    void _btnFirst_Click(object? sender, EventArgs e)
     {
         _preview.StartPage = 0;
     }
-    void _btnPrev_Click(object sender, EventArgs e)
+    void _btnPrev_Click(object? sender, EventArgs e)
     {
         _preview.StartPage--;
     }
-    void _btnNext_Click(object sender, EventArgs e)
+    void _btnNext_Click(object? sender, EventArgs e)
     {
         _preview.StartPage++;
     }
-    void _btnLast_Click(object sender, EventArgs e)
+    void _btnLast_Click(object? sender, EventArgs e)
     {
         _preview.StartPage = _preview.PageCount - 1;
     }
-    void _txtStartPage_Enter(object sender, EventArgs e)
+    void _txtStartPage_Enter(object? sender, EventArgs e)
     {
         _txtStartPage.SelectAll();
     }
-    void _txtStartPage_Validating(object sender, CancelEventArgs e)
+    void _txtStartPage_Validating(object? sender, CancelEventArgs e)
     {
         CommitPageNumber();
     }
@@ -248,12 +248,12 @@ public partial class CoolPrintPreviewDialog : Form
             _preview.StartPage = page - 1;
         }
     }
-    void _preview_StartPageChanged(object sender, EventArgs e)
+    void _preview_StartPageChanged(object? sender, EventArgs e)
     {
         var page = _preview.StartPage + 1;
         _txtStartPage.Text = page.ToString();
     }
-    private void _preview_PageCountChanged(object sender, EventArgs e)
+    private void _preview_PageCountChanged(object? sender, EventArgs e)
     {
         Update();
         Application.DoEvents();
@@ -264,7 +264,7 @@ public partial class CoolPrintPreviewDialog : Form
 
     #region ** job control
 
-    void _btnCancel_Click(object sender, EventArgs e)
+    void _btnCancel_Click(object? sender, EventArgs e)
     {
         if (_preview.IsRendering)
         {
@@ -288,7 +288,7 @@ public partial class CoolPrintPreviewDialog : Form
 
     #endregion
 
-    private void CoolPrintPreviewDialog_Shown(object sender, EventArgs e)
+    private void CoolPrintPreviewDialog_Shown(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {

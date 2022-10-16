@@ -56,7 +56,7 @@ public partial class FrmPdfView : BaseForm
     /// <summary>
     /// 打开PDF文件
     /// </summary>
-    private void btnOpenFile_Click(object sender, EventArgs e)
+    private void btnOpenFile_Click(object? sender, EventArgs e)
     {
         string filePath = FileDialogHelper.OpenPdf();
         if (!string.IsNullOrEmpty(filePath))
@@ -68,7 +68,7 @@ public partial class FrmPdfView : BaseForm
     /// <summary>
     /// 另存为PDF文件
     /// </summary>
-    private void btnSaveAs_Click(object sender, EventArgs e)
+    private void btnSaveAs_Click(object? sender, EventArgs e)
     {
         string dir = Environment.CurrentDirectory;
         string filePath = FileDialogHelper.SavePdf("", dir);
@@ -90,12 +90,12 @@ public partial class FrmPdfView : BaseForm
     /// <summary>
     /// PDF文件打印
     /// </summary>
-    private void btnPreview_Click(object sender, EventArgs e)
+    private void btnPreview_Click(object? sender, EventArgs e)
     {
         pdfViewer1.Print();
     }
 
-    private void FrmPDFView_Load(object sender, EventArgs e)
+    private void FrmPDFView_Load(object? sender, EventArgs e)
     {
         //如果文件流不为空，首先根据Stream对象加载文档，否则根据文件路径进行加载
         if (!DesignMode)
@@ -121,7 +121,7 @@ public partial class FrmPdfView : BaseForm
         }
     }
 
-    private void FrmPDFView_KeyUp(object sender, KeyEventArgs e)
+    private void FrmPDFView_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Escape)
         {

@@ -14,12 +14,12 @@ public partial class FrmModifyPassword : BaseDock
         InitializeComponent();
     }
 
-    private void FrmModifyPassword_Load(object sender, EventArgs e)
+    private void FrmModifyPassword_Load(object? sender, EventArgs e)
     {
         txtLogin.Text = LoginUserInfo.FullName;
     }
 
-    private async void btnOK_Click(object sender, EventArgs e)
+    private async void btnOK_Click(object? sender, EventArgs e)
     {
         #region 输入验证
         if (txtRePassword.Text != txtPassword.Text)

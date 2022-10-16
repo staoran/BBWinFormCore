@@ -27,7 +27,7 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEditTest1Car_Load(object sender, EventArgs e)
+    private void FrmEditTest1Car_Load(object? sender, EventArgs e)
     {
     }
 
@@ -78,7 +78,7 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     protected override void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)
     {
         base.gridView1_ValidateRow(sender, e);
-                                                    }
+    }
 
     /// <summary>
     /// 自定义行绘制指示器
@@ -88,7 +88,7 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     protected override void gridView1_CustomDrawRowIndicator(object s, RowIndicatorCustomDrawEventArgs e)
     {
         base.gridView1_CustomDrawRowIndicator(s, e);
-                                    }
+    }
 
     /// <summary>
     /// 定义单元格样式
@@ -98,7 +98,7 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     protected override void gridView1_RowCellStyle(object sender, RowCellStyleEventArgs e)
     {
         base.gridView1_RowCellStyle(sender, e);
-                                                                                            }
+    }
 
     /// <summary>
     /// 自定义列的显示文本
@@ -108,7 +108,7 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     protected override void gridView1_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
     {
         base.gridView1_CustomColumnDisplayText(sender, e);
-                                            }
+    }
 
     /// <summary>
     /// 自定义列按钮事件
@@ -118,7 +118,7 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     protected override void repositoryBtn_ButtonClick(object sender, ButtonPressedEventArgs e)
     {
         base.repositoryBtn_ButtonClick(sender, e);
-                                    }
+    }
 
     #endregion
 
@@ -130,10 +130,10 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
         //初始化代码
         txtTranNodeNO.BindDictItems(GB.AllOuDict, LoginUserInfo.CompanyId, false, false);
         txtCostType.BindDictItems(GB.AllCostType, null, false, false);
-        txtCargoType.BindDictItems("货物名称", null, true, false);
-        txtPickUpType.BindDictItems("收货类型", null, true, false);
-        txtDeliveryType.BindDictItems("交货方式", null, true, false);
-        txtTransportType.BindDictItems("运输类型", null, true, false);
+        txtCargoType.BindDictItems("货物名称", "", true, false);
+        txtPickUpType.BindDictItems("收货类型", "", true, false);
+        txtDeliveryType.BindDictItems("交货方式", "", true, false);
+        txtTransportType.BindDictItems("运输类型", "", true, false);
         txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
         txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);

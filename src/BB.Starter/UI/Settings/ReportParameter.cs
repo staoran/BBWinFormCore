@@ -11,5 +11,5 @@ public class ReportParameter
     /// 派车单报表文件
     /// </summary>
     [DefaultValue("BB.CarDispatch.CarSendBill2.rdlc")]
-    public string CarSendReportFile { get; set; }
+    public string? CarSendReportFile { get; set; }
 }

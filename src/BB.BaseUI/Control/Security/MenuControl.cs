@@ -23,7 +23,7 @@ public partial class MenuControl : UserControl
         txtMenu.EditValueChanged += txtMenu_EditValueChanged;
     }
 
-    void txtMenu_EditValueChanged(object sender, EventArgs e)
+    void txtMenu_EditValueChanged(object? sender, EventArgs e)
     {
         if (EditValueChanged != null)
         {
@@ -31,7 +31,7 @@ public partial class MenuControl : UserControl
         }
     }
 
-    private void FunctionControl_Load(object sender, EventArgs e)
+    private void FunctionControl_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -118,7 +118,7 @@ public partial class MenuControl : UserControl
         }
     }
 
-    private void btnRefresh_Click(object sender, EventArgs e)
+    private void btnRefresh_Click(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {

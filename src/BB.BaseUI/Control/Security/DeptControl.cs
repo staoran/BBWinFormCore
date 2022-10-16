@@ -27,7 +27,7 @@ public partial class DeptControl : XtraUserControl
         txtDept.EditValueChanged += cmbUpperOU_EditValueChanged;
     }
 
-    void cmbUpperOU_EditValueChanged(object sender, EventArgs e)
+    void cmbUpperOU_EditValueChanged(object? sender, EventArgs e)
     {
         if (EditValueChanged != null)
         {
@@ -35,7 +35,7 @@ public partial class DeptControl : XtraUserControl
         }
     }
 
-    private async void DeptControl_Load(object sender, EventArgs e)
+    private async void DeptControl_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -146,7 +146,7 @@ public partial class DeptControl : XtraUserControl
         }
     }
 
-    private void btnRefresh_Click(object sender, EventArgs e)
+    private void btnRefresh_Click(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {

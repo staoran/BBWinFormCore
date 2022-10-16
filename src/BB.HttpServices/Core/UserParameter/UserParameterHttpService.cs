@@ -34,7 +34,7 @@ public class UserParameterHttpService : BaseHttpService<UserParameterInfo>
     /// <param name="creator">用户标识</param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<string> LoadParameterAsync([Required] string name, string creator = null)
+    public async Task<string> LoadParameterAsync([Required] string name, string creator = "")
     {
         return (await _httpService.LoadParameterAsync(name, creator)).Handling();
     }

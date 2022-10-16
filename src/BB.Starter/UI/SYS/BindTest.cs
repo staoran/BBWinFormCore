@@ -12,7 +12,7 @@ public partial class BindTest : Form
     }
  
     Entity obj = new Entity();
-    private void Form1_Load(object sender, EventArgs e)
+    private void Form1_Load(object? sender, EventArgs e)
     {
         // textBox1.DataBindings.Add("Text", obj, "Field"); 
         DataBinderTools.BindingTextEditBase(textBox1, obj, "Field");
@@ -20,7 +20,7 @@ public partial class BindTest : Form
         checkBox1.DataBindings.Add("Checked", obj, "Bool", true);
     }
  
-    private void button1_Click(object sender, EventArgs e)
+    private void button1_Click(object? sender, EventArgs e)
     {
         var l = new List<Entity> { obj, obj, obj };
         var bl = new BindingList<Entity>(l);
@@ -30,27 +30,27 @@ public partial class BindTest : Form
         MessageBox.Show(ls);
     }
  
-    private void button2_Click(object sender, EventArgs e)
+    private void button2_Click(object? sender, EventArgs e)
     {
         obj.Field = DateTime.Now.ToString("HH:mm:ss,fff");
     }
  
-    private void button3_Click(object sender, EventArgs e)
+    private void button3_Click(object? sender, EventArgs e)
     {
         MessageBox.Show(obj.Decimal.ToString());
     }
  
-    private void button4_Click(object sender, EventArgs e)
+    private void button4_Click(object? sender, EventArgs e)
     {
         obj.Decimal += 1;
     }
  
-    private void button5_Click(object sender, EventArgs e)
+    private void button5_Click(object? sender, EventArgs e)
     {
         MessageBox.Show(obj.Bool.ToString());
     }
  
-    private void button6_Click(object sender, EventArgs e)
+    private void button6_Click(object? sender, EventArgs e)
     {
         obj.Bool = !obj.Bool;
     }
@@ -99,5 +99,5 @@ public class Entity:INotifyPropertyChanged
         }
     }
  
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

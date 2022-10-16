@@ -121,7 +121,7 @@ partial class AboutBox : DevExpress.XtraEditors.XtraForm
     }
     #endregion
 
-    private void lblContact_Click(object sender, EventArgs e)
+    private void lblContact_Click(object? sender, EventArgs e)
     {            
         if (lblContact.Text.Trim().Length > 0)
         {
@@ -130,7 +130,7 @@ partial class AboutBox : DevExpress.XtraEditors.XtraForm
         }
     }
 
-    private void AboutBox_KeyUp(object sender, KeyEventArgs e)
+    private void AboutBox_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Escape)
         {

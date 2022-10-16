@@ -194,7 +194,7 @@ public partial class FrmEditOperationLogSetting : BaseEditForm
         return false;
     }
 
-    private void FrmEditOperationLogSetting_Load(object sender, EventArgs e)
+    private void FrmEditOperationLogSetting_Load(object? sender, EventArgs e)
     {
 
     }

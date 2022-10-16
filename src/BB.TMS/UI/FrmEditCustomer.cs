@@ -27,7 +27,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEditTest1Car_Load(object sender, EventArgs e)
+    private void FrmEditTest1Car_Load(object? sender, EventArgs e)
     {
     }
 
@@ -93,7 +93,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     protected override void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)
     {
         base.gridView1_ValidateRow(sender, e);
-                                                    }
+    }
 
     /// <summary>
     /// 自定义行绘制指示器
@@ -103,7 +103,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     protected override void gridView1_CustomDrawRowIndicator(object s, RowIndicatorCustomDrawEventArgs e)
     {
         base.gridView1_CustomDrawRowIndicator(s, e);
-                                    }
+    }
 
     /// <summary>
     /// 定义单元格样式
@@ -113,7 +113,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     protected override void gridView1_RowCellStyle(object sender, RowCellStyleEventArgs e)
     {
         base.gridView1_RowCellStyle(sender, e);
-                                                                                            }
+    }
 
     /// <summary>
     /// 自定义列的显示文本
@@ -123,7 +123,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     protected override void gridView1_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
     {
         base.gridView1_CustomColumnDisplayText(sender, e);
-                                            }
+    }
 
     /// <summary>
     /// 自定义列按钮事件
@@ -133,7 +133,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     protected override void repositoryBtn_ButtonClick(object sender, ButtonPressedEventArgs e)
     {
         base.repositoryBtn_ButtonClick(sender, e);
-                                    }
+    }
 
     #endregion
 
@@ -147,7 +147,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
         txtAreaNo.BindCityItems(true);
         txtInUse.BindDictItems("是,否", true);
         txtPaymentType.BindDictItems("付款方式", null, false, false);
-        txtCommissionType.BindDictItems("计价方式", null, true, false);
+        txtCommissionType.BindDictItems("计价方式", "", true, false);
         txtSalesDeputy.BindDictItems(GB.AllUserDict, null, true, false);
         txtProjectManager.BindDictItems(GB.AllUserDict, null, true, false);
         txtFlagInvoice.BindDictItems("是,否", false);

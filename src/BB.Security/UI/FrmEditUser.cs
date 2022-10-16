@@ -43,7 +43,7 @@ public partial class FrmEditUser : BaseEditForm
         txtDept.EditValueChanged += txtDept_EditValueChanged;
     }
 
-    void txtCompany_EditValueChanged(object sender, EventArgs e)
+    void txtCompany_EditValueChanged(object? sender, EventArgs e)
     {
         if (!string.IsNullOrEmpty(txtCompany.Value))
         {
@@ -52,7 +52,7 @@ public partial class FrmEditUser : BaseEditForm
         }
     }
 
-    async void txtDept_EditValueChanged(object sender, EventArgs e)
+    async void txtDept_EditValueChanged(object? sender, EventArgs e)
     {
         if (!string.IsNullOrEmpty(txtDept.Value))
         {
@@ -78,7 +78,7 @@ public partial class FrmEditUser : BaseEditForm
     /// 实现控件输入检查的函数
     /// </summary>
     /// <returns></returns>
-    public override async Task<bool> CheckInput()
+    public override Task<bool> CheckInput()
     {
         bool result = true;//默认是可以通过
 
@@ -99,17 +99,17 @@ public partial class FrmEditUser : BaseEditForm
         {
             "所属公司不能为空".ShowUxTips();
             txtCompany.Focus();
-            return false;
+            return Task.FromResult(false);
         }
         else if (txtDept.Text == "")
         {
             "默认部门机构不能为空".ShowUxTips();
             txtDept.Focus();
-            return false;
+            return Task.FromResult(false);
         }
         #endregion
 
-        return result;
+        return Task.FromResult(result);
     }
 
     /// <summary>
@@ -311,7 +311,7 @@ public partial class FrmEditUser : BaseEditForm
         return false;
     }
 
-    private void txtIdentityCard_Validated(object sender, EventArgs e)
+    private void txtIdentityCard_Validated(object? sender, EventArgs e)
     {
         if (txtIdentityCard.Text.Trim().Length > 0)
         {

@@ -25,14 +25,14 @@ public partial class FrmEditOperationLog : BaseEditForm
     /// 实现控件输入检查的函数
     /// </summary>
     /// <returns></returns>
-    public override async Task<bool> CheckInput()
+    public override Task<bool> CheckInput()
     {
         bool result = true;//默认是可以通过
 
         #region MyRegion
         #endregion
 
-        return result;
+        return Task.FromResult(result);
     }
 
     /// <summary>

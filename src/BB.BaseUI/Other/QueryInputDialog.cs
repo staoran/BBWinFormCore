@@ -20,7 +20,7 @@ public partial class QueryInputDialog : BaseForm
         InitializeComponent();
     }
 
-    private void QueryInputDialog_Load(object sender, EventArgs e)
+    private void QueryInputDialog_Load(object? sender, EventArgs e)
     {
         if (IsEncryptInput)
         {

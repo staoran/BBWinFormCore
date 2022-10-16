@@ -23,7 +23,7 @@ public partial class FunctionControl : UserControl
         txtFunction.EditValueChanged += txtFunction_EditValueChanged;
     }
 
-    void txtFunction_EditValueChanged(object sender, EventArgs e)
+    void txtFunction_EditValueChanged(object? sender, EventArgs e)
     {
         if (EditValueChanged != null)
         {
@@ -31,7 +31,7 @@ public partial class FunctionControl : UserControl
         }
     }
 
-    private void FunctionControl_Load(object sender, EventArgs e)
+    private void FunctionControl_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -119,7 +119,7 @@ public partial class FunctionControl : UserControl
         }
     }
 
-    private void btnRefresh_Click(object sender, EventArgs e)
+    private void btnRefresh_Click(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {

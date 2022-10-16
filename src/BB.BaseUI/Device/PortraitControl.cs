@@ -96,7 +96,7 @@ public partial class PortraitControl : XtraUserControl
         InitializeComponent();
     }
 
-    private void btnLoad_Click(object sender, EventArgs e)
+    private void btnLoad_Click(object? sender, EventArgs e)
     {
         picPortrait.LoadImage();
 
@@ -104,7 +104,7 @@ public partial class PortraitControl : XtraUserControl
         ImageIsDirty = true;
     }
 
-    private void btnSave_Click(object sender, EventArgs e)
+    private void btnSave_Click(object? sender, EventArgs e)
     {
         bool sucess = SavePicture(Id);
 
@@ -152,7 +152,7 @@ public partial class PortraitControl : XtraUserControl
         return false;
     }
 
-    private void btnRestore_Click(object sender, EventArgs e)
+    private void btnRestore_Click(object? sender, EventArgs e)
     {
         ResetDefaultImage(ImageType);
     }
@@ -218,11 +218,11 @@ public partial class PortraitControl : XtraUserControl
         }
     }
 
-    private void PortraitControl_Load(object sender, EventArgs e)
+    private void PortraitControl_Load(object? sender, EventArgs e)
     {
     }
 
-    private void picPortrait_MouseDoubleClick(object sender, MouseEventArgs e)
+    private void picPortrait_MouseDoubleClick(object? sender, MouseEventArgs e)
     {
         PictureEdit picture = sender as PictureEdit;
         if (picture != null && picture.Image != null)
@@ -233,7 +233,7 @@ public partial class PortraitControl : XtraUserControl
         }
     }
 
-    private void btnCapture_Click(object sender, EventArgs e)
+    private void btnCapture_Click(object? sender, EventArgs e)
     {
         CameraDialog dlg = new CameraDialog();
         if (dlg.ShowDialog() == DialogResult.OK)

@@ -41,7 +41,7 @@ public partial class FrmExcelView : BaseForm
     /// <summary>
     /// 文档变化后，实现对新文件名称的显示
     /// </summary>
-    void spreadsheetControl1_DocumentLoaded(object sender, EventArgs e)
+    void spreadsheetControl1_DocumentLoaded(object? sender, EventArgs e)
     {
         string fileName = Path.GetFileName(spreadsheetControl1.Document.Path);
         if (String.IsNullOrEmpty(fileName))
@@ -57,7 +57,7 @@ public partial class FrmExcelView : BaseForm
     /// <summary>
     /// 打开Excel文件
     /// </summary>
-    private void btnOpenFile_Click(object sender, EventArgs e)
+    private void btnOpenFile_Click(object? sender, EventArgs e)
     { 
         string filePath = FileDialogHelper.OpenExcel();
         if (!string.IsNullOrEmpty(filePath))
@@ -70,7 +70,7 @@ public partial class FrmExcelView : BaseForm
     /// <summary>
     /// 保存Excel文件
     /// </summary>
-    private void btnSaveFile_Click(object sender, EventArgs e)
+    private void btnSaveFile_Click(object? sender, EventArgs e)
     {
         spreadsheetControl1.SaveDocument();
     }
@@ -78,7 +78,7 @@ public partial class FrmExcelView : BaseForm
     /// <summary>
     /// 另存为Excel文件
     /// </summary>
-    private void btnSaveAs_Click(object sender, EventArgs e)
+    private void btnSaveAs_Click(object? sender, EventArgs e)
     {
         string dir = Environment.CurrentDirectory;
         string filePath = FileDialogHelper.SaveExcel("", dir);
@@ -102,13 +102,13 @@ public partial class FrmExcelView : BaseForm
     /// <summary>
     /// Excel文件打印
     /// </summary>
-    private void btnPreview_Click(object sender, EventArgs e)
+    private void btnPreview_Click(object? sender, EventArgs e)
     {
         Close();
         spreadsheetControl1.ShowPrintPreview();
     }
 
-    private void FrmExcelView_Load(object sender, EventArgs e)
+    private void FrmExcelView_Load(object? sender, EventArgs e)
     {
         //如果文件流不为空，首先根据Stream对象加载文档，否则根据文件路径进行加载
         if (!DesignMode)
@@ -156,7 +156,7 @@ public partial class FrmExcelView : BaseForm
         }
     }
 
-    private void FrmExcelView_KeyUp(object sender, KeyEventArgs e)
+    private void FrmExcelView_KeyUp(object? sender, KeyEventArgs e)
     {
         if(e.KeyCode == Keys.Escape)
         {

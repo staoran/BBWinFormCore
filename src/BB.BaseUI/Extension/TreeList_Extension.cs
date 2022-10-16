@@ -371,7 +371,7 @@ public static class TreeListExtension
     /// </summary>
     public static void RegisterTreeCheckEditClickEvent(TreeList treeList, RepositoryItemCheckEdit checkCtrl, BarButtonItem btnSave = null)
     {
-        checkCtrl.Click += delegate(object sender, EventArgs e)
+        checkCtrl.Click += delegate(object? sender, EventArgs e)
         {
             TreeListNode focusedNode = treeList.FocusedNode;
             int nodeValue = ConvertToInt(focusedNode.GetValue("CHECKFLAG"));

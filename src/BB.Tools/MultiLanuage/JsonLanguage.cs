@@ -17,7 +17,7 @@ public class JsonLanguage
     /// <summary>
     /// 单例
     /// </summary>
-    public static JsonLanguage? Default
+    public static JsonLanguage Default
     {
         get
         {

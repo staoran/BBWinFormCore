@@ -21,7 +21,7 @@ public partial class FrmAddMoreFunction : BaseForm
         InitDictItem();
     }
 
-    void functionControl1_EditValueChanged(object sender, EventArgs e)
+    void functionControl1_EditValueChanged(object? sender, EventArgs e)
     {
         string item = functionControl1.Value;
         if (!string.IsNullOrEmpty(item) && item == "-1")
@@ -51,7 +51,7 @@ public partial class FrmAddMoreFunction : BaseForm
         functionControl1.Value = value;
     }
 
-    private async void btnSave_Click(object sender, EventArgs e)
+    private async void btnSave_Click(object? sender, EventArgs e)
     {
         if (functionControl1.Text.Length == 0)
             return;

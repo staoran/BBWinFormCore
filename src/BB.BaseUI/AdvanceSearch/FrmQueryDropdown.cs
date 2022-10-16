@@ -15,21 +15,21 @@ internal partial class FrmQueryDropdown : FrmQueryBase
     /// <summary>
     /// 提供给控件回车执行查询的操作
     /// </summary>
-    private void SearchControl_KeyUp(object sender, KeyEventArgs e)
+    private void SearchControl_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
             DialogResult = DialogResult.OK;
-            btnOK_Click(null, null);
+            btnOK_Click(null, null!);
         }
     }
 
-    private void btnClear_Click(object sender, EventArgs e)
+    private void btnClear_Click(object? sender, EventArgs e)
     {
         ProcessDataClear(FieldName);
     }
 
-    private void FrmQueryDropdown_Load(object sender, EventArgs e)
+    private void FrmQueryDropdown_Load(object? sender, EventArgs e)
     {
         lblFieldName.Text = FieldDisplayName;
         if (DropDownItems != null)
@@ -48,7 +48,7 @@ internal partial class FrmQueryDropdown : FrmQueryBase
         ddlContent.Focus();
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         CListItem item = ddlContent.SelectedItem as CListItem;
         if (item != null)

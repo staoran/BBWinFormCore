@@ -66,7 +66,7 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmBasicCostBillType_Shown(object sender, EventArgs e)
+    private void FrmBasicCostBillType_Shown(object? sender, EventArgs e)
     {
     }
 
@@ -149,7 +149,7 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView1_DataSourceChanged(sender, e);
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)

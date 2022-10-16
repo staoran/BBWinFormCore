@@ -62,7 +62,7 @@ public partial class FrmException : Form
     }
     #endregion
 
-    private void btnDetailsInfo_Click(object sender, EventArgs e)
+    private void btnDetailsInfo_Click(object? sender, EventArgs e)
     {
         MessageBox.Show("异常详细信息：" + _bugInfo.Message + "\r\n跟踪：" + _bugInfo.StackTrace);
     }
@@ -72,7 +72,7 @@ public partial class FrmException : Form
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void btnOk_Click(object sender, EventArgs e)
+    private void btnOk_Click(object? sender, EventArgs e)
     {
         // 发送错误报告 
         if (chkSendBug.Checked)

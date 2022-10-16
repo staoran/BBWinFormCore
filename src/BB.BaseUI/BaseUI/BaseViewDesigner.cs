@@ -51,7 +51,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual async void View_Shown(object sender, EventArgs e)
+    protected virtual async void View_Shown(object? sender, EventArgs e)
     {
         InitTree();
         await BindData();
@@ -103,14 +103,14 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected virtual void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected virtual void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
     }
 
     /// <summary>
     /// 分页控件刷新操作
     /// </summary>
-    protected virtual async void winGridViewPager1_OnRefresh(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnRefresh(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -118,21 +118,21 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 分页控件删除操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnDeleteSelected(object sender, EventArgs e)
+    protected virtual void winGridViewPager1_OnDeleteSelected(object? sender, EventArgs e)
     {
     }
 
     /// <summary>
     /// 分页控件编辑项操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnEditSelected(object sender, EventArgs e)
+    protected virtual void winGridViewPager1_OnEditSelected(object? sender, EventArgs e)
     {
     }
 
     /// <summary>
     /// 分页控件新增操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnAddNew(object sender, EventArgs e)
+    protected virtual void winGridViewPager1_OnAddNew(object? sender, EventArgs e)
     {
         AddData();
     }
@@ -140,14 +140,14 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 分页控件全部导出操作前的操作
     /// </summary>
-    protected virtual void winGridViewPager1_OnStartExport(object sender, EventArgs e)
+    protected virtual void winGridViewPager1_OnStartExport(object? sender, EventArgs e)
     {
     }
 
     /// <summary>
     /// 分页控件翻页的操作
     /// </summary>
-    protected virtual async void winGridViewPager1_OnPageChanged(object sender, EventArgs e)
+    protected virtual async void winGridViewPager1_OnPageChanged(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -171,21 +171,21 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 查询数据操作
     /// </summary>
-    protected virtual void btnSearch_Click(object sender, EventArgs e)
+    protected virtual void btnSearch_Click(object? sender, EventArgs e)
     {
     }
 
     /// <summary>
     /// 清空查询条件
     /// </summary>
-    protected virtual void btnClear_Click(object sender, EventArgs e)
+    protected virtual void btnClear_Click(object? sender, EventArgs e)
     {
     }
 
     /// <summary>
     /// 新增数据操作
     /// </summary>
-    protected virtual async void btnAddNew_Click(object sender, EventArgs e)
+    protected virtual void btnAddNew_Click(object? sender, EventArgs e)
     {
         AddData();
     }
@@ -193,7 +193,7 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 审核数据操作
     /// </summary>
-    protected virtual void btnCheck_Click(object sender, EventArgs e)
+    protected virtual void btnCheck_Click(object? sender, EventArgs e)
     {
     }
 
@@ -202,7 +202,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void btnAdvanceSearch_Click(object sender, EventArgs e)
+    protected virtual void btnAdvanceSearch_Click(object? sender, EventArgs e)
     {
         AdvanceSearch();
     }
@@ -210,7 +210,7 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 提供给控件回车执行查询的操作
     /// </summary>
-    protected virtual void SearchControl_KeyUp(object sender, KeyEventArgs e)
+    protected virtual void SearchControl_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -221,7 +221,7 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 导入Excel的操作
     /// </summary>
-    protected virtual void btnImport_Click(object sender, EventArgs e)
+    protected virtual void btnImport_Click(object? sender, EventArgs e)
     {
     }
 
@@ -230,7 +230,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual async void ExcelData_OnRefreshData(object sender, EventArgs e)
+    protected virtual async void ExcelData_OnRefreshData(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -238,7 +238,7 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 导出Excel的操作
     /// </summary>
-    protected virtual void btnExport_Click(object sender, EventArgs e)
+    protected virtual void btnExport_Click(object? sender, EventArgs e)
     {
         ExportData();
     }
@@ -248,7 +248,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual async void edit_OnDataSaved(object sender, EventArgs e)
+    protected virtual async void edit_OnDataSaved(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -258,7 +258,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void chkTableDirection_CheckedChanged(object sender, EventArgs e)
+    private void chkTableDirection_CheckedChanged(object? sender, EventArgs e)
     {
     }
 
@@ -267,7 +267,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void chkHideTree_CheckedChanged(object sender, EventArgs e)
+    protected virtual void chkHideTree_CheckedChanged(object? sender, EventArgs e)
     {
     }
 
@@ -285,7 +285,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void menuTree_ExpandAll_Click(object sender, EventArgs e)
+    protected virtual void menuTree_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeView1.ExpandAll();
     }
@@ -295,7 +295,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void menuTree_Clapase_Click(object sender, EventArgs e)
+    protected virtual void menuTree_Clapase_Click(object? sender, EventArgs e)
     {
         treeView1.CollapseAll();
     }
@@ -305,7 +305,7 @@ public partial class BaseViewDesigner : BaseDock
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void menuTree_Refresh_Click(object sender, EventArgs e)
+    protected virtual void menuTree_Refresh_Click(object? sender, EventArgs e)
     {
         InitTree();
     }
@@ -371,7 +371,7 @@ public partial class BaseViewDesigner : BaseDock
 
     #region 从表明细列表
 
-    protected virtual void winGridView2_OnRefresh(object sender, EventArgs e)
+    protected virtual void winGridView2_OnRefresh(object? sender, EventArgs e)
     {
     }
 
@@ -385,7 +385,7 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 明细表数据源变更时
     /// </summary>
-    protected virtual void gridView2_DataSourceChanged(object sender, EventArgs e)
+    protected virtual void gridView2_DataSourceChanged(object? sender, EventArgs e)
     {
     }
 

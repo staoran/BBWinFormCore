@@ -7,10 +7,10 @@ namespace BB.BaseUI.BaseUI;
 /// </summary>
 public partial class FrmSplashScreen : SplashScreen
 {
-    /// <summary>
-    /// 闪屏图片
-    /// </summary>
-    public Image SplashImage { get; set; }
+    // /// <summary>
+    // /// 闪屏图片
+    // /// </summary>
+    // public Image SplashImage { get; set; }
 
     /// <summary>
     /// 默认构造函数
@@ -33,7 +33,7 @@ public partial class FrmSplashScreen : SplashScreen
     {
     }
 
-    private void FrmSplashScreen_Load(object sender, EventArgs e)
+    private void FrmSplashScreen_Load(object? sender, EventArgs e)
     {
         if(!DesignMode)
         {

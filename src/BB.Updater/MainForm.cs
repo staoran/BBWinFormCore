@@ -27,7 +27,7 @@ public partial class MainForm : Form
         _args = args;
     }
 
-    private void MainForm_Load(object sender, EventArgs e)
+    private void MainForm_Load(object? sender, EventArgs e)
     {
         try
         {
@@ -214,7 +214,7 @@ public partial class MainForm : Form
         }
     }
 
-    private void pictureBox1_Click(object sender, EventArgs e)
+    private void pictureBox1_Click(object? sender, EventArgs e)
     {
         if (_isComplete)
         {
@@ -227,12 +227,12 @@ public partial class MainForm : Form
         }
     }
 
-    private void MenuItem_exit_Click(object sender, EventArgs e)
+    private void MenuItem_exit_Click(object? sender, EventArgs e)
     {
         Exit();
     }
 
-    private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+    private void notifyIcon1_MouseClick(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
         {
@@ -262,13 +262,13 @@ public partial class MainForm : Form
 
     Point _mouseOff;//鼠标移动位置变量
     bool _leftFlag;//标签是否为左键
-    private void Form_MouseDown(object sender, MouseEventArgs e)
+    private void Form_MouseDown(object? sender, MouseEventArgs e)
     {
         ReleaseCapture();
         SendMessage(Handle, WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
     }
 
-    private void Form_MouseMove(object sender, MouseEventArgs e)
+    private void Form_MouseMove(object? sender, MouseEventArgs e)
     {
         if (_leftFlag)
         {
@@ -278,7 +278,7 @@ public partial class MainForm : Form
         }
     }
 
-    private void Form_MouseUp(object sender, MouseEventArgs e)
+    private void Form_MouseUp(object? sender, MouseEventArgs e)
     {
         if (_leftFlag)
         {
@@ -289,7 +289,7 @@ public partial class MainForm : Form
 
     #region 事件处理
 
-    void DownloadProgressChanged(object sender, DownloadProgressEventArgs e)
+    void DownloadProgressChanged(object? sender, DownloadProgressEventArgs e)
     {
         progressBar1.Value = e.ProgressPercentage;
         lab_percent.Text = e.ProgressPercentage + "%";
@@ -300,7 +300,7 @@ public partial class MainForm : Form
         lab_filename.Update();
     }
 
-    void DownloadError(object sender, DownloadErrorEventArgs e)
+    void DownloadError(object? sender, DownloadErrorEventArgs e)
     {
         Log.Write("下载过程中出现错误，错误描述：" + e.Error.Message + Environment.NewLine + "Version:" + e.Manifest.Version);
         MessageBox.Show("下载出错：" + e.Error.Message, "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -309,7 +309,7 @@ public partial class MainForm : Form
     /// <summary>
     /// 文件下载完毕执行的操作
     /// </summary>
-    void DownloadCompleted(object sender, DownloadCompleteEventArgs e)
+    void DownloadCompleted(object? sender, DownloadCompleteEventArgs e)
     {
         _mList.Add(e.Manifest);
         if (_mList.Count == _mLen)
@@ -319,7 +319,7 @@ public partial class MainForm : Form
         }
     }
 
-    void ActivationStarted(object sender, ActivationStartedEventArgs e)
+    void ActivationStarted(object? sender, ActivationStartedEventArgs e)
     {
         lab_filename.Text = "开始安装，请稍后......";
         lab_filename.Update();
@@ -356,7 +356,7 @@ public partial class MainForm : Form
         return cancel;
     }
 
-    void ActivationProgressChanged(object sender, FileCopyProgressChangedEventArgs e)
+    void ActivationProgressChanged(object? sender, FileCopyProgressChangedEventArgs e)
     {
         progressBar1.Value = e.ProgressPercentage;
         lab_percent.Text = e.ProgressPercentage + "%";
@@ -367,7 +367,7 @@ public partial class MainForm : Form
         lab_filename.Update();
     }
 
-    void ActivationInitializing(object sender, ManifestEventArgs e)
+    void ActivationInitializing(object? sender, ManifestEventArgs e)
     {
         lab_filename.Text = "正在初始化安装，请稍后......";
         lab_filename.Update();
@@ -378,7 +378,7 @@ public partial class MainForm : Form
         progressBar1.Value = 0;
     }
 
-    void ActivationError(object sender, FileCopyErrorEventArgs e)
+    void ActivationError(object? sender, FileCopyErrorEventArgs e)
     {
         Log.Write("安装过程中出现错误，错误描述：" + e.Error.Message + Environment.NewLine + "Version:" + e.Manifest.Version);
         MessageBox.Show(this, "安装错误：" + e.Error.Message, "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -386,7 +386,7 @@ public partial class MainForm : Form
         _updater.Rollback(e.Manifest);
     }
 
-    void ActivationCompleted(object sender, ActivationCompletedEventArgs e)
+    void ActivationCompleted(object? sender, ActivationCompletedEventArgs e)
     {
         //安装完成
         _isComplete = true;

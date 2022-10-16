@@ -40,7 +40,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         _dictTypeBLL = dictTypeHttpService;
     }
 
-    private async void frmSelectDataBase_Load(object sender, EventArgs e)
+    private async void frmSelectDataBase_Load(object? sender, EventArgs e)
     {
         SplashScreenHelper.SetDescription("初始化网格...");
 
@@ -342,7 +342,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ExitClick(object sender, EventArgs e)
+    private void ExitClick(object? sender, EventArgs e)
     {
         Close();
     }
@@ -352,7 +352,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void load_Click(object sender, EventArgs e)
+    private async void load_Click(object? sender, EventArgs e)
     {
         SplashScreenHelper.Show();
         SplashScreenHelper.SetDescription("元数据加载中...");
@@ -439,7 +439,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void GenClick(object sender, EventArgs e)
+    private async void GenClick(object? sender, EventArgs e)
     {
         SplashScreenHelper.Show();
         SplashScreenHelper.SetDescription("数据校验并构造模版数据...");
@@ -574,7 +574,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         catch (Exception ex)
         {
             SplashScreenHelper.Close();
-            ex.StackTrace.ShowError();
+            ex.StackTrace?.ShowError();
         }
         SplashScreenHelper.Close();
     }
@@ -645,7 +645,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         tm.Append(_list);
     }
 
-    private async void txtTable_EditValueChanged(object sender, EventArgs e)
+    private async void txtTable_EditValueChanged(object? sender, EventArgs e)
     {
         var tempTable = txtTable.Text.Split('|')[0].Split('_');
         txtName.Text = tempTable.Length > 1 ? tempTable[1] : txtTable.Text.Split('|')[0];
@@ -658,16 +658,16 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         }
     }
 
-    private async void txtChildTable_EditValueChanged(object sender, EventArgs e)
+    private async void txtChildTable_EditValueChanged(object? sender, EventArgs e)
     {
         txtChildName.ResetText();
         txtChildDisplay.ResetText();
         txtForeignKeyName.ResetText();
         var data = txtChildTable.Properties.Items.Where(p=>p.CheckState==CheckState.Checked).ToList();
         if(data.Count == 0) return;
-        var tempTable = data[0].Value.ToString().Split('|')[0].Split('_');
-        txtChildName.Text = tempTable.Length > 1 ? tempTable[1] : data[0].Value.ToString();
-        txtChildDisplay.Text = data[0].Value.ToString().Split('|')[1];
+        var tempTable = data[0].Value.ToString()?.Split('|')[0].Split('_');
+        txtChildName.Text = tempTable?.Length > 1 ? tempTable[1] : data[0].Value.ToString();
+        txtChildDisplay.Text = data[0].Value.ToString()?.Split('|')[1];
         if (txtTable.Text.Length != 0)
         {
             IEnumerable<string> keys = await _fieldControlConfigHttpService.GetTableKeyList(txtTable.Text.Split('|')[0]);
@@ -687,7 +687,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         // }
     }
         
-    private void simpleButton1_Click(object sender, EventArgs e)
+    private void simpleButton1_Click(object? sender, EventArgs e)
     {
         textEdit2.Text = FileDialogHelper.OpenDir(AppDomain.CurrentDomain.BaseDirectory);
     }

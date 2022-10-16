@@ -27,7 +27,7 @@ public partial class PrintOptions : Form
             chklst.Items.Add(field, true);
     }
 
-    private void PrintOtions_Load(object sender, EventArgs e)
+    private void PrintOtions_Load(object? sender, EventArgs e)
     {
         // 初始化
         rdoAllRows.Checked = true;
@@ -77,13 +77,13 @@ public partial class PrintOptions : Form
         return list;
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         DialogResult = DialogResult.OK;
         Close();
     }
 
-    private void btnCancel_Click(object sender, EventArgs e)
+    private void btnCancel_Click(object? sender, EventArgs e)
     {
         DialogResult = DialogResult.Cancel;
         Close();

@@ -20,7 +20,7 @@ public partial class FrmImageView : BaseForm
         InitializeComponent();
     }
 
-    private void pictureEdit1_Properties_MouseUp(object sender, MouseEventArgs e)
+    private void pictureEdit1_Properties_MouseUp(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Right)
         {
@@ -28,12 +28,12 @@ public partial class FrmImageView : BaseForm
         }
     }
 
-    private void FrmImageView_Load(object sender, EventArgs e)
+    private void FrmImageView_Load(object? sender, EventArgs e)
     {
         pictureEdit1.Image = Image;
     }
 
-    private void FrmImageView_KeyUp(object sender, KeyEventArgs e)
+    private void FrmImageView_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Escape)
         {

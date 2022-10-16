@@ -305,7 +305,7 @@ public class DownloadClass : Component
     /// <summary>
     /// 异步下载进度事件（仅对于单个文件）
     /// </summary>
-    void webClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+    void webClient_DownloadProgressChanged(object? sender, DownloadProgressChangedEventArgs e)
     {
         DownloadProgressEventArgs args = new DownloadProgressEventArgs(e.ProgressPercentage, e.UserState)
         {
@@ -324,7 +324,7 @@ public class DownloadClass : Component
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    void webClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+    void webClient_DownloadFileCompleted(object? sender, AsyncCompletedEventArgs e)
     {
         _fileCount++;
         if (_fileCount == _manifest.ManifestFiles.Files.Length)
@@ -363,13 +363,13 @@ public class DownloadClass : Component
         return _cancel || (_userStateToLifetime[taskId] == null);
     }
 
-    private void DoDownloadCompleted(object operationState)
+    private void DoDownloadCompleted(object? operationState)
     {
         DownloadCompleteEventArgs e = operationState as DownloadCompleteEventArgs;
         OnDownloadCompleted(e);
     }
 
-    private void ReportProgress(object state)
+    private void ReportProgress(object? state)
     {
         DownloadProgressEventArgs e = state as DownloadProgressEventArgs;
         OnDownloadProgressChanged(e);

@@ -21,7 +21,7 @@ public interface IRoleHttpService : IHttpDispatchProxy, IBaseHttpService<RoleInf
 	/// <param name="companyId">公司ID</param>
 	/// <returns></returns>
 	[Get("roleByName")]
-	Task<RESTfulResultControl<RoleInfo>> GetRoleByNameAsync([QueryString]string roleName, [QueryString]string companyId = null);
+	Task<RESTfulResultControl<RoleInfo>> GetRoleByNameAsync([QueryString]string roleName, [QueryString]string companyId = "");
 
 	/// <summary>
 	/// 设置删除标志

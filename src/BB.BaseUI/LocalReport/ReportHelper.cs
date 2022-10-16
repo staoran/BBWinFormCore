@@ -18,7 +18,7 @@ public static class ReportHelper
     /// <param name="reportName">报表名称（不带".rdlc"）</param>
     /// <param name="dataSourceDict">数据源集合</param>
     /// <param name="parameters">参数集合</param>
-    public static void LoadReport(Microsoft.Reporting.WinForms.LocalReport report, string reportName, Dictionary<string, object> dataSourceDict, NameValueCollection parameters)
+    public static void LoadReport(Microsoft.Reporting.WinForms.LocalReport report, string reportName, Dictionary<string, object> dataSourceDict, NameValueCollection? parameters)
     {
         string reportPath = Path.Combine(ReportDirectory, reportName) + ".rdlc";
         LoadReportWithPath(report, reportPath, dataSourceDict, parameters);
@@ -31,7 +31,7 @@ public static class ReportHelper
     /// <param name="reportPath">报表文件相对路径（带".rdlc"后缀）</param>
     /// <param name="dataSourceDict">数据源集合</param>
     /// <param name="parameters">参数集合</param>
-    public static void LoadReportWithPath(Microsoft.Reporting.WinForms.LocalReport report, string reportPath, Dictionary<string, object> dataSourceDict, NameValueCollection parameters)
+    public static void LoadReportWithPath(Microsoft.Reporting.WinForms.LocalReport report, string reportPath, Dictionary<string, object> dataSourceDict, NameValueCollection? parameters)
     {
         if (!Directory.Exists(reportPath))
         {
@@ -46,7 +46,7 @@ public static class ReportHelper
         }
         report.Refresh();
 
-        if (parameters != null && parameters.Count > 0)
+        if (parameters is { Count: > 0 })
         {
             foreach (string key in parameters)
             {
@@ -61,7 +61,7 @@ public static class ReportHelper
     /// <param name="reportName">报表名称</param>
     /// <param name="dataSourceDict">报表数据集和数据源的映射关系</param>
     /// <param name="parameters">报表参数集合</param>
-    public static void Print(string reportName, Dictionary<string, object> dataSourceDict, NameValueCollection parameters = null)
+    public static void Print(string reportName, Dictionary<string, object> dataSourceDict, NameValueCollection? parameters = null)
     {
         Microsoft.Reporting.WinForms.LocalReport report = new Microsoft.Reporting.WinForms.LocalReport();
         LoadReport(report, reportName, dataSourceDict, parameters);
@@ -75,7 +75,7 @@ public static class ReportHelper
     /// <param name="reportPath">报表名称</param>
     /// <param name="dataSourceDict">报表数据集和数据源的映射关系</param>
     /// <param name="parameters">报表参数集合</param>
-    public static void PrintWithPath(string reportPath, Dictionary<string, object> dataSourceDict, NameValueCollection parameters = null)
+    public static void PrintWithPath(string reportPath, Dictionary<string, object> dataSourceDict, NameValueCollection? parameters = null)
     {
         Microsoft.Reporting.WinForms.LocalReport report = new Microsoft.Reporting.WinForms.LocalReport();
         LoadReportWithPath(report, reportPath, dataSourceDict, parameters);

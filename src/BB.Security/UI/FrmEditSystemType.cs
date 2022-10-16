@@ -20,7 +20,7 @@ public partial class FrmEditSystemType : BaseEditForm
     /// 实现控件输入检查的函数
     /// </summary>
     /// <returns></returns>
-    public override async Task<bool> CheckInput()
+    public override Task<bool> CheckInput()
     {
         bool result = true;//默认是可以通过
 
@@ -40,7 +40,7 @@ public partial class FrmEditSystemType : BaseEditForm
         }
         #endregion
 
-        return result;
+        return Task.FromResult(result);
     }
 
     /// <summary>

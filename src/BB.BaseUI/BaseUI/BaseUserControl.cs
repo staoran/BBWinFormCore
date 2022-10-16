@@ -48,7 +48,7 @@ public partial class BaseUserControl : XtraUserControl, IFunction
     /// <summary>
     /// 处理数据保存后的事件触发
     /// </summary>
-    public virtual void ProcessDataSaved(object sender, EventArgs e)
+    public virtual void ProcessDataSaved(object? sender, EventArgs e)
     {
         if (OnDataSaved != null)
         {
@@ -200,9 +200,10 @@ public partial class BaseUserControl : XtraUserControl, IFunction
     /// </summary>
     /// <param name="message">标题内容</param>
     /// <param name="description">正文内容</param>
+    /// <param name="owner"></param>
     /// <param name="autoFormDelay">延迟</param>
     /// <param name="formLocation">显示位置</param>
-    public void ShowAlertControl(string message = "操作成功", string description = "", Form owner = null, int autoFormDelay = 1000, AlertFormLocation formLocation = AlertFormLocation.TopRight)
+    public void ShowAlertControl(string message = "操作成功", string description = "", Form? owner = null, int autoFormDelay = 1000, AlertFormLocation formLocation = AlertFormLocation.TopRight)
     {
         message = JsonLanguage.Default.GetString(message);
         description = JsonLanguage.Default.GetString(description);
@@ -210,6 +211,6 @@ public partial class BaseUserControl : XtraUserControl, IFunction
         AlertControl alert = new AlertControl();
         alert.FormLocation = formLocation;
         alert.AutoFormDelay = autoFormDelay;
-        alert.Show(owner == null ? ParentForm : owner, message, string.IsNullOrEmpty(description) ? message : description);
+        alert.Show(owner ?? ParentForm, message, string.IsNullOrEmpty(description) ? message : description);
     }
 }

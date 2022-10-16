@@ -37,7 +37,7 @@ public interface IDictTypeHttpService : IHttpDispatchProxy, IBaseHttpService<Dic
     /// </summary>
     /// <returns></returns>
     [Get("endPointItems")]
-    Task<RESTfulResultControl<List<CListItem>>> GetEndpointItemsAsync([Body]List<DictTypeNodeInfo> nodeInfos = null, [Body]List<CListItem> items = null);
+    Task<RESTfulResultControl<List<CListItem>>> GetEndpointItemsAsync([Body]List<DictTypeNodeInfo>? nodeInfos = null, [Body]List<CListItem>? items = null);
 
     /// <summary>
     /// 获取字典类型顶级的列表

@@ -63,7 +63,7 @@ public partial class FrmBasicCostType : BaseViewDock<BasicCostType, BasicCostTyp
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmBasicCostType_Shown(object sender, EventArgs e)
+    private void FrmBasicCostType_Shown(object? sender, EventArgs e)
     {
     }
 
@@ -91,10 +91,10 @@ public partial class FrmBasicCostType : BaseViewDock<BasicCostType, BasicCostTyp
         #region 查询表单初始化
 
         txtUseYN.BindDictItems(GB.YesOrNo, null, true, false);
-        txtPayNodeType.BindDictItems("收付部门类型", null, true, false);
-        txtRecvNodeType.BindDictItems("收付部门类型", null, true, false);
-        txtPayPostType.BindDictItems("入账时机", null, true, false);
-        txtRecvPostType.BindDictItems("入账时机", null, true, false);
+        txtPayNodeType.BindDictItems("收付部门类型", "", true, false);
+        txtRecvNodeType.BindDictItems("收付部门类型", "", true, false);
+        txtPayPostType.BindDictItems("入账时机", "", true, false);
+        txtRecvPostType.BindDictItems("入账时机", "", true, false);
         txtFlagApp.BindDictItems(GB.YesOrNo, null, true, false);
 
         #endregion
@@ -165,7 +165,7 @@ public partial class FrmBasicCostType : BaseViewDock<BasicCostType, BasicCostTyp
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView1_DataSourceChanged(sender, e);
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)

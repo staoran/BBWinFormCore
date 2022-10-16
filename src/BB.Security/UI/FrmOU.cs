@@ -37,7 +37,7 @@ public partial class FrmOu : BaseForm
         _ouUserBll = ouUserBll;
     }
 
-    private async void FrmOU_Load(object sender, EventArgs e)
+    private async void FrmOU_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -158,7 +158,7 @@ public partial class FrmOu : BaseForm
         lvwUser.EndUpdate();
     }
         
-    private void treeView1_MouseDown(object sender, MouseEventArgs e)
+    private void treeView1_MouseDown(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Right)
         {
@@ -172,7 +172,7 @@ public partial class FrmOu : BaseForm
         base.OnMouseDown(e);
     }
 
-    private async void menu_Delete_Click(object sender, EventArgs e)
+    private async void menu_Delete_Click(object? sender, EventArgs e)
     {
         TreeNode node = treeView1.SelectedNode;
         if (node != null && !string.IsNullOrEmpty(node.Name))
@@ -193,7 +193,7 @@ public partial class FrmOu : BaseForm
         }
     }
 
-    private void menu_Add_Click(object sender, EventArgs e)
+    private void menu_Add_Click(object? sender, EventArgs e)
     {
         ClearInput();
         _currentId = "";
@@ -259,17 +259,17 @@ public partial class FrmOu : BaseForm
         return info;
     }
 
-    private async void menu_Update_Click(object sender, EventArgs e)
+    private async void menu_Update_Click(object? sender, EventArgs e)
     {
         await RefreshTreeView();
     }
 
-    private void menu_ExpandAll_Click(object sender, EventArgs e)
+    private void menu_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeView1.ExpandAll();
     }
 
-    private void menu_Collapse_Click(object sender, EventArgs e)
+    private void menu_Collapse_Click(object? sender, EventArgs e)
     {
         treeView1.CollapseAll();
     }
@@ -345,7 +345,7 @@ public partial class FrmOu : BaseForm
         }
     }
 
-    private async void btnSave_Click(object sender, EventArgs e)
+    private async void btnSave_Click(object? sender, EventArgs e)
     {
         #region 验证用户输入
         if (txtName.Text == "")
@@ -429,7 +429,7 @@ public partial class FrmOu : BaseForm
         }
     }
 
-    private async void btnEditUser_Click(object sender, EventArgs e)
+    private async void btnEditUser_Click(object? sender, EventArgs e)
     {
         if (treeView1.SelectedNode != null)
         {
@@ -448,7 +448,7 @@ public partial class FrmOu : BaseForm
                     await _bll.AddUserAsync(id, _currentId);
                 }
 
-                RefreshUsers(_currentId);
+                await RefreshUsers(_currentId);
             }
         }
         else
@@ -463,7 +463,7 @@ public partial class FrmOu : BaseForm
         await RefreshUsers(ouid);
     }
 
-    private async void btnRemoveUser_Click(object sender, EventArgs e)
+    private async void btnRemoveUser_Click(object? sender, EventArgs e)
     {
         if (lvwUser.SelectedItem != null)
         {
@@ -479,12 +479,12 @@ public partial class FrmOu : BaseForm
         }
     }
 
-    private void btnAdd_Click(object sender, EventArgs e)
+    private void btnAdd_Click(object? sender, EventArgs e)
     {
         menu_Add_Click(sender, e);
     }
 
-    private void btnDelete_Click(object sender, EventArgs e)
+    private void btnDelete_Click(object? sender, EventArgs e)
     {
         menu_Delete_Click(sender, e);
     }

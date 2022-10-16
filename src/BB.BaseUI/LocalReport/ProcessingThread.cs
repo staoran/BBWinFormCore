@@ -62,7 +62,7 @@ internal sealed class ProcessingThread
         return ((millisecondsTimeout != 0) && _mBackgroundThread.Join(millisecondsTimeout));
     }
 
-    private void ProcessThreadMain(object arg)
+    private void ProcessThreadMain(object? arg)
     {
         Exception e = null;
         try

@@ -122,7 +122,7 @@ public static class ControlExtension
     /// <param name="baseEdits">输入控件集合</param>
     /// <returns></returns>
     public static bool ValidateEditNullOrRange(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull,
-        int max, int min = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max, int min = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return checkNull switch
         {
@@ -182,7 +182,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateRange(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, int max, int min = 0, 
-        string errorText = null, ErrorType errorType = ErrorType.Critical)
+        string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         string Func()
         {
@@ -220,7 +220,7 @@ public static class ControlExtension
     /// <param name="realTime">实时验证</param>
     /// <returns></returns>
     public static bool ValidateEdit(this DXErrorProvider dxErrorProvider, BaseEdit baseEdit, ValidateType validateType, 
-        bool checkNull = false, int max = 0, int min = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        bool checkNull = false, int max = 0, int min = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return validateType switch
         {
@@ -252,7 +252,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateUserName(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsValidUserName, errorText ?? "用户名不合法", errorType);
     }
@@ -268,7 +268,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateNumeric(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false, 
-        string errorText = null, ErrorType errorType = ErrorType.Critical)
+        string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, 0, ValidateUtil.IsNumeric, errorText ?? "请输入与数字", errorType);
     }
@@ -284,7 +284,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateNumber(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        string errorText = null, ErrorType errorType = ErrorType.Critical)
+        string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, 0, ValidateUtil.IsNumberSign, errorText ?? "请输入整数", errorType);
     }
@@ -300,7 +300,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateDecimal(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        string errorText = null, ErrorType errorType = ErrorType.Critical)
+        string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, 0, ValidateUtil.IsDecimal, errorText ?? "请输入小数", errorType);
     }
@@ -316,7 +316,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateChinese(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsChinese, errorText ?? "请输入中文", errorType);
     }
@@ -332,7 +332,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateLetter(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsLetter, errorText ?? "请输入字母", errorType);
     }
@@ -348,7 +348,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateIdCard(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsIdCard, errorText ?? "身份证不合法", errorType);
     }
@@ -364,7 +364,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateEmail(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsEmail, errorText ?? "邮箱地址不合法", errorType);
     }
@@ -380,7 +380,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidatePhone(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsPhone, errorText ?? "请输入正确的电话号码", errorType);
     }
@@ -396,7 +396,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateMobile(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsMobile, errorText ?? "请输入正确的手机号码", errorType);
     }
@@ -412,7 +412,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidatePhoneAndMobile(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsPhoneAndMobile, errorText ?? "请输入正确的联系方式", errorType);
     }
@@ -428,7 +428,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateURL(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsUrl, errorText ?? "请输入正确的联系方式", errorType);
     }
@@ -444,7 +444,7 @@ public static class ControlExtension
     /// <param name="errorType">默认错误类型</param>
     /// <returns></returns>
     public static bool ValidateFilePath(this BaseEdit baseEdit, DXErrorProvider dxErrorProvider, bool checkNull = false,
-        int max = 0, string errorText = null, ErrorType errorType = ErrorType.Critical)
+        int max = 0, string? errorText = null, ErrorType errorType = ErrorType.Critical)
     {
         return ValidateBaseEdit(baseEdit, dxErrorProvider, checkNull, max, ValidateUtil.IsFilePath, errorText ?? "请输入正确的联系方式", errorType);
     }

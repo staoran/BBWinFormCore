@@ -42,7 +42,7 @@ public partial class FrmWordView : BaseForm
     /// <summary>
     /// WORD文档变化后，实现对新文件名称的显示
     /// </summary>
-    void richEditControl1_DocumentLoaded(object sender, EventArgs e)
+    void richEditControl1_DocumentLoaded(object? sender, EventArgs e)
     {
         string fileName = Path.GetFileName(richEditControl1.Options.DocumentSaveOptions.CurrentFileName);
         if (String.IsNullOrEmpty(fileName))
@@ -65,7 +65,7 @@ public partial class FrmWordView : BaseForm
     /// <summary>
     /// 打开WORD文件
     /// </summary>
-    private void btnOpenFile_Click(object sender, EventArgs e)
+    private void btnOpenFile_Click(object? sender, EventArgs e)
     {
         string filePath = FileDialogHelper.OpenWord();
         if (!string.IsNullOrEmpty(filePath))
@@ -77,7 +77,7 @@ public partial class FrmWordView : BaseForm
     /// <summary>
     /// 保存WORD文件
     /// </summary>
-    private void btnSaveFile_Click(object sender, EventArgs e)
+    private void btnSaveFile_Click(object? sender, EventArgs e)
     {
         richEditControl1.SaveDocument();
     }
@@ -85,7 +85,7 @@ public partial class FrmWordView : BaseForm
     /// <summary>
     /// 另存为WORD文件
     /// </summary>
-    private void btnSaveAs_Click(object sender, EventArgs e)
+    private void btnSaveAs_Click(object? sender, EventArgs e)
     {
         try
         {
@@ -102,12 +102,12 @@ public partial class FrmWordView : BaseForm
     /// <summary>
     /// WORD文件打印
     /// </summary>
-    private void btnPreview_Click(object sender, EventArgs e)
+    private void btnPreview_Click(object? sender, EventArgs e)
     {
         richEditControl1.ShowPrintPreview();
     }
 
-    private void FrmWordView_Load(object sender, EventArgs e)
+    private void FrmWordView_Load(object? sender, EventArgs e)
     {
         //如果文件流不为空，首先根据Stream对象加载文档，否则根据文件路径进行加载
         if (!DesignMode)
@@ -156,7 +156,7 @@ public partial class FrmWordView : BaseForm
         }
     }
 
-    private void FrmWordView_KeyUp(object sender, KeyEventArgs e)
+    private void FrmWordView_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Escape)
         {

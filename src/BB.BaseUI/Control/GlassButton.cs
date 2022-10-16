@@ -1132,7 +1132,7 @@ public partial class GlassButton : Button
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void GlassButton_SizeChanged(object sender, EventArgs e)
+    private void GlassButton_SizeChanged(object? sender, EventArgs e)
     {
         RecalcRect((float)_currentFrame / (FramesCount - 1f));
     }
@@ -1142,7 +1142,7 @@ public partial class GlassButton : Button
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void GlassButton_MouseLeave(object sender, EventArgs e)
+    private void GlassButton_MouseLeave(object? sender, EventArgs e)
     {
         RecalcGlow((float)_currentFrame / (FramesCount - 1f));
     }
@@ -1152,7 +1152,7 @@ public partial class GlassButton : Button
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void GlassButton_MouseEnter(object sender, EventArgs e)
+    private void GlassButton_MouseEnter(object? sender, EventArgs e)
     {
         RecalcGlow((float)_currentFrame / (FramesCount - 1f));
     }
@@ -1162,7 +1162,7 @@ public partial class GlassButton : Button
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void GlassButton_LostFocus(object sender, EventArgs e)
+    private void GlassButton_LostFocus(object? sender, EventArgs e)
     {
         RecalcOuterBorder();
     }
@@ -1172,7 +1172,7 @@ public partial class GlassButton : Button
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    private void GlassButton_GotFocus(object sender, EventArgs e)
+    private void GlassButton_GotFocus(object? sender, EventArgs e)
     {
         RecalcOuterBorder();
     }
@@ -1391,7 +1391,7 @@ public partial class GlassButton : Button
         timer.Enabled = true;
     }
 
-    private void timer_Tick(object sender, EventArgs e)
+    private void timer_Tick(object? sender, EventArgs e)
     {
         if (!timer.Enabled || !_animateGlow)
         {

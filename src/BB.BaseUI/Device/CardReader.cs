@@ -57,7 +57,7 @@ public class CardReader
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void timer_Tick(object sender, EventArgs e)
+    private void timer_Tick(object? sender, EventArgs e)
     {
         //达到一定的位数才开始判断
         if (_cardCode.Length >= CardCodeLen)
@@ -78,7 +78,7 @@ public class CardReader
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void hostCtrl_KeyUp(object sender, KeyEventArgs e)
+    private void hostCtrl_KeyUp(object? sender, KeyEventArgs e)
     {
         _timer.Stop();
         _cardCode = _cardCode + (char)e.KeyValue;

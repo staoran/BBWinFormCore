@@ -317,7 +317,7 @@ public class LocalReportPrinter
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    private void OnRenderingCompletePrintOnly(object sender, AsyncCompletedEventArgs args)
+    private void OnRenderingCompletePrintOnly(object? sender, AsyncCompletedEventArgs args)
     {
         PropertyInfo pi = _asyncAllStreamsRenderingOperationType.GetProperty("PostRenderArgs");
         object postRenderArgs = pi.GetValue(sender, null);

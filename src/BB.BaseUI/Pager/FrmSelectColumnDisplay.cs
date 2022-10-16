@@ -108,7 +108,7 @@ public partial class FrmSelectColumnDisplay : XtraForm
         panel1.Controls.Add(_mCheckedListBox);
     }
 
-    void mCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+    void mCheckedListBox_ItemCheck(object? sender, ItemCheckEventArgs e)
     {
         if (_mCheckedListBox.Items[e.Index] is CListItem item)
         {
@@ -117,13 +117,13 @@ public partial class FrmSelectColumnDisplay : XtraForm
         //mDataGridView.Columns[e.Index].Visible = (e.NewValue == CheckState.Checked);
     }
 
-    private void FrmSelectColumnDisplay_Load(object sender, EventArgs e)
+    private void FrmSelectColumnDisplay_Load(object? sender, EventArgs e)
     {
         Init();
             
     }
 
-    private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
+    private void chkSelectAll_CheckedChanged(object? sender, EventArgs e)
     {
         _isSelectAll = chkSelectAll.Checked;
         for (int i = 0; i < _mCheckedListBox.Items.Count; i++)
@@ -132,7 +132,7 @@ public partial class FrmSelectColumnDisplay : XtraForm
         }
     }
 
-    private void chkInverse_CheckedChanged(object sender, EventArgs e)
+    private void chkInverse_CheckedChanged(object? sender, EventArgs e)
     {
         for (int i = 0; i < _mCheckedListBox.Items.Count; i++)
         {
@@ -140,7 +140,7 @@ public partial class FrmSelectColumnDisplay : XtraForm
         }
     }
 
-    private void FrmSelectColumnDisplay_Shown(object sender, EventArgs e)
+    private void FrmSelectColumnDisplay_Shown(object? sender, EventArgs e)
     {
         if(!DesignMode)
         {

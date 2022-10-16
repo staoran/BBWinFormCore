@@ -43,7 +43,7 @@ public partial class FrmSystemType : BaseForm
         //初始化代码
     }
 
-    private void gridView1_DataSourceChanged(object sender, EventArgs e)
+    private void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         if (winGridView1.gridView1.Columns.Count > 0 && winGridView1.gridView1.RowCount > 0)
         {
@@ -55,12 +55,12 @@ public partial class FrmSystemType : BaseForm
         }
     }
 
-    private async void winGridView1_OnRefresh(object sender, EventArgs e)
+    private async void winGridView1_OnRefresh(object? sender, EventArgs e)
     {
         await BindData();
     }
 
-    private async void winGridView1_OnDeleteSelected(object sender, EventArgs e)
+    private async void winGridView1_OnDeleteSelected(object? sender, EventArgs e)
     {
         if ("您确定删除选定的记录么？".ShowYesNoAndUxTips() == DialogResult.No)
         {
@@ -79,7 +79,7 @@ public partial class FrmSystemType : BaseForm
         }
     }
 
-    private async void winGridView1_OnEditSelected(object sender, EventArgs e)
+    private async void winGridView1_OnEditSelected(object? sender, EventArgs e)
     {
         int[] rowSelected = winGridView1.GridView1.GetSelectedRows();
         foreach (int iRow in rowSelected)
@@ -95,7 +95,7 @@ public partial class FrmSystemType : BaseForm
         }
     }
 
-    private async void winGridView1_OnAddNew(object sender, EventArgs e)
+    private async void winGridView1_OnAddNew(object? sender, EventArgs e)
     {
         FrmEditSystemType dlg = App.GetService<FrmEditSystemType>();
         if (DialogResult.OK == dlg.ShowDialog())
@@ -119,26 +119,26 @@ public partial class FrmSystemType : BaseForm
         winGridView1.PrintTitle = GB.AppUnit + " -- " + "系统类型信息报表";
     }
 
-    private void tsbNew_Click(object sender, EventArgs e)
+    private void tsbNew_Click(object? sender, EventArgs e)
     {
         winGridView1_OnAddNew(sender, e);
     }
 
-    private void tsbEdit_Click(object sender, EventArgs e)
+    private void tsbEdit_Click(object? sender, EventArgs e)
     {
         winGridView1_OnEditSelected(sender, e);
     }
 
-    private void tsbDelete_Click(object sender, EventArgs e)
+    private void tsbDelete_Click(object? sender, EventArgs e)
     {
         winGridView1_OnDeleteSelected(sender, e);
     }
-    private async void tsbRefresh_Click(object sender, EventArgs e)
+    private async void tsbRefresh_Click(object? sender, EventArgs e)
     {
         await BindData();
     }
 
-    private void tsbClose_Click(object sender, EventArgs e)
+    private void tsbClose_Click(object? sender, EventArgs e)
     {
         Close();
     }

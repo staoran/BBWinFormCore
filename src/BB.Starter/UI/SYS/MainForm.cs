@@ -28,7 +28,7 @@ public partial class MainForm : RibbonForm
     //全局热键
     private readonly RegisterHotKeyHelper _hotKey2 = new();
     //用来第一次创建动态菜单
-    private RibbonPageHelper _ribbonHelper;
+    private RibbonPageHelper? _ribbonHelper;
 
     /// <summary>
     /// 设置窗体的标题信息
@@ -165,7 +165,7 @@ public partial class MainForm : RibbonForm
 
     void hotKey2_HotKey()
     {
-        notifyMenu_Show_Click(null, null);
+        notifyMenu_Show_Click(null!, null!);
     }
 
     /// <summary>
@@ -173,7 +173,7 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void notifyMenu_About_Click(object sender, EventArgs e)
+    private void notifyMenu_About_Click(object? sender, EventArgs e)
     {
         GB.About();
     }
@@ -183,7 +183,7 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void notifyMenu_Show_Click(object sender, EventArgs e)
+    private void notifyMenu_Show_Click(object? sender, EventArgs e)
     {
         if (WindowState == FormWindowState.Minimized)
         {
@@ -205,7 +205,7 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void notifyMenu_Exit_Click(object sender, EventArgs e)
+    private void notifyMenu_Exit_Click(object? sender, EventArgs e)
     {
         Exit(sender, e);
     }
@@ -215,12 +215,12 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+    private void notifyIcon1_MouseDoubleClick(object? sender, MouseEventArgs e)
     {
         notifyMenu_Show_Click(sender, e);
     }
 
-    private void MainForm_MaximizedBoundsChanged(object sender, EventArgs e)
+    private void MainForm_MaximizedBoundsChanged(object? sender, EventArgs e)
     {
         Hide();
     }
@@ -252,7 +252,7 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void MainForm_Move(object sender, EventArgs e)
+    private void MainForm_Move(object? sender, EventArgs e)
     {
         //最小化到托盘的时候显示图标提示信息
         if (WindowState == FormWindowState.Minimized)
@@ -289,7 +289,7 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void MainForm_Load(object sender, EventArgs e)
+    private async void MainForm_Load(object? sender, EventArgs e)
     {
         #region 加载皮肤
 
@@ -357,7 +357,7 @@ public partial class MainForm : RibbonForm
         
     #region Tab顶部右键菜单
 
-    private void xtraTabbedMdiManager1_MouseDown(object sender, MouseEventArgs e)
+    private void xtraTabbedMdiManager1_MouseDown(object? sender, MouseEventArgs e)
     {
         if (e.Button != MouseButtons.Right)
             return;
@@ -625,7 +625,7 @@ public partial class MainForm : RibbonForm
         
     //第二步：定义执行线程主体事件
     //线程主体方法
-    private void backgroundWorkerShowTime_DoWork(object sender, DoWorkEventArgs e)
+    private void backgroundWorkerShowTime_DoWork(object? sender, DoWorkEventArgs e)
     {
         while(!_backgroundWorker.CancellationPending){
             Thread.Sleep(1000);
@@ -636,7 +636,7 @@ public partial class MainForm : RibbonForm
 
     //第三步：定义执行UI更新事件
     //UI更新方法
-    private void backgroundWorkerShowTime_ProgressChanged(object sender, ProgressChangedEventArgs e)
+    private void backgroundWorkerShowTime_ProgressChanged(object? sender, ProgressChangedEventArgs e)
     {
         lblCalendar.Caption = e.UserState.ToString();
     }

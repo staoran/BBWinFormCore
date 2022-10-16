@@ -59,7 +59,7 @@ public partial class ManagerSelectControl : XtraUserControl
         }
     }
 
-    private void OperatorSelectControl_Load(object sender, EventArgs e)
+    private void OperatorSelectControl_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -69,7 +69,7 @@ public partial class ManagerSelectControl : XtraUserControl
         }
     }
 
-    private void txtOperator_EditValueChanged(object sender, EventArgs e)
+    private void txtOperator_EditValueChanged(object? sender, EventArgs e)
     {
         if (SelectedValueChanged != null)
         {

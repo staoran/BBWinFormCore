@@ -29,7 +29,7 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
         pager.PageChanged += pager_PageChanged;
     }
 
-    private void pager_PageChanged(object sender, EventArgs e)
+    private void pager_PageChanged(object? sender, EventArgs e)
     {
         if (OnPageChanged != null)
         {
@@ -90,13 +90,13 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
         }
     }
 
-    private async void btnExport_Click(object sender, EventArgs e)
+    private void btnExport_Click(object? sender, EventArgs e)
     {
         _isExportAllPage = true;
         ExportToExcel();
     }
 
-    private void btnExportCurrent_Click(object sender, EventArgs e)
+    private void btnExportCurrent_Click(object? sender, EventArgs e)
     {
         _isExportAllPage = false;
         ExportToExcel();
@@ -149,7 +149,7 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
     }
 
     //do the new excel document work using the background worker
-    private void bg_DoWork(object sender, DoWorkEventArgs e)
+    private void bg_DoWork(object? sender, DoWorkEventArgs e)
     {
         DataTable dtExport = _dataSource;
         if (TableToExport != null && _isExportAllPage)
@@ -163,7 +163,7 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
 
     //show a message to the user when the background worker has finished
     //and re-enable the export buttons
-    private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    private void bg_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
     {
         if (OnEndExport != null)
         {
@@ -178,7 +178,7 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
                 
     #endregion
 
-    private void menu_Delete_Click(object sender, EventArgs e)
+    private void menu_Delete_Click(object? sender, EventArgs e)
     {
         if (OnDeleteSelected != null)
         {
@@ -186,7 +186,7 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
         }
     }
 
-    private void menu_Refresh_Click(object sender, EventArgs e)
+    private void menu_Refresh_Click(object? sender, EventArgs e)
     {
         if (OnRefresh != null)
         {
@@ -194,12 +194,12 @@ public partial class WinListViewPager : DevExpress.XtraEditors.XtraUserControl
         }
     }
 
-    private void menu_Print_Click(object sender, EventArgs e)
+    private void menu_Print_Click(object? sender, EventArgs e)
     {
 
     }
 
-    private void WinListViewPager_Load(object sender, EventArgs e)
+    private void WinListViewPager_Load(object? sender, EventArgs e)
     {
         if (ContextMenuStrip == null)
         {

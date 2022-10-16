@@ -1184,7 +1184,7 @@ public static class GridExtension
     /// <param name="errorText">自定义错误提示</param>
     /// <returns></returns>
     public static bool ValidateRowField(this ColumnView cv, ValidateRowEventArgs e, string fieldName,
-        ValidateType validateType = ValidateType.Null, bool checkNull = false, int max = 0, int min = 0, string errorText = null)
+        ValidateType validateType = ValidateType.Null, bool checkNull = false, int max = 0, int min = 0, string? errorText = null)
     {
         if ((checkNull || validateType == ValidateType.Null) && !cv.ValidateRowNull(e, fieldName)) return false;
         if (max > 0 && !cv.ValidateRange(e, fieldName, max, min, errorText)) return false;
@@ -1219,7 +1219,7 @@ public static class GridExtension
     /// <param name="errorText">自定义错误提示</param>
     /// <returns></returns>
     public static bool ValidateRange(this ColumnView cv, ValidateRowEventArgs e, string fieldName, int max, int min = 0, 
-        string errorText = null)
+        string? errorText = null)
     {
         GridColumn column = cv.Columns[fieldName];
         RepositoryItem baseEdit = column.ColumnEdit;
@@ -1250,7 +1250,7 @@ public static class GridExtension
     /// <param name="errorText">自定义错误提示</param>
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
-    public static bool ValidateRowNull(this ColumnView cv, ValidateRowEventArgs e, string errorText = null, params string[] fieldNames)
+    public static bool ValidateRowNull(this ColumnView cv, ValidateRowEventArgs e, string? errorText = null, params string[] fieldNames)
     {
         foreach (string fieldName in fieldNames)
         {
@@ -1285,7 +1285,7 @@ public static class GridExtension
     /// <param name="errorText">自定义错误提示</param>
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
-    public static bool ValidateRowRepeat(this ColumnView cv, BaseContainerValidateEditorEventArgs e, string primaryKey, string errorText = null, params string[] fieldNames)
+    public static bool ValidateRowRepeat(this ColumnView cv, BaseContainerValidateEditorEventArgs e, string primaryKey, string? errorText = null, params string[] fieldNames)
     {
         string focuseKeyValue = string.Concat(cv.GetFocusedRowCellValue(primaryKey));
         foreach (string fieldName in fieldNames)
@@ -1355,7 +1355,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateUserName(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsValidUserName, errorText ?? "用户名不合法", fieldNames);
     }
@@ -1369,7 +1369,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateNumeric(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsNumeric, errorText ?? "请输入数字", fieldNames);
     }
@@ -1383,7 +1383,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateNumber(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsNumberSign, errorText ?? "请输入整数", fieldNames);
     }
@@ -1397,7 +1397,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateDecimal(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsDecimal, errorText ?? "请输入小数", fieldNames);
     }
@@ -1411,7 +1411,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateChinese(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsChinese, errorText ?? "请输入中文", fieldNames);
     }
@@ -1425,7 +1425,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateLetter(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsLetter, errorText ?? "请输入字母", fieldNames);
     }
@@ -1439,7 +1439,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateIdCard(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsIdCard, errorText ?? "身份证不合法", fieldNames);
     }
@@ -1453,7 +1453,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateEmail(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsEmail, errorText ?? "邮箱地址不合法", fieldNames);
     }
@@ -1467,7 +1467,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidatePhone(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsPhone, errorText ?? "请输入正确的电话号码", fieldNames);
     }
@@ -1481,7 +1481,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateMobile(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsMobile, errorText ?? "请输入正确的手机号码", fieldNames);
     }
@@ -1495,7 +1495,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidatePhoneAndMobile(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsPhoneAndMobile, errorText ?? "请输入正确的联系方式", fieldNames);
     }
@@ -1509,7 +1509,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateURL(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsUrl, errorText ?? "请输入正确的URL", fieldNames);
     }
@@ -1523,7 +1523,7 @@ public static class GridExtension
     /// <param name="fieldNames">字段名数组</param>
     /// <returns></returns>
     public static bool ValidateFilePath(this ColumnView cv, ValidateRowEventArgs e, 
-        string errorText = null, params string[] fieldNames)
+        string? errorText = null, params string[] fieldNames)
     {
         return ValidateRow(cv, e, ValidateUtil.IsFilePath, errorText ?? "请输入正确的文件路径", fieldNames);
     }

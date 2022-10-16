@@ -62,7 +62,7 @@ public partial class FrmSelectUser : BaseForm
     /// <summary>
     /// 绑定数据后，分配各列的宽度
     /// </summary>
-    private void gridView1_DataSourceChanged(object sender, EventArgs e)
+    private void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         if (winGridView1.gridView1.Columns.Count > 0 && winGridView1.gridView1.RowCount > 0)
         {
@@ -89,7 +89,7 @@ public partial class FrmSelectUser : BaseForm
         }
     }
 
-    async void winGridView1_OnRefresh(object sender, EventArgs e)
+    async void winGridView1_OnRefresh(object? sender, EventArgs e)
     {
         await BindGridData();
     }
@@ -144,7 +144,7 @@ public partial class FrmSelectUser : BaseForm
         }
     }
 
-    private void FrmSelectFlowUser_Load(object sender, EventArgs e)
+    private void FrmSelectFlowUser_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -281,14 +281,14 @@ public partial class FrmSelectUser : BaseForm
         }
     }
 
-    private void btnClearAll_Click(object sender, EventArgs e)
+    private void btnClearAll_Click(object? sender, EventArgs e)
     {
         SelectUserDict = new Dictionary<string, string>();
         RefreshSelectItems();
         DialogResult = DialogResult.OK;
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         if (SelectUserDict.Count == 0)
         {
@@ -317,7 +317,7 @@ public partial class FrmSelectUser : BaseForm
         }
     }
 
-    private void btnAddUser_Click(object sender, EventArgs e)
+    private void btnAddUser_Click(object? sender, EventArgs e)
     {
         List<int> list = winGridView1.GetCheckedRows();
         foreach(int rowIndex in list)

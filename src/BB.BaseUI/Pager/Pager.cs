@@ -5,9 +5,9 @@ using DevExpress.XtraEditors;
 
 namespace BB.BaseUI.Pager;
 
-public delegate void PageChangedEventHandler(object sender, EventArgs e);
-public delegate void ExportCurrentEventHandler(object sender, EventArgs e);
-public delegate void ExportAllEventHandler(object sender, EventArgs e);
+public delegate void PageChangedEventHandler(object? sender, EventArgs e);
+public delegate void ExportCurrentEventHandler(object? sender, EventArgs e);
+public delegate void ExportAllEventHandler(object? sender, EventArgs e);
 
 /// <summary>
 /// 分页工具条用户控件，仅提供分页信息显示及改变页码操作
@@ -394,12 +394,12 @@ public class Pager : XtraUserControl
         OnPageChanged(e);
     }
         
-    private void btnFirst_Click(object sender, EventArgs e)
+    private void btnFirst_Click(object? sender, EventArgs e)
     {
         RefreshData(1);
     }
         
-    private void btnPrevious_Click(object sender, EventArgs e)
+    private void btnPrevious_Click(object? sender, EventArgs e)
     {
         if (_mCurrentPageIndex > 1)
         {
@@ -411,7 +411,7 @@ public class Pager : XtraUserControl
         }
     }
 
-    private void btnNext_Click(object sender, EventArgs e)
+    private void btnNext_Click(object? sender, EventArgs e)
     {
         if (_mCurrentPageIndex < _mPageCount)
         {
@@ -427,7 +427,7 @@ public class Pager : XtraUserControl
         }
     }
         
-    private void btnLast_Click(object sender, EventArgs e)
+    private void btnLast_Click(object? sender, EventArgs e)
     {
         if (_mPageCount > 0)
         {
@@ -439,7 +439,7 @@ public class Pager : XtraUserControl
         }
     }
         
-    private void txtCurrentPage_KeyDown(object sender, KeyEventArgs e)
+    private void txtCurrentPage_KeyDown(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -462,7 +462,7 @@ public class Pager : XtraUserControl
         }
     }
 
-    private void btnExportCurrent_Click(object sender, EventArgs e)
+    private void btnExportCurrent_Click(object? sender, EventArgs e)
     {
         if (ExportCurrent != null)
         {
@@ -470,7 +470,7 @@ public class Pager : XtraUserControl
         }
     }
 
-    private void btnExport_Click(object sender, EventArgs e)
+    private void btnExport_Click(object? sender, EventArgs e)
     {
         if (ExportAll != null)
         {

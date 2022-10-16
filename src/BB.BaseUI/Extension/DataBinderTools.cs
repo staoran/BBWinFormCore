@@ -309,7 +309,7 @@ public static class DataBinderTools
         return true;
     }
 
-    static void edit_EditValueChanged(object sender, EventArgs e)
+    static void edit_EditValueChanged(object? sender, EventArgs e)
     {
         ((BaseEdit)sender).ErrorText = string.Empty;
     }

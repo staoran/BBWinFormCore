@@ -223,12 +223,12 @@ public class Logon : BaseForm
 		_txtLogin.Text = EncryptHelper.ComputeHash("", "admin");
 	}
 
-	private void btExit_Click(object sender, EventArgs e)
+	private void btExit_Click(object? sender, EventArgs e)
 	{
 		Close();
 	}
 
-	private async void btLogin_Click(object sender, EventArgs e)
+	private async void btLogin_Click(object? sender, EventArgs e)
 	{
 		if (_txtLogin.Text.Trim() == "")
 		{
@@ -259,31 +259,31 @@ public class Logon : BaseForm
 		return EncodeHelper.Md5Encrypt(passwordText);
 	}
 
-	private void Logon_KeyDown(object sender, KeyEventArgs e)
+	private void Logon_KeyDown(object? sender, KeyEventArgs e)
 	{
 		if (e.KeyCode == Keys.Enter)
 		{
-			btLogin_Click(sender, null);
+			btLogin_Click(sender, null!);
 		}
 		if (e.KeyCode == Keys.F1) //按下F1键将跳出帮助
 		{
-			linkHelp_LinkClicked(sender, null);
+			linkHelp_LinkClicked(sender, null!);
 		}
 	}
 
-	private void tbPass_KeyDown(object sender, KeyEventArgs e)
+	private void tbPass_KeyDown(object? sender, KeyEventArgs e)
 	{
 		if (e.KeyCode == Keys.Enter) //密码回车，则检查用户是否符合数据库的用户
 		{
-			btLogin_Click(sender, null);
+			btLogin_Click(sender, null!);
 		}
 		if (e.KeyCode == Keys.F1) //按下F1键将跳出帮助
 		{
-			linkHelp_LinkClicked(sender, null);
+			linkHelp_LinkClicked(sender, null!);
 		}
 	}
 
-	private void txtLogin_KeyDown(object sender, KeyEventArgs e)
+	private void txtLogin_KeyDown(object? sender, KeyEventArgs e)
 	{
 		if (e.KeyCode == Keys.Enter) //如果用户回车，跳转到密码的输入框，接受输入
 		{
@@ -291,14 +291,14 @@ public class Logon : BaseForm
 		}
 		if (e.KeyCode == Keys.F1) //按下F1键将跳出帮助
 		{
-			linkHelp_LinkClicked(sender, null);
+			linkHelp_LinkClicked(sender, null!);
 		}
 	}
 
 	/// <summary>
 	/// 开始的时候提示登陆账号和密码
 	/// </summary>
-	private void Logon_Load(object sender, EventArgs e)
+	private void Logon_Load(object? sender, EventArgs e)
 	{
 		ToolTip tp = new ToolTip();
 		tp.SetToolTip(_txtLogin, "首次登陆的默认账号为:admin");
@@ -312,7 +312,7 @@ public class Logon : BaseForm
 		_lblCalendar.Text = cal.GetDateInfo(DateTime.Now).Fullinfo;
 	}
 
-	private void linkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+	private void linkHelp_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 	{
 		try
 		{

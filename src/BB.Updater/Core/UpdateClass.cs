@@ -269,12 +269,12 @@ public class UpdateClass
 
     #region 事件处理
 
-    private void fileCopyer_FileCopyError(object sender, FileCopyErrorEventArgs e)
+    private void fileCopyer_FileCopyError(object? sender, FileCopyErrorEventArgs e)
     {
         OnActivationError(e);
     }
 
-    private void fileCopyer_FileCopyProgressChanged(object sender, FileCopyProgressChangedEventArgs e)
+    private void fileCopyer_FileCopyProgressChanged(object? sender, FileCopyProgressChangedEventArgs e)
     {
         if (ActivationProgressChanged != null)
         {
@@ -282,7 +282,7 @@ public class UpdateClass
         }
     }
 
-    private void fileCopyer_FileCopyCompleted(object sender, FileCopyCompletedEventArgs e)
+    private void fileCopyer_FileCopyCompleted(object? sender, FileCopyCompletedEventArgs e)
     {
         Clear();
         try
@@ -302,7 +302,7 @@ public class UpdateClass
         }
     }
 
-    private void downloader_DownloadProgressChanged(object sender, DownloadProgressEventArgs e)
+    private void downloader_DownloadProgressChanged(object? sender, DownloadProgressEventArgs e)
     {
         if (DownloadProgressChanged != null)
         {
@@ -310,7 +310,7 @@ public class UpdateClass
         }
     }
 
-    private void downloader_DownloadError(object sender, DownloadErrorEventArgs e)
+    private void downloader_DownloadError(object? sender, DownloadErrorEventArgs e)
     {
         if (DownloadError != null)
         {
@@ -318,7 +318,7 @@ public class UpdateClass
         }
     }
 
-    private void downloader_DownloadCompleted(object sender, DownloadCompleteEventArgs e)
+    private void downloader_DownloadCompleted(object? sender, DownloadCompleteEventArgs e)
     {
         if (DownloadCompleted != null)
         {

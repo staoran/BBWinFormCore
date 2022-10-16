@@ -90,7 +90,7 @@ public class BaseHttpService<T> : ITransient
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
-    public async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
+    public async Task<List<T>> FindByForeignKeyAsync(object foreignKeyId, string foreignKeyName = "")
     {
         return (await _baseHttpService.FindByForeignKeyAsync(foreignKeyId, foreignKeyName)).Handling();
     }
@@ -101,7 +101,7 @@ public class BaseHttpService<T> : ITransient
     /// <param name="foreignKeyId">外键ID</param>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
-    public async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = null)
+    public async Task<List<string>> FindIdByForeignKeyAsync(object foreignKeyId, string foreignKeyName = "")
     {
         return (await _baseHttpService.FindIdByForeignKeyAsync(foreignKeyId, foreignKeyName)).Handling();
     }

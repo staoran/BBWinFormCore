@@ -197,7 +197,7 @@ public class RegDlg : BaseForm
 
     #endregion
 
-    private void btRegister_Click(object sender, EventArgs e)
+    private void btRegister_Click(object? sender, EventArgs e)
     {
         bool passed = GB.Register(_tbSerialNumber.Text);
         if (passed)
@@ -236,12 +236,12 @@ public class RegDlg : BaseForm
         }
     }
 
-    private void RegDlg_Load(object sender, EventArgs e)
+    private void RegDlg_Load(object? sender, EventArgs e)
     {
         _tbMachineCode.Text = GB.GetHardNumber();
     }
 
-    private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void linkLabel1_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
     {
         try
         {
@@ -259,7 +259,7 @@ public class RegDlg : BaseForm
         Process.Start("mailto:" + "bubing@bb.com");
     }
 
-    private void btnCopy_Click(object sender, EventArgs e)
+    private void btnCopy_Click(object? sender, EventArgs e)
     {
         Clipboard.SetText(_tbMachineCode.Text);
     }

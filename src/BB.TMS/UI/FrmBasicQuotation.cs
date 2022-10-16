@@ -63,7 +63,7 @@ public partial class FrmBasicQuotation : BaseViewDock<BasicQuotation, BasicQuota
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmBasicQuotation_Shown(object sender, EventArgs e)
+    private void FrmBasicQuotation_Shown(object? sender, EventArgs e)
     {
     }
 
@@ -92,10 +92,10 @@ public partial class FrmBasicQuotation : BaseViewDock<BasicQuotation, BasicQuota
         #region 查询表单初始化
 
         txtCostType.BindDictItems(GB.AllCostType, null, true, false);
-        txtCargoType.BindDictItems("货物名称", null, true, false);
-        txtPickUpType.BindDictItems("收货类型", null, true, false);
-        txtDeliveryType.BindDictItems("交货方式", null, true, false);
-        txtTransportType.BindDictItems("运输类型", null, true, false);
+        txtCargoType.BindDictItems("货物名称", "", true, false);
+        txtPickUpType.BindDictItems("收货类型", "", true, false);
+        txtDeliveryType.BindDictItems("交货方式", "", true, false);
+        txtTransportType.BindDictItems("运输类型", "", true, false);
         txtFlagApp.BindDictItems(GB.YesOrNo, null, true, false);
         txtRakeMarkYN.BindDictItems(GB.YesOrNo, null, true, false);
 
@@ -203,7 +203,7 @@ public partial class FrmBasicQuotation : BaseViewDock<BasicQuotation, BasicQuota
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView1_DataSourceChanged(sender, e);
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)
@@ -248,7 +248,7 @@ public partial class FrmBasicQuotation : BaseViewDock<BasicQuotation, BasicQuota
     /// <summary>
     /// 明细表数据源变更时
     /// </summary>
-    protected override void gridView2_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView2_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView2_DataSourceChanged(sender, e);
         // 绑定数据后，分配各列的宽度

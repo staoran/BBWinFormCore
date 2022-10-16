@@ -86,7 +86,7 @@ public partial class FrmEditRoleOU : BaseForm
         Cursor.Current = Cursors.Default;
     }
 
-    private async void FrmEditRoleOU_Load(object sender, EventArgs e)
+    private async void FrmEditRoleOU_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -94,7 +94,7 @@ public partial class FrmEditRoleOU : BaseForm
         }
     }
 
-    private void chkAll_CheckedChanged(object sender, EventArgs e)
+    private void chkAll_CheckedChanged(object? sender, EventArgs e)
     {
         foreach (TreeNode node in treeView1.Nodes)
         {
@@ -111,7 +111,7 @@ public partial class FrmEditRoleOU : BaseForm
         }
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         List<string> list = new();
         foreach (TreeNode node in treeView1.Nodes)

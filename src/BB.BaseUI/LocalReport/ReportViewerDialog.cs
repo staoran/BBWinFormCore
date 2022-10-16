@@ -19,7 +19,7 @@ public partial class ReportViewerDialog : BaseForm
         IsPrintLayout = true;//默认使用打印布局
     }
 
-    private void ReportViewerDialog_Load(object sender, EventArgs e)
+    private void ReportViewerDialog_Load(object? sender, EventArgs e)
     {
         //是否为打印布局
         if (IsPrintLayout)

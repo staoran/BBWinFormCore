@@ -51,12 +51,12 @@ public partial class FrmImportExcelDataWithTrans : BaseForm
         _worker.RunWorkerCompleted += worker_RunWorkerCompleted;
     }
 
-    void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+    void worker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
     {
         progressBar1.Value = e.ProgressPercentage;
     }
 
-    void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    void worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
     {
         progressBar1.Visible = false;
         progressBar1.Value = 0;
@@ -77,7 +77,7 @@ public partial class FrmImportExcelDataWithTrans : BaseForm
         }
     }
 
-    void worker_DoWork(object sender, DoWorkEventArgs e)
+    void worker_DoWork(object? sender, DoWorkEventArgs e)
     {
         int itemCount = 0;
         int errorCount = 0;
@@ -169,7 +169,7 @@ public partial class FrmImportExcelDataWithTrans : BaseForm
         lnkExcel.Tag = filePath;
     }
 
-    private void lnkExcel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void lnkExcel_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
     {
         try
         {
@@ -187,11 +187,11 @@ public partial class FrmImportExcelDataWithTrans : BaseForm
         }
     }
 
-    private void FrmImportExcelData_Load(object sender, EventArgs e)
+    private void FrmImportExcelData_Load(object? sender, EventArgs e)
     {
     }
 
-    private void btnBrowse_Click(object sender, EventArgs e)
+    private void btnBrowse_Click(object? sender, EventArgs e)
     {
         string file = FileDialogHelper.OpenExcel();
         if (!string.IsNullOrEmpty(file))
@@ -231,7 +231,7 @@ public partial class FrmImportExcelDataWithTrans : BaseForm
         }
     }
 
-    private void btnSaveData_Click(object sender, EventArgs e)
+    private void btnSaveData_Click(object? sender, EventArgs e)
     {
         if (_worker.IsBusy)
             return;
@@ -288,7 +288,7 @@ public partial class FrmImportExcelDataWithTrans : BaseForm
         return dt;
     }
 
-    private void btnCancel_Click(object sender, EventArgs e)
+    private void btnCancel_Click(object? sender, EventArgs e)
     {
         Close();
     }

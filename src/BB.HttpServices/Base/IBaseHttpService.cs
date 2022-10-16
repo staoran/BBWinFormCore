@@ -74,7 +74,7 @@ public interface IBaseHttpService<T>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>数据列表</returns>
     [Get("findByForeignKey")]
-    Task<RESTfulResultControl<List<T>>> FindByForeignKeyAsync([QueryString]object foreignKeyId, [QueryString]string foreignKeyName = null);
+    Task<RESTfulResultControl<List<T>>> FindByForeignKeyAsync([QueryString]object foreignKeyId, [QueryString]string foreignKeyName = "");
 
     /// <summary>
     /// 通过外键获取表ID
@@ -83,7 +83,7 @@ public interface IBaseHttpService<T>
     /// <param name="foreignKeyName">外键名称</param>
     /// <returns>ID列表</returns>
     [Get("findIdByForeignKey")]
-    Task<RESTfulResultControl<List<string>>> FindIdByForeignKeyAsync([QueryString]object foreignKeyId, [QueryString]string foreignKeyName = null);
+    Task<RESTfulResultControl<List<string>>> FindIdByForeignKeyAsync([QueryString]object foreignKeyId, [QueryString]string foreignKeyName = "");
 
     /// <summary>
     /// 根据多个主键获取对象列表

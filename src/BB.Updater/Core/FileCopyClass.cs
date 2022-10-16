@@ -301,14 +301,14 @@ public class FileCopyClass : Component
         return bytes;
     }
 
-    private void CopyCompleted(object operationState)
+    private void CopyCompleted(object? operationState)
     {
         FileCopyCompletedEventArgs e = operationState as FileCopyCompletedEventArgs;
 
         OnFileCopyCompleted(e);
     }
 
-    private void ReportProgress(object state)
+    private void ReportProgress(object? state)
     {
         FileCopyProgressChangedEventArgs e = state as FileCopyProgressChangedEventArgs;
 

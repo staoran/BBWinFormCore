@@ -27,7 +27,7 @@ public partial class FrmSetPrinterName : BaseForm
         InitializeComponent();
     }
 
-    private void FrmSetPrinterName_Load(object sender, EventArgs e)
+    private void FrmSetPrinterName_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -52,7 +52,7 @@ public partial class FrmSetPrinterName : BaseForm
         txtPrinter.Text = DefaultPrinterName;
     }
 
-    private void btnPrint_Click(object sender, EventArgs e)
+    private void btnPrint_Click(object? sender, EventArgs e)
     {
         if (txtPrinter.Text.Length == 0)
         {

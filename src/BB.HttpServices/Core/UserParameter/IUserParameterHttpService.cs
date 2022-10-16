@@ -22,7 +22,7 @@ public interface IUserParameterHttpService : IHttpDispatchProxy, IBaseHttpServic
     /// <param name="creator">用户标识</param>
     /// <returns></returns>
     [Get("loadParameter")]
-    Task<RESTfulResultControl<string>> LoadParameterAsync([QueryString][Required] string name, [QueryString]string creator = null);
+    Task<RESTfulResultControl<string>> LoadParameterAsync([QueryString][Required] string name, [QueryString]string creator = "");
 
     /// <summary>
     /// HttpClient 拦截

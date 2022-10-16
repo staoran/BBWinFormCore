@@ -18,7 +18,7 @@ public partial class FrmSplash : Form,ISplashForm
 
     #endregion
 
-    private void frmSplash_Load(object sender, EventArgs e)
+    private void frmSplash_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {

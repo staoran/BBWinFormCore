@@ -13,7 +13,7 @@ internal partial class FrmQueryDateEdit : FrmQueryBase
     /// <summary>
     /// 提供给控件回车执行查询的操作
     /// </summary>
-    private void SearchControl_KeyUp(object sender, KeyEventArgs e)
+    private void SearchControl_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -22,12 +22,12 @@ internal partial class FrmQueryDateEdit : FrmQueryBase
         }
     }
 
-    private void btnClear_Click(object sender, EventArgs e)
+    private void btnClear_Click(object? sender, EventArgs e)
     {
         ProcessDataClear(FieldName);
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         //判断输入的内容是否为空，来决定是否匹配日期
         if (dtStart.Text.Length > 0)
@@ -44,7 +44,7 @@ internal partial class FrmQueryDateEdit : FrmQueryBase
         ProcessDataSearch(null, null);
     }
 
-    private void FrmQueryDateEdit_Load(object sender, EventArgs e)
+    private void FrmQueryDateEdit_Load(object? sender, EventArgs e)
     {
         lblFieldName.Text = FieldDisplayName;
         if (!string.IsNullOrEmpty(FieldDefaultValue))

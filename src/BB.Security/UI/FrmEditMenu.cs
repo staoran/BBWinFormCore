@@ -35,7 +35,7 @@ public partial class FrmEditMenu : BaseEditForm
         menuControl1.EditValueChanged += menuControl1_EditValueChanged;
     }
 
-    void menuControl1_EditValueChanged(object sender, EventArgs e)
+    void menuControl1_EditValueChanged(object? sender, EventArgs e)
     {
         DisplaySystemType();
     }
@@ -226,7 +226,7 @@ public partial class FrmEditMenu : BaseEditForm
         return false;
     }
 
-    private void FrmEditMenu_Load(object sender, EventArgs e)
+    private void FrmEditMenu_Load(object? sender, EventArgs e)
     {
 
     }
@@ -243,7 +243,7 @@ public partial class FrmEditMenu : BaseEditForm
         }
     }
 
-    private void btnSelectIcon_Click(object sender, EventArgs e)
+    private void btnSelectIcon_Click(object? sender, EventArgs e)
     {
         FrmImageGallery dlg = new FrmImageGallery();
         dlg.OnIconSelected += (image, name) =>
@@ -256,7 +256,7 @@ public partial class FrmEditMenu : BaseEditForm
         dlg.ShowDialog();
     }
 
-    private void btnSelectWebIcon_Click(object sender, EventArgs e)
+    private void btnSelectWebIcon_Click(object? sender, EventArgs e)
     {
         FrmImageGallery dlg = new FrmImageGallery();
         dlg.OnIconSelected += (image, name) =>

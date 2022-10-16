@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,6 +10,7 @@ using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.BaseUI.WinForm;
 using BB.HttpServices.Base;
+using BB.Starter.UI.SplashScreen;
 using BB.Starter.UI.SYS;
 using BB.Tools.Const;
 using BB.Tools.Encrypt;
@@ -17,11 +19,12 @@ using BB.Tools.Format;
 using BB.Tools.Utils;
 using BB.Tools.Validation;
 using BB.Updater.Core;
+using DevExpress.Skins;
+using DevExpress.UserSkins;
 using FluentValidation;
 using Furion;
 using Furion.Logging.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-
 #if DEBUG
 // 控制台输出，需加入此库
 using System.Runtime.InteropServices;
@@ -34,12 +37,12 @@ public class Portal
 
 #if DEBUG
     [DllImport("kernel32.dll")]
-    public static extern bool AllocConsole();
+    static extern bool AllocConsole();
     [DllImport("kernel32.dll")]
     static extern bool FreeConsole();
 #endif
     
-    private static BackgroundWorker _updateWorker;
+    private static BackgroundWorker? _updateWorker;
 
     /// <summary>
     /// 应用程序的主入口点。
@@ -96,9 +99,9 @@ public class Portal
             GlobalMutex();
             
             //界面汉化
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
-            DevExpress.UserSkins.BonusSkins.Register();
-            DevExpress.Skins.SkinManager.EnableFormSkins();
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("zh-CN");
+            BonusSkins.Register();
+            SkinManager.EnableFormSkins();
         
             // 配置验证程序
             ValidatorOptions.Global.DisplayNameResolver = CustomValidatorExtensions.DisplayNameResolver;
@@ -112,7 +115,7 @@ public class Portal
             }
             else
             {
-                LoginNormal(args);
+                LoginNormal();
             }
 
 #if DEBUG
@@ -125,8 +128,7 @@ public class Portal
     /// <summary>
     /// 常规登陆方式
     /// </summary>
-    /// <param name="args"></param>
-    private static void LoginNormal(string[] args)
+    private static void LoginNormal()
     {
         //登录界面
         var dlg = new Logon();
@@ -136,7 +138,7 @@ public class Portal
         {
             if (dlg.BLogin)
             {
-                SplashScreen.Splasher.Show(typeof(SplashScreen.FrmSplash));
+                Splasher.Show(typeof(FrmSplash));
 
                 GB.MainDialog = new MainForm();
                 GB.MainDialog.StartPosition = FormStartPosition.CenterScreen;
@@ -169,7 +171,7 @@ public class Portal
             // LoginUserInfo loginUser = await App.GetService<IUserHttpService>().VerifyUser(loginName, password, GB.SystemType);
             if (await SecurityHelper.Login(loginName, password, GB.SystemType))
             {
-                SplashScreen.Splasher.Show(typeof(SplashScreen.FrmSplash));
+                Splasher.Show(typeof(FrmSplash));
 
                 GB.MainDialog = App.GetService<MainForm>();
                 GB.MainDialog.StartPosition = FormStartPosition.CenterScreen;
@@ -178,17 +180,15 @@ public class Portal
             else
             {
                 "参数快捷登陆失败，您可以使用常规登陆方式重试。".ShowTips();
-                LoginNormal(args);
+                LoginNormal();
             }
         }
         else
         {
             "命令格式有误".ShowTips();
-            LoginNormal(args);
+            LoginNormal();
         }
     }
-
-    private static Mutex _mutex = null;
         
     /// <summary>
     /// 程序启动标识，互斥检测
@@ -200,7 +200,7 @@ public class Portal
         string mutexName = "Global\\" + "HussarFramework";
         try
         {
-            _mutex = new Mutex(false, mutexName, out newMutexCreated);
+            new Mutex(false, mutexName, out newMutexCreated);
         }
         catch (Exception ex)
         {
@@ -250,8 +250,8 @@ public class Portal
         var es = e.ToString();
         if (ex is AggregateException exception)
         {
-            var sb = new System.Text.StringBuilder();
-            foreach (Exception innerEx in exception.Flatten().InnerExceptions)
+            var sb = new StringBuilder();
+            foreach (Exception? innerEx in exception.Flatten().InnerExceptions)
             {
                 GetExceptionMsg(innerEx, es).LogError();
                 sb.AppendLine(innerEx.Message);
@@ -283,7 +283,7 @@ public class Portal
             mainContent();
             #endregion
         }
-        catch (Exception ex)
+        catch (Exception? ex)
         {
             string str = GetExceptionMsg(ex, string.Empty);
             str.LogError();
@@ -297,6 +297,7 @@ public class Portal
     private static void GetScreenshot()
     {
         Thread.Sleep(Const.SLEEP_TIME); 
+        if (Screen.PrimaryScreen == null) return;
         int width = Screen.PrimaryScreen.Bounds.Width;
         int height = Screen.PrimaryScreen.Bounds.Height;
         Bitmap bmp = new (width, height);
@@ -311,7 +312,7 @@ public class Portal
     /// <param name="ex">异常对象</param>
     /// <param name="backStr">备用异常消息：当ex为null时有效</param>
     /// <returns>异常字符串文本</returns>
-    static string GetExceptionMsg(Exception ex, string backStr)
+    static string GetExceptionMsg(Exception? ex, string? backStr)
     {
         StringBuilder sbr = new ();
         sbr.AppendLine("****************************异常文本****************************");
@@ -334,12 +335,12 @@ public class Portal
     
     #region 更新提示线程处理
 
-    private static void updateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    private static void updateWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
     {
         //MessageDxUtil.ShowUxTips("版本更新完成");
     }
 
-    private static void updateWorker_DoWork(object sender, DoWorkEventArgs e)
+    private static void updateWorker_DoWork(object? sender, DoWorkEventArgs e)
     {
         try
         {

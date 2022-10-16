@@ -31,7 +31,7 @@ public class RoleHttpService : BaseHttpService<RoleInfo>
 	/// <param name="roleName">角色名称</param>
 	/// <param name="companyId">公司ID</param>
 	/// <returns></returns>
-	public async Task<RoleInfo> GetRoleByNameAsync(string roleName, string companyId = null)
+	public async Task<RoleInfo> GetRoleByNameAsync(string roleName, string companyId = "")
 	{
 		return (await _roleHttpService.GetRoleByNameAsync(roleName, companyId)).Handling();
 	}

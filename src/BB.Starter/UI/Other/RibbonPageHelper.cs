@@ -18,13 +18,13 @@ namespace BB.Starter.UI.Other;
 /// </summary>
 public class RibbonPageHelper
 {
-    private RibbonControl _control;
-    public MainForm mainForm;
-    private int _index = 0;
+    private readonly RibbonControl _control;
+    private readonly MainForm _mainForm;
+    private int _index;
 
     public RibbonPageHelper(MainForm mainForm, ref RibbonControl control)
     {
-        this.mainForm = mainForm;
+        _mainForm = mainForm;
         _control = control;
     }
 
@@ -88,7 +88,7 @@ public class RibbonPageHelper
                     button.Name = thirdInfo.ID;
                     button.Caption = thirdInfo.Name;
                     button.Tag = thirdInfo.WinformType;
-                    button.ItemClick += (sender, e) =>
+                    button.ItemClick += (_, _) =>
                     {
                         if (button.Tag != null && !string.IsNullOrEmpty(button.Tag.ToString()))
                         {
@@ -140,11 +140,15 @@ public class RibbonPageHelper
     /// <summary>
     /// 加载插件窗体
     /// </summary>
-    private void LoadPlugInForm(string typeName)
+    private void LoadPlugInForm(string? typeName)
     {
         try
         {
-            string[] itemArray = typeName.Split(new[]{',',';'});
+            if (string.IsNullOrEmpty(typeName))
+            {
+                throw new Exception("插件名称为空");
+            }
+            string[] itemArray = typeName.Split(',', ';');
 
             string type = itemArray[0].Trim();
             string filePath = itemArray[1].Trim();//必须是相对路径
@@ -155,13 +159,10 @@ public class RibbonPageHelper
 
             string dllFullPath = Path.Combine(Application.StartupPath, filePath);
             Assembly tempAssembly = Assembly.LoadFrom(dllFullPath);
-            if (tempAssembly != null)
+            Type? objType = tempAssembly.GetType(type);
+            if (objType != null)
             {
-                Type objType = tempAssembly.GetType(type);
-                if (objType != null)
-                {
-                    LoadMdiForm(mainForm, objType, isShowDialog);    
-                }
+                LoadMdiForm(_mainForm, objType, isShowDialog);
             }
         }
         catch (Exception ex)
@@ -180,7 +181,7 @@ public class RibbonPageHelper
     /// <returns></returns>
     public static Form LoadMdiForm(Form mainDialog, Type formType, bool isShowDialog)
     {
-        Form tableForm = null;
+        Form? tableForm = null;
         bool bFound = false;
         if (!isShowDialog) //如果是模态窗口，跳过
         {
@@ -206,8 +207,7 @@ public class RibbonPageHelper
             tableForm = (Form)App.GetService(formType);
 
             //如果窗体集成了IFunction接口(第一次创建需要设置)
-            IFunction function = tableForm as IFunction;
-            if (function != null)
+            if (tableForm is IFunction function)
             {
                 //初始化权限控制信息
                 function.InitFunction(GB.LoginUserInfo, GB.FunctionDict);
@@ -215,7 +215,11 @@ public class RibbonPageHelper
                 //记录程序的相关信息
                 function.AppInfo = new AppInfo(GB.AppUnit, GB.AppName, GB.AppWholeName, GB.SystemType);
             }
+        }
 
+        if (tableForm == null)
+        {
+            throw new Exception("找不到要加载的模块");
         }
 
         if (isShowDialog)

@@ -24,7 +24,7 @@ public partial class FrmEditCostMsgs : BaseEditForm<CostMsgs, CostMsgsHttpServic
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEditTest1Car_Load(object sender, EventArgs e)
+    private void FrmEditTest1Car_Load(object? sender, EventArgs e)
     {
     }
 

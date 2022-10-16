@@ -12,7 +12,7 @@ namespace BB.BaseUI.Pager;
 /// <summary>
 /// GridView选择变化的委托定义
 /// </summary>
-public delegate void SelectionChangedEventHandler(object sender, EventArgs e);
+public delegate void SelectionChangedEventHandler(object? sender, EventArgs e);
 
 /// <summary>
 /// GridView复选框选择的辅助类
@@ -293,12 +293,12 @@ public class GridCheckMarksSelection
         else
             SelectRow(View.GetRowHandle(e.ListSourceRowIndex), (bool)e.Value);
     }
-    void view_KeyDown(object sender, KeyEventArgs e)
+    void view_KeyDown(object? sender, KeyEventArgs e)
     {
         if (View.FocusedColumn != _column || e.KeyCode != Keys.Space) return;
         InvertRowSelection(View.FocusedRowHandle);
     }
-    void View_Click(object sender, EventArgs e)
+    void View_Click(object? sender, EventArgs e)
     {
         GridHitInfo info;
         Point pt = _view.GridControl.PointToClient(System.Windows.Forms.Control.MousePosition);
@@ -318,7 +318,7 @@ public class GridCheckMarksSelection
         if (info.InRow && _view.IsGroupRow(info.RowHandle) && info.HitTest != GridHitTest.RowGroupButton)
             InvertRowSelection(info.RowHandle);
     }
-    void View_CustomDrawColumnHeader(object sender, ColumnHeaderCustomDrawEventArgs e)
+    void View_CustomDrawColumnHeader(object? sender, ColumnHeaderCustomDrawEventArgs e)
     {
         if (e.Column == _column)
         {

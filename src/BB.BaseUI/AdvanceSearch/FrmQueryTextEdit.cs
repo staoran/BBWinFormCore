@@ -12,7 +12,7 @@ internal partial class FrmQueryTextEdit : FrmQueryBase
     /// <summary>
     /// 提供给控件回车执行查询的操作
     /// </summary>
-    private void SearchControl_KeyUp(object sender, KeyEventArgs e)
+    private void SearchControl_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -21,24 +21,24 @@ internal partial class FrmQueryTextEdit : FrmQueryBase
         }
     }
 
-    private void btnClear_Click(object sender, EventArgs e)
+    private void btnClear_Click(object? sender, EventArgs e)
     {
         ProcessDataClear(FieldName);
     }
 
-    private void btnCopy_Click(object sender, EventArgs e)
+    private void btnCopy_Click(object? sender, EventArgs e)
     {
         if (txtContent.Text.Length > 0)
         {
             Clipboard.SetText(txtContent.Text);
         }
     }
-    private void btnPaste_Click(object sender, EventArgs e)
+    private void btnPaste_Click(object? sender, EventArgs e)
     {
         txtContent.Text = Clipboard.GetText();
     }
 
-    private void FrmQueryTextEdit_Load(object sender, EventArgs e)
+    private void FrmQueryTextEdit_Load(object? sender, EventArgs e)
     {
         lblFieldName.Text = FieldDisplayName;
         if (!string.IsNullOrEmpty(FieldDefaultValue))
@@ -48,7 +48,7 @@ internal partial class FrmQueryTextEdit : FrmQueryBase
         txtContent.Focus();
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void btnOK_Click(object? sender, EventArgs e)
     {
         ReturnValue = txtContent.Text.Trim();
         ReturnDisplay = txtContent.Text.Trim();

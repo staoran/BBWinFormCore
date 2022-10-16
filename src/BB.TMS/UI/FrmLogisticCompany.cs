@@ -63,7 +63,7 @@ public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, Logistic
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmLogisticCompany_Shown(object sender, EventArgs e)
+    private void FrmLogisticCompany_Shown(object? sender, EventArgs e)
     {
     }
 
@@ -89,7 +89,7 @@ public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, Logistic
     {
         #region 查询表单初始化
 
-        txtTrustLevel.BindDictItems("信誉类型", null, true, false);
+        txtTrustLevel.BindDictItems("信誉类型", "", true, false);
         txtInUse.BindDictItems(GB.YesOrNo, null, true, false);
         txtFlagInvoice.BindDictItems(GB.YesOrNo, null, true, false);
         txtFlagApp.BindDictItems(GB.YesOrNo, null, true, false);
@@ -172,7 +172,7 @@ public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, Logistic
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView1_DataSourceChanged(sender, e);
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)

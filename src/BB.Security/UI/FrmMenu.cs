@@ -53,7 +53,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 绑定数据后，分配各列的宽度
     /// </summary>
-    private void gridView1_DataSourceChanged(object sender, EventArgs e)
+    private void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)
         {
@@ -104,7 +104,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 分页控件刷新操作
     /// </summary>
-    private async void winGridViewPager1_OnRefresh(object sender, EventArgs e)
+    private async void winGridViewPager1_OnRefresh(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -112,7 +112,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 分页控件删除操作
     /// </summary>
-    private async void winGridViewPager1_OnDeleteSelected(object sender, EventArgs e)
+    private async void winGridViewPager1_OnDeleteSelected(object? sender, EventArgs e)
     {
         if ("您确定删除选定的记录么？".ShowYesNoAndUxTips() == DialogResult.No)
         {
@@ -132,7 +132,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 分页控件编辑项操作
     /// </summary>
-    private async void winGridViewPager1_OnEditSelected(object sender, EventArgs e)
+    private async void winGridViewPager1_OnEditSelected(object? sender, EventArgs e)
     {
         string id = winGridViewPager1.gridView1.GetFocusedRowCellDisplayText("ID");
         List<string> idList = new List<string>();
@@ -155,7 +155,7 @@ public partial class FrmMenu : BaseForm
         }
     }
 
-    async void dlg_OnDataSaved(object sender, EventArgs e)
+    async void dlg_OnDataSaved(object? sender, EventArgs e)
     {
         await InitTree();
         await BindData();
@@ -164,7 +164,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 分页控件新增操作
     /// </summary>        
-    private void winGridViewPager1_OnAddNew(object sender, EventArgs e)
+    private void winGridViewPager1_OnAddNew(object? sender, EventArgs e)
     {
         btnAddNew_Click(sender, e);
     }
@@ -172,7 +172,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 分页控件全部导出操作前的操作
     /// </summary> 
-    private async void winGridViewPager1_OnStartExport(object sender, EventArgs e)
+    private async void winGridViewPager1_OnStartExport(object? sender, EventArgs e)
     {
         Dictionary<string,string> condition = GetConditionSql();
         winGridViewPager1.AllToExport = await _bll.FindAsync(condition);
@@ -181,7 +181,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 分页控件翻页的操作
     /// </summary> 
-    private async void winGridViewPager1_OnPageChanged(object sender, EventArgs e)
+    private async void winGridViewPager1_OnPageChanged(object? sender, EventArgs e)
     {
         await BindData();
     }
@@ -238,7 +238,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 查询数据操作
     /// </summary>
-    private async void btnSearch_Click(object sender, EventArgs e)
+    private async void btnSearch_Click(object? sender, EventArgs e)
     {
         _treeCondition = null;
         await BindData();
@@ -247,7 +247,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 新增数据操作
     /// </summary>
-    private async void btnAddNew_Click(object sender, EventArgs e)
+    private async void btnAddNew_Click(object? sender, EventArgs e)
     {
         string selectId = "";
         string systemType = "";
@@ -282,7 +282,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 提供给控件回车执行查询的操作
     /// </summary>
-    private void SearchControl_KeyUp(object sender, KeyEventArgs e)
+    private void SearchControl_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -295,7 +295,7 @@ public partial class FrmMenu : BaseForm
     /// <summary>
     /// 导出Excel的操作
     /// </summary>
-    private async void btnExport_Click(object sender, EventArgs e)
+    private async void btnExport_Click(object? sender, EventArgs e)
     {
         string file = FileDialogHelper.SaveExcel($"{_moduleName}.xls");
         if (!string.IsNullOrEmpty(file))
@@ -438,7 +438,7 @@ public partial class FrmMenu : BaseForm
         }
     }
 
-    private async void ctxMenuTree_Refresh_Click(object sender, EventArgs e)
+    private async void ctxMenuTree_Refresh_Click(object? sender, EventArgs e)
     {
         await InitTree();
     }
@@ -478,7 +478,7 @@ public partial class FrmMenu : BaseForm
         return null;
     }
 
-    private void txtVisible_CheckedChanged(object sender, EventArgs e)
+    private void txtVisible_CheckedChanged(object? sender, EventArgs e)
     {
         btnSearch_Click(sender, e);
     }

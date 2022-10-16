@@ -73,7 +73,7 @@ public partial class FrmPosPrintPreview : BaseForm
         InitializeComponent();
     }
 
-    private void FrmPosPrintPreview_Load(object sender, EventArgs e)
+    private void FrmPosPrintPreview_Load(object? sender, EventArgs e)
     {
         if (!DesignMode)
         {
@@ -102,7 +102,7 @@ public partial class FrmPosPrintPreview : BaseForm
         _printdocument.PrinterSettings.PrinterName = PrinterName;
     }
 
-    private void btnPrintSetup_Click(object sender, EventArgs e)
+    private void btnPrintSetup_Click(object? sender, EventArgs e)
     {
         try
         {
@@ -127,7 +127,7 @@ public partial class FrmPosPrintPreview : BaseForm
         }
     }
 
-    private void btnPreview_Click(object sender, EventArgs e)
+    private void btnPreview_Click(object? sender, EventArgs e)
     {
         try
         {
@@ -143,7 +143,7 @@ public partial class FrmPosPrintPreview : BaseForm
         }
     }
 
-    private void btnPrint_Click(object sender, EventArgs e)
+    private void btnPrint_Click(object? sender, EventArgs e)
     {
         try
         {
@@ -162,12 +162,12 @@ public partial class FrmPosPrintPreview : BaseForm
         }
     }
 
-    private void btnClose_Click(object sender, EventArgs e)
+    private void btnClose_Click(object? sender, EventArgs e)
     {
         Close();
     }
 
-    private void btnSetPrinterName_Click(object sender, EventArgs e)
+    private void btnSetPrinterName_Click(object? sender, EventArgs e)
     {
         FrmSetPrinterName dlg = new FrmSetPrinterName();
         dlg.DefaultPrinterName = PrinterName;

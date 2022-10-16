@@ -54,7 +54,7 @@ internal partial class FrmQueryBase : DevExpress.XtraEditors.XtraForm
     /// <summary>
     /// 处理数据查询后的事件触发
     /// </summary>
-    public virtual void ProcessDataSearch(object sender, EventArgs e)
+    public virtual void ProcessDataSearch(object? sender, EventArgs e)
     {
         if (DataSearch != null)
         {
@@ -62,7 +62,7 @@ internal partial class FrmQueryBase : DevExpress.XtraEditors.XtraForm
         }
     }
 
-    private void FrmQueryBase_Load(object sender, EventArgs e)
+    private void FrmQueryBase_Load(object? sender, EventArgs e)
     {
         if(!DesignMode)
         {
@@ -70,7 +70,7 @@ internal partial class FrmQueryBase : DevExpress.XtraEditors.XtraForm
         }
     }
 
-    private void FrmQueryBase_KeyUp(object sender, KeyEventArgs e)
+    private void FrmQueryBase_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Escape)
         {

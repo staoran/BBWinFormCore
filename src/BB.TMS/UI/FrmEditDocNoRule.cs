@@ -36,7 +36,7 @@ public partial class FrmEditDocNoRule : BaseEditForm<DocNoRule, DocNoRuleHttpSer
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEditTest1Car_Load(object sender, EventArgs e)
+    private void FrmEditTest1Car_Load(object? sender, EventArgs e)
     {
     }
 
@@ -131,13 +131,13 @@ public partial class FrmEditDocNoRule : BaseEditForm<DocNoRule, DocNoRuleHttpSer
     //    }
     //}
 
-    private void txtElement_EditValueChanged(object sender, EventArgs e)
+    private void txtElement_EditValueChanged(object? sender, EventArgs e)
     {
         TempInfo.RuleFormat = txtElement1.Text + txtElement2.Text + txtElement3.Text + txtElement4.Text;
         TempInfo.ResetZero = !TempInfo.RuleFormat.IsNullOrEmpty();
     }
 
-    private void txtPerview_EditValueChanged(object sender, EventArgs e)
+    private void txtPerview_EditValueChanged(object? sender, EventArgs e)
     {
         DoPreviewCode();
     }

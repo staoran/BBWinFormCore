@@ -12,7 +12,7 @@ public class VistaButton : UserControl
 {
     #region -  Designer  -
 
-    private Container _components = null;
+    private Container? _components = null;
 
     /// <summary>
     /// Initialize the component with it's
@@ -110,11 +110,11 @@ public class VistaButton : UserControl
 
     #region -  Private Variables  -
 
-    private bool _calledbykey = false;
+    private bool _calledbykey;
     private State _mButtonState = State.None;
-    private Timer _mFadeIn = new Timer();
-    private Timer _mFadeOut = new Timer();
-    private int _mGlowAlpha = 0;
+    private Timer _mFadeIn = new();
+    private Timer _mFadeOut = new();
+    private int _mGlowAlpha;
 
     #endregion
 
@@ -447,19 +447,17 @@ public class VistaButton : UserControl
         int alpha = (_mButtonState == State.Pressed) ? 204 : 127;
         Rectangle r = ClientRectangle;
         r.Width--; r.Height--;
-        using (GraphicsPath rr = RoundRect(r, CornerRadius, CornerRadius, CornerRadius, CornerRadius))
+        using GraphicsPath rr = RoundRect(r, CornerRadius, CornerRadius, CornerRadius, CornerRadius);
+        using (SolidBrush sb = new SolidBrush(BaseColor))
         {
-            using (SolidBrush sb = new SolidBrush(BaseColor))
-            {
-                g.FillPath(sb, rr);
-            }
-            SetClip(g);
-            if (BackImage != null) { g.DrawImage(BackImage, ClientRectangle); }
-            g.ResetClip();
-            using (SolidBrush sb = new SolidBrush(Color.FromArgb(alpha, ButtonColor)))
-            {
-                g.FillPath(sb, rr);
-            }
+            g.FillPath(sb, rr);
+        }
+        SetClip(g);
+        g.DrawImage(BackImage, ClientRectangle);
+        g.ResetClip();
+        using (SolidBrush sb = new SolidBrush(Color.FromArgb(alpha, ButtonColor)))
+        {
+            g.FillPath(sb, rr);
         }
     }
 
@@ -525,7 +523,6 @@ public class VistaButton : UserControl
     /// <param name="g">The graphics object used in the paint event.</param>
     private void DrawImage(Graphics g)
     {
-        if (Image == null) { return; }
         Rectangle r = new Rectangle(8, 8, ImageSize.Width, ImageSize.Height);
         switch (ImageAlign)
         {
@@ -571,7 +568,7 @@ public class VistaButton : UserControl
 
     #region -  Private Subs  -
 
-    private void VistaButton_Paint(object sender, PaintEventArgs e)
+    private void VistaButton_Paint(object? sender, PaintEventArgs e)
     {
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -584,7 +581,7 @@ public class VistaButton : UserControl
         DrawInnerStroke(e.Graphics);
     }
 
-    private void VistaButton_Resize(object sender, EventArgs e)
+    private void VistaButton_Resize(object? sender, EventArgs e)
     {
         Rectangle r = ClientRectangle;
         r.X -= 1; r.Y -= 1;
@@ -597,13 +594,13 @@ public class VistaButton : UserControl
 
     #region -  Mouse and Keyboard Events  -
 
-    private void VistaButton_MouseEnter(object sender, EventArgs e)
+    private void VistaButton_MouseEnter(object? sender, EventArgs e)
     {
         _mButtonState = State.Hover;
         _mFadeOut.Stop();
         _mFadeIn.Start();
     }
-    private void VistaButton_MouseLeave(object sender, EventArgs e)
+    private void VistaButton_MouseLeave(object? sender, EventArgs e)
     {
         _mButtonState = State.None;
         if (_mButtonStyle == Style.Flat) { _mGlowAlpha = 0; }
@@ -611,7 +608,7 @@ public class VistaButton : UserControl
         _mFadeOut.Start();
     }
 
-    private void VistaButton_MouseDown(object sender, MouseEventArgs e)
+    private void VistaButton_MouseDown(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
         {
@@ -623,7 +620,7 @@ public class VistaButton : UserControl
         }
     }
 
-    private void mFadeIn_Tick(object sender, EventArgs e)
+    private void mFadeIn_Tick(object? sender, EventArgs e)
     {
         if (ButtonStyle == Style.Flat) { _mGlowAlpha = 0; }
         if (_mGlowAlpha + 30 >= 255)
@@ -638,7 +635,7 @@ public class VistaButton : UserControl
         Invalidate();
     }
 
-    private void mFadeOut_Tick(object sender, EventArgs e)
+    private void mFadeOut_Tick(object? sender, EventArgs e)
     {
         if (ButtonStyle == Style.Flat) { _mGlowAlpha = 0; }
         if (_mGlowAlpha - 30 <= 0)
@@ -653,7 +650,7 @@ public class VistaButton : UserControl
         Invalidate();
     }
 
-    private void VistaButton_KeyDown(object sender, KeyEventArgs e)
+    private void VistaButton_KeyDown(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Space)
         {
@@ -662,7 +659,7 @@ public class VistaButton : UserControl
         }
     }
 
-    private void VistaButton_KeyUp(object sender, KeyEventArgs e)
+    private void VistaButton_KeyUp(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Space)
         {
@@ -672,7 +669,7 @@ public class VistaButton : UserControl
         }
     }
 
-    private void VistaButton_MouseUp(object sender, MouseEventArgs e)
+    private void VistaButton_MouseUp(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
         {

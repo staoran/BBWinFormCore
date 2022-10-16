@@ -6,14 +6,14 @@
 /// </summary>
 /// <typeparam name="TK">Key type</typeparam>
 /// <typeparam name="TV">Value type</typeparam>
-public class ThreadSafeSortedList<TK, TV>
+public class ThreadSafeSortedList<TK, TV> where TK : notnull
 {
     /// <summary>
     /// Gets/adds/replaces an item by key.
     /// </summary>
     /// <param name="key">Key to get/set value</param>
     /// <returns>Item associated with this key</returns>
-    public TV this[TK key]
+    public TV? this[TK key]
     {
         get
         {
@@ -64,7 +64,7 @@ public class ThreadSafeSortedList<TK, TV>
     /// <summary>
     /// Internal collection to store items.
     /// </summary>
-    protected readonly SortedList<TK, TV> Items;
+    protected readonly SortedList<TK, TV?> Items;
 
     /// <summary>
     /// Used to synchronize access to _items list.
@@ -76,7 +76,7 @@ public class ThreadSafeSortedList<TK, TV>
     /// </summary>
     public ThreadSafeSortedList()
     {
-        Items = new SortedList<TK, TV>();
+        Items = new SortedList<TK, TV?>();
         Lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
@@ -103,7 +103,7 @@ public class ThreadSafeSortedList<TK, TV>
     /// </summary>
     /// <param name="item">Item to check</param>
     /// <returns>True; if collection contains given item</returns>
-    public bool ContainsValue(TV item)
+    public bool ContainsValue(TV? item)
     {
         Lock.EnterReadLock();
         try

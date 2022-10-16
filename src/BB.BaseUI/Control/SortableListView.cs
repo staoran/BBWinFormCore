@@ -34,17 +34,17 @@ public class SortableListView : ListView
         ColumnReordered += SortableListView_ColumnReordered;
     }
 
-    void SortableListView_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+    void SortableListView_DrawSubItem(object? sender, DrawListViewSubItemEventArgs e)
     {
         e.DrawDefault = true;
     }
 
-    void SortableListView_DrawItem(object sender, DrawListViewItemEventArgs e)
+    void SortableListView_DrawItem(object? sender, DrawListViewItemEventArgs e)
     {
         e.DrawDefault = true;
     }
 
-    void SortableListView_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+    void SortableListView_DrawColumnHeader(object? sender, DrawListViewColumnHeaderEventArgs e)
     {
         bool fSorted = (_sortColumn == e.ColumnIndex);
 
@@ -81,7 +81,7 @@ public class SortableListView : ListView
         ListViewItemSorter = new ListViewItemComparer(_sortColumn, _sortOrder);
     }
 
-    void SortableListView_ColumnReordered(object sender, ColumnReorderedEventArgs e)
+    void SortableListView_ColumnReordered(object? sender, ColumnReorderedEventArgs e)
     {
         if (e.OldDisplayIndex == _sortColumn)
         {
@@ -91,7 +91,7 @@ public class SortableListView : ListView
     }
 
     bool _clickColumn = false;
-    void SortableListView_ColumnClick(object sender, ColumnClickEventArgs e)
+    void SortableListView_ColumnClick(object? sender, ColumnClickEventArgs e)
     {
         if (_sortColumn != e.Column)
         {

@@ -218,7 +218,7 @@ public partial class FrmEditBlackIp : BaseEditForm
         return false;
     }
 
-    private void FrmEditBlackIP_Load(object sender, EventArgs e)
+    private void FrmEditBlackIP_Load(object? sender, EventArgs e)
     {
     }
 
@@ -279,7 +279,7 @@ public partial class FrmEditBlackIp : BaseEditForm
             }
         }
     }
-    private async void btnEditUser_Click(object sender, EventArgs e)
+    private async void btnEditUser_Click(object? sender, EventArgs e)
     {
         FrmSelectUser dlg = App.GetService<FrmSelectUser>();
         dlg.SelectUserDict = _selectUserDict;
@@ -304,7 +304,7 @@ public partial class FrmEditBlackIp : BaseEditForm
         }
     }
 
-    private async void btnRemoveUser_Click(object sender, EventArgs e)
+    private async void btnRemoveUser_Click(object? sender, EventArgs e)
     {
         if (lvwUser.SelectedItem != null)
         {

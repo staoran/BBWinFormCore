@@ -30,7 +30,7 @@ public partial class FrmFunction : BaseForm
         functionControl1.EditValueChanged += functionControl1_EditValueChanged;
     }
 
-    void functionControl1_EditValueChanged(object sender, EventArgs e)
+    void functionControl1_EditValueChanged(object? sender, EventArgs e)
     {
         string item = functionControl1.Value;
         if (!string.IsNullOrEmpty(item) && item == "-1")
@@ -43,7 +43,7 @@ public partial class FrmFunction : BaseForm
         }
     }
 
-    private async void FrmFunction_Load(object sender, EventArgs e)
+    private async void FrmFunction_Load(object? sender, EventArgs e)
     {
         await InitDictItem();
         await RefreshTreeView();
@@ -157,7 +157,7 @@ public partial class FrmFunction : BaseForm
         }
     }
 
-    private void treeView1_MouseDown(object sender, MouseEventArgs e)
+    private void treeView1_MouseDown(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Right)
         {
@@ -171,7 +171,7 @@ public partial class FrmFunction : BaseForm
         base.OnMouseDown(e);
     }
 
-    private async void menu_Delete_Click(object sender, EventArgs e)
+    private async void menu_Delete_Click(object? sender, EventArgs e)
     {
         TreeNode node = treeView1.SelectedNode;
         if (node != null && !string.IsNullOrEmpty(node.Name))
@@ -193,7 +193,7 @@ public partial class FrmFunction : BaseForm
         }
     }
 
-    private async void menu_DeletAll_Click(object sender, EventArgs e)
+    private async void menu_DeletAll_Click(object? sender, EventArgs e)
     {
         TreeNode node = treeView1.SelectedNode;
         if (node != null && !string.IsNullOrEmpty(node.Name))
@@ -215,7 +215,7 @@ public partial class FrmFunction : BaseForm
         }
     }
 
-    private void menu_Add_Click(object sender, EventArgs e)
+    private void menu_Add_Click(object? sender, EventArgs e)
     {
         ClearInput();
         _currentId = "";
@@ -227,12 +227,12 @@ public partial class FrmFunction : BaseForm
         txtName.Focus();
     }
 
-    private async void menu_Update_Click(object sender, EventArgs e)
+    private async void menu_Update_Click(object? sender, EventArgs e)
     {
         await RefreshTreeView();
     }
 
-    private void menu_ExpandAll_Click(object sender, EventArgs e)
+    private void menu_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeView1.ExpandAll();
     }
@@ -281,7 +281,7 @@ public partial class FrmFunction : BaseForm
         lblSystemType.Visible = visible;
     }
 
-    private async void btnSave_Click(object sender, EventArgs e)
+    private async void btnSave_Click(object? sender, EventArgs e)
     {            
         if (functionControl1.Text.Length == 0)
             return;
@@ -354,17 +354,17 @@ public partial class FrmFunction : BaseForm
         }
     }
 
-    private void btnAdd_Click(object sender, EventArgs e)
+    private void btnAdd_Click(object? sender, EventArgs e)
     {
         menu_Add_Click(sender, e);
     }
 
-    private void btnDelete_Click(object sender, EventArgs e)
+    private void btnDelete_Click(object? sender, EventArgs e)
     {
         menu_Delete_Click(sender, e);
     }
 
-    private void btnBatchAdd_Click(object sender, EventArgs e)
+    private void btnBatchAdd_Click(object? sender, EventArgs e)
     {
         TreeNode node = treeView1.SelectedNode;
         if (node is { Tag: { } })
@@ -384,13 +384,13 @@ public partial class FrmFunction : BaseForm
         }
     }
 
-    async void dlg_OnDataSaved(object sender, EventArgs e)
+    void dlg_OnDataSaved(object? sender, EventArgs e)
     {
         //提高速度，避免重复更新
         //await RefreshTreeView();
     }
 
-    private void menu_Collapse_Click(object sender, EventArgs e)
+    private void menu_Collapse_Click(object? sender, EventArgs e)
     {
         treeView1.CollapseAll();
     }

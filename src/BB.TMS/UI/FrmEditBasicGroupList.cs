@@ -24,7 +24,7 @@ public partial class FrmEditBasicGroupList : BaseEditForm<BasicGroupList, BasicG
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEditTest1Car_Load(object sender, EventArgs e)
+    private void FrmEditTest1Car_Load(object? sender, EventArgs e)
     {
     }
 
