@@ -65,26 +65,8 @@ public partial class MainForm : RibbonForm
     {
         InitializeComponent();
 
-        #region 加载皮肤
-            
-        SplashScreen.Splasher.Status = "正在展示相关的内容...";
-        System.Threading.Thread.Sleep(Const.SLEEP_TIME);
-        Application.DoEvents();
-        DevExpress.XtraBars.Helpers.SkinHelper.InitSkinGallery(rgbiSkins, true);
-        ribbonControl.Toolbar.ItemLinks.Clear();
-        ribbonControl.Toolbar.ItemLinks.Add(rgbiSkins);
-        UserLookAndFeel.Default.SetSkinStyle("Seven Classic");
-
-        #endregion
-
-        #region 初始化菜单及界面数据
-        SplashScreen.Splasher.Status = "初始化用户缓存、菜单及界面数据...";
-        System.Threading.Thread.Sleep(Const.SLEEP_TIME);
-        Application.DoEvents();
-        InitUserRelated();
-        #endregion
-
         #region 注册右下角显示时间
+
         _backgroundWorker = new BackgroundWorker();
         //设置报告进度更新
         _backgroundWorker.WorkerReportsProgress = true;
@@ -95,24 +77,17 @@ public partial class MainForm : RibbonForm
         // 允许后台取消操作
         _backgroundWorker.WorkerSupportsCancellation = true;
         _backgroundWorker.RunWorkerAsync();
+
         #endregion
-
-        SplashScreen.Splasher.Status = "初始化完毕...";
-        System.Threading.Thread.Sleep(Const.SLEEP_TIME);
-        Application.DoEvents();
-
-        SplashScreen.Splasher.Close();
-        // 注册热键
-        // SetHotKey();
     }
                  
     /// <summary>
     /// 初始化用户相关的系统信息
     /// </summary>
-    private void InitUserRelated()
+    private async Task InitUserRelated()
     {
         // 必须首先加载缓存，用户权限在其中
-        GB.LoadCache();
+        await GB.LoadCache();
             
         #region 根据权限显示对象的初始化窗体(首页，启动后默认打开的窗体)
 
@@ -154,7 +129,7 @@ public partial class MainForm : RibbonForm
         if (_ribbonHelper == null)
         {
             _ribbonHelper = new RibbonPageHelper(this, ref ribbonControl);
-            _ribbonHelper.AddPages();
+            await _ribbonHelper.AddPages();
         }
 
         //根据权限屏蔽静态构建的菜单对象
@@ -314,8 +289,37 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void MainForm_Load(object sender, EventArgs e)
+    private async void MainForm_Load(object sender, EventArgs e)
     {
+        #region 加载皮肤
+
+        SplashScreen.Splasher.Status = "正在展示相关的内容...";
+        Thread.Sleep(Const.SLEEP_TIME);
+        Application.DoEvents();
+        DevExpress.XtraBars.Helpers.SkinHelper.InitSkinGallery(rgbiSkins, true);
+        ribbonControl.Toolbar.ItemLinks.Clear();
+        ribbonControl.Toolbar.ItemLinks.Add(rgbiSkins);
+        UserLookAndFeel.Default.SetSkinStyle("Seven Classic");
+
+        #endregion
+
+        #region 初始化菜单及界面数据
+
+        SplashScreen.Splasher.Status = "初始化用户缓存、菜单及界面数据...";
+        Thread.Sleep(Const.SLEEP_TIME);
+        Application.DoEvents();
+        await InitUserRelated();
+
+        #endregion
+
+        SplashScreen.Splasher.Status = "初始化完毕...";
+        Thread.Sleep(Const.SLEEP_TIME);
+        Application.DoEvents();
+
+        SplashScreen.Splasher.Close();
+        // 注册热键
+        // SetHotKey();
+
         Init();
     }
     
@@ -425,7 +429,7 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void btnRelogin_ItemClick(object sender, ItemClickEventArgs e)
+    private async void btnRelogin_ItemClick(object sender, ItemClickEventArgs e)
     {
         if ("您确定需要重新登录吗？".ShowYesNoAndUxWarning() != DialogResult.Yes) return;
 
@@ -439,7 +443,7 @@ public partial class MainForm : RibbonForm
             if (dlg.BLogin)
             {
                 CloseAllDocuments();
-                InitUserRelated();
+                await InitUserRelated();
             }
         }
         dlg.Dispose();
@@ -624,7 +628,7 @@ public partial class MainForm : RibbonForm
     private void backgroundWorkerShowTime_DoWork(object sender, DoWorkEventArgs e)
     {
         while(!_backgroundWorker.CancellationPending){
-            System.Threading.Thread.Sleep(1000);
+            Thread.Sleep(1000);
             // 执行ProgressChanged事件，发送消息到主线程
             _backgroundWorker.ReportProgress(0, DateTimeHelper.GetServerDateTime());
         }

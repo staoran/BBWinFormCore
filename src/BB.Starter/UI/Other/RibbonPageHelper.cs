@@ -10,7 +10,6 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using Furion;
 using Furion.Logging.Extensions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BB.Starter.UI.Other;
 
