@@ -145,7 +145,7 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
     public override async Task<bool> CheckInput()
     {
         // SetInfo(_tempInfo);
-        return await ProcessValidationResults(await _validator.ValidateAsync(TempInfo!));
+        return ProcessValidationResults(await _validator.ValidateAsync(TempInfo!), false);
     }
 
     /// <summary>

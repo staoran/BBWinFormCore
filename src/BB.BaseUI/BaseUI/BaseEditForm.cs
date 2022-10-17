@@ -312,8 +312,9 @@ public partial class BaseEditForm : BaseForm
     /// 统一处理验证结果
     /// </summary>
     /// <param name="result"></param>
+    /// <param name="showTip"></param>
     /// <returns></returns>
-    public virtual async Task<bool> ProcessValidationResults(ValidationResult result)
+    public virtual bool ProcessValidationResults(ValidationResult result, bool showTip = true)
     {
         ErrorProvider.ClearErrors();
         if (!result.IsValid)
@@ -323,13 +324,13 @@ public partial class BaseEditForm : BaseForm
                 var c = Controls.Find($"txt{x.PropertyName}", true);
                 if (c.Length > 0)
                 {
-                    x.ErrorMessage.ShowErrorTip(c[0]);
+                    if (showTip) x.ErrorMessage.ShowErrorTip(c[0]);
                     ErrorProvider.SetError(c[0], x.ErrorMessage);
                 }
             });
         }
 
-        return await Task.FromResult(result.IsValid);
+        return result.IsValid;
     }
     private async void btnAdd_Click(object? sender, EventArgs e)
     {
