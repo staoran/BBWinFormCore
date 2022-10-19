@@ -24,7 +24,7 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
     [ApiDescriptionSettings(KeepVerb = true)]
-    public async Task<List<DictDataInfo>> FindByTypeIdAsync(string dictTypeId)
+    public async Task<List<DictDataInfo>> FindByTypeIdAsync(int dictTypeId)
     {
         return await FindAsync(x => x.DictTypeId == dictTypeId);
     }
@@ -38,7 +38,7 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     public async Task<List<DictDataInfo>> FindByDictTypeAsync(string dictTypeName)
     {
         string sql =
-            $"select d.* from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.ID where t.Name ='{dictTypeName}'";
+            $"select d.* from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.Code where t.Name ='{dictTypeName}'";
         sql += $" Order by d.{Repository.SortField} {(Repository.IsDescending ? "DESC" : "ASC")}";
 
         return await FindAsync(sql);
@@ -50,9 +50,9 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     /// <param name="dictCode">字典类型代码</param>
     /// <returns></returns>
     [ApiDescriptionSettings(KeepVerb = true)]
-    public async Task<List<DictDataInfo>> FindByDictCodeAsync(string dictCode)
+    public async Task<List<DictDataInfo>> FindByDictCodeAsync(int dictCode)
     {
-        return await Repository.Db.Queryable<DictDataInfo, DictTypeInfo>((dd, dt) => dd.ID == dt.ID)
+        return await Repository.Db.Queryable<DictDataInfo, DictTypeInfo>((dd, dt) => dd.ID == dt.Code)
             .Where((dd, dt) => dt.Code == dictCode)
             .Select<DictDataInfo>()
             .ToListAsync();
@@ -65,7 +65,7 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     public async Task<Dictionary<string, string>> GetAllDictAsync()
     {
         string sql =
-            $"select d.Name,d.Value from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.ID order by d.{Repository.SortField} {(Repository.IsDescending ? "DESC" : "ASC")}";
+            $"select d.Name,d.Value from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.Code order by d.{Repository.SortField} {(Repository.IsDescending ? "DESC" : "ASC")}";
 
         return await GetDictBySqlAsync(sql);
     }
@@ -75,10 +75,10 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     /// </summary>
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
-    public async Task<Dictionary<string, string>> GetDictByTypeIdAsync(string dictTypeId)
+    public async Task<Dictionary<string, string>> GetDictByTypeIdAsync(int dictTypeId)
     {
         string sql =
-            $"select d.Name,d.Value from tb_DictData d where d.DictType_ID ='{dictTypeId}' order by d.{Repository.SortField} {(Repository.IsDescending ? "DESC" : "ASC")}";
+            $"select d.Name,d.Value from tb_DictData d where d.DictType_ID ={dictTypeId} order by d.{Repository.SortField} {(Repository.IsDescending ? "DESC" : "ASC")}";
 
         return await GetDictBySqlAsync(sql);
     }
@@ -91,7 +91,7 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     public async Task<Dictionary<string, string>> GetDictByDictTypeAsync(string dictTypeName)
     {
         string sql =
-            $"select d.Name,d.Value from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.ID where t.Name ='{dictTypeName}' order by d.{Repository.SortField} {(Repository.IsDescending ? "DESC" : "ASC")}";
+            $"select d.Name,d.Value from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.Code where t.Name ='{dictTypeName}' order by d.{Repository.SortField} {(Repository.IsDescending ? "DESC" : "ASC")}";
 
         return await GetDictBySqlAsync(sql);
     }
@@ -129,7 +129,7 @@ public class DictDataService : BaseService<DictDataInfo>, IDynamicApiController,
     public async Task<string> GetDictNameAsync(string dictTypeName, string dictValue)
     {
         string sql =
-            $"select d.Name from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.ID where t.Name ='{dictTypeName}' and d.Value='{dictValue}'";
+            $"select d.Name from tb_DictData d inner join tb_DictType t on d.DictType_ID = t.Code where t.Name ='{dictTypeName}' and d.Value='{dictValue}'";
 
         string value = await SqlValueListAsync(sql);
         return value.IsNullOrEmpty() ? "" : value.Split(',')[0];

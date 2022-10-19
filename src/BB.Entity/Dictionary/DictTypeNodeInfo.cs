@@ -29,13 +29,12 @@ public class DictTypeNodeInfo : DictTypeInfo
 	/// <param name="typeInfo">字典类型对象</param>
 	public DictTypeNodeInfo(DictTypeInfo typeInfo) : this()
 	{
-		base.ID = typeInfo.ID;
+		base.Code = typeInfo.Code;
 		base.Name = typeInfo.Name;
 		base.Remark = typeInfo.Remark;
 		base.SEQ = typeInfo.SEQ;
 		base.PID = typeInfo.PID;
 		base.Editor = typeInfo.Editor;
 		base.LastUpdated = typeInfo.LastUpdated;
-		base.DbSQL = typeInfo.DbSQL;
 	}
 }

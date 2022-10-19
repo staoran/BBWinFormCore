@@ -22,7 +22,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// </summary>
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
-    public async Task<Dictionary<string, string>> GetAllTypeAsync(string dictTypeId = "")
+    public async Task<Dictionary<string, string>> GetAllTypeAsync(int dictTypeId = -1)
     {
         return (await _httpService.GetAllTypeAsync(dictTypeId)).Handling();
     }
@@ -33,7 +33,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// <param name="name">名称</param>
     /// <param name="id">编号</param>
     /// <returns></returns>
-    public async Task<bool> CheckDuplicatedAsync(string name, string id)
+    public async Task<bool> CheckDuplicatedAsync(string name, int id)
     {
         return (await _httpService.CheckDuplicatedAsync(name, id)).Handling();
     }
@@ -70,7 +70,7 @@ public class DictTypeHttpService : BaseHttpService<DictTypeInfo>
     /// </summary>
     /// <param name="mainId">字典类型ID</param>
     /// <returns></returns>
-    public async Task<List<DictTypeNodeInfo>> GetTreeByIdAsync([Required] string mainId)
+    public async Task<List<DictTypeNodeInfo>> GetTreeByIdAsync([Required] int mainId)
     {
         return (await _httpService.GetTreeByIdAsync(mainId)).Handling();
     }

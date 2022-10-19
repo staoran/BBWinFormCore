@@ -17,19 +17,18 @@ public class DictTypeInfo : BaseEntity
     /// </summary>
     public DictTypeInfo()
     {
-        ID = Guid.NewGuid().ToString();
         LastUpdated = DateTime.Now;
     }
 
     #region Property Members
 
     /// <summary>
-    /// 编号
+    /// 类型编号
     /// </summary>
     [DataMember]
     [Key]
-    [Column(FieldID)]
-    public virtual string ID { get; set; }
+    [Column(FieldCode)]
+    public virtual int Code { get; set; }
 
     /// <summary>
     /// 类型名称
@@ -73,21 +72,7 @@ public class DictTypeInfo : BaseEntity
     /// </summary>
     [DataMember]
     [Column(FieldPID)]
-    public virtual string PID { get; set; }
-
-    /// <summary>
-    /// 类型编号
-    /// </summary>
-    [DataMember]
-    [Column(FieldCode)]
-    public virtual string Code { get; set; }
-
-    /// <summary>
-    /// SQL数据源
-    /// </summary>
-    [DataMember]
-    [Column(FieldDbSQL)]
-    public virtual string DbSQL { get; set; }
+    public virtual int PID { get; set; }
 
     #endregion
 
@@ -103,7 +88,7 @@ public class DictTypeInfo : BaseEntity
     /// 主键名
     /// </summary>
     [NonSerialized]
-    public new const string PrimaryKey = FieldID;
+    public new const string PrimaryKey = FieldCode;
 
     /// <summary>
     /// 排序字段
@@ -122,9 +107,6 @@ public class DictTypeInfo : BaseEntity
     /// </summary>
     [NonSerialized]
     public new const string OptimisticLockKey = FieldLastUpdated;
-
-    [NonSerialized]
-    public const string FieldID = "ID";
 
     /// <summary>
     /// 类型名称
@@ -167,12 +149,6 @@ public class DictTypeInfo : BaseEntity
     /// </summary>
     [NonSerialized]
     public const string FieldCode = "Code";
-
-    /// <summary>
-    /// SQL语句
-    /// </summary>
-    [NonSerialized]
-    public const string FieldDbSQL = "DbSQL";
 
     #endregion
 }

@@ -17,7 +17,6 @@ public class DictDataInfo : BaseEntity
     /// </summary>
     public DictDataInfo()
     {
-        ID = Guid.NewGuid().ToString();
         LastUpdated = DateTime.Now;
     }
 
@@ -28,15 +27,16 @@ public class DictDataInfo : BaseEntity
     /// </summary>
     [DataMember]
     [Key]
+    [Identity]
     [Column(FieldID)]
-    public virtual string ID { get; set; }
+    public virtual int ID { get; set; }
 
     /// <summary>
     /// 字典大类
     /// </summary>
     [DataMember]
     [Column(FieldDictTypeId)]
-    public virtual string DictTypeId { get; set; }
+    public virtual int DictTypeId { get; set; }
 
     /// <summary>
     /// 字典名称

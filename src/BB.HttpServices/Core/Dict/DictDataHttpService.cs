@@ -21,7 +21,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// </summary>
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
-    public async Task<List<DictDataInfo>> FindByTypeIdAsync(string dictTypeId)
+    public async Task<List<DictDataInfo>> FindByTypeIdAsync(int dictTypeId)
     {
         return (await _httpService.FindByTypeIdAsync(dictTypeId)).Handling();
     }
@@ -41,7 +41,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// </summary>
     /// <param name="dictCode">字典类型代码</param>
     /// <returns></returns>
-    public async Task<List<DictDataInfo>> FindByDictCodeAsync(string dictCode)
+    public async Task<List<DictDataInfo>> FindByDictCodeAsync(int dictCode)
     {
         return (await _httpService.FindByDictCodeAsync(dictCode)).Handling();
     }
@@ -60,7 +60,7 @@ public class DictDataHttpService : BaseHttpService<DictDataInfo>
     /// </summary>
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
-    public async Task<Dictionary<string, string>> GetDictByTypeIdAsync(string dictTypeId)
+    public async Task<Dictionary<string, string>> GetDictByTypeIdAsync(int dictTypeId)
     {
         return (await _httpService.GetDictByTypeIdAsync(dictTypeId)).Handling();
     }

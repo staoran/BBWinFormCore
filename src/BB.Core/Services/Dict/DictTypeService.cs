@@ -6,6 +6,7 @@ using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
 using BB.Tools.Entity;
+using BB.Tools.Format;
 using FluentValidation;
 
 namespace BB.Core.Services.Dict;
@@ -25,14 +26,14 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
     /// </summary>
     /// <param name="dictTypeId">字典类型ID</param>
     /// <returns></returns>
-    public async Task<Dictionary<string, string>> GetAllTypeAsync(string dictTypeId = "")
+    public async Task<Dictionary<string, string>> GetAllTypeAsync(int dictTypeId = -1)
     {
         return (await Repository.AsQueryable()
-            .WhereIF(ExpressionExtensions.IsNullOrEmpty(dictTypeId), x => x.PID == dictTypeId)
-            .Select(x => new { x.Name, x.ID })
+            .Where(x => x.PID == dictTypeId)
+            .Select(x => new { x.Name, x.Code })
             .OrderBy($"{Repository.SortField} {(Repository.IsDescending ? "desc" : "asc")}")
             .ToListAsync())
-            .ToDictionary(x=>x.Name,x=>x.ID);;
+            .ToDictionary(x=>x.Name,x=>x.Code.ObjToStr());;
     }
 
     /// <summary>
@@ -42,9 +43,9 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
     /// <param name="id">编号</param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<bool> CheckDuplicatedAsync(string name, string id)
+    public async Task<bool> CheckDuplicatedAsync(string name, int id)
     {
-        return await Repository.IsAnyAsync(x => x.Name == name && x.ID != id);
+        return await Repository.IsAnyAsync(x => x.Name == name && x.Code != id);
     }
 
     /// <summary>
@@ -63,10 +64,10 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
 
         if (dictTypeInfos.Count > 0)
         {
-            List<DictTypeInfo> roots = dictTypeInfos.Where(x=>x.PID == "-1").ToList();
+            List<DictTypeInfo> roots = dictTypeInfos.Where(x=>x.PID == -1).ToList();
             roots.ForEach(x =>
             {
-                DictTypeNodeInfo dictTypeNodeInfo = GetNode(x.ID, dictTypeInfos);
+                DictTypeNodeInfo dictTypeNodeInfo = GetNode(x.Code, dictTypeInfos);
                 typeNodeList.Add(dictTypeNodeInfo);
             });
         }
@@ -87,7 +88,7 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
         {
             if (x.Children.Count == 0)
             {
-                items.Add(new CListItem(x.ID, x.Name));
+                items.Add(new CListItem(x.Code.ObjToStr(), x.Name));
             }
             else
             {
@@ -105,7 +106,7 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
     public async Task<List<DictTypeInfo>> GetTopItemsAsync()
     {
         return await Repository.AsQueryable()
-            .Where(x => x.PID == "-1")
+            .Where(x => x.PID == -1)
             .OrderBy(x => x.SEQ)
             .ToListAsync();
     }
@@ -115,7 +116,7 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
     /// </summary>
     /// <param name="mainId">字典类型ID</param>
     /// <returns></returns>
-    public async Task<List<DictTypeNodeInfo>> GetTreeByIdAsync([Required] string mainId)
+    public async Task<List<DictTypeNodeInfo>> GetTreeByIdAsync([Required] int mainId)
     {
         List<DictTypeNodeInfo> typeNodeList = new();
 
@@ -130,7 +131,7 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
             var roots = dt.Where(x=>x.PID == mainId).ToList();
             roots.ForEach(x =>
             {
-                DictTypeNodeInfo dictTypeNodeInfo = GetNode(x.ID, dt);
+                DictTypeNodeInfo dictTypeNodeInfo = GetNode(x.Code, dt);
                 typeNodeList.Add(dictTypeNodeInfo);
             });
         }
@@ -145,20 +146,20 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
     /// <returns>执行操作是否成功。</returns>
     public override async Task<bool> InsertAsync(DictTypeInfo obj)
     {
-        if (!ExpressionExtensions.IsNullOrEmpty(obj.Code))
+        if (obj.Code > -2)
             await CheckUniqueAsync(DictTypeInfo.FieldCode, "字典代码", obj.Code);
         return await base.InsertAsync(obj);
     }
 
-    private DictTypeNodeInfo GetNode(string id, List<DictTypeInfo> dt)
+    private DictTypeNodeInfo GetNode(int id, List<DictTypeInfo> dt)
     {
-        DictTypeInfo dictTypeInfo = dt.Find(x => x.ID == id);
+        DictTypeInfo dictTypeInfo = dt.Find(x => x.Code == id);
         DictTypeNodeInfo dictTypeNodeInfo = new(dictTypeInfo);
 
         List<DictTypeInfo> roots = dt.Where(x => x.PID == id).ToList();
         roots.ForEach(x =>
         {
-            DictTypeNodeInfo childNodeInfo = GetNode(x.ID, dt);
+            DictTypeNodeInfo childNodeInfo = GetNode(x.Code, dt);
             dictTypeNodeInfo.Children.Add(childNodeInfo);
         });
 
