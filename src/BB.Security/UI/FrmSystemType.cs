@@ -2,6 +2,7 @@
 using BB.BaseUI.BaseUI;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
+using BB.Entity.Security;
 using BB.HttpServices.Core.SystemType;
 using Furion;
 
@@ -47,11 +48,11 @@ public partial class FrmSystemType : BaseForm
     {
         if (winGridView1.gridView1.Columns.Count > 0 && winGridView1.gridView1.RowCount > 0)
         {
-            winGridView1.gridView1.Columns["OID"].Width = 100;
-            winGridView1.gridView1.Columns["Name"].Width = 100;
-            winGridView1.gridView1.Columns["CustomID"].Width = 100;
-            winGridView1.gridView1.Columns["Authorize"].Width = 100;
-            winGridView1.gridView1.Columns["Note"].Width = 200;
+            winGridView1.gridView1.Columns[nameof(SystemTypeInfo.Oid)].Width = 100;
+            winGridView1.gridView1.Columns[nameof(SystemTypeInfo.Name)].Width = 100;
+            winGridView1.gridView1.Columns[nameof(SystemTypeInfo.CustomId)].Width = 100;
+            winGridView1.gridView1.Columns[nameof(SystemTypeInfo.Authorize)].Width = 100;
+            winGridView1.gridView1.Columns[nameof(SystemTypeInfo.Note)].Width = 200;
         }
     }
 
@@ -106,13 +107,13 @@ public partial class FrmSystemType : BaseForm
 
     private async Task BindData()
     {
-        winGridView1.DisplayColumns = "OID,Name,CustomID,Authorize,Note";
+        winGridView1.DisplayColumns = $"{nameof(SystemTypeInfo.Oid)},{nameof(SystemTypeInfo.Name)},{nameof(SystemTypeInfo.CustomId)},{nameof(SystemTypeInfo.Authorize)},{nameof(SystemTypeInfo.Note)}";
         #region 添加别名解析
-        winGridView1.AddColumnAlias("OID", "系统标识");
-        winGridView1.AddColumnAlias("Name", "系统名称");
-        winGridView1.AddColumnAlias("CustomID", "客户编码");
-        winGridView1.AddColumnAlias("Authorize", "授权编码");
-        winGridView1.AddColumnAlias("Note", "备注");
+        winGridView1.AddColumnAlias(nameof(SystemTypeInfo.Oid), "系统标识");
+        winGridView1.AddColumnAlias(nameof(SystemTypeInfo.Name), "系统名称");
+        winGridView1.AddColumnAlias(nameof(SystemTypeInfo.CustomId), "客户编码");
+        winGridView1.AddColumnAlias(nameof(SystemTypeInfo.Authorize), "授权编码");
+        winGridView1.AddColumnAlias(nameof(SystemTypeInfo.Note), "备注");
         #endregion
 
         winGridView1.DataSource = await _bll.GetAllAsync();
