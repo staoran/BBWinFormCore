@@ -11,6 +11,7 @@ using Furion.Logging.Extensions;
 
 namespace BB.Security.UI;
 
+// public partial class FrmEditMenu : BaseEditDesigner
 public partial class FrmEditMenu : BaseEditForm
 {
     /// <summary>
@@ -78,6 +79,8 @@ public partial class FrmEditMenu : BaseEditForm
         {
             txtSystemType.SelectedIndex = 0;
         }
+        
+        txtMenuType.BindDictItems("菜单类型", "1", false, false);
     }
 
     /// <summary>
@@ -89,22 +92,19 @@ public partial class FrmEditMenu : BaseEditForm
 
         if (!string.IsNullOrEmpty(ID))
         {
-            #region 显示客户信息
             MenuInfo info = await _bll.FindByIdAsync(ID);
-            if (info != null)
-            {
-                menuControl1.Value = info.PID;
-                txtName.Text = info.Name;
-                txtIcon.Text = info.Icon;
-                txtSeq.Text = info.Seq;
-                txtFunctionId.Text = info.FunctionId;
-                txtVisible.Checked = info.Visible;
-                txtWinformType.Text = info.WinformType;
-                txtUrl.Text = info.Url;
-                txtWebIcon.Text = info.WebIcon;
-                txtSystemType.SetComboBoxItem(info.SystemTypeId);//设置系统类型
-            }
-            #endregion
+            menuControl1.Value = info.PID;
+            txtName.Text = info.Name;
+            txtIcon.Text = info.Icon;
+            txtSeq.Text = info.Seq;
+            txtFunctionId.Text = info.FunctionId;
+            txtVisible.Checked = info.Visible;
+            txtWinformType.Text = info.WinformType;
+            txtUrl.Text = info.Url;
+            txtWebIcon.Text = info.WebIcon;
+            txtSystemType.SetComboBoxItem(info.SystemTypeId);//设置系统类型
+            txtMenuType.SetComboBoxItem(info.MenuType);
+
             //this.btnOK.Enabled = GB.HasFunction("Menu/Edit");             
         }
         else

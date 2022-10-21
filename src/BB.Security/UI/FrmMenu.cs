@@ -214,18 +214,27 @@ public partial class FrmMenu : BaseForm
     private async Task BindData()
     {
         //entity
-        winGridViewPager1.DisplayColumns = "Name,Icon,Seq,FunctionId,Visible,WinformType,WebIcon,Url";
+        winGridViewPager1.DisplayColumns =
+            $"{nameof(MenuInfo.Name)},{nameof(MenuInfo.Icon)},{nameof(MenuInfo.Seq)},{nameof(MenuInfo.MenuType)},{nameof(MenuInfo.FunctionId)},{nameof(MenuInfo.Visible)},{nameof(MenuInfo.WinformType)},{nameof(MenuInfo.WebIcon)},{nameof(MenuInfo.Url)},{nameof(MenuInfo.SystemTypeId)}";
         #region 添加别名解析
 
-        winGridViewPager1.AddColumnAlias("ID", "");
-        winGridViewPager1.AddColumnAlias("Name", "显示名称");
-        winGridViewPager1.AddColumnAlias("Icon", "图标");
-        winGridViewPager1.AddColumnAlias("Seq", "排序");
-        winGridViewPager1.AddColumnAlias("FunctionId", "功能ID");
-        winGridViewPager1.AddColumnAlias("Visible", "菜单可见");
-        winGridViewPager1.AddColumnAlias("WinformType", "Winform窗体类型");
-        winGridViewPager1.AddColumnAlias("WebIcon", "Web界面的菜单图标");
-        winGridViewPager1.AddColumnAlias("Url", "Web界面Url地址");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.ID), "");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Name), "显示名称");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Icon), "图标");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Seq), "排序");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.MenuType), "菜单类型");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.FunctionId), "功能ID");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Visible), "菜单可见");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.WinformType), "Winform窗体类型");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.WebIcon), "Web界面的菜单图标");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Url), "Web界面Url地址");
+        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.SystemTypeId), "系统类型ID");
+
+        #endregion
+
+        #region 添加列字段数据源
+
+        winGridViewPager1.SetColumnDataSource(MenuInfo.FieldMenuType, "菜单类型");
 
         #endregion
 

@@ -21,6 +21,7 @@ public class MenuInfo : BaseEntity
         PID = "-1";
         Visible = true;
         Expand = false;
+        MenuType = "1";
         CreationDate = DateTime.Now;
         LastUpdateDate = DateTime.Now;
         Deleted = false;
@@ -64,6 +65,13 @@ public class MenuInfo : BaseEntity
     [Sort(IsDesc)]
     [Column(FieldSeq)]
     public virtual string Seq { get; set; }
+
+    /// <summary>
+    /// 菜单类型
+    /// </summary>
+    [DataMember]
+    [Column(FieldMenuType)]
+    public virtual string MenuType { get; set; }
 
     /// <summary>
     /// 功能ID
@@ -234,6 +242,12 @@ public class MenuInfo : BaseEntity
     public const string FieldIcon = "Icon";
 
     /// <summary>
+    /// 菜单类型
+    /// </summary>
+    [NonSerialized]
+    public const string FieldMenuType = "MenuType";
+
+    /// <summary>
     /// 排序
     /// </summary>
     [NonSerialized]
@@ -382,6 +396,7 @@ public class MenuNodeInfo : MenuInfo
         base.EmbedIcon = menuInfo.EmbedIcon;
         base.WebIcon = menuInfo.WebIcon;
         base.WinformType = menuInfo.WinformType;
+        base.MenuType = menuInfo.MenuType;
         base.Url = menuInfo.Url;
         base.SystemTypeId = menuInfo.SystemTypeId;
         base.Creator = menuInfo.Creator;
