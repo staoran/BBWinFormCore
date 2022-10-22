@@ -350,10 +350,9 @@ public static class ComboBoxExtension
     /// <param name="value">指定的CListItem中的值</param>
     public static void SetComboBoxItem(this ComboBoxEdit combo, object value)
     {
-        for (int i = 0; i < combo.Properties.Items.Count; i++)
+        for (var i = 0; i < combo.Properties.Items.Count; i++)
         {
-            CListItem item = combo.Properties.Items[i] as CListItem;
-            if (item != null && value != null && item.Value == string.Concat(value))
+            if (combo.Properties.Items[i] is CListItem item && value != null && item.Value == string.Concat(value))
             {
                 combo.SelectedIndex = i;
                 combo.SelectedText = item.Text;
@@ -388,7 +387,7 @@ public static class ComboBoxExtension
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
     /// <param name="limitedContent">是否限定输入内容</param>
-    public static void BindDictItems(this ComboBoxEdit combo, string dictTypeName, string defaultValue = "", bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
+    public static void BindDictItems(this ComboBoxEdit combo, string dictTypeName, string? defaultValue, bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
     {
         BindDictItems(combo, GB.GetDictByName(dictTypeName), defaultValue, emptyFlag, freeInput, limitedContent);
     }
@@ -455,10 +454,17 @@ public static class ComboBoxExtension
         if (limitedContent)
             combo.LostFocus += (sender, args) =>
             {
-                var com = (ComboBoxEdit)sender;
-                bool contains = itemList.Contains(com.EditValue);
-                if (!contains)
+                if (freeInput && sender is ComboBoxEdit com)
+                {
+                    string value = com.EditValue switch
+                    {
+                        CListItem c => c.Value,
+                        string s => s,
+                        _ => com.EditValue.ObjToStr()
+                    };
                     com.EditValue = null;
+                    com.SetComboBoxItem(value);
+                }
             };
     }
 
