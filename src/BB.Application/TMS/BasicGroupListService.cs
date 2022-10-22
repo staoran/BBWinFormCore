@@ -43,15 +43,15 @@ public class BasicGroupListService : BaseService<BasicGroupList>, IDynamicApiCon
         var permitDict = new Dictionary<string, int>
         {
             // 主键不为空则只读
-            { BasicGroupList.FieldISID, 4 },
-            { BasicGroupList.FieldGroupName, 4 },
-            { BasicGroupList.FieldCreationDate, 1 },
-            { BasicGroupList.FieldCreatedBy, 1 },
-            { BasicGroupList.FieldLastUpdateDate, 1 },
-            { BasicGroupList.FieldLastUpdatedBy, 1 },
-            { BasicGroupList.FieldFlagApp, 1 },
-            { BasicGroupList.FieldAppUser, 1 },
-            { BasicGroupList.FieldAppDate, 1 }
+            { nameof(BasicGroupList.ISID), 4 },
+            { nameof(BasicGroupList.GroupName), 4 },
+            { nameof(BasicGroupList.CreationDate), 1 },
+            { nameof(BasicGroupList.CreatedBy), 1 },
+            { nameof(BasicGroupList.LastUpdateDate), 1 },
+            { nameof(BasicGroupList.LastUpdatedBy), 1 },
+            { nameof(BasicGroupList.FlagApp), 1 },
+            { nameof(BasicGroupList.AppUser), 1 },
+            { nameof(BasicGroupList.AppDate), 1 }
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

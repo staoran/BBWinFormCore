@@ -48,17 +48,17 @@ public class CustomerService : BaseMultiService<Customer, Customers>, IDynamicAp
         var permitDict = new Dictionary<string, int>
         {
             // 主键不为空则只读
-            { Customer.FieldCustomerCode, 1 },
-            { Customer.FieldTranNode, 1 },
-            { Customer.FieldProvinceNo, 3 },
-            { Customer.FieldCityNo, 3 },
-            { Customer.FieldCreationDate, 1 },
-            { Customer.FieldCreatedBy, 1 },
-            { Customer.FieldLastUpdateDate, 1 },
-            { Customer.FieldLastUpdatedBy, 1 },
-            { Customer.FieldFlagApp, 1 },
-            { Customer.FieldAppUser, 1 },
-            { Customer.FieldAppDate, 1 }
+            { nameof(Customer.CustomerCode), 1 },
+            { nameof(Customer.TranNode), 1 },
+            { nameof(Customer.ProvinceNo), 3 },
+            { nameof(Customer.CityNo), 3 },
+            { nameof(Customer.CreationDate), 1 },
+            { nameof(Customer.CreatedBy), 1 },
+            { nameof(Customer.LastUpdateDate), 1 },
+            { nameof(Customer.LastUpdatedBy), 1 },
+            { nameof(Customer.FlagApp), 1 },
+            { nameof(Customer.AppUser), 1 },
+            { nameof(Customer.AppDate), 1 }
         };
         // 主键不为空则只读
         permitDict.TryAdd(Customer.PrimaryKey, 4);

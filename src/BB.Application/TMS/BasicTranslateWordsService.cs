@@ -42,12 +42,12 @@ public class BasicTranslateWordsService : BaseService<BasicTranslateWords>, IDyn
     {
         var permitDict = new Dictionary<string, int>
         {
-            { BasicTranslateWords.FieldISID, 3 },
-            { BasicTranslateWords.FieldTranslateTypeDesc, 3 },
-            { BasicTranslateWords.FieldCreationDate, 1 },
-            { BasicTranslateWords.FieldCreatedBy, 1 },
-            { BasicTranslateWords.FieldLastUpdateDate, 1 },
-            { BasicTranslateWords.FieldLastUpdatedBy, 1 },
+            { nameof(BasicTranslateWords.ISID), 3 },
+            { nameof(BasicTranslateWords.TranslateTypeDesc), 3 },
+            { nameof(BasicTranslateWords.CreationDate), 1 },
+            { nameof(BasicTranslateWords.CreatedBy), 1 },
+            { nameof(BasicTranslateWords.LastUpdateDate), 1 },
+            { nameof(BasicTranslateWords.LastUpdatedBy), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

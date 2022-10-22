@@ -47,19 +47,19 @@ public class MessageService : BaseMultiService<Message, Messages>, IDynamicApiCo
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Message.FieldISID, 3 },
+            { nameof(Message.ISID), 3 },
             // 主键不为空则只读
-            { Message.FieldMsgNo, 4 },
-            { Message.DisRecvMsgNode, 4 },
-            { Message.FieldSendMsgNode, 1 },
-            { Message.FieldDealStatus, 1 },
-            { Message.FieldCreationDate, 1 },
-            { Message.FieldCreatedBy, 1 },
-            { Message.FieldLastUpdateDate, 1 },
-            { Message.FieldLastUpdatedBy, 1 },
-            { Message.FieldFlagApp, 1 },
-            { Message.FieldAppUser, 1 },
-            { Message.FieldAppDate, 1 },
+            { nameof(Message.MsgNo), 4 },
+            { nameof(Message.RecvMsgNode), 4 },
+            { nameof(Message.SendMsgNode), 1 },
+            { nameof(Message.DealStatus), 1 },
+            { nameof(Message.CreationDate), 1 },
+            { nameof(Message.CreatedBy), 1 },
+            { nameof(Message.LastUpdateDate), 1 },
+            { nameof(Message.LastUpdatedBy), 1 },
+            { nameof(Message.FlagApp), 1 },
+            { nameof(Message.AppUser), 1 },
+            { nameof(Message.AppDate), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

@@ -48,16 +48,16 @@ public class QuotationsService : BaseService<Quotations>, IDynamicApiController,
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Quotations.FieldISID, 3 },
-            { Quotations.FieldQuotationNo, 3 },
-            { Quotations.FieldMathConditional, 3 },
-            { Quotations.FieldMathContent, 3 },
-            { Quotations.FieldCreationDate, 3 },
-            { Quotations.FieldCreatedBy, 3 },
-            { Quotations.FieldLastUpdateDate, 3 },
-            { Quotations.FieldLastUpdatedBy, 3 },
-            { Quotations.FieldFromGroupsID, 3 },
-            { Quotations.FieldToGroupsID, 3 },
+            { nameof(Quotations.ISID), 3 },
+            { nameof(Quotations.QuotationNo), 3 },
+            { nameof(Quotations.MathConditional), 3 },
+            { nameof(Quotations.MathContent), 3 },
+            { nameof(Quotations.CreationDate), 3 },
+            { nameof(Quotations.CreatedBy), 3 },
+            { nameof(Quotations.LastUpdateDate), 3 },
+            { nameof(Quotations.LastUpdatedBy), 3 },
+            { nameof(Quotations.FromGroupsID), 3 },
+            { nameof(Quotations.ToGroupsID), 3 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

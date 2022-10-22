@@ -44,15 +44,15 @@ public class BasicCostTypeService : BaseService<BasicCostType>, IDynamicApiContr
         var permitDict = new Dictionary<string, int>
         {
             // 主键不为空则只读
-            { BasicCostType.FieldCostType, 4 },
-            { BasicCostType.FieldCostTypeDesc, 4 },
-            { BasicCostType.FieldFlagApp, 1 },
-            { BasicCostType.FieldAppUser, 1 },
-            { BasicCostType.FieldAppDate, 1 },
-            { BasicCostType.FieldCreatedBy, 1 },
-            { BasicCostType.FieldCreationDate, 1 },
-            { BasicCostType.FieldLastUpdatedBy, 1 },
-            { BasicCostType.FieldLastUpdateDate, 1 }
+            { nameof(BasicCostType.CostType), 4 },
+            { nameof(BasicCostType.CostTypeDesc), 4 },
+            { nameof(BasicCostType.FlagApp), 1 },
+            { nameof(BasicCostType.AppUser), 1 },
+            { nameof(BasicCostType.AppDate), 1 },
+            { nameof(BasicCostType.CreatedBy), 1 },
+            { nameof(BasicCostType.CreationDate), 1 },
+            { nameof(BasicCostType.LastUpdatedBy), 1 },
+            { nameof(BasicCostType.LastUpdateDate), 1 }
         };
         // 主键不为空则只读
         permitDict.TryAdd(BasicCostType.PrimaryKey, 4);

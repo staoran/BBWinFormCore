@@ -46,16 +46,16 @@ public class QuotationService : BaseMultiService<Quotation, Quotations>, IDynami
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Quotation.FieldISID, 3 },
-            { Quotation.FieldQuotationNo, 1 },
-            { Quotation.FieldCreationDate, 1 },
-            { Quotation.FieldCreatedBy, 1 },
-            { Quotation.FieldLastUpdateDate, 1 },
-            { Quotation.FieldLastUpdatedBy, 1 },
-            { Quotation.FieldFlagApp, 1 },
-            { Quotation.FieldAppUser, 1 },
-            { Quotation.FieldAppDate, 1 },
-            { Quotation.FieldTranNodeNO, 1 },
+            { nameof(Quotation.ISID), 3 },
+            { nameof(Quotation.QuotationNo), 1 },
+            { nameof(Quotation.CreationDate), 1 },
+            { nameof(Quotation.CreatedBy), 1 },
+            { nameof(Quotation.LastUpdateDate), 1 },
+            { nameof(Quotation.LastUpdatedBy), 1 },
+            { nameof(Quotation.FlagApp), 1 },
+            { nameof(Quotation.AppUser), 1 },
+            { nameof(Quotation.AppDate), 1 },
+            { nameof(Quotation.TranNodeNO), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

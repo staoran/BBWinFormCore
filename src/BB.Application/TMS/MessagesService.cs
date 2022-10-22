@@ -43,14 +43,14 @@ public class MessagesService : BaseService<Messages>, IDynamicApiController, ITr
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Messages.FieldISID, 3 },
-            { Messages.FieldMsgNo, 1 },
-            { Messages.FieldLastReadTime, 3 },
-            { Messages.FieldLaseRealAccount, 3 },
-            { Messages.FieldCreationDate, 1 },
-            { Messages.FieldCreatedBy, 1 },
-            { Messages.FieldLastUpdateDate, 1 },
-            { Messages.FieldLastUpdateBy, 1 }
+            { nameof(Messages.ISID), 3 },
+            { nameof(Messages.MsgNo), 1 },
+            { nameof(Messages.LastReadTime), 3 },
+            { nameof(Messages.LaseRealAccount), 3 },
+            { nameof(Messages.CreationDate), 1 },
+            { nameof(Messages.CreatedBy), 1 },
+            { nameof(Messages.LastUpdateDate), 1 },
+            { nameof(Messages.LastUpdateBy), 1 }
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

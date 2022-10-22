@@ -45,12 +45,12 @@ public class DocNoRuleService : BaseService<DocNoRule>, IDynamicApiController, I
         var permitDict = new Dictionary<string, int>
         {
             // 主键不为空则只读
-            { DocNoRule.FieldISID, 4 },
-            { DocNoRule.FieldRuleFormat, 1 },
-            { DocNoRule.FieldCurrentValue, 1 },
-            { DocNoRule.FieldCurrentYMD, 1 },
-            { DocNoRule.FieldCreationDate, 1 },
-            { DocNoRule.FieldCreatedBy, 1 },
+            { nameof(DocNoRule.ISID), 4 },
+            { nameof(DocNoRule.RuleFormat), 1 },
+            { nameof(DocNoRule.CurrentValue), 1 },
+            { nameof(DocNoRule.CurrentYMD), 1 },
+            { nameof(DocNoRule.CreationDate), 1 },
+            { nameof(DocNoRule.CreatedBy), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

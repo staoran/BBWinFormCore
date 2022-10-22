@@ -43,16 +43,16 @@ public class SegmentService : BaseMultiService<Segment, Segments>, IDynamicApiCo
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Segment.FieldISID, 3 },
+            { nameof(Segment.ISID), 3 },
             // 主键不为空则只读
-            { Segment.FieldSegmentNo, 4 },
-            { Segment.FieldCreationDate, 1 },
-            { Segment.FieldCreatedBy, 1 },
-            { Segment.FieldLastUpdateDate, 1 },
-            { Segment.FieldLastUpdatedBy, 1 },
-            { Segment.FieldFlagApp, 1 },
-            { Segment.FieldAppUser, 1 },
-            { Segment.FieldAppDate, 1 },
+            { nameof(Segment.SegmentNo), 4 },
+            { nameof(Segment.CreationDate), 1 },
+            { nameof(Segment.CreatedBy), 1 },
+            { nameof(Segment.LastUpdateDate), 1 },
+            { nameof(Segment.LastUpdatedBy), 1 },
+            { nameof(Segment.FlagApp), 1 },
+            { nameof(Segment.AppUser), 1 },
+            { nameof(Segment.AppDate), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

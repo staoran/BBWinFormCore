@@ -76,18 +76,18 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Node.FieldISID, 3 },
-            { Node.FieldTranNodeNO, 1 },
-            { Node.FieldCompanyNo, 3 },
-            { Node.FieldProvinceNo, 3 },
-            { Node.FieldCityNo, 3 },
-            { Node.FieldCreationDate, 1 },
-            { Node.FieldCreatedBy, 1 },
-            { Node.FieldLastUpdateDate, 1 },
-            { Node.FieldLastUpdatedBy, 1 },
-            { Node.FieldFlagApp, 1 },
-            { Node.FieldAppUser, 1 },
-            { Node.FieldAppDate, 1 },
+            { nameof(Node.ISID), 3 },
+            { nameof(Node.TranNodeNO), 1 },
+            { nameof(Node.CompanyNo), 3 },
+            { nameof(Node.ProvinceNo), 3 },
+            { nameof(Node.CityNo), 3 },
+            { nameof(Node.CreationDate), 1 },
+            { nameof(Node.CreatedBy), 1 },
+            { nameof(Node.LastUpdateDate), 1 },
+            { nameof(Node.LastUpdatedBy), 1 },
+            { nameof(Node.FlagApp), 1 },
+            { nameof(Node.AppUser), 1 },
+            { nameof(Node.AppDate), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

@@ -41,15 +41,15 @@ public class CustomersService : BaseService<Customers>, IDynamicApiController, I
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Customers.FieldISID, 3 },
-            { Customers.FieldCustomerCode, 3 },
-            { Customers.FieldTranNode, 3 },
-            { Customers.FieldProvinceNo, 3 },
-            { Customers.FieldCityNo, 3 },
-            { Customers.FieldCreationDate, 3 },
-            { Customers.FieldCreatedBy, 3 },
-            { Customers.FieldLastUpdateDate, 3 },
-            { Customers.FieldLastUpdatedBy, 3 }
+            { nameof(Customers.ISID), 3 },
+            { nameof(Customers.CustomerCode), 3 },
+            { nameof(Customers.TranNode), 3 },
+            { nameof(Customers.ProvinceNo), 3 },
+            { nameof(Customers.CityNo), 3 },
+            { nameof(Customers.CreationDate), 3 },
+            { nameof(Customers.CreatedBy), 3 },
+            { nameof(Customers.LastUpdateDate), 3 },
+            { nameof(Customers.LastUpdatedBy), 3 }
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

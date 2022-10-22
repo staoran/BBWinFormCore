@@ -51,22 +51,22 @@ public class CostMsgService : BaseMultiService<CostMsg, CostMsgs>, IDynamicApiCo
     {
         var permitDict = new Dictionary<string, int>
         {
-            { CostMsg.FieldISID, 3 },
-            { CostMsg.FieldCostMsgNo, 1 },
-            { CostMsg.FieldSourceISID, 3 },
-            { CostMsg.FieldWaybillNo, 4 },
-            { CostMsg.FieldSendMsgNode, 1 },
-            { CostMsg.FieldRecvMsgType, 1 },
-            { CostMsg.FieldSourceValue, 1 },
-            { CostMsg.FieldStatusID, 1 },
-            { CostMsg.FieldCreationDate, 1 },
-            { CostMsg.FieldCreatedBy, 1 },
-            { CostMsg.FieldLastUpdateDate, 1 },
-            { CostMsg.FieldLastUpdatedBy, 1 },
-            { CostMsg.FieldFlagApp, 1 },
-            { CostMsg.FieldAppUser, 1 },
-            { CostMsg.FieldAppDate, 1 },
-            { CostMsg.FieldFinancialCenter, 1 },
+            { nameof(CostMsg.ISID), 3 },
+            { nameof(CostMsg.CostMsgNo), 1 },
+            { nameof(CostMsg.SourceISID), 3 },
+            { nameof(CostMsg.WaybillNo), 4 },
+            { nameof(CostMsg.SendMsgNode), 1 },
+            { nameof(CostMsg.RecvMsgType), 1 },
+            { nameof(CostMsg.SourceValue), 1 },
+            { nameof(CostMsg.StatusID), 1 },
+            { nameof(CostMsg.CreationDate), 1 },
+            { nameof(CostMsg.CreatedBy), 1 },
+            { nameof(CostMsg.LastUpdateDate), 1 },
+            { nameof(CostMsg.LastUpdatedBy), 1 },
+            { nameof(CostMsg.FlagApp), 1 },
+            { nameof(CostMsg.AppUser), 1 },
+            { nameof(CostMsg.AppDate), 1 },
+            { nameof(CostMsg.FinancialCenter), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

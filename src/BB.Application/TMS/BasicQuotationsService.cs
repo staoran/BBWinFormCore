@@ -40,12 +40,12 @@ public class BasicQuotationsService : BaseService<BasicQuotations>, IDynamicApiC
     {
         var permitDict = new Dictionary<string, int>
         {
-            { BasicQuotations.FieldISID, 3 },
-            { BasicQuotations.FieldQuotationNo, 3 },
-            { BasicQuotations.FieldCreationDate, 3 },
-            { BasicQuotations.FieldCreatedBy, 3 },
-            { BasicQuotations.FieldLastUpdateDate, 3 },
-            { BasicQuotations.FieldLastUpdatedBy, 3 },
+            { nameof(BasicQuotations.ISID), 3 },
+            { nameof(BasicQuotations.QuotationNo), 3 },
+            { nameof(BasicQuotations.CreationDate), 3 },
+            { nameof(BasicQuotations.CreatedBy), 3 },
+            { nameof(BasicQuotations.LastUpdateDate), 3 },
+            { nameof(BasicQuotations.LastUpdatedBy), 3 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

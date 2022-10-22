@@ -1398,7 +1398,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
                     var attr = (ColumnAttribute)attribute;
                     if (attr.Permit != 0)
                     {
-                        dic.Add(attr.Name, attr.Permit);
+                        dic.Add(prop.Name, attr.Permit);
                     }
                 }
             }
@@ -1426,9 +1426,10 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
                     var attr = (ColumnAttribute)attribute;
                     bool isHide = prop.GetCustomAttribute(typeof(HideAttribute), false)!.IsNotNull();
                     // Column 和 Hide 特性都可以设置隐藏
-                    if (!attr.Hide && !isHide && !attr.Name.IsNullOrEmpty())
+                    if (!attr.Hide && !isHide)
                     {
                         string display = attr.Display;
+                        string name = !attr.Name.IsNullOrEmpty() ? attr.Name : prop.Name;
                         if (display.IsNullOrEmpty())
                         {
                             if (dbCols.Count == 0)
@@ -1436,9 +1437,9 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
                                 dbCols = _db.DbMaintenance.GetColumnInfosByTableName(_tableName);
                             }
 
-                            display = dbCols.First(x => x.DbColumnName == attr.Name).ColumnDescription ?? string.Empty;
+                            display = dbCols.First(x => x.DbColumnName == name).ColumnDescription ?? string.Empty;
                         }
-                        dic.Add(attr.Name, display);
+                        dic.Add(name, display);
                     }
                 }
             }
@@ -1466,6 +1467,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
                     var attr = (ColumnAttribute)attribute;
                     if (attr.SqlOperator != SqlOperator.Empty)
                     {
+                        // 搜索查询配置必须用数据库字段名
                         dic.Add(new FieldConditionType(attr.Name, attr.SqlOperator, attr.QueryRequired));
                     }
                 }

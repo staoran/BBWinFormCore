@@ -45,12 +45,12 @@ public class SegmentsService : BaseService<Segments>, IDynamicApiController, ITr
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Segments.FieldISID, 3 },
-            { Segments.FieldSegmentNo, 3 },
-            { Segments.FieldCreationDate, 3 },
-            { Segments.FieldCreatedBy, 3 },
-            { Segments.FieldLastUpdateDate, 3 },
-            { Segments.FieldLastUpdatedBy, 3 },
+            { nameof(Segments.ISID), 3 },
+            { nameof(Segments.SegmentNo), 3 },
+            { nameof(Segments.CreationDate), 3 },
+            { nameof(Segments.CreatedBy), 3 },
+            { nameof(Segments.LastUpdateDate), 3 },
+            { nameof(Segments.LastUpdatedBy), 3 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

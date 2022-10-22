@@ -41,16 +41,16 @@ public class BasicCostBillTypeService : BaseService<BasicCostBillType>, IDynamic
     {
         var permitDict = new Dictionary<string, int>
         {
-            { BasicCostBillType.FieldISID, 3 },
+            { nameof(BasicCostBillType.ISID), 3 },
             // 主键不为空则只读
-            { BasicCostBillType.FieldCostType, 4 },
-            { BasicCostBillType.FieldCreatedBy, 1 },
-            { BasicCostBillType.FieldCreationDate, 1 },
-            { BasicCostBillType.FieldFlagApp, 1 },
-            { BasicCostBillType.FieldAppUser, 1 },
-            { BasicCostBillType.FieldAppDate, 1 },
-            { BasicCostBillType.FieldLastUpdatedBy, 1 },
-            { BasicCostBillType.FieldLastUpdateDate, 1 },
+            { nameof(BasicCostBillType.CostType), 4 },
+            { nameof(BasicCostBillType.CreatedBy), 1 },
+            { nameof(BasicCostBillType.CreationDate), 1 },
+            { nameof(BasicCostBillType.FlagApp), 1 },
+            { nameof(BasicCostBillType.AppUser), 1 },
+            { nameof(BasicCostBillType.AppDate), 1 },
+            { nameof(BasicCostBillType.LastUpdatedBy), 1 },
+            { nameof(BasicCostBillType.LastUpdateDate), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

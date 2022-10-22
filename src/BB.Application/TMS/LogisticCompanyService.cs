@@ -47,24 +47,24 @@ public class LogisticCompanyService : BaseService<LogisticCompany>, IDynamicApiC
     {
         var permitDict = new Dictionary<string, int>
         {
-            { LogisticCompany.FieldOrgCode, 1 },
+            { nameof(LogisticCompany.OrgCode), 1 },
             // 主键不为空则只读
-            { LogisticCompany.FieldLogisticCode, 1 },
-            { LogisticCompany.FieldStation, 3 },
-            { LogisticCompany.FieldMobile, 3 },
-            { LogisticCompany.FieldFax, 3 },
-            { LogisticCompany.FieldCreationDate, 1 },
-            { LogisticCompany.FieldCreatedBy, 1 },
-            { LogisticCompany.FieldLastUpdateDate, 1 },
-            { LogisticCompany.FieldLastUpdatedBy, 1 },
-            { LogisticCompany.FieldDataType, 3 },
-            { LogisticCompany.FieldFlagApp, 1 },
-            { LogisticCompany.FieldAppUser, 1 },
-            { LogisticCompany.FieldAppDate, 1 },
-            { LogisticCompany.FieldAttaPath, 3 },
-            { LogisticCompany.FieldCancelYN, 1 },
-            { LogisticCompany.FieldCancelDate, 1 },
-            { LogisticCompany.FieldCancelUser, 1 }
+            { nameof(LogisticCompany.LogisticCode), 1 },
+            { nameof(LogisticCompany.Station), 3 },
+            { nameof(LogisticCompany.Mobile), 3 },
+            { nameof(LogisticCompany.Fax), 3 },
+            { nameof(LogisticCompany.CreationDate), 1 },
+            { nameof(LogisticCompany.CreatedBy), 1 },
+            { nameof(LogisticCompany.LastUpdateDate), 1 },
+            { nameof(LogisticCompany.LastUpdatedBy), 1 },
+            { nameof(LogisticCompany.DataType), 3 },
+            { nameof(LogisticCompany.FlagApp), 1 },
+            { nameof(LogisticCompany.AppUser), 1 },
+            { nameof(LogisticCompany.AppDate), 1 },
+            { nameof(LogisticCompany.AttaPath), 3 },
+            { nameof(LogisticCompany.CancelYN), 1 },
+            { nameof(LogisticCompany.CancelDate), 1 },
+            { nameof(LogisticCompany.CancelUser), 1 }
         };
         // 主键不为空则只读
         permitDict.TryAdd(LogisticCompany.PrimaryKey, 4);

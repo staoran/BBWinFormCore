@@ -44,17 +44,17 @@ public class BasicQuotationService : BaseMultiService<BasicQuotation, BasicQuota
     {
         var permitDict = new Dictionary<string, int>
         {
-            { BasicQuotation.FieldISID, 3 },
+            { nameof(BasicQuotation.ISID), 3 },
             // 主键不为空则只读
-            { BasicQuotation.FieldQuotationNo, 4 },
-            { BasicQuotation.FieldTranNodeNO, 1 },
-            { BasicQuotation.FieldCreationDate, 1 },
-            { BasicQuotation.FieldCreatedBy, 1 },
-            { BasicQuotation.FieldLastUpdateDate, 1 },
-            { BasicQuotation.FieldLastUpdatedBy, 1 },
-            { BasicQuotation.FieldFlagApp, 1 },
-            { BasicQuotation.FieldAppUser, 1 },
-            { BasicQuotation.FieldAppDate, 1 },
+            { nameof(BasicQuotation.QuotationNo), 4 },
+            { nameof(BasicQuotation.TranNodeNO), 1 },
+            { nameof(BasicQuotation.CreationDate), 1 },
+            { nameof(BasicQuotation.CreatedBy), 1 },
+            { nameof(BasicQuotation.LastUpdateDate), 1 },
+            { nameof(BasicQuotation.LastUpdatedBy), 1 },
+            { nameof(BasicQuotation.FlagApp), 1 },
+            { nameof(BasicQuotation.AppUser), 1 },
+            { nameof(BasicQuotation.AppDate), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

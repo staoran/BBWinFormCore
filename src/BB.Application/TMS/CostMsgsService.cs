@@ -42,14 +42,14 @@ public class CostMsgsService : BaseService<CostMsgs>, IDynamicApiController, ITr
     {
         var permitDict = new Dictionary<string, int>
         {
-            { CostMsgs.FieldISID, 3 },
-            { CostMsgs.FieldCostMsgNo, 1 },
-            { CostMsgs.FieldStatusID, 4 },
-            { CostMsgs.FieldRecvMsgNode, 1 },
-            { CostMsgs.FieldCreationDate, 1 },
-            { CostMsgs.FieldCreatedBy, 1 },
-            { CostMsgs.FieldLastUpdateDate, 1 },
-            { CostMsgs.FieldLastUpdatedBy, 1 },
+            { nameof(CostMsgs.ISID), 3 },
+            { nameof(CostMsgs.CostMsgNo), 1 },
+            { nameof(CostMsgs.StatusID), 4 },
+            { nameof(CostMsgs.RecvMsgNode), 1 },
+            { nameof(CostMsgs.CreationDate), 1 },
+            { nameof(CostMsgs.CreatedBy), 1 },
+            { nameof(CostMsgs.LastUpdateDate), 1 },
+            { nameof(CostMsgs.LastUpdatedBy), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

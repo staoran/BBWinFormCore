@@ -43,15 +43,15 @@ public class NodesService : BaseService<Nodes>, IDynamicApiController, ITransien
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Nodes.FieldISID, 3 },
-            { Nodes.FieldTranNodeNO, 3 },
-            { Nodes.FieldProvinceId, 3 },
-            { Nodes.FieldCityId, 3 },
-            { Nodes.FieldTownId, 3 },
-            { Nodes.FieldCreationDate, 3 },
-            { Nodes.FieldCreatedBy, 3 },
-            { Nodes.FieldLastUpdateDate, 3 },
-            { Nodes.FieldLastUpdatedBy, 3 },
+            { nameof(Nodes.ISID), 3 },
+            { nameof(Nodes.TranNodeNO), 3 },
+            { nameof(Nodes.ProvinceId), 3 },
+            { nameof(Nodes.CityId), 3 },
+            { nameof(Nodes.TownId), 3 },
+            { nameof(Nodes.CreationDate), 3 },
+            { nameof(Nodes.CreatedBy), 3 },
+            { nameof(Nodes.LastUpdateDate), 3 },
+            { nameof(Nodes.LastUpdatedBy), 3 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());

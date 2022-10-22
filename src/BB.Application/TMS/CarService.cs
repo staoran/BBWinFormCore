@@ -47,16 +47,16 @@ public class CarService : BaseService<Car>, IDynamicApiController, ITransient
     {
         var permitDict = new Dictionary<string, int>
         {
-            { Car.FieldTranNode, 1 },
+            { nameof(Car.TranNode), 1 },
             // 主键不为空则只读
-            { Car.FieldCarNo, 4 },
-            { Car.FieldCreationDate, 1 },
-            { Car.FieldCreatedBy, 1 },
-            { Car.FieldLastUpdateDate, 1 },
-            { Car.FieldLastUpdatedBy, 1 },
-            { Car.FieldFlagApp, 1 },
-            { Car.FieldAppUser, 1 },
-            { Car.FieldAppDate, 1 },
+            { nameof(Car.CarNo), 4 },
+            { nameof(Car.CreationDate), 1 },
+            { nameof(Car.CreatedBy), 1 },
+            { nameof(Car.LastUpdateDate), 1 },
+            { nameof(Car.LastUpdatedBy), 1 },
+            { nameof(Car.FlagApp), 1 },
+            { nameof(Car.AppUser), 1 },
+            { nameof(Car.AppDate), 1 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
