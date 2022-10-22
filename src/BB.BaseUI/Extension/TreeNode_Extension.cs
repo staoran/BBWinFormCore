@@ -29,7 +29,7 @@ public static class TreeNodeExtension
     /// 根据字典名称增加树节点
     /// </summary>
     /// <param name="nodes">上级节点</param>
-    /// <param name="fieldName">对应字段</param>
+    /// <param name="fieldName">对应数据库字段名</param>
     /// <param name="dictTypeName">字典名称</param>
     /// <param name="anotherName">节点别名</param>
     /// <param name="parentImageIndex">父节点图标</param>
@@ -44,7 +44,7 @@ public static class TreeNodeExtension
     /// 根据键值列增加树节点
     /// </summary>
     /// <param name="nodes">上级节点</param>
-    /// <param name="fieldName">对应字段</param>
+    /// <param name="fieldName">对应数据库字段名</param>
     /// <param name="nodeName">节点名称</param>
     /// <param name="itemList">子节点数据</param>
     /// <param name="parentImageIndex">父节点图标</param>
