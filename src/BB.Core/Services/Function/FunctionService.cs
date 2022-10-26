@@ -180,7 +180,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
             .ToListAsync();
 
         List<FunctionInfo> roots = menuInfos.Where(x => x.PID == "-1").OrderBy(x => x.SortCode).ToList();
-        
+
         roots.ForEach(x =>
         {
             FunctionNodeInfo menuNodeInfo = GetNode(x.ID, menuInfos);

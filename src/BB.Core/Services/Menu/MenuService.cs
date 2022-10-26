@@ -7,6 +7,7 @@ using BB.Core.Services.User;
 using BB.Entity.Security;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
+using BB.Tools.Format;
 using BB.Tools.Utils;
 using FluentValidation;
 
@@ -34,7 +35,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             .OrderBy(x => x.Seq)
             .ToListAsync();
     }
-                
+
     /// <summary>
     /// 获取树形结构的菜单列表
     /// </summary>
@@ -44,7 +45,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
         List<MenuInfo> menuInfos = await GetAllMenuAsync(systemType);
 
         List<MenuInfo> roots = menuInfos.Where(x => x.PID == "-1").OrderBy(x => x.Seq).ToList();
-        
+
         roots.ForEach(x =>
         {
             MenuNodeInfo menuNodeInfo = GetNode(x.ID, menuInfos);
@@ -87,7 +88,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     {
         List<MenuNodeInfo> arrReturn = new();
         List<MenuInfo> dt = await GetAllMenuAsync("");
-        
+
         List<MenuInfo> children = dt.Where(x => x.PID == mainMenuId).OrderBy(x => x.Seq).ToList();
         children.ForEach(x =>
         {
@@ -104,7 +105,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     /// <param name="pid">菜单父ID</param>
     public async Task<List<MenuInfo>> GetMenuByIdAsync(string pid)
     {
-        return await Repository.GetListAsync(x=>x.PID == pid);
+        return await Repository.GetListAsync(x => x.PID == pid);
     }
 
     private MenuNodeInfo GetNode(string id, List<MenuInfo> dt)
@@ -148,34 +149,21 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     /*
      * 在引入和角色多对多的关系后，菜单作为角色的资源之一，和功能模块并立。
      * 因此在处理上和Function表的处理类似，作为角色的资源之一。
-     */ 
-      
+     */
+
     /// <summary>
     /// 根据角色集合和系统标识获取对应的菜单集合
     /// </summary>
-    /// <param name="roleIDs">角色ID字符串</param>
+    /// <param name="roleIds">角色ID数组</param>
     /// <param name="typeId">系统类型</param>
     /// <returns></returns>
-    public async Task<List<MenuNodeInfo>> GetMenuNodesAsync(string roleIDs, string typeId)
+    public async Task<List<MenuNodeInfo>> GetMenuNodesAsync(int[] roleIds, string typeId)
     {
-        if (roleIDs == string.Empty)
-        {
-            roleIDs = "-1";
-        }
-        // 目前并没有基于 T_ACL_Role_Menu 的菜单权限管理，菜单权限是基于 功能设置 和 功能ID 实现。
-        string sql = string.Format(@"SELECT * FROM {1} Where ID in(
-            SELECT distinct ID FROM {1} 
-            INNER JOIN T_ACL_Role_Menu On {1}.ID=T_ACL_Role_Menu.Menu_ID WHERE Role_ID IN ({0}) ) AND Visible > 0", roleIDs, Repository.TableName);
-        if (!string.IsNullOrWhiteSpace(typeId))
-        {
-            sql += $" AND SystemType_ID='{typeId}' ";
-        }
-
-        List<MenuNodeInfo> arrReturn = new ();
-        List<MenuInfo> dt = await Repository.GetListAsync(sql);
+        List<MenuNodeInfo> arrReturn = new();
+        List<MenuInfo> dt = await GetMenusByRoleAsync(roleIds, typeId);
 
         List<MenuInfo> roots = dt.Where(x => x.PID == "-1").OrderBy(x => x.Seq).ToList();
-        
+
         roots.ForEach(x =>
         {
             MenuNodeInfo menuNodeInfo = GetNode(x.ID, dt);
@@ -186,21 +174,25 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     }
 
     /// <summary>
-    /// 根据角色ID获取功能集合
+    /// 根据角色ID获取菜单集合
     /// </summary>
-    /// <param name="roleId">角色ID</param>
+    /// <param name="roleIds">角色ID数组</param>
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
-    public async Task<List<MenuInfo>> GetMenusByRole(int roleId, string typeId)
+    public async Task<List<MenuInfo>> GetMenusByRoleAsync(int[] roleIds, string typeId)
     {
-        // 目前并没有基于 T_ACL_Role_Menu 的菜单权限管理，菜单权限是基于 功能设置 和 功能ID 实现。
-        string sql = string.Format(@"SELECT * FROM {0} 
-            LEFT JOIN T_ACL_Role_Menu On {0}.ID=T_ACL_Role_Menu.Menu_ID WHERE Role_ID = {1}", Repository.TableName, roleId);
-        if (!string.IsNullOrWhiteSpace(typeId))
+        int[] enumerable = roleIds as int[] ?? roleIds.ToArray();
+        if (!enumerable.Any())
         {
-            sql += $" AND SystemType_ID='{typeId}' ";
+            enumerable = new[] { -1 };
         }
-        return await Repository.GetListAsync(sql);
+
+        List<MenuNodeInfo> arrReturn = new();
+        return await Repository.AsQueryable()
+            .Where(x => x.Visible)
+            .WhereIF(!typeId.IsNullOrEmpty(), f => f.SystemTypeId == typeId)
+            .InnerJoin<RoleMenu>((m, r) => m.ID == r.MenuId && enumerable.Contains(r.RoleId))
+            .ToListAsync();
     }
 
     /// <summary>
@@ -211,16 +203,11 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<MenuNodeInfo>> GetMenuNodesByUser(int userId, string typeId)
     {
-        List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
-        string roleIDs = ",";
-        foreach (RoleInfo info in rolesByUser)
-        {
-            roleIDs = roleIDs + info.ID + ",";
-        }
-        roleIDs = roleIDs.Trim(',');//移除前后的逗号
+        var rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
+        var roleIDs = rolesByUser.Select(x => x.ID).ToArray();
 
-        List<MenuNodeInfo> menuList = new List<MenuNodeInfo>();
-        if (!string.IsNullOrEmpty(roleIDs))
+        var menuList = new List<MenuNodeInfo>();
+        if (roleIDs.Any())
         {
             menuList = await GetMenuNodesAsync(roleIDs, typeId);
         }
