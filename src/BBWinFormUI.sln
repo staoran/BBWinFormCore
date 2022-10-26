@@ -1,22 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.Updater", "BB.Updater\BB.Updater.csproj", "{CE7E2D61-460E-4E08-8324-50B7667EF2AF}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33006.217
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.Updater", "BB.Updater\BB.Updater.csproj", "{CE7E2D61-460E-4E08-8324-50B7667EF2AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.BaseUI", "BB.BaseUI\BB.BaseUI.csproj", "{D4858375-FADB-40CC-A15B-EAA12831926E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.BaseUI", "BB.BaseUI\BB.BaseUI.csproj", "{D4858375-FADB-40CC-A15B-EAA12831926E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.Starter", "BB.Starter\BB.Starter.csproj", "{6D93C3DB-E868-42D7-9361-8C1562E47324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.Starter", "BB.Starter\BB.Starter.csproj", "{6D93C3DB-E868-42D7-9361-8C1562E47324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.Tools", "BB.Tools\BB.Tools.csproj", "{14BE95C2-8FEB-4378-BE40-CC8B8863A413}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.Tools", "BB.Tools\BB.Tools.csproj", "{14BE95C2-8FEB-4378-BE40-CC8B8863A413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.HttpServices", "BB.HttpServices\BB.HttpServices.csproj", "{E70FA7E4-E403-4ED9-9902-169D497B05DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.HttpServices", "BB.HttpServices\BB.HttpServices.csproj", "{E70FA7E4-E403-4ED9-9902-169D497B05DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.Security", "BB.Security\BB.Security.csproj", "{574EEC7B-6D3D-437E-9117-FA08AEC6628C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.Security", "BB.Security\BB.Security.csproj", "{574EEC7B-6D3D-437E-9117-FA08AEC6628C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.TMS", "BB.TMS\BB.TMS.csproj", "{EE5E80D8-DD4E-4DAD-8CC2-EE0889478C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.TMS", "BB.TMS\BB.TMS.csproj", "{EE5E80D8-DD4E-4DAD-8CC2-EE0889478C91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.Entity", "BB.Entity\BB.Entity.csproj", "{B38A18F1-6F3A-4B16-ADBA-F8E7A0237DAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.Entity", "BB.Entity\BB.Entity.csproj", "{B38A18F1-6F3A-4B16-ADBA-F8E7A0237DAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB.EntityVerification", "BB.EntityVerification\BB.EntityVerification.csproj", "{075BCC55-76BF-406E-BD36-B554AB45B020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BB.EntityVerification", "BB.EntityVerification\BB.EntityVerification.csproj", "{075BCC55-76BF-406E-BD36-B554AB45B020}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,5 +63,11 @@ Global
 		{075BCC55-76BF-406E-BD36-B554AB45B020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{075BCC55-76BF-406E-BD36-B554AB45B020}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{075BCC55-76BF-406E-BD36-B554AB45B020}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0E6FDA3-60BE-4240-AFC6-90A84537C93E}
 	EndGlobalSection
 EndGlobal
