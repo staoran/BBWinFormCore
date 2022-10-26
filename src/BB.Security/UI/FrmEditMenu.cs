@@ -135,6 +135,7 @@ public partial class FrmEditMenu : BaseEditForm
         info.Url = txtUrl.Text;
         info.WebIcon = txtWebIcon.Text;
         info.SystemTypeId = txtSystemType.GetComboBoxValue();
+        info.MenuType = txtMenuType.GetComboBoxValue();
 
         info.CurrentLoginUserId = GB.LoginUserInfo.ID.ToString();
     }
