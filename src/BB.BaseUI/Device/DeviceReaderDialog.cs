@@ -9,7 +9,6 @@ public partial class DeviceReaderDialog : BaseForm
 {
     private CardReader _cardReader;
     private UsbScanner _usbScanner;
-    private ComScanner _comScanner;
 
     /// <summary>
     /// 读卡构造函数
@@ -30,11 +29,6 @@ public partial class DeviceReaderDialog : BaseForm
         {
             _usbScanner = new UsbScanner(this);
             _usbScanner.ScannerRead += Scanner_ScannerRead;
-        }
-        else if (type == DeviceType.ComScanner)
-        {
-            _comScanner = new ComScanner("COM3");
-            _comScanner.ScannerRead += Scanner_ScannerRead;
         }
     }
 
