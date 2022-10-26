@@ -30,7 +30,7 @@ namespace BB.BaseUI.Other;
 {
     #region 系统全局变量
         
-    public static dynamic MainDialog;
+    public static dynamic? MainDialog;
 
     /// <summary>
     /// 单位名称
@@ -70,17 +70,17 @@ namespace BB.BaseUI.Other;
     /// <summary>
     /// 前后台会话ID
     /// </summary>
-    public static string SessionId { get; set; }
+    public static string? SessionId { get; set; }
         
     /// <summary>
     /// 登录用户具有的功能字典集合
     /// </summary>
-    public static Dictionary<string, string> FunctionDict = new();//登录用户具有的功能字典集合
+    public static readonly Dictionary<string, string> FunctionDict = new();//登录用户具有的功能字典集合
 
     /// <summary>
     /// 用户具有的角色集合
     /// </summary>
-    public static List<RoleInfo> RoleList { get; set; }
+    public static List<RoleInfo> RoleList { get; set; } = new();
         
     /// <summary>
     /// 是否注册
@@ -90,82 +90,88 @@ namespace BB.BaseUI.Other;
     /// <summary>
     /// 设置一个开关，确定是否要求注册后才能使用软件
     /// </summary>
-    public static bool EnableRegister = false;//设置一个开关，确定是否要求注册后才能使用软件
+    public static readonly bool EnableRegister = false; //设置一个开关，确定是否要求注册后才能使用软件
 
     /// <summary>
     /// 登陆用户基础信息
     /// </summary>
-    public static LoginUserInfo LoginUserInfo { get; set; }//登陆用户基础信息
-        
+    public static LoginUserInfo LoginUserInfo
+    {
+        get => _loginUserInfo ?? throw new Exception("登陆用户为空");
+        set => _loginUserInfo = value;
+    }
+
+    private static LoginUserInfo? _loginUserInfo;
+
     /// <summary>
     /// 全部用户字典
     /// </summary>
-    public static List<CListItem> AllUserDict { get; private set; }
+    public static List<CListItem> AllUserDict { get; } = new();
         
     /// <summary>
     /// 有效的用户字典
     /// </summary>
-    public static List<CListItem> EnabledUserDict { get; private set; }
+    public static List<CListItem> EnabledUserDict { get; } = new();
 
     /// <summary>
     /// 全部公司和部门字典
     /// </summary>
-    public static List<CListItem> AllOuDict { get; private set; }
+    public static List<CListItem> AllOuDict { get; } = new();
 
     /// <summary>
     /// 有效的公司和部门字典
     /// </summary>
-    public static List<CListItem> EnabledOuDict { get; private set; }
+    public static List<CListItem> EnabledOuDict { get; } = new();
 
     /// <summary>
     /// 全部费用类型
     /// </summary>
-    public static List<CListItem> AllCostType { get; private set; }
+    public static List<CListItem> AllCostType { get; } = new();
 
     /// <summary>
     /// 已审核的费用类型
     /// </summary>
-    public static List<CListItem> EnabledCostType { get; private set; }
+    public static List<CListItem> EnabledCostType { get; } = new();
 
     /// <summary>
     /// 全部预付金操作类型
     /// </summary>
-    public static List<CListItem> AllCostBillType { get; private set; }
+    public static List<CListItem> AllCostBillType { get; } = new();
 
     /// <summary>
     /// 已审核的预付金操作类型
     /// </summary>
-    public static List<CListItem> EnabledCostBillType { get; private set; }
+    public static List<CListItem> EnabledCostBillType { get; } = new();
 
     /// <summary>
     /// 全部省信息
     /// </summary>
-    public static List<CListItem> AllProvince { get; private set; }
+    public static List<CListItem> AllProvince { get; } = new();
 
     /// <summary>
     /// 全部市信息
     /// </summary>
-    public static List<CListItem> AllCity { get; private set; }
+    public static List<CListItem> AllCity { get; } = new();
 
     /// <summary>
     /// 全部区信息
     /// </summary>
-    public static List<CListItem> AllDistrict { get; private set; }
+    public static List<CListItem> AllDistrict { get; } = new();
 
     /// <summary>
     /// 全部省市区信息
     /// </summary>
-    public static List<CListItem> AllRegions { get; private set; }
+    public static List<CListItem> AllRegions { get; } = new();
 
     /// <summary>
     /// 全部字典类型
     /// </summary>
-    public static List<DictTypeInfo> AllDictType { get; private set; }
+    public static List<DictTypeInfo> AllDictType { get; private set; } = new();
 
     /// <summary>
     /// 全部字典数据
     /// </summary>
-    public static List<DictDataInfo> AllDictData { get; private set; }
+    public static List<DictDataInfo> AllDictData { get; private set; } = new();
 
     /// <summary>
     /// 是否
@@ -234,8 +240,6 @@ namespace BB.BaseUI.Other;
             return new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0, 0);
         }
     }
-    
-    private static readonly System.Timers.Timer Timer = new();
 
     #endregion
 
@@ -248,7 +252,6 @@ namespace BB.BaseUI.Other;
     /// <returns></returns>
     public static LoginUserInfo ConvertToLoginUser(UserInfo info)
     {
-        if (info == null) return null;
         var loginInfo = new LoginUserInfo
         {
             ID = info.ID,
@@ -272,7 +275,7 @@ namespace BB.BaseUI.Other;
     public static bool HasFunction(string controlId)
     {
         return string.IsNullOrEmpty(controlId) || DataCanManage(LoginUserInfo.CompanyId) ||
-               FunctionDict != null && FunctionDict.ContainsKey(controlId);
+               FunctionDict.ContainsKey(controlId);
     }
 
     /// <summary>
@@ -316,7 +319,7 @@ namespace BB.BaseUI.Other;
     /// </summary>
     public static void Refresh()
     {
-        MainDialog.Hide();
+        MainDialog?.Hide();
         
         Cache.Instance.FlushAll();
 
@@ -326,12 +329,12 @@ namespace BB.BaseUI.Other;
         {
             if (dlg.BLogin)
             {
-                MainDialog.CloseAllDocuments();
-                MainDialog.InitUserRelated();
+                MainDialog?.CloseAllDocuments();
+                MainDialog?.InitUserRelated();
             }
         }
         dlg.Dispose();
-        MainDialog.Show();
+        MainDialog?.Show();
     }
 
     /// <summary>
@@ -384,14 +387,19 @@ namespace BB.BaseUI.Other;
     public static bool CheckRegister()
     {
         // 先获取用户的注册码进行比较
-        RegistryKey reg = Registry.CurrentUser.OpenSubKey(UiConstants.SoftwareRegistryKey, true);
+        RegistryKey? reg = Registry.CurrentUser.OpenSubKey(UiConstants.SoftwareRegistryKey, true);
         if (null != reg)
         {
-            var serialNumber = (string)reg.GetValue("SerialNumber"); //注册码
+            var serialNumber = (string?)reg.GetValue("SerialNumber"); //注册码
+            if (string.IsNullOrEmpty(serialNumber))
+            {
+                return false;
+            }
             Registed = Register(serialNumber);
+            return Registed;
         }
 
-        return Registed;
+        return false;
     }
 
     /// <summary>
@@ -468,15 +476,12 @@ namespace BB.BaseUI.Other;
     public static bool UserInRole(string roleName)
     {
         bool result = false;
-        if (RoleList != null)
+        foreach (RoleInfo info in RoleList)
         {
-            foreach (RoleInfo info in RoleList)
+            if (info.Name.Equals(roleName, StringComparison.OrdinalIgnoreCase))
             {
-                if (info.Name.Equals(roleName, StringComparison.OrdinalIgnoreCase))
-                {
-                    result = true;
-                    break;
-                }
+                result = true;
+                break;
             }
         }
         return result;
@@ -509,7 +514,6 @@ namespace BB.BaseUI.Other;
     public static async Task<List<OUInfo>> GetMyTopGroup()
     {
         List<OUInfo> list = new List<OUInfo>();
-        OUInfo groupInfo = null;
         if (UserInRole(RoleInfo.SUPER_ADMIN_NAME))
         {
             //超级管理员取集团节点
@@ -517,7 +521,7 @@ namespace BB.BaseUI.Other;
         }
         else
         {
-            groupInfo = await App.GetService<OUHttpService>().FindByIdAsync(LoginUserInfo.CompanyId);//公司管理员取公司节点
+            OUInfo groupInfo = await App.GetService<OUHttpService>().FindByIdAsync(LoginUserInfo.CompanyId);
             list.Add(groupInfo);
         }
         return list;
@@ -530,13 +534,15 @@ namespace BB.BaseUI.Other;
     /// <summary>
     /// 根据字典类型ID获取对应的CListItem集合
     /// </summary>
-    /// <param name="dictTypeName"></param>
+    /// <param name="dictTypeId"></param>
     /// <returns></returns>
-    public static List<CListItem> GetDictByType(string dictTypeID)
+    public static List<CListItem> GetDictByType(int? dictTypeId)
     {
-        return AllDictData.Where(x => x.DictTypeId == dictTypeID)
-            .Select(x => new CListItem(x.Name, x.Value))
-            .ToList();
+        return dictTypeId == null
+            ? new List<CListItem>()
+            : AllDictData.Where(x => x.DictTypeId == dictTypeId)
+                .Select(x => new CListItem(x.Name, x.Value))
+                .ToList();
     }
 
     /// <summary>
@@ -546,8 +552,8 @@ namespace BB.BaseUI.Other;
     /// <returns></returns>
     public static List<CListItem> GetDictByName(string dictTypeName)
     {
-        string dictTypeID = AllDictType.FirstOrDefault(x => x.Name == dictTypeName)?.ID;
-        return dictTypeID.IsNullOrEmpty() ? new List<CListItem>() : GetDictByType(dictTypeID);
+        int? dictTypeId = AllDictType.FirstOrDefault(x => x.Name == dictTypeName)?.Code;
+        return GetDictByType(dictTypeId);
     }
     
     /// <summary>
@@ -570,11 +576,10 @@ namespace BB.BaseUI.Other;
     /// <returns></returns>
     public static async Task LoadCache()
     {
-        if (LoginUserInfo == null) return;
         #region 用户权限
 
         List<FunctionInfo> list = await App.GetService<FunctionHttpService>().GetFunctionsByUserAsync(LoginUserInfo.ID, SystemType);
-        if (list != null && list.Count > 0)
+        if (list is { Count: > 0 })
         {
             FunctionDict.Clear();
             foreach (FunctionInfo functionInfo in list)
@@ -620,9 +625,7 @@ namespace BB.BaseUI.Other;
 
         #region 获取用户信息
 
-        AllUserDict ??= new List<CListItem>();
         AllUserDict.Clear();
-        EnabledUserDict ??= new List<CListItem>();
         EnabledUserDict.Clear();
 
         List<UserInfo> lst = await App.GetService<UserHttpService>().GetAllAsync();
@@ -643,9 +646,7 @@ namespace BB.BaseUI.Other;
 
         #region 获取部门信息
 
-        AllOuDict ??= new List<CListItem>();
         AllOuDict.Clear();
-        EnabledOuDict ??= new List<CListItem>();
         EnabledOuDict.Clear();
 
         List<OUInfo> ouList = await App.GetService<OUHttpService>().GetAllAsync();
@@ -666,9 +667,6 @@ namespace BB.BaseUI.Other;
         
         #region 获取费用类型
 
-        AllCostType ??= new List<CListItem>();
-        EnabledCostType ??= new List<CListItem>();
-
         AllCostType.Clear();
         EnabledCostType.Clear();
 
@@ -685,9 +683,6 @@ namespace BB.BaseUI.Other;
                     EnabledCostType.Add(costType);
             });
         }
-
-        AllCostBillType ??= new List<CListItem>();
-        EnabledCostBillType ??= new List<CListItem>();
 
         AllCostBillType.Clear();
         EnabledCostBillType.Clear();
@@ -721,10 +716,6 @@ namespace BB.BaseUI.Other;
 
         if (allRegion.Any())
         {
-            AllProvince ??= new List<CListItem>();
-            AllCity ??= new List<CListItem>();
-            AllDistrict ??= new List<CListItem>();
-            AllRegions ??= new List<CListItem>();
             AllProvince.Clear();
             AllCity.Clear();
             AllDistrict.Clear();

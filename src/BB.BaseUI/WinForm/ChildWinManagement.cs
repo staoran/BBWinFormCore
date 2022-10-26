@@ -40,7 +40,7 @@ public sealed class ChildWinManagement
 	/// <param name="mainDialog">主窗体对象</param>
 	/// <param name="formType">待显示的窗体类型</param>
 	/// <returns></returns>
-	public static Form LoadMdiForm(Form mainDialog, Type formType)
+	public static Form LoadMdiForm(Form? mainDialog, Type formType)
 	{
 		return LoadMdiForm(mainDialog, formType, null);
 	}
@@ -52,7 +52,7 @@ public sealed class ChildWinManagement
 	/// <param name="formType">待显示的窗体类型</param>
 	/// <param name="json">传递的参数内容，自定义Json格式</param>
 	/// <returns></returns>
-	public static Form LoadMdiForm(Form mainDialog, Type formType, string json)
+	public static Form LoadMdiForm(Form? mainDialog, Type formType, string json)
 	{
 		bool bFound = false;
 		Form tableForm = null;

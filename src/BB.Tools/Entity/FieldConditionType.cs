@@ -8,7 +8,7 @@ public class FieldConditionType
     /// <summary>
     /// 字段查询条件类型
     /// </summary>
-    /// <param name="fieldName">字段名称</param>
+    /// <param name="fieldName">数据库字段名称</param>
     /// <param name="sqlOperator">查询类型</param>
     /// <param name="queryRequired">是否必填</param>
     /// <param name="enabledConditions">是否生效的逻辑</param>

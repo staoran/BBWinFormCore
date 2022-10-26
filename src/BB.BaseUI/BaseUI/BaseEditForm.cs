@@ -95,7 +95,7 @@ public partial class BaseEditForm : BaseForm
     {
         dataNavigator1.IdList = IdList;
         dataNavigator1.CurrentIndex = IdList.IndexOf(ID);
-        if (IdList == null || IdList.Count == 0)
+        if (IdList.Count == 0)
         {
             dataNavigator1.Visible = false;
             await DisplayData(); //CurrentIndex = -1的时候需要主动调用
@@ -169,9 +169,9 @@ public partial class BaseEditForm : BaseForm
             System.Windows.Forms.Control panel = panels[i];
             foreach (System.Windows.Forms.Control c in panel.Controls)
             {
-                if (c is BaseEdit)
+                if (c is BaseEdit edit)
                 {
-                    (c as BaseEdit).EditValue = null;
+                    edit.EditValue = null;
                 }
                 ClearPanelEditValue(c);
             }
@@ -217,7 +217,7 @@ public partial class BaseEditForm : BaseForm
     /// </summary>
     public virtual async Task<bool> SaveEntity()
     {
-        bool result = false;
+        bool result;
         if(!string.IsNullOrEmpty(ID))
         {
             //编辑的保存

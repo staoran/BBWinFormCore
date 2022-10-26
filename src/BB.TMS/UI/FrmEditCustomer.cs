@@ -162,7 +162,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     /// <summary>
     /// 设置控件字段的权限显示或者隐藏(默认不使用字段权限)
     /// </summary>
-    protected override Task SetPermit()
+    protected override async Task SetPermit()
     {
         #region 设置控件和字段的对应关系，字段权限判断也用到，无权字段赋值：*
 
@@ -197,8 +197,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
 
         #endregion
 
-        base.SetPermit();
-        return Task.CompletedTask;
+        await base.SetPermit();
     }
 
     // /// <summary>
