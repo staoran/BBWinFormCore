@@ -6,12 +6,14 @@ using BB.BaseUI.WinForm;
 using BB.Security.UI;
 using BB.Starter.UI.Other;
 using BB.Starter.UI.Settings;
+using BB.Starter.UI.SplashScreen;
 using BB.Tools.Const;
 using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.Utils;
 using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraTabbedMdi;
 using Furion;
@@ -255,7 +257,7 @@ public partial class MainForm : RibbonForm
     private void MainForm_Move(object? sender, EventArgs e)
     {
         //最小化到托盘的时候显示图标提示信息
-        if (WindowState == FormWindowState.Minimized)
+        if (ShowInTaskbar && WindowState == FormWindowState.Minimized)
         {
             Hide();
             notifyIcon1.ShowBalloonTip(3000, "程序最小化提示",
@@ -291,36 +293,49 @@ public partial class MainForm : RibbonForm
     /// <param name="e"></param>
     private async void MainForm_Load(object? sender, EventArgs e)
     {
-        #region 加载皮肤
+        try
+        {
+            #region 加载皮肤
 
-        SplashScreen.Splasher.Status = "正在展示相关的内容...";
-        Thread.Sleep(Const.SLEEP_TIME);
-        Application.DoEvents();
-        DevExpress.XtraBars.Helpers.SkinHelper.InitSkinGallery(rgbiSkins, true);
-        ribbonControl.Toolbar.ItemLinks.Clear();
-        ribbonControl.Toolbar.ItemLinks.Add(rgbiSkins);
-        UserLookAndFeel.Default.SetSkinStyle("Seven Classic");
+            Splasher.Status = "正在展示相关的内容...";
+            Thread.Sleep(Const.SLEEP_TIME);
+            Application.DoEvents();
+            SkinHelper.InitSkinGallery(rgbiSkins, true);
+            ribbonControl.Toolbar.ItemLinks.Clear();
+            ribbonControl.Toolbar.ItemLinks.Add(rgbiSkins);
+            UserLookAndFeel.Default.SetSkinStyle("Seven Classic");
 
-        #endregion
+            #endregion
 
-        #region 初始化菜单及界面数据
+            #region 初始化菜单及界面数据
 
-        SplashScreen.Splasher.Status = "初始化用户缓存、菜单及界面数据...";
-        Thread.Sleep(Const.SLEEP_TIME);
-        Application.DoEvents();
-        await InitUserRelated();
+            Splasher.Status = "初始化用户缓存、菜单及界面数据...";
+            Thread.Sleep(Const.SLEEP_TIME);
+            Application.DoEvents();
+            await InitUserRelated();
 
-        #endregion
+            #endregion
 
-        SplashScreen.Splasher.Status = "初始化完毕...";
-        Thread.Sleep(Const.SLEEP_TIME);
-        Application.DoEvents();
+            Splasher.Status = "初始化完毕...";
+            Thread.Sleep(Const.SLEEP_TIME);
+            Application.DoEvents();
 
-        SplashScreen.Splasher.Close();
-        // 注册热键
-        // SetHotKey();
+            Splasher.Close();
+            // 注册热键
+            // SetHotKey();
 
-        Init();
+            Init();
+        }
+        catch (Exception)
+        {
+            Splasher.Close();
+            throw;
+        }
+        finally
+        {
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Maximized;
+        }
     }
     
     /// <summary>
