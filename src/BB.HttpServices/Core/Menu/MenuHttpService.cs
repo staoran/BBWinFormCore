@@ -81,23 +81,23 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     /// <summary>
     /// 根据角色集合和系统标识获取对应的菜单集合
     /// </summary>
-    /// <param name="roleIDs">角色ID字符串</param>
+    /// <param name="roleIds">角色ID数组</param>
     /// <param name="typeId">系统类型</param>
     /// <returns></returns>
-    public async Task<List<MenuNodeInfo>> GetMenuNodesAsync(string roleIDs, string typeId)
+    public async Task<List<MenuNodeInfo>> GetMenuNodesAsync(int[] roleIds, string typeId)
     {
-        return (await _menuHttpService.GetMenuNodesAsync(roleIDs, typeId)).Handling();
+        return (await _menuHttpService.GetMenuNodesAsync(roleIds, typeId)).Handling();
     }
 
     /// <summary>
     /// 根据角色ID获取功能集合
     /// </summary>
-    /// <param name="roleId">角色ID</param>
+    /// <param name="roleIds">角色ID数组</param>
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
-    public async Task<List<MenuInfo>> GetMenusByRole(int roleId, string typeId)
+    public async Task<List<MenuInfo>> GetMenusByRole(int[] roleIds, string typeId)
     {
-        return (await _menuHttpService.GetMenusByRole(roleId, typeId)).Handling();
+        return (await _menuHttpService.GetMenusByRole(roleIds, typeId)).Handling();
     }
 
     /// <summary>

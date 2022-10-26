@@ -61,20 +61,20 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     /// <summary>
     /// 根据角色集合和系统标识获取对应的菜单集合
     /// </summary>
-    /// <param name="roleIDs">角色ID字符串</param>
+    /// <param name="roleIds">角色ID数组</param>
     /// <param name="typeId">系统类型</param>
     /// <returns></returns>
     [Get("menuNodes")]
-    Task<RESTfulResultControl<List<MenuNodeInfo>>> GetMenuNodesAsync([QueryString]string roleIDs, [QueryString]string typeId);
+    Task<RESTfulResultControl<List<MenuNodeInfo>>> GetMenuNodesAsync([QueryString]int[] roleIds, [QueryString]string typeId);
 
     /// <summary>
     /// 根据角色ID获取功能集合
     /// </summary>
-    /// <param name="roleId">角色ID</param>
+    /// <param name="roleIds">角色ID数组</param>
     /// <param name="typeId">系统类别ID</param>
     /// <returns></returns>
     [Get("menusByRole")]
-    Task<RESTfulResultControl<List<MenuInfo>>> GetMenusByRole([QueryString]int roleId, [QueryString]string typeId);
+    Task<RESTfulResultControl<List<MenuInfo>>> GetMenusByRole([QueryString]int[] roleIds, [QueryString]string typeId);
 
     /// <summary>
     /// 根据用户ID，获取对应的菜单列表
