@@ -7,6 +7,7 @@ using BB.Tools.Entity;
 using BB.Tools.Format;
 using BB.Entity.Security;
 using BB.HttpServices.Core.Function;
+using BB.HttpServices.Core.Menu;
 using BB.HttpServices.Core.OU;
 using BB.HttpServices.Core.Role;
 using BB.HttpServices.Core.RoleData;
@@ -29,14 +30,14 @@ public partial class FrmRole : BaseForm
     private readonly RoleHttpService _bll;
     private readonly OUHttpService _ouBll;
     private readonly FunctionHttpService _functionBll;
-    private readonly UserHttpService _userBll;
+    private readonly MenuHttpService _menuBll;
     private readonly SystemTypeHttpService _systemTypeBll;
     private readonly RoleDataHttpService _roleDataBll;
     private readonly UserRoleHttpService _userRoleBll;
     private readonly OURoleHttpService _ouRoleBll;
     private readonly RoleFunctionHttpService _roleFunctionBll;
 
-    public FrmRole(RoleHttpService bll, OUHttpService ouBll, FunctionHttpService functionBll, UserHttpService userBll,
+    public FrmRole(RoleHttpService bll, OUHttpService ouBll, FunctionHttpService functionBll, MenuHttpService menuBll,
         SystemTypeHttpService systemTypeBll, RoleDataHttpService roleDataBll, UserRoleHttpService userRoleBll,
         OURoleHttpService ouRoleBll, RoleFunctionHttpService roleFunctionBll)
     {
@@ -44,7 +45,7 @@ public partial class FrmRole : BaseForm
         _bll = bll;
         _ouBll = ouBll;
         _functionBll = functionBll;
-        _userBll = userBll;
+        _menuBll = menuBll;
         _systemTypeBll = systemTypeBll;
         _roleDataBll = roleDataBll;
         _userRoleBll = userRoleBll;
@@ -58,6 +59,7 @@ public partial class FrmRole : BaseForm
         {
             InitDictItem();                
             await InitTreeFunction();
+            await InitTreeMenu();
             await RefreshTreeView();
         }
     }
@@ -150,6 +152,8 @@ public partial class FrmRole : BaseForm
             treeNode.Nodes.Add(roleNode);
         }
     }
+
+    #region 角色功能
 
     private List<string> _addedFunctionList = new();//增加的功能列表
     private List<string> _deletedFunctionList = new();//删除的功能列表
@@ -276,6 +280,144 @@ public partial class FrmRole : BaseForm
         }
     }
 
+        #endregion
+
+    #region 角色菜单
+
+    private List<string> _addedMenuList = new();//增加的功能列表
+    private List<string> _deletedMenuList = new();//删除的功能列表
+    private void GetMenuChanges(TreeNode node)
+    {
+        if (node.Tag != null)
+        {
+            string id = node.Tag.ToString();
+            if (!node.Checked && _dictMenu.ContainsKey(id))
+            {
+                _deletedMenuList.Add(id);
+            }
+            if (node.Checked && !_dictMenu.ContainsKey(id))
+            {
+                _addedMenuList.Add(id);
+            }
+        }
+
+        foreach (TreeNode subNode in node.Nodes)
+        {
+            GetMenuChanges(subNode);
+        }
+    }
+
+    Dictionary<string,string> _dictMenu = new();//最初的用户列表
+    private async Task RefreshMenus(int roleId)
+    {
+        _dictMenu = new Dictionary<string, string>();
+
+        List<MenuInfo> list = await _menuBll.GetMenusByRole(new[] { roleId }, GB.SystemType);
+
+        //增加一个字典方便快速选择
+        foreach (MenuInfo info in list)
+        {
+            if (!_dictMenu.ContainsKey(info.ID))
+            {
+                _dictMenu.Add(info.ID, info.ID);
+            }
+        }
+                
+        //如果是公司管理员一级，不能修改自己角色的权限（避免误操作，不再显示）
+        bool isSuperAdmin = await _userRoleBll.UserIsSuperAdminAsync(GB.LoginUserInfo.ID);
+        TreeNode selectNode = treeView1.SelectedNode;
+        if (selectNode is { Text: RoleInfo.COMPANY_ADMIN_NAME } && !isSuperAdmin)
+        {
+            treeMenu.CheckBoxes = false;
+        }
+        else
+        {
+            treeMenu.CheckBoxes = true;
+        }
+
+        //判断角色具有哪些功能，更新勾选项
+        foreach (TreeNode node in treeMenu.Nodes)
+        {
+            RefreshMenuNode(node, _dictMenu);
+        }
+    }
+
+    /// <summary>
+    /// 为了提高速度，第一次需要构建功能树节点
+    /// </summary>
+    private async Task InitTreeMenu()
+    {
+        bool isSuperAdmin = await _userRoleBll.UserIsSuperAdminAsync(GB.LoginUserInfo.ID);
+        treeMenu.BeginUpdate();
+        treeMenu.Nodes.Clear();
+
+        //初始化全部功能树
+        List<SystemTypeInfo> typeList = await _systemTypeBll.GetAllAsync();
+        foreach (SystemTypeInfo typeInfo in typeList)
+        {
+            TreeNode parentNode = treeMenu.Nodes.Add(typeInfo.Oid, typeInfo.Name, 4, 4);
+
+            //如果是超级管理员，不根据角色获取，否则根据角色获取对应的分配权限
+            //也就是说，公司管理员只能分配自己被授权的功能，而超级管理员不受限制
+            List<MenuNodeInfo> allNode = new();
+            if (isSuperAdmin)
+            {
+                allNode = await _menuBll.GetTreeAsync(typeInfo.Oid);
+            }
+            else
+            {
+                allNode = await _menuBll.GetMenuNodesByUser(GB.LoginUserInfo.ID, typeInfo.Oid);
+            }
+            AddMenuNode(parentNode, allNode);
+        }
+        treeMenu.ExpandAll();
+        treeMenu.EndUpdate();
+    }
+
+    /// <summary>
+    /// 初始化功能树
+    /// </summary>
+    private void AddMenuNode(TreeNode node, List<MenuNodeInfo> list)
+    {
+        foreach (MenuNodeInfo info in list)
+        {
+            int imageIndex = info.MenuType switch
+            {
+                "1" => 2, // 分支
+                "2" => 3, // 叶子
+                "3" => 0, // 按钮
+                _ => 4
+            };
+            TreeNode subNode = new TreeNode(info.Name, imageIndex, imageIndex)
+            {
+                Tag = info.ID
+            };
+            node.Nodes.Add(subNode);
+
+            AddMenuNode(subNode, info.Children);
+        }
+    }
+    /// <summary>
+    /// 根据角色更新功能树勾选
+    /// </summary>
+    private void RefreshMenuNode(TreeNode node, Dictionary<string, string> dictMenu)
+    {
+        foreach (TreeNode subNode in node.Nodes)
+        {
+            if (subNode.Tag != null && dictMenu.ContainsKey(subNode.Tag.ToString()))
+            {
+                subNode.Checked = true;
+            }
+            else
+            {
+                subNode.Checked = false;
+            }
+            RefreshMenuNode(subNode, dictMenu);
+        }
+    }
+
+        #endregion
+
     /// <summary>
     /// 记录用户的选择情况
     /// </summary>
@@ -342,7 +484,7 @@ public partial class FrmRole : BaseForm
         base.OnMouseDown(e);
     }
 
-    private async void menu_Delete_Click(object? sender, EventArgs e)
+    private async void roleList_Delete_Click(object? sender, EventArgs e)
     {
         TreeNode node = treeView1.SelectedNode;
         if (node is { Tag: { } })
@@ -373,7 +515,7 @@ public partial class FrmRole : BaseForm
         }
     }
 
-    private void menu_Add_Click(object? sender, EventArgs e)
+    private void roleList_Add_Click(object? sender, EventArgs e)
     {
         //跳转到第一个页面
         xtraTabControl1.SelectedTabPageIndex = 0;
@@ -398,6 +540,7 @@ public partial class FrmRole : BaseForm
         txtName.Text = "";
         txtNote.Text = "";
         treeFunction.Nodes.Clear();
+        treeMenu.Nodes.Clear();
         lvwOU.Items.Clear();
         lvwUser.Items.Clear();
         txtCompany.Text = "";
@@ -406,12 +549,12 @@ public partial class FrmRole : BaseForm
         txtSortCode.Text = "";
     }
 
-    private async void menu_Update_Click(object? sender, EventArgs e)
+    private async void roleList_Update_Click(object? sender, EventArgs e)
     {
         await RefreshTreeView();
     }
 
-    private void menu_ExpandAll_Click(object? sender, EventArgs e)
+    private void roleList_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeView1.ExpandAll();
     }
@@ -435,6 +578,7 @@ public partial class FrmRole : BaseForm
 
                     await RefreshUsers(info.ID);
                     await RefreshFunctions(info.ID);
+                    await RefreshMenus(info.ID);
                     await RefreshOUs(info.ID);
                     await RefreshTreeRoleData(info.ID);                        
                 }
@@ -542,6 +686,12 @@ public partial class FrmRole : BaseForm
     {
         await _roleFunctionBll.RemoveFunctionAsync(functionId, roleId);
         await RefreshFunctions(roleId);
+    }
+
+    private async Task DeleteMenu(string menuId, int roleId)
+    {
+        await _bll.RemoveMenuAsync(menuId, roleId);
+        await RefreshMenus(roleId);
     }
 
     private async Task DeleteOu(string ouid, int roleId)
@@ -730,15 +880,15 @@ public partial class FrmRole : BaseForm
 
     private void btnAdd_Click(object? sender, EventArgs e)
     {
-        menu_Add_Click(sender, e);
+        roleList_Add_Click(sender, e);
     }
 
     private void btnDelete_Click(object? sender, EventArgs e)
     {
-        menu_Delete_Click(sender, e);
+        roleList_Delete_Click(sender, e);
     }
 
-    private void menu_Collapse_Click(object? sender, EventArgs e)
+    private void roleList_Collapse_Click(object? sender, EventArgs e)
     {
         treeView1.CollapseAll();
     }
@@ -788,6 +938,55 @@ public partial class FrmRole : BaseForm
     }
 
     private void treeFunction_AfterCheck(object sender, TreeViewEventArgs e)
+    {
+        CheckSelect(e.Node, e.Node.Checked);
+    }
+
+    private async void btnSaveMenu_Click(object? sender, EventArgs e)
+    {
+        if (treeView1.SelectedNode != null)
+        {
+            _addedMenuList = new List<string>();
+            _deletedMenuList = new List<string>();
+
+            //获取相关的变化
+            foreach (TreeNode node in treeMenu.Nodes)
+            {
+                GetMenuChanges(node);
+            }
+
+            foreach (string id in _deletedMenuList)
+            {
+                await _bll.RemoveMenuAsync(id, _currentId.ToInt32());
+            }
+            foreach (string id in _addedMenuList)
+            {
+                await _bll.AddMenuAsync(id, _currentId.ToInt32());
+            }
+
+            "保存成功".ShowUxTips();
+            await RefreshMenus(_currentId.ToInt32());
+        }
+        else
+        {
+            "请选择具体的角色".ShowUxTips();
+        }
+    }
+
+    private async void btnRefreshMenu_Click(object? sender, EventArgs e)
+    {
+        if (treeView1.SelectedNode != null)
+        {
+            await InitTreeMenu();
+            await RefreshMenus(_currentId.ToInt32());
+        }
+        else
+        {
+            "请选择具体的角色".ShowUxTips();
+        }
+    }
+
+    private void treeMenu_AfterCheck(object sender, TreeViewEventArgs e)
     {
         CheckSelect(e.Node, e.Node.Checked);
     }
@@ -999,5 +1198,28 @@ public partial class FrmRole : BaseForm
     private void function_ExpandAll_Click(object? sender, EventArgs e)
     {
         treeFunction.ExpandAll();
+    }
+
+    private void chkMenuSelectAll_CheckedChanged(object? sender, EventArgs e)
+    {
+        foreach (TreeNode node in treeMenu.Nodes)
+        {
+            CheckSelect(node, chkMenuSelectAll.Checked);
+        }
+    }
+
+    private async void menu_Refresh_Click(object? sender, EventArgs e)
+    {
+        await InitTreeMenu();
+    }
+
+    private void menu_Collapse_Click(object? sender, EventArgs e)
+    {
+        treeMenu.CollapseAll();
+    }
+
+    private void menu_ExpandAll_Click(object? sender, EventArgs e)
+    {
+        treeMenu.ExpandAll();
     }
 }

@@ -30,6 +30,7 @@ namespace BB.Security.UI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("节点0");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("节点2");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("节点1", new System.Windows.Forms.TreeNode[] {
@@ -43,15 +44,19 @@ namespace BB.Security.UI
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("节点2");
             System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("节点1", new System.Windows.Forms.TreeNode[] {
             treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("节点0");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("节点2");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("节点1", new System.Windows.Forms.TreeNode[] {
+            treeNode11});
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
-            this.menu_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_Add = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_Update = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.roleList_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.roleList_Add = new System.Windows.Forms.ToolStripMenuItem();
+            this.roleList_Update = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.menu_ExpandAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_Collapse = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageList1 = new System.Windows.Forms.ImageList();
+            this.roleList_ExpandAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.roleList_Collapse = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.txtNote = new DevExpress.XtraEditors.MemoEdit();
             this.label12 = new System.Windows.Forms.Label();
@@ -63,11 +68,10 @@ namespace BB.Security.UI
             this.btnEditOU = new DevExpress.XtraEditors.SimpleButton();
             this.btnRemoveOU = new DevExpress.XtraEditors.SimpleButton();
             this.lvwOU = new System.Windows.Forms.ListBox();
-            this.btnAdd = new DevExpress.XtraEditors.SimpleButton();
             this.btnDelete = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
-            this.txtCompany = new CompanyControl();
+            this.txtCompany = new BB.BaseUI.Control.Security.CompanyControl();
             this.label5 = new System.Windows.Forms.Label();
             this.txtCategory = new DevExpress.XtraEditors.ComboBoxEdit();
             this.label4 = new System.Windows.Forms.Label();
@@ -77,25 +81,35 @@ namespace BB.Security.UI
             this.txtHandNo = new DevExpress.XtraEditors.TextEdit();
             this.groupControl4 = new DevExpress.XtraEditors.GroupControl();
             this.groupControl5 = new DevExpress.XtraEditors.GroupControl();
-            this.imageFunction = new System.Windows.Forms.ImageList();
+            this.imageFunction = new System.Windows.Forms.ImageList(this.components);
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.tabBasic = new DevExpress.XtraTab.XtraTabPage();
+            this.tabMenu = new DevExpress.XtraTab.XtraTabPage();
+            this.chkMenuSelectAll = new DevExpress.XtraEditors.CheckEdit();
+            this.btnRefreshMenu = new DevExpress.XtraEditors.SimpleButton();
+            this.btnSaveMenu = new DevExpress.XtraEditors.SimpleButton();
+            this.treeMenu = new Sunny.UI.UITreeView();
+            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menu_Refresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_ExpandAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_Collapse = new System.Windows.Forms.ToolStripMenuItem();
             this.tabFunction = new DevExpress.XtraTab.XtraTabPage();
             this.chkFunctionSelectAll = new DevExpress.XtraEditors.CheckEdit();
             this.btnRefreshFunction = new DevExpress.XtraEditors.SimpleButton();
             this.btnSaveFunction = new DevExpress.XtraEditors.SimpleButton();
             this.treeFunction = new System.Windows.Forms.TreeView();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.function_Refresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.function_ExpandAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.function_Collapse = new System.Windows.Forms.ToolStripMenuItem();
             this.tabRoleData = new DevExpress.XtraTab.XtraTabPage();
             this.btnRefreshRoleData = new DevExpress.XtraEditors.SimpleButton();
             this.btnSaveRoleData = new DevExpress.XtraEditors.SimpleButton();
             this.chkAllRoleData = new DevExpress.XtraEditors.CheckEdit();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.treeRoleData = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip();
-            this.function_Refresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.function_ExpandAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.function_Collapse = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageMenu = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNote.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).BeginInit();
@@ -111,17 +125,24 @@ namespace BB.Security.UI
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).BeginInit();
             this.groupControl5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
+            this.splitContainerControl1.Panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel2)).BeginInit();
+            this.splitContainerControl1.Panel2.SuspendLayout();
             this.splitContainerControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.tabBasic.SuspendLayout();
+            this.tabMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkMenuSelectAll.Properties)).BeginInit();
+            this.contextMenuStrip3.SuspendLayout();
             this.tabFunction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkFunctionSelectAll.Properties)).BeginInit();
+            this.contextMenuStrip2.SuspendLayout();
             this.tabRoleData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkAllRoleData.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.groupControl3.SuspendLayout();
-            this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
@@ -132,7 +153,7 @@ namespace BB.Security.UI
             this.treeView1.ImageIndex = 0;
             this.treeView1.ImageList = this.imageList1;
             this.treeView1.ItemHeight = 24;
-            this.treeView1.Location = new System.Drawing.Point(2, 22);
+            this.treeView1.Location = new System.Drawing.Point(2, 23);
             this.treeView1.Name = "treeView1";
             treeNode1.Name = "节点0";
             treeNode1.Text = "节点0";
@@ -144,7 +165,7 @@ namespace BB.Security.UI
             treeNode1,
             treeNode3});
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(223, 649);
+            this.treeView1.Size = new System.Drawing.Size(223, 648);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
@@ -152,62 +173,58 @@ namespace BB.Security.UI
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menu_Delete,
-            this.menu_Add,
-            this.menu_Update,
+            this.roleList_Delete,
+            this.roleList_Add,
+            this.roleList_Update,
             this.toolStripSeparator1,
-            this.menu_ExpandAll,
-            this.menu_Collapse});
+            this.roleList_ExpandAll,
+            this.roleList_Collapse});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(165, 120);
             // 
-            // menu_Delete
+            // roleList_Delete
             // 
-            this.menu_Delete.Image = ((System.Drawing.Image)(resources.GetObject("menu_Delete.Image")));
-            this.menu_Delete.Name = "menu_Delete";
-            this.menu_Delete.Size = new System.Drawing.Size(164, 22);
-            this.menu_Delete.Text = "删除(&D)";
-            this.menu_Delete.Click += new System.EventHandler(this.menu_Delete_Click);
+            this.roleList_Delete.Name = "roleList_Delete";
+            this.roleList_Delete.Size = new System.Drawing.Size(164, 22);
+            this.roleList_Delete.Text = "删除(&D)";
+            this.roleList_Delete.Click += new System.EventHandler(this.roleList_Delete_Click);
             // 
-            // menu_Add
+            // roleList_Add
             // 
-            this.menu_Add.Image = ((System.Drawing.Image)(resources.GetObject("menu_Add.Image")));
-            this.menu_Add.Name = "menu_Add";
-            this.menu_Add.Size = new System.Drawing.Size(164, 22);
-            this.menu_Add.Text = "添加(&A)";
-            this.menu_Add.Click += new System.EventHandler(this.menu_Add_Click);
+            this.roleList_Add.Name = "roleList_Add";
+            this.roleList_Add.Size = new System.Drawing.Size(164, 22);
+            this.roleList_Add.Text = "添加(&A)";
+            this.roleList_Add.Click += new System.EventHandler(this.roleList_Add_Click);
             // 
-            // menu_Update
+            // roleList_Update
             // 
-            this.menu_Update.Image = ((System.Drawing.Image)(resources.GetObject("menu_Update.Image")));
-            this.menu_Update.Name = "menu_Update";
-            this.menu_Update.Size = new System.Drawing.Size(164, 22);
-            this.menu_Update.Text = "刷新列表(&U)";
-            this.menu_Update.Click += new System.EventHandler(this.menu_Update_Click);
+            this.roleList_Update.Name = "roleList_Update";
+            this.roleList_Update.Size = new System.Drawing.Size(164, 22);
+            this.roleList_Update.Text = "刷新列表(&U)";
+            this.roleList_Update.Click += new System.EventHandler(this.roleList_Update_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
             // 
-            // menu_ExpandAll
+            // roleList_ExpandAll
             // 
-            this.menu_ExpandAll.Image = ((System.Drawing.Image)(resources.GetObject("menu_ExpandAll.Image")));
-            this.menu_ExpandAll.Name = "menu_ExpandAll";
-            this.menu_ExpandAll.Size = new System.Drawing.Size(164, 22);
-            this.menu_ExpandAll.Text = "展开全部子节点";
-            this.menu_ExpandAll.Click += new System.EventHandler(this.menu_ExpandAll_Click);
+            this.roleList_ExpandAll.Name = "roleList_ExpandAll";
+            this.roleList_ExpandAll.Size = new System.Drawing.Size(164, 22);
+            this.roleList_ExpandAll.Text = "展开全部子节点";
+            this.roleList_ExpandAll.Click += new System.EventHandler(this.roleList_ExpandAll_Click);
             // 
-            // menu_Collapse
+            // roleList_Collapse
             // 
-            this.menu_Collapse.Image = ((System.Drawing.Image)(resources.GetObject("menu_Collapse.Image")));
-            this.menu_Collapse.Name = "menu_Collapse";
-            this.menu_Collapse.Size = new System.Drawing.Size(164, 22);
-            this.menu_Collapse.Text = "折叠全部节点(&C)";
-            this.menu_Collapse.Click += new System.EventHandler(this.menu_Collapse_Click);
+            this.roleList_Collapse.Name = "roleList_Collapse";
+            this.roleList_Collapse.Size = new System.Drawing.Size(164, 22);
+            this.roleList_Collapse.Text = "折叠全部节点(&C)";
+            this.roleList_Collapse.Click += new System.EventHandler(this.roleList_Collapse_Click);
             // 
             // imageList1
             // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "star.ico");
@@ -325,15 +342,6 @@ namespace BB.Security.UI
             this.lvwOU.Name = "lvwOU";
             this.lvwOU.Size = new System.Drawing.Size(490, 354);
             this.lvwOU.TabIndex = 3;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(10, 11);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(61, 23);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "添加";
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnDelete
             // 
@@ -484,6 +492,7 @@ namespace BB.Security.UI
             // 
             // imageFunction
             // 
+            this.imageFunction.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageFunction.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageFunction.ImageStream")));
             this.imageFunction.TransparentColor = System.Drawing.Color.Transparent;
             this.imageFunction.Images.SetKeyName(0, "0036.ICO");
@@ -494,10 +503,16 @@ namespace BB.Security.UI
             this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
             this.splitContainerControl1.Name = "splitContainerControl1";
+            // 
+            // splitContainerControl1.Panel1
+            // 
             this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl1.Panel1.Controls.Add(this.btnAdd);
             this.splitContainerControl1.Panel1.Controls.Add(this.btnDelete);
             this.splitContainerControl1.Panel1.Text = "Panel1";
+            // 
+            // splitContainerControl1.Panel2
+            // 
             this.splitContainerControl1.Panel2.Controls.Add(this.xtraTabControl1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
             this.splitContainerControl1.Size = new System.Drawing.Size(1008, 730);
@@ -511,10 +526,11 @@ namespace BB.Security.UI
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.tabBasic;
-            this.xtraTabControl1.Size = new System.Drawing.Size(762, 730);
+            this.xtraTabControl1.Size = new System.Drawing.Size(757, 730);
             this.xtraTabControl1.TabIndex = 0;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.tabBasic,
+            this.tabMenu,
             this.tabFunction,
             this.tabRoleData});
             // 
@@ -524,8 +540,111 @@ namespace BB.Security.UI
             this.tabBasic.Controls.Add(this.groupControl2);
             this.tabBasic.Controls.Add(this.groupControl4);
             this.tabBasic.Name = "tabBasic";
-            this.tabBasic.Size = new System.Drawing.Size(756, 701);
+            this.tabBasic.Size = new System.Drawing.Size(755, 704);
             this.tabBasic.Text = "角色基础信息";
+            // 
+            // tabMenu
+            // 
+            this.tabMenu.Controls.Add(this.chkMenuSelectAll);
+            this.tabMenu.Controls.Add(this.btnRefreshMenu);
+            this.tabMenu.Controls.Add(this.btnSaveMenu);
+            this.tabMenu.Controls.Add(this.treeMenu);
+            this.tabMenu.Name = "tabMenu";
+            this.tabMenu.Size = new System.Drawing.Size(755, 704);
+            this.tabMenu.Text = "可操作的菜单和按钮";
+            // 
+            // chkMenuSelectAll
+            // 
+            this.chkMenuSelectAll.Location = new System.Drawing.Point(6, 18);
+            this.chkMenuSelectAll.Name = "chkMenuSelectAll";
+            this.chkMenuSelectAll.Properties.Caption = "全选/反选";
+            this.chkMenuSelectAll.Size = new System.Drawing.Size(79, 20);
+            this.chkMenuSelectAll.TabIndex = 9;
+            this.chkMenuSelectAll.CheckedChanged += new System.EventHandler(this.chkMenuSelectAll_CheckedChanged);
+            // 
+            // btnRefreshMenu
+            // 
+            this.btnRefreshMenu.Location = new System.Drawing.Point(169, 14);
+            this.btnRefreshMenu.Name = "btnRefreshMenu";
+            this.btnRefreshMenu.Size = new System.Drawing.Size(79, 23);
+            this.btnRefreshMenu.TabIndex = 7;
+            this.btnRefreshMenu.Text = "刷新列表";
+            this.btnRefreshMenu.Click += new System.EventHandler(this.btnRefreshMenu_Click);
+            // 
+            // btnSaveMenu
+            // 
+            this.btnSaveMenu.Location = new System.Drawing.Point(275, 14);
+            this.btnSaveMenu.Name = "btnSaveMenu";
+            this.btnSaveMenu.Size = new System.Drawing.Size(141, 23);
+            this.btnSaveMenu.TabIndex = 6;
+            this.btnSaveMenu.Text = "保存可操作的菜单和按钮";
+            this.btnSaveMenu.Click += new System.EventHandler(this.btnSaveMenu_Click);
+            // 
+            // treeMenu
+            // 
+            this.treeMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeMenu.CheckBoxes = true;
+            this.treeMenu.ContextMenuStrip = this.contextMenuStrip3;
+            this.treeMenu.FillColor = System.Drawing.Color.White;
+            this.treeMenu.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.treeMenu.ImageIndex = 0;
+            this.treeMenu.ImageList = this.imageMenu;
+            this.treeMenu.Indent = 27;
+            this.treeMenu.ItemHeight = 24;
+            this.treeMenu.Location = new System.Drawing.Point(8, 43);
+            this.treeMenu.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.treeMenu.MinimumSize = new System.Drawing.Size(1, 1);
+            this.treeMenu.Name = "treeMenu";
+            treeNode4.Name = "节点0";
+            treeNode4.Text = "节点0";
+            treeNode5.Name = "节点2";
+            treeNode5.Text = "节点2";
+            treeNode6.Name = "节点1";
+            treeNode6.Text = "节点1";
+            this.treeMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode6});
+            this.treeMenu.SelectedImageIndex = 0;
+            this.treeMenu.ShowText = false;
+            this.treeMenu.Size = new System.Drawing.Size(741, 651);
+            this.treeMenu.Style = Sunny.UI.UIStyle.Custom;
+            this.treeMenu.TabIndex = 5;
+            this.treeMenu.Text = null;
+            this.treeMenu.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.treeMenu.ZoomScaleRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+            this.treeMenu.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeMenu_AfterCheck);
+            // 
+            // contextMenuStrip3
+            // 
+            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu_Refresh,
+            this.menu_ExpandAll,
+            this.menu_Collapse});
+            this.contextMenuStrip3.Name = "contextMenuStrip3";
+            this.contextMenuStrip3.Size = new System.Drawing.Size(165, 70);
+            // 
+            // menu_Refresh
+            // 
+            this.menu_Refresh.Name = "menu_Refresh";
+            this.menu_Refresh.Size = new System.Drawing.Size(164, 22);
+            this.menu_Refresh.Text = "刷新列表(&U)";
+            this.menu_Refresh.Click += new System.EventHandler(this.menu_Refresh_Click);
+            // 
+            // menu_ExpandAll
+            // 
+            this.menu_ExpandAll.Name = "menu_ExpandAll";
+            this.menu_ExpandAll.Size = new System.Drawing.Size(164, 22);
+            this.menu_ExpandAll.Text = "展开全部子节点";
+            this.menu_ExpandAll.Click += new System.EventHandler(this.menu_ExpandAll_Click);
+            // 
+            // menu_Collapse
+            // 
+            this.menu_Collapse.Name = "menu_Collapse";
+            this.menu_Collapse.Size = new System.Drawing.Size(164, 22);
+            this.menu_Collapse.Text = "折叠全部节点(&C)";
+            this.menu_Collapse.Click += new System.EventHandler(this.menu_Collapse_Click);
             // 
             // tabFunction
             // 
@@ -534,15 +653,15 @@ namespace BB.Security.UI
             this.tabFunction.Controls.Add(this.btnSaveFunction);
             this.tabFunction.Controls.Add(this.treeFunction);
             this.tabFunction.Name = "tabFunction";
-            this.tabFunction.Size = new System.Drawing.Size(756, 701);
-            this.tabFunction.Text = "可操作功能";
+            this.tabFunction.Size = new System.Drawing.Size(755, 704);
+            this.tabFunction.Text = "可操作功能(废弃)";
             // 
             // chkFunctionSelectAll
             // 
             this.chkFunctionSelectAll.Location = new System.Drawing.Point(6, 18);
             this.chkFunctionSelectAll.Name = "chkFunctionSelectAll";
             this.chkFunctionSelectAll.Properties.Caption = "全选/反选";
-            this.chkFunctionSelectAll.Size = new System.Drawing.Size(79, 19);
+            this.chkFunctionSelectAll.Size = new System.Drawing.Size(79, 20);
             this.chkFunctionSelectAll.TabIndex = 9;
             this.chkFunctionSelectAll.CheckedChanged += new System.EventHandler(this.chkFunctionSelectAll_CheckedChanged);
             // 
@@ -577,91 +696,19 @@ namespace BB.Security.UI
             this.treeFunction.ItemHeight = 24;
             this.treeFunction.Location = new System.Drawing.Point(8, 43);
             this.treeFunction.Name = "treeFunction";
-            treeNode4.Name = "节点0";
-            treeNode4.Text = "节点0";
-            treeNode5.Name = "节点2";
-            treeNode5.Text = "节点2";
-            treeNode6.Name = "节点1";
-            treeNode6.Text = "节点1";
-            this.treeFunction.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode6});
-            this.treeFunction.SelectedImageIndex = 0;
-            this.treeFunction.Size = new System.Drawing.Size(741, 651);
-            this.treeFunction.TabIndex = 5;
-            this.treeFunction.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeFunction_AfterCheck);
-            // 
-            // tabRoleData
-            // 
-            this.tabRoleData.Controls.Add(this.btnRefreshRoleData);
-            this.tabRoleData.Controls.Add(this.btnSaveRoleData);
-            this.tabRoleData.Controls.Add(this.chkAllRoleData);
-            this.tabRoleData.Controls.Add(this.groupControl3);
-            this.tabRoleData.Name = "tabRoleData";
-            this.tabRoleData.Size = new System.Drawing.Size(756, 701);
-            this.tabRoleData.Text = "可访问数据";
-            // 
-            // btnRefreshRoleData
-            // 
-            this.btnRefreshRoleData.Location = new System.Drawing.Point(166, 14);
-            this.btnRefreshRoleData.Name = "btnRefreshRoleData";
-            this.btnRefreshRoleData.Size = new System.Drawing.Size(79, 23);
-            this.btnRefreshRoleData.TabIndex = 10;
-            this.btnRefreshRoleData.Text = "刷新列表";
-            this.btnRefreshRoleData.Click += new System.EventHandler(this.btnRefreshRoleData_Click);
-            // 
-            // btnSaveRoleData
-            // 
-            this.btnSaveRoleData.Location = new System.Drawing.Point(262, 14);
-            this.btnSaveRoleData.Name = "btnSaveRoleData";
-            this.btnSaveRoleData.Size = new System.Drawing.Size(115, 23);
-            this.btnSaveRoleData.TabIndex = 9;
-            this.btnSaveRoleData.Text = "保存数据权限";
-            this.btnSaveRoleData.Click += new System.EventHandler(this.btnSaveRoleData_Click);
-            // 
-            // chkAllRoleData
-            // 
-            this.chkAllRoleData.Location = new System.Drawing.Point(14, 18);
-            this.chkAllRoleData.Name = "chkAllRoleData";
-            this.chkAllRoleData.Properties.Caption = "全选/反选";
-            this.chkAllRoleData.Size = new System.Drawing.Size(89, 19);
-            this.chkAllRoleData.TabIndex = 8;
-            this.chkAllRoleData.CheckedChanged += new System.EventHandler(this.chkAllRoleData_CheckedChanged);
-            // 
-            // groupControl3
-            // 
-            this.groupControl3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupControl3.Controls.Add(this.treeRoleData);
-            this.groupControl3.Location = new System.Drawing.Point(14, 43);
-            this.groupControl3.Name = "groupControl3";
-            this.groupControl3.Size = new System.Drawing.Size(734, 649);
-            this.groupControl3.TabIndex = 7;
-            this.groupControl3.Text = "组织机构列表";
-            // 
-            // treeRoleData
-            // 
-            this.treeRoleData.CheckBoxes = true;
-            this.treeRoleData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeRoleData.HideSelection = false;
-            this.treeRoleData.ImageIndex = 0;
-            this.treeRoleData.ImageList = this.imageList1;
-            this.treeRoleData.ItemHeight = 24;
-            this.treeRoleData.Location = new System.Drawing.Point(2, 22);
-            this.treeRoleData.Name = "treeRoleData";
             treeNode7.Name = "节点0";
             treeNode7.Text = "节点0";
             treeNode8.Name = "节点2";
             treeNode8.Text = "节点2";
             treeNode9.Name = "节点1";
             treeNode9.Text = "节点1";
-            this.treeRoleData.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            this.treeFunction.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode7,
             treeNode9});
-            this.treeRoleData.SelectedImageIndex = 0;
-            this.treeRoleData.Size = new System.Drawing.Size(730, 625);
-            this.treeRoleData.TabIndex = 0;
+            this.treeFunction.SelectedImageIndex = 0;
+            this.treeFunction.Size = new System.Drawing.Size(741, 651);
+            this.treeFunction.TabIndex = 5;
+            this.treeFunction.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeFunction_AfterCheck);
             // 
             // contextMenuStrip2
             // 
@@ -670,7 +717,7 @@ namespace BB.Security.UI
             this.function_ExpandAll,
             this.function_Collapse});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(165, 92);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(165, 70);
             // 
             // function_Refresh
             // 
@@ -696,6 +743,89 @@ namespace BB.Security.UI
             this.function_Collapse.Text = "折叠全部节点(&C)";
             this.function_Collapse.Click += new System.EventHandler(this.function_Collapse_Click);
             // 
+            // tabRoleData
+            // 
+            this.tabRoleData.Controls.Add(this.btnRefreshRoleData);
+            this.tabRoleData.Controls.Add(this.btnSaveRoleData);
+            this.tabRoleData.Controls.Add(this.chkAllRoleData);
+            this.tabRoleData.Controls.Add(this.groupControl3);
+            this.tabRoleData.Name = "tabRoleData";
+            this.tabRoleData.Size = new System.Drawing.Size(755, 704);
+            this.tabRoleData.Text = "可访问数据";
+            // 
+            // btnRefreshRoleData
+            // 
+            this.btnRefreshRoleData.Location = new System.Drawing.Point(166, 14);
+            this.btnRefreshRoleData.Name = "btnRefreshRoleData";
+            this.btnRefreshRoleData.Size = new System.Drawing.Size(79, 23);
+            this.btnRefreshRoleData.TabIndex = 10;
+            this.btnRefreshRoleData.Text = "刷新列表";
+            this.btnRefreshRoleData.Click += new System.EventHandler(this.btnRefreshRoleData_Click);
+            // 
+            // btnSaveRoleData
+            // 
+            this.btnSaveRoleData.Location = new System.Drawing.Point(262, 14);
+            this.btnSaveRoleData.Name = "btnSaveRoleData";
+            this.btnSaveRoleData.Size = new System.Drawing.Size(115, 23);
+            this.btnSaveRoleData.TabIndex = 9;
+            this.btnSaveRoleData.Text = "保存数据权限";
+            this.btnSaveRoleData.Click += new System.EventHandler(this.btnSaveRoleData_Click);
+            // 
+            // chkAllRoleData
+            // 
+            this.chkAllRoleData.Location = new System.Drawing.Point(14, 18);
+            this.chkAllRoleData.Name = "chkAllRoleData";
+            this.chkAllRoleData.Properties.Caption = "全选/反选";
+            this.chkAllRoleData.Size = new System.Drawing.Size(89, 20);
+            this.chkAllRoleData.TabIndex = 8;
+            this.chkAllRoleData.CheckedChanged += new System.EventHandler(this.chkAllRoleData_CheckedChanged);
+            // 
+            // groupControl3
+            // 
+            this.groupControl3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupControl3.Controls.Add(this.treeRoleData);
+            this.groupControl3.Location = new System.Drawing.Point(14, 43);
+            this.groupControl3.Name = "groupControl3";
+            this.groupControl3.Size = new System.Drawing.Size(734, 649);
+            this.groupControl3.TabIndex = 7;
+            this.groupControl3.Text = "组织机构列表";
+            // 
+            // treeRoleData
+            // 
+            this.treeRoleData.CheckBoxes = true;
+            this.treeRoleData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeRoleData.HideSelection = false;
+            this.treeRoleData.ImageIndex = 0;
+            this.treeRoleData.ImageList = this.imageList1;
+            this.treeRoleData.ItemHeight = 24;
+            this.treeRoleData.Location = new System.Drawing.Point(2, 23);
+            this.treeRoleData.Name = "treeRoleData";
+            treeNode10.Name = "节点0";
+            treeNode10.Text = "节点0";
+            treeNode11.Name = "节点2";
+            treeNode11.Text = "节点2";
+            treeNode12.Name = "节点1";
+            treeNode12.Text = "节点1";
+            this.treeRoleData.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode10,
+            treeNode12});
+            this.treeRoleData.SelectedImageIndex = 0;
+            this.treeRoleData.Size = new System.Drawing.Size(730, 624);
+            this.treeRoleData.TabIndex = 0;
+            // 
+            // imageMenu
+            // 
+            this.imageMenu.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageMenu.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageMenu.ImageStream")));
+            this.imageMenu.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageMenu.Images.SetKeyName(0, "底层架构.png");
+            this.imageMenu.Images.SetKeyName(1, "分支.png");
+            this.imageMenu.Images.SetKeyName(2, "联盟链.png");
+            this.imageMenu.Images.SetKeyName(3, "灵活扩展.png");
+            this.imageMenu.Images.SetKeyName(4, "全领域规模.png");
+            // 
             // FrmRole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -705,6 +835,7 @@ namespace BB.Security.UI
             this.Name = "FrmRole";
             this.Text = "角色管理";
             this.Load += new System.EventHandler(this.FrmRole_Load);
+            this.Controls.SetChildIndex(this.splitContainerControl1, 0);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.txtNote.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
@@ -720,19 +851,27 @@ namespace BB.Security.UI
             this.groupControl4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).EndInit();
             this.groupControl5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).EndInit();
+            this.splitContainerControl1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel2)).EndInit();
+            this.splitContainerControl1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
             this.splitContainerControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
             this.tabBasic.ResumeLayout(false);
+            this.tabMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chkMenuSelectAll.Properties)).EndInit();
+            this.contextMenuStrip3.ResumeLayout(false);
             this.tabFunction.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkFunctionSelectAll.Properties)).EndInit();
+            this.contextMenuStrip2.ResumeLayout(false);
             this.tabRoleData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkAllRoleData.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).EndInit();
             this.groupControl3.ResumeLayout(false);
-            this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -746,11 +885,11 @@ namespace BB.Security.UI
         private System.Windows.Forms.Label label12;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem menu_Delete;
-        private System.Windows.Forms.ToolStripMenuItem menu_Add;
-        private System.Windows.Forms.ToolStripMenuItem menu_Update;
+        private System.Windows.Forms.ToolStripMenuItem roleList_Delete;
+        private System.Windows.Forms.ToolStripMenuItem roleList_Add;
+        private System.Windows.Forms.ToolStripMenuItem roleList_Update;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem menu_ExpandAll;
+        private System.Windows.Forms.ToolStripMenuItem roleList_ExpandAll;
         private System.Windows.Forms.ListBox lvwUser;
         private System.Windows.Forms.ListBox lvwOU;
         private DevExpress.XtraEditors.SimpleButton btnRemoveUser;
@@ -772,10 +911,14 @@ namespace BB.Security.UI
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ImageList imageFunction;
         private CompanyControl txtCompany;
-        private System.Windows.Forms.ToolStripMenuItem menu_Collapse;
+        private System.Windows.Forms.ToolStripMenuItem roleList_Collapse;
         private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
         private DevExpress.XtraTab.XtraTabPage tabBasic;
+        private DevExpress.XtraTab.XtraTabPage tabMenu;
+        private Sunny.UI.UITreeView treeMenu;
+        private DevExpress.XtraEditors.SimpleButton btnSaveMenu;
+        private DevExpress.XtraEditors.SimpleButton btnRefreshMenu;
         private DevExpress.XtraTab.XtraTabPage tabFunction;
         private System.Windows.Forms.TreeView treeFunction;
         private DevExpress.XtraEditors.SimpleButton btnSaveFunction;
@@ -786,10 +929,16 @@ namespace BB.Security.UI
         private System.Windows.Forms.TreeView treeRoleData;
         private DevExpress.XtraEditors.SimpleButton btnSaveRoleData;
         private DevExpress.XtraEditors.SimpleButton btnRefreshRoleData;
+        private DevExpress.XtraEditors.CheckEdit chkMenuSelectAll;
         private DevExpress.XtraEditors.CheckEdit chkFunctionSelectAll;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
+        private System.Windows.Forms.ToolStripMenuItem menu_Refresh;
+        private System.Windows.Forms.ToolStripMenuItem menu_ExpandAll;
+        private System.Windows.Forms.ToolStripMenuItem menu_Collapse;
         private System.Windows.Forms.ToolStripMenuItem function_Refresh;
         private System.Windows.Forms.ToolStripMenuItem function_ExpandAll;
         private System.Windows.Forms.ToolStripMenuItem function_Collapse;
+        private System.Windows.Forms.ImageList imageMenu;
     }
 }
