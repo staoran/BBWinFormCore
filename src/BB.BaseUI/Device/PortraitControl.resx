@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="picPortrait.EditValue" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="picPortrait.EditValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAALrCSURBVHhe7b0FtB1F1v496/2ThBAIEkhyc+Pu7oq76zDCKMMwMG7vGOPCwMzgLiF+4+4uX3Lj
@@ -921,7 +921,7 @@
         IyaZtwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="btnCapture.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnCapture.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHPSURBVDhPlZPNq3FRFMb3/3RQPkoKRaF8lNzIQId8
@@ -935,7 +935,7 @@
         0pq/T40wp2bmaCz1D6uaPI2df9n1AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="btnRestore.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnRestore.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAYZJREFUOE+d
         ki1ywzAQhXuEHCE3iGGgYFjEmqIKmlXQLIJmFTQUNItgoWDhwrAKFgqWve4qzjTt1OnPzryRxtb7tNrd
@@ -947,7 +947,7 @@
         zAJ4yhoeEpEMi1S7ilOWtBeNyLIs3gF/WaYMmtzr4QAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="btnSave.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAWtJREFUOE+t
         kqFywzAQRPMJ/YR8gmGgYKCgoWCKKhgoGGgYKBgoGChYVsNCwULBsOvu2UkUN1PQ6c3seMbyPt3tefUv
@@ -959,7 +959,7 @@
         thuyzAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="btnLoad.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnLoad.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAACYUlEQVQ4T52T30uTURzG3/8h
@@ -976,7 +976,7 @@
         AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="CabrioletRed" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CabrioletRed" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAD8PSURBVHhe7X0HWFVZsnWbUESRLCAIiJhzVsw555wDGBCVJCgImHPOEXPOomAGxUTOUVAUU9s5
