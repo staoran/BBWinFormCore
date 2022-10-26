@@ -63,7 +63,7 @@ public class Startup : AppStartup
                 // 驼峰命名
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 // 时间格式化
-                options.JsonSerializerOptions.Converters.AddDateFormatString("yyyy-MM-dd HH:mm:ss.fff");
+                options.JsonSerializerOptions.Converters.AddDateTimeTypeConverters("yyyy-MM-dd HH:mm:ss.fff");
                 // 忽略循环引用
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             })
