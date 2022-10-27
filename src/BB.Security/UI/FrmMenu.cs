@@ -213,6 +213,8 @@ public partial class FrmMenu : BaseForm
     /// </summary>
     private async Task BindData()
     {
+        ShowWaitForm();
+        WaitForm.SetWaitFormDescription("数据加载中...");
         //entity
         winGridViewPager1.DisplayColumns =
             $"{nameof(MenuInfo.Name)},{nameof(MenuInfo.Icon)},{nameof(MenuInfo.Seq)},{nameof(MenuInfo.MenuType)},{nameof(MenuInfo.FunctionId)},{nameof(MenuInfo.Visible)},{nameof(MenuInfo.WinformType)},{nameof(MenuInfo.WebIcon)},{nameof(MenuInfo.Url)},{nameof(MenuInfo.SystemTypeId)}";
@@ -242,6 +244,7 @@ public partial class FrmMenu : BaseForm
         PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
         PageResult<MenuInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
         winGridViewPager1.InitDataSource(list, "功能菜单信息报表");
+        HideWaitForm();
     }
 
     /// <summary>
