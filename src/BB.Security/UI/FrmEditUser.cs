@@ -5,9 +5,8 @@ using BB.BaseUI.Other;
 using BB.Tools.Entity;
 using BB.Tools.Format;
 using BB.Entity.Security;
-using BB.HttpServices.Core.Function;
+using BB.HttpServices.Core.Menu;
 using BB.HttpServices.Core.OU;
-using BB.HttpServices.Core.Role;
 using BB.HttpServices.Core.SystemType;
 using BB.HttpServices.Core.User;
 using Furion.Logging.Extensions;
@@ -23,20 +22,18 @@ public partial class FrmEditUser : BaseEditForm
 
     private readonly UserHttpService _bll;
     private readonly OUHttpService _ouBll;
-    private readonly RoleHttpService _roleBll;
     private readonly SystemTypeHttpService _systemTypeBll;
-    private readonly FunctionHttpService _functionBll;
+    private readonly MenuHttpService _menuBll;
     private readonly UserRoleHttpService _userRoleBll;
 
-    public FrmEditUser(UserHttpService bll, OUHttpService ouBll, RoleHttpService roleBll, SystemTypeHttpService systemTypeBll,
-        FunctionHttpService functionBll, UserRoleHttpService userRoleBll)
+    public FrmEditUser(UserHttpService bll, OUHttpService ouBll, SystemTypeHttpService systemTypeBll,
+        MenuHttpService menuBll, UserRoleHttpService userRoleBll)
     {
         InitializeComponent();
         _bll = bll;
         _ouBll = ouBll;
-        _roleBll = roleBll;
         _systemTypeBll = systemTypeBll;
-        _functionBll = functionBll;
+        _menuBll = menuBll;
         _userRoleBll = userRoleBll;
 
         txtCompany.EditValueChanged += txtCompany_EditValueChanged;
@@ -383,7 +380,7 @@ public partial class FrmEditUser : BaseEditForm
         foreach (SystemTypeInfo typeInfo in typeList)
         {
             TreeNode parentNode = treeFunction.Nodes.Add(typeInfo.Oid, typeInfo.Name, 0, 0);
-            List<FunctionNodeInfo> list = await _functionBll.GetFunctionNodesByUserAsync(id, typeInfo.Oid);
+            List<MenuNodeInfo> list = await _menuBll.GetMenuNodesByUser(id, typeInfo.Oid);
             AddFunctionNode(parentNode, list);                
         }
 
@@ -391,11 +388,11 @@ public partial class FrmEditUser : BaseEditForm
         treeFunction.EndUpdate();            
     }
 
-    private void AddFunctionNode(TreeNode node, List<FunctionNodeInfo> list)
+    private void AddFunctionNode(TreeNode node, List<MenuNodeInfo> list)
     {
-        foreach (FunctionNodeInfo info in list)
+        foreach (MenuNodeInfo info in list)
         {
-            TreeNode subNode =  node.Nodes.Add(info.ID, info.Name, 1, 1);
+            TreeNode subNode =  node.Nodes.Add(info.FunctionId, info.Name, 1, 1);
 
             AddFunctionNode(subNode, info.Children);
         }

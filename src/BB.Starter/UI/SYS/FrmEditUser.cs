@@ -2,7 +2,7 @@
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.Entity.Security;
-using BB.HttpServices.Core.Function;
+using BB.HttpServices.Core.Menu;
 using BB.HttpServices.Core.OU;
 using BB.HttpServices.Core.SystemType;
 using BB.HttpServices.Core.User;
@@ -23,17 +23,17 @@ public partial class FrmEditUser : BaseEditForm
     private readonly OUHttpService _ouHttpService;
     private readonly UserRoleHttpService _userRoleHttpService;
     private readonly SystemTypeHttpService _systemTypeHttpService;
-    private readonly FunctionHttpService _functionHttpService;
+    private readonly MenuHttpService _menuHttpService;
 
     public FrmEditUser(UserHttpService userHttpService, OUHttpService ouHttpService, UserRoleHttpService userUserRoleHttpService,
-        SystemTypeHttpService systemTypeHttpService, FunctionHttpService functionHttpService)
+        SystemTypeHttpService systemTypeHttpService, MenuHttpService menuHttpService)
     {
         InitializeComponent();
         _userHttpService = userHttpService;
         _ouHttpService = ouHttpService;
         _userRoleHttpService = userUserRoleHttpService;
         _systemTypeHttpService = systemTypeHttpService;
-        _functionHttpService = functionHttpService;
+        _menuHttpService = menuHttpService;
     }
 
     /// <summary>
@@ -326,7 +326,7 @@ public partial class FrmEditUser : BaseEditForm
         foreach (SystemTypeInfo typeInfo in typeList)
         {
             TreeNode parentNode = treeFunction.Nodes.Add(typeInfo.Oid, typeInfo.Name, 0, 0);
-            List<FunctionNodeInfo> list = await _functionHttpService.GetFunctionNodesByUserAsync(id, typeInfo.Oid);
+            List<MenuNodeInfo> list = await _menuHttpService.GetMenuNodesByUser(id, typeInfo.Oid);
             AddFunctionNode(parentNode, list);                
         }
 
@@ -334,11 +334,11 @@ public partial class FrmEditUser : BaseEditForm
         treeFunction.EndUpdate();            
     }
 
-    private void AddFunctionNode(TreeNode node, List<FunctionNodeInfo> list)
+    private void AddFunctionNode(TreeNode node, List<MenuNodeInfo> list)
     {
-        foreach (FunctionNodeInfo info in list)
+        foreach (MenuNodeInfo info in list)
         {
-            TreeNode subNode =  node.Nodes.Add(info.ID, info.Name, 1, 1);
+            TreeNode subNode =  node.Nodes.Add(info.FunctionId, info.Name, 1, 1);
 
             AddFunctionNode(subNode, info.Children);
         }
