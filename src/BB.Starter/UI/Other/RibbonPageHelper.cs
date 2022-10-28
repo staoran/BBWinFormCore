@@ -38,22 +38,25 @@ public class RibbonPageHelper
             _control.Pages.RemoveAt(0);
         }
         _index = 0;
+        // 刷新缓存
+        await GB.LoadCache();
         await AddPages();
     }
 
     /// <summary>
     /// 加载菜单
     /// </summary>
-    public async Task AddPages()
+    public Task AddPages()
     {
         //约定菜单共有3级，第一级为大的类别，第二级为小模块分组，第三级为具体的菜单
-        List<MenuNodeInfo> menuList = await App.GetService<MenuHttpService>().GetTreeAsync(GB.SystemType);
-        if (menuList.Count == 0) return;
+        // List<MenuNodeInfo> menuList = await App.GetService<MenuHttpService>().GetTreeAsync(GB.SystemType);
+        List<MenuNodeInfo> menuList = GB.UserMenuNode;
+        if (menuList.Count == 0) return Task.CompletedTask;
 
         foreach(MenuNodeInfo firstInfo in menuList)
         {
             //如果没有菜单的权限，则跳过
-            if (!GB.HasFunction(firstInfo.FunctionId)) continue;
+            // if (!GB.HasFunction(firstInfo.FunctionId)) continue;
 
             //添加页面（一级菜单）
             RibbonPage page = new RibbonPage();
@@ -65,7 +68,7 @@ public class RibbonPageHelper
             foreach(MenuNodeInfo secondInfo in firstInfo.Children)
             {
                 //如果没有菜单的权限，则跳过
-                if (!GB.HasFunction(secondInfo.FunctionId)) continue;
+                // if (!GB.HasFunction(secondInfo.FunctionId)) continue;
 
                 //添加RibbonPageGroup（二级菜单）
                 RibbonPageGroup group = new RibbonPageGroup();
@@ -77,7 +80,7 @@ public class RibbonPageHelper
                 foreach (MenuNodeInfo thirdInfo in secondInfo.Children)
                 {
                     //如果没有菜单的权限，则跳过
-                    if (!GB.HasFunction(thirdInfo.FunctionId)) continue;
+                    // if (!GB.HasFunction(thirdInfo.FunctionId)) continue;
 
                     //添加功能按钮（三级菜单）
                     BarButtonItem button = new BarButtonItem();
@@ -108,6 +111,8 @@ public class RibbonPageHelper
         {
             _control.SelectedPage = _control.Pages[0];
         }
+
+        return Task.CompletedTask;
     }
 
     /// <summary>
