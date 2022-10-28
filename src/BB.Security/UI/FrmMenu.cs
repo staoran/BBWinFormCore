@@ -202,7 +202,7 @@ public partial class FrmMenu : BaseForm
 
         if (txtVisible.Checked)
         {
-            condition.Add(MenuInfo.FieldVisible, "1");
+            condition.AddOrSet(MenuInfo.FieldVisible, "1");
         }
 
         return condition.ToDicString();

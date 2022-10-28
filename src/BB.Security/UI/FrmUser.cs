@@ -412,7 +412,7 @@ public partial class FrmUser : BaseDock
         //如非选定，只显示正常用户
         if (!chkIncludeDelete.Checked)
         {
-            condition.Add(UserInfo.FieldDeleted, "0");
+            condition.AddOrSet(UserInfo.FieldDeleted, "0");
         }
 
         return condition.ToDicString();
@@ -431,26 +431,31 @@ public partial class FrmUser : BaseDock
             winGridViewPager1.DisplayColumns = "HandNo,Name,FullName,Title,MobilePhone,OfficePhone,Email,Gender,QQ,AuditStatus,IsExpire,Deleted,Note";
             winGridViewPager1.ColumnNameAlias = await _bll.GetColumnNameAliasAsync();//字段列显示名称转义
 
-        #region 添加别名解析
+            #region 添加别名解析
 
-        //this.winGridViewPager1.AddColumnAlias("HandNo", "用户编码");
-        //this.winGridViewPager1.AddColumnAlias("Name", "用户名/登录名");
-        //this.winGridViewPager1.AddColumnAlias("FullName", "用户全名");
-        //this.winGridViewPager1.AddColumnAlias("IsExpire", "是否过期");
-        //this.winGridViewPager1.AddColumnAlias("Title", "职务头衔");
-        //this.winGridViewPager1.AddColumnAlias("MobilePhone", "移动电话");
-        //this.winGridViewPager1.AddColumnAlias("OfficePhone", "办公电话");
-        //this.winGridViewPager1.AddColumnAlias("Email", "邮件地址");
-        //this.winGridViewPager1.AddColumnAlias("Gender", "性别");
-        //this.winGridViewPager1.AddColumnAlias("QQ", "QQ号码");
-        //this.winGridViewPager1.AddColumnAlias("AuditStatus", "审核状态");
+            //this.winGridViewPager1.AddColumnAlias("HandNo", "用户编码");
+            //this.winGridViewPager1.AddColumnAlias("Name", "用户名/登录名");
+            //this.winGridViewPager1.AddColumnAlias("FullName", "用户全名");
+            //this.winGridViewPager1.AddColumnAlias("IsExpire", "是否过期");
+            //this.winGridViewPager1.AddColumnAlias("Title", "职务头衔");
+            //this.winGridViewPager1.AddColumnAlias("MobilePhone", "移动电话");
+            //this.winGridViewPager1.AddColumnAlias("OfficePhone", "办公电话");
+            //this.winGridViewPager1.AddColumnAlias("Email", "邮件地址");
+            //this.winGridViewPager1.AddColumnAlias("Gender", "性别");
+            //this.winGridViewPager1.AddColumnAlias("QQ", "QQ号码");
+            //this.winGridViewPager1.AddColumnAlias("AuditStatus", "审核状态");
 
-        #endregion
+            #endregion
 
-        Dictionary<string,string> condition = GetConditionSql();
-        PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
-        PageResult<UserInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
-        winGridViewPager1.InitDataSource(list, "系统用户信息报表");
+            Dictionary<string,string> condition = GetConditionSql();
+            PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
+            PageResult<UserInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
+            winGridViewPager1.InitDataSource(list, "系统用户信息报表");
+        }
+        finally
+        {
+            HideWaitForm();
+        }
     }
 
     /// <summary>

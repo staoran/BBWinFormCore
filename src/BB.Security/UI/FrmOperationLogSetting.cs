@@ -234,7 +234,7 @@ public partial class FrmOperationLogSetting : BaseDock
 
         if (chkForbid.Checked)
         {
-            condition.Add(OperationLogSettingInfo.FieldForbid, "1");
+            condition.AddOrSet(OperationLogSettingInfo.FieldForbid, "1");
         }
         
         return condition.ToDicString();

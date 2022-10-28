@@ -246,7 +246,7 @@ public partial class FrmBlackIp : BaseDock
 
         if (txtForbid.Checked)
         {
-            condition.Add(BlackIpInfo.FieldForbid, "1");
+            condition.AddOrSet(BlackIpInfo.FieldForbid, "1");
         }
 
         return condition.ToDicString();
