@@ -222,4 +222,16 @@ public static class EnumerableExtension
 
         return c;
     }
+
+    public static void AddOrSet(this NameValueCollection dic, string name, string value)
+    {
+        if (dic.GetValues(name) == null)
+        {
+            dic.Add(name, "0");
+        }
+        else
+        {
+            dic.Set(name, "0");
+        }
+    }
 }
