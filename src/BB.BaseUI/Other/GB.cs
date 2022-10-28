@@ -7,7 +7,7 @@ using BB.Entity.Dictionary;
 using BB.Entity.Security;
 using BB.Entity.TMS;
 using BB.HttpServices.Core.Dict;
-using BB.HttpServices.Core.Function;
+using BB.HttpServices.Core.Menu;
 using BB.HttpServices.Core.OU;
 using BB.HttpServices.Core.Region;
 using BB.HttpServices.Core.RoleData;
@@ -71,11 +71,16 @@ namespace BB.BaseUI.Other;
     /// 前后台会话ID
     /// </summary>
     public static string? SessionId { get; set; }
-        
+
     /// <summary>
     /// 登录用户具有的功能字典集合
     /// </summary>
     public static readonly Dictionary<string, string> FunctionDict = new();//登录用户具有的功能字典集合
+
+    /// <summary>
+    /// 登录用户具有的菜单集合
+    /// </summary>
+    public static List<MenuNodeInfo> UserMenuNode = new();
 
     /// <summary>
     /// 用户具有的角色集合
@@ -268,7 +273,7 @@ namespace BB.BaseUI.Other;
     }
 
     /// <summary>
-    /// 看用户是否具有某个功能
+    /// 看用户是否具有某个功能（管理员和功能ID为空都视为有权）
     /// </summary>
     /// <param name="controlId"></param>
     /// <returns></returns>
@@ -566,6 +571,26 @@ namespace BB.BaseUI.Other;
         return GetDictByName(dictTypeName).ToArray();
     }
 
+    /// <summary>
+    /// 加载菜单功能权限
+    /// </summary>
+    /// <param name="menuNodeInfos"></param>
+    public static void LoadFunction(List<MenuNodeInfo> menuNodeInfos)
+    {
+        menuNodeInfos.ForEach(x =>
+        {
+            if (!x.FunctionId.IsNullOrEmpty() && !FunctionDict.ContainsKey(x.FunctionId))
+            {
+                FunctionDict.Add(x.FunctionId, x.Name);
+            }
+
+            if (x.Children.Count > 0)
+            {
+                LoadFunction(x.Children);
+            }
+        });
+    }
+
     #endregion
 
     #region 缓存
@@ -578,17 +603,11 @@ namespace BB.BaseUI.Other;
     {
         #region 用户权限
 
-        List<FunctionInfo> list = await App.GetService<FunctionHttpService>().GetFunctionsByUserAsync(LoginUserInfo.ID, SystemType);
-        if (list is { Count: > 0 })
+        UserMenuNode = await App.GetService<MenuHttpService>().GetMenuNodesByUser(LoginUserInfo.ID, SystemType);
+        if (UserMenuNode is { Count: > 0 })
         {
             FunctionDict.Clear();
-            foreach (FunctionInfo functionInfo in list)
-            {
-                if (!FunctionDict.ContainsKey(functionInfo.ControlId))
-                {
-                    FunctionDict.Add(functionInfo.ControlId, functionInfo.Name);
-                }
-            }
+            LoadFunction(UserMenuNode);
         }
 
         #endregion
