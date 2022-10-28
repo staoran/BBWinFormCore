@@ -577,7 +577,10 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
         return Cache.Instance.GetOrCreate($"{nameof(UserInfo)}ConditionTypes",
             () => new List<FieldConditionType>
             {
-                new(UserInfo.FieldHandNo, SqlOperator.Like),
+                new(UserInfo.FieldHandNo, SqlOperator.Equal),
+                new(UserInfo.FieldDeptId, SqlOperator.Equal),
+                new(UserInfo.FieldCompanyId, SqlOperator.Equal),
+                new(UserInfo.FieldDeleted, SqlOperator.Equal),
                 new(UserInfo.FieldName, SqlOperator.Like ),
                 new(UserInfo.FieldFullName, SqlOperator.Like ),
                 new(UserInfo.FieldNickname, SqlOperator.Like ),
