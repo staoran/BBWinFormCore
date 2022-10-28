@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
   <assembly>
     <name>DevExpress.XtraRichEdit.v22.1</name>
   </assembly>
@@ -807,7 +807,7 @@
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraRichEdit.ParagraphFormShowingEventArgs"/> class with the specified information for initializing the dialog controls.</para>
       </summary>
       <param name="controllerParameters">A ParagraphFormControllerParameters object containing information to be displayed in the form.</param>
-      <param name="tabsClickCallback"></param>
+      <param name="tabsClickCallback" />
     </member>
     <member name="P:DevExpress.XtraRichEdit.ParagraphFormShowingEventArgs.ControllerParameters">
       <summary>
@@ -819,7 +819,7 @@
       <summary>
         <para>Parameter required for one of the ParagraphForm constructors.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="T:DevExpress.XtraRichEdit.ParagraphFormShowingEventHandler">
       <summary>
@@ -857,18 +857,18 @@
         <para>Provides data for the <see cref="E:DevExpress.XtraRichEdit.RichEditControl.PopupMenuShowing"/> event.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs.#ctor(DevExpress.XtraRichEdit.Menu.RichEditPopupMenu)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs"/> class with the specified settings.</para>
-      </summary>
-      <param name="menu">A <see cref="T:DevExpress.XtraRichEdit.Menu.RichEditPopupMenu"/> which represents the event’s popup menu. This value is assigned to the <see cref="P:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs.Menu"/> property.</param>
-    </member>
     <member name="M:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs.#ctor(DevExpress.XtraRichEdit.Menu.RichEditPopupMenu,DevExpress.XtraRichEdit.RichEditMenuType)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs"/> class with the specified menu and menu type.</para>
       </summary>
       <param name="menu">A <see cref="T:DevExpress.XtraRichEdit.Menu.RichEditPopupMenu"/> object representing a popup menu.</param>
       <param name="menuType">A  enumeration member specifying the menu type.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs.#ctor(DevExpress.XtraRichEdit.Menu.RichEditPopupMenu)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs"/> class with the specified settings.</para>
+      </summary>
+      <param name="menu">A <see cref="T:DevExpress.XtraRichEdit.Menu.RichEditPopupMenu"/> which represents the event’s popup menu. This value is assigned to the <see cref="P:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs.Menu"/> property.</param>
     </member>
     <member name="P:DevExpress.XtraRichEdit.PopupMenuShowingEventArgs.Menu">
       <summary>
@@ -1010,14 +1010,6 @@
       <summary>
         <para>For internal use.</para>
       </summary>
-      <value></value>
-    </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
-      <summary>
-        <para>Adds the specified service to the service container.</para>
-      </summary>
-      <param name="serviceType">The type of service to add.</param>
-      <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback,System.Boolean)">
       <summary>
@@ -1027,12 +1019,12 @@
       <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
       <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.AddService(System.Type,System.Object)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
       <summary>
         <para>Adds the specified service to the service container.</para>
       </summary>
       <param name="serviceType">The type of service to add.</param>
-      <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
+      <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.AddService(System.Type,System.Object,System.Boolean)">
       <summary>
@@ -1041,6 +1033,13 @@
       <param name="serviceType">The type of service to add.</param>
       <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
       <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.AddService(System.Type,System.Object)">
+      <summary>
+        <para>Adds the specified service to the service container.</para>
+      </summary>
+      <param name="serviceType">The type of service to add.</param>
+      <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.AddToolbarToMenuManager(DevExpress.XtraRichEdit.RichEditToolbarType)">
       <summary>
@@ -1065,14 +1064,6 @@
       </summary>
       <value>A <see cref="T:DevExpress.XtraRichEdit.RichEditAppearance"/> object containig appearance settings specific to the RichEditControl.</value>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.AssignShortcutKeyToCommand(System.Windows.Forms.Keys,System.Windows.Forms.Keys,DevExpress.XtraRichEdit.Commands.RichEditCommandId)">
-      <summary>
-        <para>Assigns a shortcut key to a command. The shortcut key is available for all RichEdit views.</para>
-      </summary>
-      <param name="key">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a key to assign.</param>
-      <param name="modifier">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a modifier key.</param>
-      <param name="commandId">A <see cref="T:DevExpress.XtraRichEdit.Commands.RichEditCommandId"/> enumeration member specifying a command.</param>
-    </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.AssignShortcutKeyToCommand(System.Windows.Forms.Keys,System.Windows.Forms.Keys,DevExpress.XtraRichEdit.Commands.RichEditCommandId,DevExpress.XtraRichEdit.RichEditViewType)">
       <summary>
         <para>Assigns a shortcut key to a command. The shortcut key is available for the specified RichEditView.</para>
@@ -1090,6 +1081,14 @@
       <param name="modifier">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a modifier key.</param>
       <param name="commandId">A <see cref="T:DevExpress.XtraRichEdit.Commands.RichEditCommandId"/> enumeration member specifying a command.</param>
       <param name="updateToolTip">True to modify a tooltip of the <see cref="T:DevExpress.XtraBars.BarItem"/> to which a command is assigned; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.AssignShortcutKeyToCommand(System.Windows.Forms.Keys,System.Windows.Forms.Keys,DevExpress.XtraRichEdit.Commands.RichEditCommandId)">
+      <summary>
+        <para>Assigns a shortcut key to a command. The shortcut key is available for all RichEdit views.</para>
+      </summary>
+      <param name="key">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a key to assign.</param>
+      <param name="modifier">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a modifier key.</param>
+      <param name="commandId">A <see cref="T:DevExpress.XtraRichEdit.Commands.RichEditCommandId"/> enumeration member specifying a command.</param>
     </member>
     <member name="E:DevExpress.XtraRichEdit.RichEditControl.AutoCorrect">
       <summary>
@@ -1112,13 +1111,13 @@
       <summary>
         <para>This property is not in effect for the <see cref="T:DevExpress.XtraRichEdit.RichEditControl"/> class.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="P:DevExpress.XtraRichEdit.RichEditControl.BackgroundImageLayout">
       <summary>
         <para>This property is not in effect for the <see cref="T:DevExpress.XtraRichEdit.RichEditControl"/> class.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="E:DevExpress.XtraRichEdit.RichEditControl.BeforeDispose">
       <summary>
@@ -1168,7 +1167,7 @@
     </member>
     <member name="E:DevExpress.XtraRichEdit.RichEditControl.CalculateDocumentVariable">
       <summary>
-        <para>Fires for the DOCVARIABLE field and allows you to update its value.</para>
+        <para>Fires when the DOCVARIABLE field is updated.</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.CancelUpdate">
@@ -1504,12 +1503,6 @@
         <para>Unlocks the <see cref="T:DevExpress.XtraRichEdit.RichEditControl"/> object after a call to the RichEditControl.BeginUpdate method and causes an immediate visual update.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.ExportToPdf(System.IO.Stream)">
-      <summary>
-        <para>Exports the content of the RichEditControl to the specified stream in PDF format.</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
-    </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.ExportToPdf(System.IO.Stream,DevExpress.Pdf.PdfCreationOptions,DevExpress.Pdf.PdfSaveOptions)">
       <summary>
         <para>Exports the content of the RichEditControl to the specified stream in PDF format, applying options for creating and saving.</para>
@@ -1525,11 +1518,11 @@
       <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
       <param name="pdfExportOptions">A <see cref="T:DevExpress.XtraPrinting.PdfExportOptions"/> object which specifies the PDF export options.</param>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.ExportToPdf(System.String)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.ExportToPdf(System.IO.Stream)">
       <summary>
-        <para>Exports the document content to the specified file path in PDF format.</para>
+        <para>Exports the content of the RichEditControl to the specified stream in PDF format.</para>
       </summary>
-      <param name="fileName">A <see cref="T:System.String"/> which specifies the file name (including the full path) for the created PDF file.</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.ExportToPdf(System.String,DevExpress.Pdf.PdfCreationOptions,DevExpress.Pdf.PdfSaveOptions)">
       <summary>
@@ -1545,6 +1538,12 @@
       </summary>
       <param name="fileName">A <see cref="T:System.String"/> which specifies the file name (including the full path) for the created PDF file.</param>
       <param name="pdfExportOptions">A <see cref="T:DevExpress.XtraPrinting.PdfExportOptions"/> object which specifies the PDF export options.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.ExportToPdf(System.String)">
+      <summary>
+        <para>Exports the document content to the specified file path in PDF format.</para>
+      </summary>
+      <param name="fileName">A <see cref="T:System.String"/> which specifies the file name (including the full path) for the created PDF file.</param>
     </member>
     <member name="E:DevExpress.XtraRichEdit.RichEditControl.FinishHeaderFooterEditing">
       <summary>
@@ -1812,11 +1811,13 @@ The default is DocumentLayoutUnit.Pixel.</value>
       </summary>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.Byte[])">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.Byte[],DevExpress.XtraRichEdit.DocumentFormat,System.String)">
       <summary>
-        <para>Loads a document from a byte array. The file format is determined based on document content.</para>
+        <para>Loads a document in the specified format from a byte array. You can use this method to load HTML documents with connected files.</para>
       </summary>
       <param name="buffer">A byte array that contains document data.</param>
+      <param name="format">An enumeration member that specifies the format of the loaded document.</param>
+      <param name="sourceUri">The document’s URI. You can use this parameter to load files associated with an HTML document.</param>
       <returns>true if the document was successfully loaded; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.Byte[],DevExpress.XtraRichEdit.DocumentFormat)">
@@ -1827,29 +1828,12 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="format">An enumeration member that specifies the format of the loaded document.</param>
       <returns>true if the document was successfully loaded; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.Byte[],DevExpress.XtraRichEdit.DocumentFormat,System.String)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.Byte[])">
       <summary>
-        <para>Loads a document in the specified format from a byte array. You can use this method to load HTML documents with connected files.</para>
+        <para>Loads a document from a byte array. The file format is determined based on document content.</para>
       </summary>
       <param name="buffer">A byte array that contains document data.</param>
-      <param name="format">An enumeration member that specifies the format of the loaded document.</param>
-      <param name="sourceUri">The document’s URI. You can use this parameter to load files associated with an HTML document.</param>
       <returns>true if the document was successfully loaded; otherwise, false.</returns>
-    </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.IO.Stream)">
-      <summary>
-        <para>Loads a document from the stream.</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream used to load a document.</param>
-      <returns>true if the document is successfully loaded; otherwise, false.</returns>
-    </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat)">
-      <summary>
-        <para>Loads a document from a stream, specifying the document format.</para>
-      </summary>
-      <param name="stream">The stream from which to load a document.</param>
-      <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration members indicating the document format.</param>
-      <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat,System.Boolean)">
       <summary>
@@ -1869,19 +1853,19 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="sourceUri">A string representing the document URI.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.String)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
-        <para>Loads a document from the specified file. The file format is determined by its content.</para>
+        <para>Loads a document from a stream, specifying the document format.</para>
       </summary>
-      <param name="fileName">A string specifying the file to load (including the full path).</param>
+      <param name="stream">The stream from which to load a document.</param>
+      <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration members indicating the document format.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.String,DevExpress.XtraRichEdit.DocumentFormat)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.IO.Stream)">
       <summary>
-        <para>Loads a document from a file, specifying the document format.</para>
+        <para>Loads a document from the stream.</para>
       </summary>
-      <param name="fileName">A string specifying the file to load (including the full path).</param>
-      <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration members, indicating the document format.</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream used to load a document.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.String,DevExpress.XtraRichEdit.DocumentFormat,System.String)">
@@ -1893,18 +1877,26 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="sourceUri">A string representing the document URI.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.String,DevExpress.XtraRichEdit.DocumentFormat)">
+      <summary>
+        <para>Loads a document from a file, specifying the document format.</para>
+      </summary>
+      <param name="fileName">A string specifying the file to load (including the full path).</param>
+      <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration members, indicating the document format.</param>
+      <returns>true if the document is successfully loaded; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.String)">
+      <summary>
+        <para>Loads a document from the specified file. The file format is determined by its content.</para>
+      </summary>
+      <param name="fileName">A string specifying the file to load (including the full path).</param>
+      <returns>true if the document is successfully loaded; otherwise, false.</returns>
+    </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocument(System.Windows.Forms.IWin32Window)">
       <summary>
         <para>Invokes the Open file dialog as a child of the specified parent window.</para>
       </summary>
       <param name="parent">The <see cref="T:System.Windows.Forms.IWin32Window"/> object that is the parent window.</param>
-    </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.Byte[])">
-      <summary>
-        <para>Loads a document template from a byte array.</para>
-      </summary>
-      <param name="buffer">A byte array that contains document data.</param>
-      <returns>true if the document was successfully loaded; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.Byte[],DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
@@ -1914,12 +1906,12 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="documentFormat">An enumeration member that specifies the format of the loaded document.</param>
       <returns>true if the document was successfully loaded; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.IO.Stream)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.Byte[])">
       <summary>
-        <para>Loads a document template from the stream.</para>
+        <para>Loads a document template from a byte array.</para>
       </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream used to load a document.</param>
-      <returns>true if the document is successfully loaded; otherwise, false.</returns>
+      <param name="buffer">A byte array that contains document data.</param>
+      <returns>true if the document was successfully loaded; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
@@ -1929,11 +1921,11 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration members, indicating the document format.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.String)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.IO.Stream)">
       <summary>
-        <para>Loads a document template from the specified file.</para>
+        <para>Loads a document template from the stream.</para>
       </summary>
-      <param name="fileName">A string specifying the file to load (including the full path).</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream used to load a document.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.String,DevExpress.XtraRichEdit.DocumentFormat)">
@@ -1944,6 +1936,13 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration values indicating the document format.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.LoadDocumentTemplate(System.String)">
+      <summary>
+        <para>Loads a document template from the specified file.</para>
+      </summary>
+      <param name="fileName">A string specifying the file to load (including the full path).</param>
+      <returns>true if the document is successfully loaded; otherwise, false.</returns>
+    </member>
     <member name="P:DevExpress.XtraRichEdit.RichEditControl.LookAndFeel">
       <summary>
         <para>Provides access to the settings that specify the RichEdit control’s look and feel.</para>
@@ -1952,63 +1951,63 @@ The default is DocumentLayoutUnit.Pixel.</value>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(DevExpress.XtraRichEdit.API.Native.Document)">
       <summary>
-        <para>Merges the current document and sends the result to the specified <see cref="T:DevExpress.XtraRichEdit.API.Native.Document"/>.</para>
+        <para>Merges data to the current document and sends the result to the specified <see cref="T:DevExpress.XtraRichEdit.API.Native.Document"/> instance.</para>
       </summary>
       <param name="document">An object exposing the <see cref="T:DevExpress.XtraRichEdit.API.Native.Document"/> interface to which the merged document is sent.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(DevExpress.XtraRichEdit.API.Native.MailMergeOptions,DevExpress.XtraRichEdit.API.Native.Document)">
       <summary>
-        <para>Merges the current document using the specified options, and sends the result to the specified <see cref="T:DevExpress.XtraRichEdit.API.Native.Document"/>.</para>
+        <para>Merges data to the current document and sends the result to the specified <see cref="T:DevExpress.XtraRichEdit.API.Native.Document"/> instance. Allows you to set the mail merge options.</para>
       </summary>
-      <param name="options">A <see cref="T:DevExpress.XtraRichEdit.API.Native.MailMergeOptions"/> interface exposing options for the current merge.</param>
-      <param name="targetDocument">An object exposing the <see cref="T:DevExpress.XtraRichEdit.API.Native.Document"/> interface to which the merged document is sent.</param>
+      <param name="options">An object that contains options for the current merge.</param>
+      <param name="targetDocument">An object that exposes the <see cref="T:DevExpress.XtraRichEdit.API.Native.Document"/> interface to which the merged document is sent.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(DevExpress.XtraRichEdit.API.Native.MailMergeOptions,DevExpress.XtraRichEdit.IRichEditDocumentServer)">
       <summary>
-        <para>Merges the current document using the specified options and sends the result to the specified RichEditDocumentServer instance.</para>
+        <para>Merges data to the current document using the specified options and sends the result to the specified RichEditDocumentServer instance.</para>
       </summary>
       <param name="options">A <see cref="T:DevExpress.XtraRichEdit.API.Native.MailMergeOptions"/> interface exposing options for the current merge.</param>
       <param name="targetDocumentServer">An object implementing the IRichEditDocumentServer interface, such as the <see cref="T:DevExpress.XtraRichEdit.RichEditDocumentServer"/> or the  <see cref="T:DevExpress.XtraRichEdit.RichEditControl"/> instance.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(DevExpress.XtraRichEdit.API.Native.MailMergeOptions,System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
-        <para>Merges the current document using the specified options and sends the result to the specified stream in a specified format.</para>
+        <para>Merges data to the current document and sends the result in the specified format to a stream. Allows you to set mail merge options.</para>
       </summary>
-      <param name="options">A <see cref="T:DevExpress.XtraRichEdit.API.Native.MailMergeOptions"/> interface exposing options for the current merge.</param>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the output stream.</param>
-      <param name="format">A <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration member specifying the destination format.</param>
+      <param name="options">An object that contains options for the current merge.</param>
+      <param name="stream">An output stream.</param>
+      <param name="format">An enumeration member that indicates the destination format.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(DevExpress.XtraRichEdit.API.Native.MailMergeOptions,System.String,DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
-        <para>Merges the current document using the specified options and saves the result to the specified file and format.</para>
+        <para>Merges data to the current document, and saves the result to a file with the specified format. Allows you to set mail merge options.</para>
       </summary>
-      <param name="options">A <see cref="T:DevExpress.XtraRichEdit.API.Native.MailMergeOptions"/> interface exposing options for the merge.</param>
+      <param name="options">An object that contains options for the current merge.</param>
       <param name="fileName">A name of the file to which the merged document is saved.</param>
-      <param name="format">A <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration member specifying the destination format.</param>
+      <param name="format">An enumeration member that indicates the destination format.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(DevExpress.XtraRichEdit.IRichEditDocumentServer)">
       <summary>
-        <para>Merges the current document and sends the result to the specified RichEditDocumentServer instance.</para>
+        <para>Merges data to the current document, and sends the result to the specified RichEditDocumentServer instance.</para>
       </summary>
       <param name="documentServer">An object implementing the IRichEditDocumentServer interface, such as the <see cref="T:DevExpress.XtraRichEdit.RichEditDocumentServer"/> or the  <see cref="T:DevExpress.XtraRichEdit.RichEditControl"/> instance.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
-        <para>Merges the current document and sends the result to the specified stream in a specified format.</para>
+        <para>Merges data to the current document, and sends the result in the specified format to a stream.</para>
       </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the output stream.</param>
-      <param name="format">A <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration member specifying the destination format.</param>
+      <param name="stream">The output stream.</param>
+      <param name="format">An enumeration member that indicates the destination format.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.MailMerge(System.String,DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
-        <para>Merges the current document and sends the result to the specified file in a specified format.</para>
+        <para>Merges data to the current document and sends the result to a file in the specified format.</para>
       </summary>
-      <param name="fileName">A name of the file to which the merged document is saved.</param>
-      <param name="format">A <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration member specifying the destination format.</param>
+      <param name="fileName">A name of the file to which the merge result is saved.</param>
+      <param name="format">An enumeration member that indicates the destination format.</param>
     </member>
     <member name="E:DevExpress.XtraRichEdit.RichEditControl.MailMergeFinished">
       <summary>
-        <para>Fires when mail merge is completed.</para>
+        <para>Fires when the mail merge is completed.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraRichEdit.RichEditControl.MailMergeRecordFinished">
@@ -2055,7 +2054,7 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <summary>
         <para>For internal use.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="P:DevExpress.XtraRichEdit.RichEditControl.Modified">
       <summary>
@@ -2152,18 +2151,18 @@ The default is DocumentLayoutUnit.Pixel.</value>
         <para>Prints the document to the default printer.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.Print(System.Drawing.Printing.PrinterSettings)">
-      <summary>
-        <para>Prints the document with the given printer settings.</para>
-      </summary>
-      <param name="printerSettings">A <see cref="T:System.Drawing.Printing.PrinterSettings"/> instance containing printer settings.</param>
-    </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.Print(System.Drawing.Printing.PrinterSettings,System.String)">
       <summary>
         <para>Prints the document with the given printer settings and document name.</para>
       </summary>
       <param name="printerSettings">A <see cref="T:System.Drawing.Printing.PrinterSettings"/> instance containing printer settings.</param>
       <param name="printDocumentName">A string indicating the document name to be printed.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.Print(System.Drawing.Printing.PrinterSettings)">
+      <summary>
+        <para>Prints the document with the given printer settings.</para>
+      </summary>
+      <param name="printerSettings">A <see cref="T:System.Drawing.Printing.PrinterSettings"/> instance containing printer settings.</param>
     </member>
     <member name="E:DevExpress.XtraRichEdit.RichEditControl.PropertyChanged">
       <summary>
@@ -2191,12 +2190,6 @@ The default is DocumentLayoutUnit.Pixel.</value>
         <para>Reapplies the last action that was undone in the control.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.RemoveService(System.Type)">
-      <summary>
-        <para>Removes the service of specified type from the service container.</para>
-      </summary>
-      <param name="serviceType">The type of service to remove.</param>
-    </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.RemoveService(System.Type,System.Boolean)">
       <summary>
         <para>Removes the service of the specified type from the service container.</para>
@@ -2204,12 +2197,11 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="serviceType">The type of service to remove.</param>
       <param name="promote">true to promote this request to any parent service containers; otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.RemoveShortcutKey(System.Windows.Forms.Keys,System.Windows.Forms.Keys)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.RemoveService(System.Type)">
       <summary>
-        <para>Removes a command shortcut for all RichEdit views.</para>
+        <para>Removes the service of specified type from the service container.</para>
       </summary>
-      <param name="key">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a shortcut key.</param>
-      <param name="modifier">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a modifier key.</param>
+      <param name="serviceType">The type of service to remove.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.RemoveShortcutKey(System.Windows.Forms.Keys,System.Windows.Forms.Keys,DevExpress.XtraRichEdit.RichEditViewType)">
       <summary>
@@ -2226,6 +2218,13 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="key">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a shortcut key.</param>
       <param name="modifier">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a modifier key.</param>
       <param name="updateToolTip">True to modify a tooltip of the <see cref="T:DevExpress.XtraBars.BarItem"/> to which a command is assigned to remove a reference to the shortcut key; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.RemoveShortcutKey(System.Windows.Forms.Keys,System.Windows.Forms.Keys)">
+      <summary>
+        <para>Removes a command shortcut for all RichEdit views.</para>
+      </summary>
+      <param name="key">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a shortcut key.</param>
+      <param name="modifier">A <see cref="T:System.Windows.Forms.Keys"/> enumeration member specifying a modifier key.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.ReplaceService``1(``0)">
       <summary>
@@ -2244,7 +2243,7 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <summary>
         <para>This property is not in effect for the <see cref="T:DevExpress.XtraRichEdit.RichEditControl"/> class.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="P:DevExpress.XtraRichEdit.RichEditControl.RtfText">
       <summary>
@@ -2263,13 +2262,6 @@ The default is DocumentLayoutUnit.Pixel.</value>
       </summary>
       <returns>true if a document has been successfully saved; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(DevExpress.XtraRichEdit.DocumentFormat)">
-      <summary>
-        <para>Saves the document to a byte array in the specified file format.</para>
-      </summary>
-      <param name="documentFormat">An enumeration member that specifies the output document format.</param>
-      <returns>A byte array that contains data in the specified format.</returns>
-    </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(DevExpress.XtraRichEdit.DocumentFormat,DevExpress.XtraRichEdit.API.Native.EncryptionSettings)">
       <summary>
         <para>Saves the document to a byte array in the specified file format and encrypts it with a password.</para>
@@ -2278,12 +2270,12 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="encryptionSettings">Specifies encryption settings.</param>
       <returns>A byte array that contains encrypted data in the specified format.</returns>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
-        <para>Saves the control’s document to a file and specifies the document’s format.</para>
+        <para>Saves the document to a byte array in the specified file format.</para>
       </summary>
-      <param name="stream">The stream to output the document to.</param>
-      <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration values.</param>
+      <param name="documentFormat">An enumeration member that specifies the output document format.</param>
+      <returns>A byte array that contains data in the specified format.</returns>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat,DevExpress.XtraRichEdit.API.Native.EncryptionSettings)">
       <summary>
@@ -2293,11 +2285,11 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="documentFormat">Indicates the document format.</param>
       <param name="encryptionSettings">Document encryption settings.</param>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(System.String,DevExpress.XtraRichEdit.DocumentFormat)">
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(System.IO.Stream,DevExpress.XtraRichEdit.DocumentFormat)">
       <summary>
         <para>Saves the control’s document to a file and specifies the document’s format.</para>
       </summary>
-      <param name="fileName">A string value specifying the path to a file into which to save the control’s document.</param>
+      <param name="stream">The stream to output the document to.</param>
       <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration values.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(System.String,DevExpress.XtraRichEdit.DocumentFormat,DevExpress.XtraRichEdit.API.Native.EncryptionSettings)">
@@ -2307,6 +2299,13 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <param name="fileName">A file name.</param>
       <param name="documentFormat">Indicates the document format.</param>
       <param name="encryptionSettings">Document encryption settings.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(System.String,DevExpress.XtraRichEdit.DocumentFormat)">
+      <summary>
+        <para>Saves the control’s document to a file and specifies the document’s format.</para>
+      </summary>
+      <param name="fileName">A string value specifying the path to a file into which to save the control’s document.</param>
+      <param name="documentFormat">One of the <see cref="T:DevExpress.XtraRichEdit.DocumentFormat"/> enumeration values.</param>
     </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditControl.SaveDocument(System.Windows.Forms.IWin32Window)">
       <summary>
@@ -2666,18 +2665,18 @@ The default is DocumentLayoutUnit.Pixel.</value>
         <para>Defines an object used to draw lines on the layout canvas.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraRichEdit.RichEditPen.#ctor(System.Drawing.Color)">
-      <summary>
-        <para>Initializes new instance of the <see cref="T:DevExpress.XtraRichEdit.RichEditPen"></see> class with the specified settings.</para>
-      </summary>
-      <param name="color">Represents one of the ARGB color values.</param>
-    </member>
     <member name="M:DevExpress.XtraRichEdit.RichEditPen.#ctor(System.Drawing.Color,System.Int32)">
       <summary>
         <para>Initializes new instance of the <see cref="T:DevExpress.XtraRichEdit.RichEditPen"></see> class with the specified settings.</para>
       </summary>
       <param name="color">Represents one of the ARGB color values.</param>
       <param name="thickness">An int value that is the line thickness.</param>
+    </member>
+    <member name="M:DevExpress.XtraRichEdit.RichEditPen.#ctor(System.Drawing.Color)">
+      <summary>
+        <para>Initializes new instance of the <see cref="T:DevExpress.XtraRichEdit.RichEditPen"></see> class with the specified settings.</para>
+      </summary>
+      <param name="color">Represents one of the ARGB color values.</param>
     </member>
     <member name="P:DevExpress.XtraRichEdit.RichEditPen.Color">
       <summary>
@@ -2909,7 +2908,7 @@ The default is DocumentLayoutUnit.Pixel.</value>
       <summary>
         <para>For internal use.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="T:DevExpress.XtraRichEdit.SymbolFormShowingEventHandler">
       <summary>

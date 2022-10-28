@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
   <assembly>
     <name>DevExpress.Data.Desktop.v22.1</name>
   </assembly>
@@ -113,18 +113,18 @@
         <para>Contains system information used to identify a video capture device.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.Data.Camera.CameraDeviceInfo.#ctor(System.String)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.Data.Camera.CameraDeviceInfo"/> class with the specified settings.</para>
-      </summary>
-      <param name="monikerString">A String value that specifies the string representation of the moniker for the video capture device. This value is assigned to the <see cref="F:DevExpress.Data.Camera.CameraDeviceInfo.MonikerString"/> field.</param>
-    </member>
     <member name="M:DevExpress.Data.Camera.CameraDeviceInfo.#ctor(System.String,System.String)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.Data.Camera.CameraDeviceInfo"/> class with the specified settings.</para>
       </summary>
       <param name="monikerString">A String value that specifies the string representation of the moniker for the video capture device. This value is assigned to the <see cref="F:DevExpress.Data.Camera.CameraDeviceInfo.MonikerString"/> field.</param>
       <param name="name">A String value that specifies the UI display name of the video capture device. This value is assigned to the <see cref="F:DevExpress.Data.Camera.CameraDeviceInfo.Name"/> field.</param>
+    </member>
+    <member name="M:DevExpress.Data.Camera.CameraDeviceInfo.#ctor(System.String)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.Data.Camera.CameraDeviceInfo"/> class with the specified settings.</para>
+      </summary>
+      <param name="monikerString">A String value that specifies the string representation of the moniker for the video capture device. This value is assigned to the <see cref="F:DevExpress.Data.Camera.CameraDeviceInfo.MonikerString"/> field.</param>
     </member>
     <member name="M:DevExpress.Data.Camera.CameraDeviceInfo.CompareTo(System.Object)">
       <summary>
@@ -137,13 +137,11 @@
       <summary>
         <para>The string representation of the moniker for the video capture device.</para>
       </summary>
-      <value></value>
     </member>
     <member name="F:DevExpress.Data.Camera.CameraDeviceInfo.Name">
       <summary>
         <para>The UI display name of the video capture device.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.Data.Camera.CameraDeviceInfo.ToString">
       <summary>
@@ -161,10 +159,6 @@
         <para>Gets the default value of the video property.</para>
       </summary>
       <value>An <see cref="T:System.Int32"/> value that specifies the default value of the video property.</value>
-    </member>
-    <member name="P:DevExpress.Data.Camera.DeviceVideoProperty.IsActive">
-      <summary />
-      <value></value>
     </member>
     <member name="P:DevExpress.Data.Camera.DeviceVideoProperty.Max">
       <summary>
@@ -287,12 +281,6 @@
       </summary>
       <value>A <see cref="T:DevExpress.Data.Camera.DeviceVideoProperty"/> object that is the video property specifying the white balance, as a color temperature in degrees Kelvin.</value>
     </member>
-    <member name="N:DevExpress.Data.Controls">
-      <summary />
-    </member>
-    <member name="T:DevExpress.Data.Controls.ControlRows">
-      <summary />
-    </member>
     <member name="F:DevExpress.Data.Controls.ControlRows.Selected">
       <summary>
         <para>The Chart Control visualizes data rows that are selected within a source control.</para>
@@ -307,9 +295,6 @@
       <summary>
         <para>The Chart Control visualizes data rows that the source control filters.</para>
       </summary>
-    </member>
-    <member name="T:DevExpress.Data.Controls.ControlRowSource">
-      <summary />
     </member>
     <member name="M:DevExpress.Data.Controls.ControlRowSource.#ctor">
       <summary>
@@ -339,9 +324,6 @@
       </summary>
       <param name="raiseList">The value indicating whether the PropertyChanged event should be raised.</param>
     </member>
-    <member name="T:DevExpress.Data.Controls.ControlRowSourceChangedEventArgs">
-      <summary />
-    </member>
     <member name="M:DevExpress.Data.Controls.ControlRowSourceChangedEventArgs.#ctor(DevExpress.Data.Controls.ControlRows)">
       <summary>
         <para>Initializes new instance of the <see cref="T:DevExpress.Data.Controls.ControlRowSourceChangedEventArgs"></see> class with the specified settings.</para>
@@ -360,9 +342,6 @@
       </summary>
       <param name="sender">An object of any type that triggers the <see cref="E:DevExpress.Data.Controls.IControlRowSource.Changed"/> event.</param>
       <param name="e">Event arguments that provide data for the <see cref="E:DevExpress.XtraPrinting.PrintingSystemBase.PrintProgress"/> event.</param>
-    </member>
-    <member name="T:DevExpress.Data.Controls.IControlRowSource">
-      <summary />
     </member>
     <member name="E:DevExpress.Data.Controls.IControlRowSource.Changed">
       <summary>
@@ -396,22 +375,11 @@
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.Printing.PrinterItem"/> class with specified settings.</para>
       </summary>
-      <param name="printQueue"></param>
-      <param name="isFax"></param>
-      <param name="isNetwork"></param>
-      <param name="isDefault"></param>
-      <param name="isOffline"></param>
     </member>
     <member name="M:DevExpress.Printing.PrinterItem.#ctor(System.String,System.String,System.String,System.String,System.String,DevExpress.Printing.Native.PrintEditor.PrinterStatus)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.Printing.PrinterItem"/> class with specified settings.</para>
       </summary>
-      <param name="fullName"></param>
-      <param name="displayName"></param>
-      <param name="location"></param>
-      <param name="comment"></param>
-      <param name="printerDocumentsInQueue"></param>
-      <param name="status"></param>
     </member>
     <member name="P:DevExpress.Printing.PrinterItem.Comment">
       <summary>
@@ -455,146 +423,129 @@
       </summary>
       <value>A string that specifies the printer status.</value>
     </member>
-    <member name="N:DevExpress.Utils.Html">
-      <summary />
-    </member>
     <member name="T:DevExpress.Utils.Html.DxHtmlElement">
-      <summary />
+      <summary>
+        <para>An element of an HTML-CSS template.</para>
+      </summary>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.#ctor(DevExpress.Utils.Html.Dom.DxHtmlDocumentNode)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.Utils.Html.DxHtmlElement"/> class with specified settings.</para>
       </summary>
-      <param name="documentNode"></param>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.ChildElementCount">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Returns the number of elements owned by this HTML element (the length of the <see cref="P:DevExpress.Utils.Html.DxHtmlElement.Children"/> collection).</para>
+      </summary>
+      <value>The number of HTML elements owned by this element.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.Children">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Returns HTML elements owned by this element. This collection includes only direct children; elements owned by child elements are not included.</para>
+      </summary>
+      <value>The collection of child HTML elements.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.ClassName">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Gets or sets the name of the CSS style applied to this element.</para>
+      </summary>
+      <value>The name of the CSS style applied to this element.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.ClientHeight">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Returns the height of the element’s client area (the area that contains child elements of this HTML element).</para>
+      </summary>
+      <value>The height of this element’s client area.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.ClientLeft">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Returns the distance between the element’s left border and the left border of this element’s client area (the area that contains child elements of this HTML element).</para>
+      </summary>
+      <value>The left margin of the element’s client area.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.ClientTop">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Returns the distance between the element’s top border and the top border of this element’s client area (the area that contains child elements of this HTML element).</para>
+      </summary>
+      <value>The top margin of the element’s client area.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.ClientWidth">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Returns the width of the element’s client area (the area that contains child elements of this HTML element).</para>
+      </summary>
+      <value>The width of this element’s client area.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.Disabled">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Gets or sets whether this element is disabled. Disabled elements do not trigger HtmlElementMouseClick and HtmlElementMouseDown events, and are styled with the “main_class_name:disabled” CSS pseudo-class.</para>
+      </summary>
+      <value>true if this element is disabled; otherwise, false.</value>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.FindElementById(System.String)">
-      <summary />
-      <param name="id"></param>
-      <returns></returns>
+      <summary>
+        <para>Returns an item of this element’s Children collection that has the target ID. If multiple items are present, it returns the first found item.</para>
+      </summary>
+      <param name="id">The ID to search.</param>
+      <returns>The HTML element with the target ID.</returns>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.FindElementsByClass(System.String)">
-      <summary />
-      <param name="class"></param>
-      <returns></returns>
+      <summary>
+        <para>Returns all of this element’s Children collection items that are styled with the target CSS class.</para>
+      </summary>
+      <param name="class">The name of a CSS style to find.</param>
+      <returns>The list of found HTML elements.</returns>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.FindElementsByTag(System.String)">
-      <summary />
-      <param name="name"></param>
-      <returns></returns>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElement.FindTemplate(System.String)">
-      <summary />
-      <param name="templateId"></param>
-      <returns></returns>
+      <summary>
+        <para>Returns all of this element’s Children collection items that have the specific tag.</para>
+      </summary>
+      <param name="name">The tag to find.</param>
+      <returns>The collection of child elements with the given tag.</returns>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.Focus(System.Boolean)">
-      <summary />
-      <param name="value"></param>
-      <returns></returns>
+      <summary>
+        <para>Gets or sets whether this element is focused. Focused elements are styled with the “main_class_name:focus” CSS pseudo-class.</para>
+      </summary>
+      <param name="value">true to focus the element and apply the “:focus” CSS pseudo-class; false to unfocus the element and apply the regular CSS style.</param>
+      <returns>true if the item was successfully focused; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.ForEach(System.Action{DevExpress.Utils.Html.DxHtmlElement},System.Predicate{DevExpress.Utils.Html.DxHtmlElement})">
-      <summary />
-      <param name="action"></param>
-      <param name="predicate"></param>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElement.GetAttribute(System.String)">
-      <summary />
-      <param name="attributeName"></param>
-      <returns></returns>
+      <summary>
+        <para>Modifies all child elements that match the given predicate. This method searches for matching elements recursively: first among this element’s Children collection, then among child elements of these children, and so on, until it reaches the lowermost elements.</para>
+      </summary>
+      <param name="action">The action that modifies found elements.</param>
+      <param name="predicate">The condition used to find HTML elements.</param>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.GetComputedStyle">
-      <summary />
-      <returns></returns>
+      <summary>
+        <para>Returns the actual CSS style applied to this element.</para>
+      </summary>
+      <returns>The actual CSS style of this element.</returns>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.Hidden">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Gets or sets whether this element is shown on-screen.</para>
+      </summary>
+      <value>true to completely hide this element; false to display the element.</value>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.Id">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElement.Internals">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElement.NodeType">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Gets or sets the unique element identifier. You can search elements by their IDs with the FindElementById(String) method.</para>
+      </summary>
+      <value>The element identifier.</value>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElement.Select(System.Boolean)">
-      <summary />
-      <param name="value"></param>
-      <returns></returns>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElement.SetAttribute(System.String,System.Object)">
-      <summary />
-      <param name="attributeName"></param>
-      <param name="value"></param>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElement.SetInnerHtml(System.String)">
-      <summary />
-      <param name="htmlTemplate"></param>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElement.SetInnerText(System.String)">
-      <summary />
-      <param name="text"></param>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElement.ShadowRoot">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElement.Slot">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElement.Style">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElement.TabIndex">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElement.TagName">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Gets or sets whether this element is selected. Focused elements are styled with the “main_class_name:select” CSS pseudo-class.</para>
+      </summary>
+      <param name="value">true to select the element and apply the “:select” CSS pseudo-class; false to deselect the element and apply the regular CSS style.</param>
+      <returns>true if the element was successfully selected; otherwise, false.</returns>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElement.Title">
-      <summary />
-      <value></value>
+      <summary>
+        <para>Gets or sets the element tooltip.</para>
+      </summary>
+      <value>The tooltip displayed when a user hovers over this element.</value>
     </member>
     <member name="T:DevExpress.Utils.Html.DxHtmlElementEventArgs">
       <summary>
@@ -610,14 +561,11 @@
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.Utils.Html.DxHtmlElementEventArgs"/> class with specified settings.</para>
       </summary>
-      <param name="node"></param>
     </member>
     <member name="M:DevExpress.Utils.Html.DxHtmlElementEventArgs.#ctor(DevExpress.Utils.Html.DxHtmlRootElement,DevExpress.Utils.Html.DxHtmlNode)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.Utils.Html.DxHtmlElementEventArgs"/> class with specified settings.</para>
       </summary>
-      <param name="rootElement"></param>
-      <param name="node"></param>
     </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.Bubbles">
       <summary>
@@ -631,56 +579,17 @@
       </summary>
       <value>true to prevent an event from bubbling up along the element tree; otherwise, false.</value>
     </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.CurrentTarget">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.Element">
-      <summary />
-      <value></value>
-    </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.ElementId">
       <summary>
         <para>Returns the unique identifier of an HTML element. Element IDs are set in HTML markup (the “id” property). See any “HtmlElementMouse~” event description for more information (for example, <see cref="E:DevExpress.XtraGrid.Views.WinExplorer.WinExplorerView.HtmlElementMouseClick"/>).</para>
       </summary>
       <value>The unique identifier of an HTML element.</value>
     </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.NodeName">
-      <summary />
-      <value></value>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElementEventArgs.ParentHasClassName(System.String)">
-      <summary />
-      <param name="class"></param>
-      <returns></returns>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElementEventArgs.ParentHasId(System.String)">
-      <summary />
-      <param name="id"></param>
-      <returns></returns>
-    </member>
-    <member name="M:DevExpress.Utils.Html.DxHtmlElementEventArgs.ParentHasTag(System.String)">
-      <summary />
-      <param name="tagName"></param>
-      <returns></returns>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.RootElement">
-      <summary />
-      <value></value>
-    </member>
     <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.SuppressOwnerEvent">
       <summary>
         <para>Specifies whether a control whose HTML element triggered this event should raise its own related event. See any “HtmlElementMouse~” event description for more information (for example, <see cref="E:DevExpress.XtraGrid.Views.WinExplorer.WinExplorerView.HtmlElementMouseClick"/>).</para>
       </summary>
       <value>true if a parent control’s own event should not fire; otherwise, false.</value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.TagName">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.Utils.Html.DxHtmlElementEventArgs.Target">
-      <summary />
-      <value></value>
     </member>
     <member name="T:DevExpress.Utils.Html.DxHtmlElementMouseEventArgs">
       <summary>
@@ -758,10 +667,6 @@
       </summary>
       <value>A <see cref="T:System.String"/> value that specifies the theme name.</value>
     </member>
-    <member name="P:DevExpress.Xpf.Core.ApplicationThemeHelper.ConfigurationUserLevel">
-      <summary />
-      <value></value>
-    </member>
     <member name="M:DevExpress.Xpf.Core.ApplicationThemeHelper.SaveApplicationThemeName">
       <summary>
         <para>Saves the current theme name to the application configuration file.</para>
@@ -772,15 +677,10 @@
         <para>Loads the theme name from the application configuration file.</para>
       </summary>
     </member>
-    <member name="P:DevExpress.Xpf.Core.ApplicationThemeHelper.UseDefaultSvgImages">
-      <summary />
-      <value></value>
-    </member>
     <member name="P:DevExpress.Xpf.Core.ApplicationThemeHelper.UseLegacyDefaultTheme">
       <summary>
         <para>Specifies whether the application should use the legacy default theme (“DeepBlue”).</para>
       </summary>
-      <value></value>
     </member>
     <member name="T:DevExpress.Xpf.Core.CompatibilityMode">
       <summary>
@@ -832,20 +732,10 @@
         <para>The DevExpress WPF controls function like in v21.1.</para>
       </summary>
     </member>
-    <member name="F:DevExpress.Xpf.Core.CompatibilityMode.v21_2">
-      <summary />
-    </member>
-    <member name="F:DevExpress.Xpf.Core.CompatibilityMode.v22_1">
-      <summary />
-    </member>
     <member name="T:DevExpress.Xpf.Core.CompatibilitySettings">
       <summary>
         <para>Provides access to compatibility settings.</para>
       </summary>
-    </member>
-    <member name="P:DevExpress.Xpf.Core.CompatibilitySettings.AllowAccessibilityAlerts">
-      <summary />
-      <value></value>
     </member>
     <member name="P:DevExpress.Xpf.Core.CompatibilitySettings.AllowEditTextExpressionInFormatRule">
       <summary>

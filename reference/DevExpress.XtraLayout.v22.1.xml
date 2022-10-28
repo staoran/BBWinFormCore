@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
   <assembly>
     <name>DevExpress.XtraLayout.v22.1</name>
   </assembly>
@@ -53,7 +53,6 @@
       <summary>
         <para>For internal use.</para>
       </summary>
-      <returns></returns>
     </member>
     <member name="P:DevExpress.XtraDataLayout.DataLayoutControl.CurrentRecord">
       <summary>
@@ -275,7 +274,6 @@
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraDataLayout.RetrieveFieldsParameters.DataSourceNullValue">
       <summary>
@@ -287,7 +285,7 @@
     <member name="P:DevExpress.XtraDataLayout.RetrieveFieldsParameters.DataSourceUpdateMode">
       <summary>
         <para>Gets or sets the default value used to initialize the Binding.DataSourceUpdateMode property for all auto-generated editors.</para>
-        <para></para>
+        <para />
         <para>This property indicates when changes to the bound editor property are propagated to the data source.</para>
       </summary>
       <value>The default value used to initialize the Binding.DataSourceUpdateMode property of all auto-generated editors.</value>
@@ -472,11 +470,6 @@
       </summary>
       <returns>The <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/>‘s display text.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.BaseLayoutItem.GetPaintAppearanceItemCaptionByState(DevExpress.Utils.Drawing.ObjectState)">
-      <summary />
-      <param name="objectState"></param>
-      <returns></returns>
-    </member>
     <member name="P:DevExpress.XtraLayout.BaseLayoutItem.Height">
       <summary>
         <para>Gets or sets the layout item’s height.</para>
@@ -555,14 +548,6 @@
         <para>Occurs when the mouse button is released if it was pressed within a layout item.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraLayout.BaseLayoutItem.Move(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
-      <summary>
-        <para>Moves the item to the specified visual position within the LayoutControl.</para>
-      </summary>
-      <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant that represents the layout item within the LayoutControl.</param>
-      <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified baseItem.</param>
-      <returns>true if the item has been successfully moved to a new position; otherwise, false.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.BaseLayoutItem.Move(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType,DevExpress.XtraLayout.Utils.MoveType)">
       <summary>
         <para>Moves the item to the specified visual position within the LayoutControl.</para>
@@ -570,6 +555,14 @@
       <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant that represents the layout item within the LayoutControl.</param>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified baseItem.</param>
       <param name="moveType">A <see cref="T:DevExpress.XtraLayout.Utils.MoveType"/> enumeration value that specifies how a layout item is inserted to another position.</param>
+      <returns>true if the item has been successfully moved to a new position; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.BaseLayoutItem.Move(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
+      <summary>
+        <para>Moves the item to the specified visual position within the LayoutControl.</para>
+      </summary>
+      <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant that represents the layout item within the LayoutControl.</param>
+      <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified baseItem.</param>
       <returns>true if the item has been successfully moved to a new position; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.BaseLayoutItem.Move(DevExpress.XtraLayout.Customization.LayoutItemDragController)">
@@ -717,9 +710,9 @@
     </member>
     <member name="P:DevExpress.XtraLayout.BaseLayoutItem.Text">
       <summary>
-        <para>Gets or sets the text associated with the layout item.</para>
+        <para>Gets or sets the caption of this layout item. If the Text property is null (Nothing in VB.NET) or String.Empty, this property returns the item name.</para>
       </summary>
-      <value>A string that specifies the layout item’s text.</value>
+      <value>A string that is the layout item’s text.</value>
     </member>
     <member name="E:DevExpress.XtraLayout.BaseLayoutItem.TextChanged">
       <summary>
@@ -950,11 +943,10 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Initializes a new instance of a <see cref="T:DevExpress.XtraLayout.ColumnDefinition"/> class with the default settings.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraLayout.ColumnDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup)">
+    <member name="M:DevExpress.XtraLayout.ColumnDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup,System.Double,System.Windows.Forms.SizeType,System.Boolean)">
       <summary>
-        <para>Initializes a new instance of a <see cref="T:DevExpress.XtraLayout.ColumnDefinition"/> class with the specified owner.</para>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.ColumnDefinition"/> class with specified settings.</para>
       </summary>
-      <param name="owner">A layout group that owns the created <see cref="T:DevExpress.XtraLayout.ColumnDefinition"/> object.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.ColumnDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup,System.Double,System.Windows.Forms.SizeType)">
       <summary>
@@ -964,14 +956,11 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="size">The width of the created column. This value is assigned to the <see cref="P:DevExpress.XtraLayout.ColumnDefinition.Width"/> property.</param>
       <param name="sizingType">The size type of the created column. This value is assigned to the <see cref="P:DevExpress.XtraLayout.ColumnDefinition.SizeType"/> property.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.ColumnDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup,System.Double,System.Windows.Forms.SizeType,System.Boolean)">
+    <member name="M:DevExpress.XtraLayout.ColumnDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup)">
       <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.ColumnDefinition"/> class with specified settings.</para>
+        <para>Initializes a new instance of a <see cref="T:DevExpress.XtraLayout.ColumnDefinition"/> class with the specified owner.</para>
       </summary>
-      <param name="owner"></param>
-      <param name="size"></param>
-      <param name="sizingType"></param>
-      <param name="visible"></param>
+      <param name="owner">A layout group that owns the created <see cref="T:DevExpress.XtraLayout.ColumnDefinition"/> object.</param>
     </member>
     <member name="P:DevExpress.XtraLayout.ColumnDefinition.SizeType">
       <summary>
@@ -1102,29 +1091,12 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Contains methods to move a layout item to a position next to another layout item.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraLayout.Customization.LayoutItemDragController.#ctor(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem)">
-      <summary>
-        <para>Initializes a new <see cref="T:DevExpress.XtraLayout.Customization.LayoutItemDragController"/> instance with settings specifying that the_dragItem_ should be inserted horizontally after the baseItem, occupying its largest part (typically, half the region).</para>
-      </summary>
-      <param name="dragItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object to be moved. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.DragItem"/> property.</param>
-      <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object relative to which the dragItem will be positioned. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.Item"/> property.</param>
-    </member>
     <member name="M:DevExpress.XtraLayout.Customization.LayoutItemDragController.#ctor(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertLocation,DevExpress.XtraLayout.Utils.LayoutType)">
       <summary>
         <para>Initializes a new <see cref="T:DevExpress.XtraLayout.Customization.LayoutItemDragController"/> instance with settings specifying that the dragItem should be inserted next to the baseItem, occupying its largest part (typically, half the region).</para>
       </summary>
       <param name="dragItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object to be moved. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.DragItem"/> property.</param>
       <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object relative to which the dragItem will be positioned. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.Item"/> property.</param>
-      <param name="insertLocation">A <see cref="T:DevExpress.XtraLayout.Utils.InsertLocation"/> value that specifies whether the dragItem is inserted before or after the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.InsertLocation"/> property.</param>
-      <param name="layoutType">A <see cref="T:DevExpress.XtraLayout.Utils.LayoutType"/> value that specifies whether the dragItem is inserted horizontally or vertically next to the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.LayoutType"/> property.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.Customization.LayoutItemDragController.#ctor(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.MoveType,DevExpress.XtraLayout.Utils.InsertLocation,DevExpress.XtraLayout.Utils.LayoutType)">
-      <summary>
-        <para>Initializes a new <see cref="T:DevExpress.XtraLayout.Customization.LayoutItemDragController"/> instance with settings specifying that the dragItem should be inserted next to the baseItem.</para>
-      </summary>
-      <param name="dragItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object to be moved. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.DragItem"/> property.</param>
-      <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object relative to which the dragItem will be positioned. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.Item"/> property.</param>
-      <param name="moveType">A <see cref="T:DevExpress.XtraLayout.Utils.MoveType"/> value that specifies whether the dragItem is inserted inside or outside the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.MoveType"/> property.</param>
       <param name="insertLocation">A <see cref="T:DevExpress.XtraLayout.Utils.InsertLocation"/> value that specifies whether the dragItem is inserted before or after the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.InsertLocation"/> property.</param>
       <param name="layoutType">A <see cref="T:DevExpress.XtraLayout.Utils.LayoutType"/> value that specifies whether the dragItem is inserted horizontally or vertically next to the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.LayoutType"/> property.</param>
     </member>
@@ -1137,7 +1109,23 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="moveType">A <see cref="T:DevExpress.XtraLayout.Utils.MoveType"/> value that specifies whether the dragItem is inserted inside or outside the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.MoveType"/> property.</param>
       <param name="insertLocation">A <see cref="T:DevExpress.XtraLayout.Utils.InsertLocation"/> value that specifies whether the dragItem is inserted before or after the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.InsertLocation"/> property.</param>
       <param name="layoutType">A <see cref="T:DevExpress.XtraLayout.Utils.LayoutType"/> value that specifies whether the draItem is inserted horizontally or vertically next to the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.LayoutType"/> property.</param>
-      <param name="rating"></param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.Customization.LayoutItemDragController.#ctor(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.MoveType,DevExpress.XtraLayout.Utils.InsertLocation,DevExpress.XtraLayout.Utils.LayoutType)">
+      <summary>
+        <para>Initializes a new <see cref="T:DevExpress.XtraLayout.Customization.LayoutItemDragController"/> instance with settings specifying that the dragItem should be inserted next to the baseItem.</para>
+      </summary>
+      <param name="dragItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object to be moved. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.DragItem"/> property.</param>
+      <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object relative to which the dragItem will be positioned. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.Item"/> property.</param>
+      <param name="moveType">A <see cref="T:DevExpress.XtraLayout.Utils.MoveType"/> value that specifies whether the dragItem is inserted inside or outside the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.MoveType"/> property.</param>
+      <param name="insertLocation">A <see cref="T:DevExpress.XtraLayout.Utils.InsertLocation"/> value that specifies whether the dragItem is inserted before or after the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.InsertLocation"/> property.</param>
+      <param name="layoutType">A <see cref="T:DevExpress.XtraLayout.Utils.LayoutType"/> value that specifies whether the dragItem is inserted horizontally or vertically next to the baseItem. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.LayoutType"/> property.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.Customization.LayoutItemDragController.#ctor(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem)">
+      <summary>
+        <para>Initializes a new <see cref="T:DevExpress.XtraLayout.Customization.LayoutItemDragController"/> instance with settings specifying that the_dragItem_ should be inserted horizontally after the baseItem, occupying its largest part (typically, half the region).</para>
+      </summary>
+      <param name="dragItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object to be moved. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.DragItem"/> property.</param>
+      <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object relative to which the dragItem will be positioned. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.Item"/> property.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.Customization.LayoutItemDragController.#ctor(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Customization.LayoutItemDragController)">
       <summary>
@@ -1163,7 +1151,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.DragItem">
       <summary>
@@ -1175,7 +1162,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraLayout.Customization.LayoutItemDragController.DragWildItem">
       <summary>
@@ -1223,13 +1209,11 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.Customization.LayoutItemDragController.ShouldRestoreOriginalSize">
       <summary>
         <para>For internal use.</para>
       </summary>
-      <value></value>
     </member>
     <member name="T:DevExpress.XtraLayout.CustomizationModes">
       <summary>
@@ -1279,19 +1263,10 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <value>false.</value>
     </member>
-    <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ContentHorzAlignment">
-      <summary />
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ContentVertAlignment">
-      <summary />
-      <value></value>
-    </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ContentVisible">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.Control">
       <summary>
@@ -1303,7 +1278,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ControlMaxSize">
       <summary>
@@ -1321,7 +1295,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraLayout.EmptySpaceItem.GetDefaultText">
       <summary>
@@ -1333,37 +1306,31 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.Image">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ImageAlignment">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ImageIndex">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ImageOptions">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ImageToTextDistance">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.MaxSize">
       <summary>
@@ -1399,7 +1366,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.TypeName">
       <summary>
@@ -1593,18 +1559,18 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutControl"/> class.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.#ctor(System.Boolean)">
-      <summary>
-        <para>This constructor supports the internal infrastructure, and is not intended to be used directly from your code.</para>
-      </summary>
-      <param name="createFast">A Boolean value.</param>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.#ctor(System.Boolean,System.Boolean)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutControl"/> class with the specified settings.</para>
       </summary>
       <param name="fAllowUseSplitters">true to allow use splitters; otherwise, false.</param>
       <param name="fAllowUseTabbedGroup">true to allow use tabbed groups; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.#ctor(System.Boolean)">
+      <summary>
+        <para>This constructor supports the internal infrastructure, and is not intended to be used directly from your code.</para>
+      </summary>
+      <param name="createFast">A Boolean value.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.About">
       <summary>
@@ -1625,13 +1591,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The newly created group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.AddGroup(DevExpress.XtraLayout.LayoutGroup)">
-      <summary>
-        <para>Inserts the specified layout group to the root group.</para>
-      </summary>
-      <param name="newGroup">The group to add to the root group.</param>
-      <returns>The added group.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.AddGroup(DevExpress.XtraLayout.LayoutGroup,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
         <para>Inserts the specified layout group at a position relative to an item within the root group.</para>
@@ -1641,12 +1600,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The added group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.AddGroup(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.AddGroup(DevExpress.XtraLayout.LayoutGroup)">
       <summary>
-        <para>Creates a new layout group with the default layout type and the specified caption, and adds it to the root group.</para>
+        <para>Inserts the specified layout group to the root group.</para>
       </summary>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the group’s caption. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
-      <returns>The newly created group.</returns>
+      <param name="newGroup">The group to add to the root group.</param>
+      <returns>The added group.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.AddGroup(System.String,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -1657,18 +1616,18 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The newly created group.</returns>
     </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.AddGroup(System.String)">
+      <summary>
+        <para>Creates a new layout group with the default layout type and the specified caption, and adds it to the root group.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the group’s caption. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
+      <returns>The newly created group.</returns>
+    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem">
       <summary>
         <para>Creates a new layout item with the default layout type and adds it to the root group.</para>
       </summary>
       <returns>The newly created layout item.</returns>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(DevExpress.XtraLayout.BaseLayoutItem)">
-      <summary>
-        <para>Inserts the specified layout item to the root group.</para>
-      </summary>
-      <param name="newItem">The item to add to the root group.</param>
-      <returns>The added item.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -1687,20 +1646,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new item relative to the specified baseItem.</param>
       <returns>The newly created layout item.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(DevExpress.XtraLayout.BaseLayoutItem)">
       <summary>
-        <para>Creates a new layout item with the specified text and adds it to the root group.</para>
+        <para>Inserts the specified layout item to the root group.</para>
       </summary>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
-      <returns>The newly created layout item.</returns>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(System.String,System.Windows.Forms.Control)">
-      <summary>
-        <para>Creates a new layout item with the specified text and control, and adds it to the root group.</para>
-      </summary>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
-      <param name="control">The control to display in the new layout item. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.LayoutControlItem.Control"/> property.</param>
-      <returns>The newly created layout item.</returns>
+      <param name="newItem">The item to add to the root group.</param>
+      <returns>The added item.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(System.String,System.Windows.Forms.Control,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -1723,6 +1674,21 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new item relative to the specified baseItem.</param>
       <returns>The newly created layout item.</returns>
     </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(System.String,System.Windows.Forms.Control)">
+      <summary>
+        <para>Creates a new layout item with the specified text and control, and adds it to the root group.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
+      <param name="control">The control to display in the new layout item. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.LayoutControlItem.Control"/> property.</param>
+      <returns>The newly created layout item.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.AddItem(System.String)">
+      <summary>
+        <para>Creates a new layout item with the specified text and adds it to the root group.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
+      <returns>The newly created layout item.</returns>
+    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.AddTabbedGroup">
       <summary>
         <para>Creates a new tabbed group with the default layout type and adds it to the root group.</para>
@@ -1737,13 +1703,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new tabbed group relative to the baseItem.</param>
       <returns>The newly created group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup)">
-      <summary>
-        <para>Inserts the specified tabbed group to the root group.</para>
-      </summary>
-      <param name="newTabbedGroup">The group to add to the root group.</param>
-      <returns>The added group.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
         <para>Inserts the specified tabbed group at a position relative to an item within the root group.</para>
@@ -1751,6 +1710,13 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="newTabbedGroup">The group to add to the root group.</param>
       <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant (owned by the root group) next to which the ‘newTabbedGroup’ is inserted.</param>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new tabbed group relative to the specified item.</param>
+      <returns>The added group.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup)">
+      <summary>
+        <para>Inserts the specified tabbed group to the root group.</para>
+      </summary>
+      <param name="newTabbedGroup">The group to add to the root group.</param>
       <returns>The added group.</returns>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControl.AllowCustomization">
@@ -1816,7 +1782,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This property is not supported by the <see cref="T:DevExpress.XtraLayout.LayoutControl"/> class.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControl.AutoSize">
       <summary>
@@ -2035,24 +2000,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <param name="stream">A <see cref="T:System.IO.Stream"/> object which specifies the stream to which the <see cref="T:DevExpress.XtraLayout.LayoutControl"/> is exported in XML format.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToCsv(System.IO.Stream)">
-      <summary />
-      <param name="stream"></param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToCsv(System.IO.Stream,DevExpress.XtraPrinting.CsvExportOptions)">
-      <summary />
-      <param name="stream"></param>
-      <param name="options"></param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToCsv(System.String)">
-      <summary />
-      <param name="filePath"></param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToCsv(System.String,DevExpress.XtraPrinting.CsvExportOptions)">
-      <summary />
-      <param name="filePath"></param>
-      <param name="options"></param>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToDocx(System.IO.Stream)">
       <summary>
         <para>Exports the control’s data in the Office Open XML file format (DOCX file) and sends it to the specified stream.</para>
@@ -2064,12 +2011,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Exports the control’s data in the Office Open XML file format and saves it to the specified DOCX file.</para>
       </summary>
       <param name="filePath">A System.String value which specifies the full path (including the file name and extension) where the DOCX file should be created.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.IO.Stream)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a stream in HTML format</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.IO.Stream,DevExpress.XtraPrinting.HtmlExportOptions)">
       <summary>
@@ -2087,11 +2028,11 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="title">A <see cref="T:System.String"/> containing the name shown as the title of the created document.</param>
       <param name="compressed">true if the HTML code is compressed (secondary characters e.g. spaces are removed); otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.IO.Stream)">
       <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in HTML format</para>
+        <para>Exports the controls displayed within the LayoutControl to a stream in HTML format</para>
       </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.String,DevExpress.XtraPrinting.HtmlExportOptions)">
       <summary>
@@ -2099,13 +2040,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <param name="filePath">A <see cref="T:System.String"/> which specifies the name (including the full path) of the file to which the control is exported.</param>
       <param name="options">A <see cref="T:DevExpress.XtraPrinting.HtmlExportOptions"/> object which specifies the export options to be applied when the control is exported.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.String,System.String)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in HTML format using the specified character encoding.</para>
-      </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
-      <param name="htmlCharSet">A <see cref="T:System.String"/> representing the encoding name set in the output document (e.g. “UTF-8”).</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.String,System.String,System.String,System.Boolean)">
       <summary>
@@ -2115,6 +2049,19 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="htmlCharSet">A <see cref="T:System.String"/> representing the encoding name set in the output document (e.g. “UTF-8”).</param>
       <param name="title">A <see cref="T:System.String"/> containing the name shown as the title of the created document.</param>
       <param name="compressed">true if the HTML code is compressed (secondary characters e.g. spaces are removed); otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.String,System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a file in HTML format using the specified character encoding.</para>
+      </summary>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="htmlCharSet">A <see cref="T:System.String"/> representing the encoding name set in the output document (e.g. “UTF-8”).</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToHtml(System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a file in HTML format</para>
+      </summary>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToMht(System.IO.Stream,DevExpress.XtraPrinting.MhtExportOptions)">
       <summary>
@@ -2132,25 +2079,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="title">A <see cref="T:System.String"/> containing the name shown as the title of the created document.</param>
       <param name="compressed">true if the MHT code is compressed (secondary characters e.g. spaces are removed); otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToMht(System.String)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in MHT format.</para>
-      </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToMht(System.String,DevExpress.XtraPrinting.MhtExportOptions)">
       <summary>
         <para>Exports the control’s data to the specified file in MHT format using the specified options.</para>
       </summary>
       <param name="filePath">A <see cref="T:System.String"/> which specifies the name (including the full path) of the file to which the control is exported.</param>
       <param name="options">A <see cref="T:DevExpress.XtraPrinting.MhtExportOptions"/> object which specifies the export options to be applied when the control is exported.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToMht(System.String,System.String)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in MHT format using the specified character encoding.</para>
-      </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
-      <param name="htmlCharSet">A <see cref="T:System.String"/> representing the encoding name set in the output document (e.g. “UTF-8”).</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToMht(System.String,System.String,System.String,System.Boolean)">
       <summary>
@@ -2160,6 +2094,19 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="htmlCharSet">A <see cref="T:System.String"/> representing the encoding name set in the output document (e.g. “UTF-8”).</param>
       <param name="title">A <see cref="T:System.String"/> containing the name shown as the title of the created document.</param>
       <param name="compressed">true if the MHT code is compressed (secondary characters e.g. spaces are removed); otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToMht(System.String,System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a file in MHT format using the specified character encoding.</para>
+      </summary>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="htmlCharSet">A <see cref="T:System.String"/> representing the encoding name set in the output document (e.g. “UTF-8”).</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToMht(System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a file in MHT format.</para>
+      </summary>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToPdf(System.IO.Stream)">
       <summary>
@@ -2185,33 +2132,12 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a stream in TXT format.</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream,DevExpress.XtraPrinting.TextExportOptions)">
       <summary>
         <para>Exports the control’s data to the specified stream in Text format using the specified options.</para>
       </summary>
       <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
       <param name="options">A <see cref="T:DevExpress.XtraPrinting.TextExportOptions"/> object which specifies the export options to be applied when the control is exported.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream,System.String)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a stream in TXT format using the specified separator string.</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
-      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream,System.String,System.Boolean)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a stream in TXT format using the specified separator string and quotation settings.</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
-      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
-      <param name="quoteStringsWithSeparators">true to quote (place quotation marks around) text elements that contain symbols which coincide with the specified separator string; otherwise, false.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream,System.String,System.Boolean,System.Text.Encoding)">
       <summary>
@@ -2222,11 +2148,26 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="quoteStringsWithSeparators">true to quote (place quotation marks around) text elements that contain symbols which coincide with the specified separator string; otherwise, false.</param>
       <param name="encoding">A <see cref="T:System.Text.Encoding"/> class descendant specifying the encoding of the created text document.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream,System.String,System.Boolean)">
       <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in TXT format.</para>
+        <para>Exports the controls displayed within the LayoutControl to a stream in TXT format using the specified separator string and quotation settings.</para>
       </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
+      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
+      <param name="quoteStringsWithSeparators">true to quote (place quotation marks around) text elements that contain symbols which coincide with the specified separator string; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream,System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a stream in TXT format using the specified separator string.</para>
+      </summary>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
+      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.IO.Stream)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a stream in TXT format.</para>
+      </summary>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String,DevExpress.XtraPrinting.TextExportOptions)">
       <summary>
@@ -2234,21 +2175,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <param name="filePath">A <see cref="T:System.String"/> which specifies the name (including the full path) of the file to which the control is exported.</param>
       <param name="options">A <see cref="T:DevExpress.XtraPrinting.TextExportOptions"/> object which specifies the export options to be applied when the control is exported.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String,System.String)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in TXT format using the specified separator string.</para>
-      </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
-      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String,System.String,System.Boolean)">
-      <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in TXT format using the specified separator string and quotation settings.</para>
-      </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
-      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
-      <param name="quoteStringsWithSeparators">true to quote (place quotation marks around) text elements that contain symbols which coincide with the specified separator string; otherwise, false.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String,System.String,System.Boolean,System.Text.Encoding)">
       <summary>
@@ -2259,11 +2185,26 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="quoteStringsWithSeparators">true to quote (place quotation marks around) text elements that contain symbols which coincide with the specified separator string; otherwise, false.</param>
       <param name="encoding">A <see cref="T:System.Text.Encoding"/> class descendant specifying the encoding of the created text document.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXls(System.IO.Stream)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String,System.String,System.Boolean)">
       <summary>
-        <para>Exports the controls displayed within the LayoutControl to a stream in XLS format.</para>
+        <para>Exports the controls displayed within the LayoutControl to a file in TXT format using the specified separator string and quotation settings.</para>
       </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
+      <param name="quoteStringsWithSeparators">true to quote (place quotation marks around) text elements that contain symbols which coincide with the specified separator string; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String,System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a file in TXT format using the specified separator string.</para>
+      </summary>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="separator">A <see cref="T:System.String"/> containing symbols which will be used to separate the document’s text elements in the created text file.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToText(System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a file in TXT format.</para>
+      </summary>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXls(System.IO.Stream,DevExpress.XtraPrinting.XlsExportOptions)">
       <summary>
@@ -2279,11 +2220,11 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
       <param name="useNativeFormat">true to use the data format of the exported controls for the cells in the XLS document; otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXls(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXls(System.IO.Stream)">
       <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in XLS format.</para>
+        <para>Exports the controls displayed within the LayoutControl to a stream in XLS format.</para>
       </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXls(System.String,DevExpress.XtraPrinting.XlsExportOptions)">
       <summary>
@@ -2299,11 +2240,11 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
       <param name="useNativeFormat">true to use the data format of the exported controls for the cells in the XLS document; otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXlsx(System.IO.Stream)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXls(System.String)">
       <summary>
-        <para>Exports the controls displayed within the LayoutControl to a stream in XLSX (MS Excel 2007) format.</para>
+        <para>Exports the controls displayed within the LayoutControl to a file in XLS format.</para>
       </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXlsx(System.IO.Stream,DevExpress.XtraPrinting.XlsxExportOptions)">
       <summary>
@@ -2312,11 +2253,11 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="stream">A <see cref="T:System.IO.Stream"/> object to which data is exported.</param>
       <param name="options">An <see cref="T:DevExpress.XtraPrinting.XlsxExportOptions"/> object that contains export options.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXlsx(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXlsx(System.IO.Stream)">
       <summary>
-        <para>Exports the controls displayed within the LayoutControl to a file in XLSX (MS Excel 2007) format.</para>
+        <para>Exports the controls displayed within the LayoutControl to a stream in XLSX (MS Excel 2007) format.</para>
       </summary>
-      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXlsx(System.String,DevExpress.XtraPrinting.XlsxExportOptions)">
       <summary>
@@ -2325,11 +2266,16 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="filePath">A <see cref="T:System.String"/> which specifies the name (including the full path) of the file to which the data is exported.</param>
       <param name="options">An <see cref="T:DevExpress.XtraPrinting.XlsxExportOptions"/> object which specifies the XLS export options to be applied when the control is exported.</param>
     </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.ExportToXlsx(System.String)">
+      <summary>
+        <para>Exports the controls displayed within the LayoutControl to a file in XLSX (MS Excel 2007) format.</para>
+      </summary>
+      <param name="filePath">A <see cref="T:System.String"/> that specifies the full path to the file, to which the created document is exported.</param>
+    </member>
     <member name="P:DevExpress.XtraLayout.LayoutControl.FocusHelper">
       <summary>
         <para>For internal use.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.GetControlByName(System.String)">
       <summary>
@@ -2352,13 +2298,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="p">A <see cref="T:System.Drawing.Point"/> structure which specifies the test point coordinates relative to the layout control’s top-left corner.</param>
       <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object which represents the group located at the specified point. null (Nothing in Visual Basic) if there is no group at the specified point.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.GetItemByControl(System.Windows.Forms.Control)">
-      <summary>
-        <para>Returns the layout item contained within the root group which holds the specified control.</para>
-      </summary>
-      <param name="control">A <see cref="T:System.Windows.Forms.Control"/> object which represents the control whose parent layout item is to be returned.</param>
-      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutControlItem"/> object which contains the specified control. null (Nothing in Visual Basic) if there is no layout item within the root group which holds the specified control.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.GetItemByControl(System.Windows.Forms.Control,DevExpress.XtraLayout.LayoutControlGroup)">
       <summary>
         <para>Returns the layout item which is contained within the specified group and holds the specified control.</para>
@@ -2366,6 +2305,13 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="control">A <see cref="T:System.Windows.Forms.Control"/> object which represents the control whose parent layout item is to be returned.</param>
       <param name="group">A <see cref="T:DevExpress.XtraLayout.LayoutControlGroup"/> object representing the group within which the search is performed.</param>
       <returns>A <see cref="T:DevExpress.XtraLayout.LayoutControlItem"/> object which contains the specified control. null (Nothing in Visual Basic) if there is no layout item within the specified group which holds the specified control.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.GetItemByControl(System.Windows.Forms.Control)">
+      <summary>
+        <para>Returns the layout item contained within the root group which holds the specified control.</para>
+      </summary>
+      <param name="control">A <see cref="T:System.Windows.Forms.Control"/> object which represents the control whose parent layout item is to be returned.</param>
+      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutControlItem"/> object which contains the specified control. null (Nothing in Visual Basic) if there is no layout item within the root group which holds the specified control.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.GetItemByRepositoryItem(DevExpress.XtraEditors.Repository.RepositoryItem,DevExpress.XtraLayout.LayoutControlGroup)">
       <summary>
@@ -2593,9 +2539,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Prints the <see cref="T:DevExpress.XtraLayout.LayoutControl"/>.</para>
       </summary>
     </member>
-    <member name="E:DevExpress.XtraLayout.LayoutControl.QueryControl">
-      <summary />
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.Refresh">
       <summary>
         <para>Updates the layout control.</para>
@@ -2620,12 +2563,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <param name="customizationFormType">The type of the custom Customization Form.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControl.Remove(DevExpress.XtraLayout.BaseLayoutItem)">
-      <summary>
-        <para>Removes the specified item from the control.</para>
-      </summary>
-      <param name="item">The <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object that should be removed.</param>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.Remove(DevExpress.XtraLayout.BaseLayoutItem,System.Boolean)">
       <summary>
         <para>Removes the specified item from the control.</para>
@@ -2633,14 +2570,16 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="item">The <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object that should be removed.</param>
       <param name="disposeItemAndControls">true, to release all resources; otherwise false.</param>
     </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControl.Remove(DevExpress.XtraLayout.BaseLayoutItem)">
+      <summary>
+        <para>Removes the specified item from the control.</para>
+      </summary>
+      <param name="item">The <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> object that should be removed.</param>
+    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.RenameSelectedItem">
       <summary>
         <para>Activates an edit box that allows an end-user to rename the currently selected layout item.</para>
       </summary>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutControl.RepositoryItems">
-      <summary />
-      <value></value>
     </member>
     <member name="E:DevExpress.XtraLayout.LayoutControl.RequestUniqueName">
       <summary>
@@ -2816,13 +2755,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The new layout group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddGroup(DevExpress.XtraLayout.LayoutGroup)">
-      <summary>
-        <para>Inserts the specified group to the current group.</para>
-      </summary>
-      <param name="newGroup">The group to add to the current group.</param>
-      <returns>The added group.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddGroup(DevExpress.XtraLayout.LayoutGroup,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
         <para>Inserts the specified layout group at a position relative to an item within the current group.</para>
@@ -2832,12 +2764,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The added layout group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddGroup(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddGroup(DevExpress.XtraLayout.LayoutGroup)">
       <summary>
-        <para>Creates a new group with a specified caption and adds it to the current group.</para>
+        <para>Inserts the specified group to the current group.</para>
       </summary>
-      <param name="text">The group’s caption. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
-      <returns>The newly created layout group.</returns>
+      <param name="newGroup">The group to add to the current group.</param>
+      <returns>The added group.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddGroup(System.String,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -2848,18 +2780,18 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The newly created layout group.</returns>
     </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddGroup(System.String)">
+      <summary>
+        <para>Creates a new group with a specified caption and adds it to the current group.</para>
+      </summary>
+      <param name="text">The group’s caption. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
+      <returns>The newly created layout group.</returns>
+    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem">
       <summary>
         <para>Creates a new layout item with the default layout type and adds it to the current group.</para>
       </summary>
       <returns>The newly created item.</returns>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(DevExpress.XtraLayout.BaseLayoutItem)">
-      <summary>
-        <para>Inserts the specified layout item to the current group.</para>
-      </summary>
-      <param name="newItem">The layout item to add to the current group.</param>
-      <returns>The added layout item.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -2878,20 +2810,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new item relative to the specified item.</param>
       <returns>The newly created layout item.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(DevExpress.XtraLayout.BaseLayoutItem)">
       <summary>
-        <para>Creates a new layout item with the specified text and adds it to the current group.</para>
+        <para>Inserts the specified layout item to the current group.</para>
       </summary>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
-      <returns>The newly created item.</returns>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(System.String,System.Windows.Forms.Control)">
-      <summary>
-        <para>Creates a new layout item with the specified text and control, and adds it to the current group.</para>
-      </summary>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
-      <param name="control">The control to display in the layout item. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.LayoutControlItem.Control"/> property.</param>
-      <returns>The newly created item.</returns>
+      <param name="newItem">The layout item to add to the current group.</param>
+      <returns>The added layout item.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(System.String,System.Windows.Forms.Control,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -2902,6 +2826,21 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant (owned by the current group) next to which a new item is inserted.</param>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new item relative to the specified item.</param>
       <returns>The newly created layout item.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(System.String,System.Windows.Forms.Control)">
+      <summary>
+        <para>Creates a new layout item with the specified text and control, and adds it to the current group.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
+      <param name="control">The control to display in the layout item. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.LayoutControlItem.Control"/> property.</param>
+      <returns>The newly created item.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddItem(System.String)">
+      <summary>
+        <para>Creates a new layout item with the specified text and adds it to the current group.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
+      <returns>The newly created item.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddRange(DevExpress.XtraLayout.BaseLayoutItem[])">
       <summary>
@@ -2923,13 +2862,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new tabbed group relative to the specified item.</param>
       <returns>The newly created group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup)">
-      <summary>
-        <para>Inserts the specified tabbed group to the current group.</para>
-      </summary>
-      <param name="newTabbedGroup">The tabbed group to add to the current group.</param>
-      <returns>The added tabbed group.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
         <para>Inserts the specified tabbed group at a position relative to an item within the current group.</para>
@@ -2937,6 +2869,13 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="newTabbedGroup">The group that is to be moved to a new position.</param>
       <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant (owned by the current group) next to which the ‘newTabbedGroup’ is inserted.</param>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new tabbed group relative to the specified item.</param>
+      <returns>The added tabbed group.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutControlGroup.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup)">
+      <summary>
+        <para>Inserts the specified tabbed group to the current group.</para>
+      </summary>
+      <param name="newTabbedGroup">The tabbed group to add to the current group.</param>
       <returns>The added tabbed group.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlGroup.HideToCustomization">
@@ -2964,7 +2903,7 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="T:DevExpress.XtraLayout.LayoutControlItem">
       <summary>
-        <para>Displays an embedded control and an optional label.</para>
+        <para>A layout item.</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlItem.#ctor">
@@ -2983,8 +2922,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutControlItem"/> class with specified settings.</para>
       </summary>
-      <param name="parent"></param>
-      <param name="addToLayout"></param>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.AllowAutoAlignment">
       <summary>
@@ -3009,10 +2946,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Gets or sets whether HTML formatting is allowed in the text that is associated with the layout item.</para>
       </summary>
       <value>true if HTML formatting is allowed; otherwise, false.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutControlItem.AppearanceItemCaptionDisabled">
-      <summary />
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControlItem.Assign(DevExpress.XtraLayout.BaseLayoutItem)">
       <summary>
@@ -3133,10 +3066,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <value>An integer value that specifies the distance between the label’s text and icon, in pixels.</value>
     </member>
-    <member name="P:DevExpress.XtraLayout.LayoutControlItem.IsAccessible">
-      <summary />
-      <value></value>
-    </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.ItemImages">
       <summary>
         <para>Gets a collection of icons that can be displayed in the item’s label.</para>
@@ -3218,7 +3147,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutControlItemImageOptions"/> class with specified settings.</para>
       </summary>
-      <param name="owner"></param>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItemImageOptions.Alignment">
       <summary>
@@ -3269,13 +3197,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The newly created layout group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddGroup(DevExpress.XtraLayout.LayoutGroup)">
-      <summary>
-        <para>Inserts the specified group to the current group.</para>
-      </summary>
-      <param name="newGroup">The group to add to the current group.</param>
-      <returns>The added layout group.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.AddGroup(DevExpress.XtraLayout.LayoutGroup,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
         <para>Inserts the specified group at a position relative to an item within the current group.</para>
@@ -3285,12 +3206,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The added group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddGroup(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddGroup(DevExpress.XtraLayout.LayoutGroup)">
       <summary>
-        <para>Creates a new group with the default layout type and the specified caption, and adds it to the current group.</para>
+        <para>Inserts the specified group to the current group.</para>
       </summary>
-      <param name="text">The group’s caption. This value is used to initialize to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
-      <returns>The newly added group.</returns>
+      <param name="newGroup">The group to add to the current group.</param>
+      <returns>The added layout group.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.AddGroup(System.String,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -3301,18 +3222,18 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new group relative to the specified item.</param>
       <returns>The newly created layout group.</returns>
     </member>
+    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddGroup(System.String)">
+      <summary>
+        <para>Creates a new group with the default layout type and the specified caption, and adds it to the current group.</para>
+      </summary>
+      <param name="text">The group’s caption. This value is used to initialize to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
+      <returns>The newly added group.</returns>
+    </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.AddItem">
       <summary>
         <para>Creates a new layout item and adds it to the current group.</para>
       </summary>
       <returns>The newly added item.</returns>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddItem(DevExpress.XtraLayout.BaseLayoutItem)">
-      <summary>
-        <para>Inserts the specified item to the current group.</para>
-      </summary>
-      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant which represents the layout item to add to the collection.</param>
-      <returns>The added layout item.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.AddItem(DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -3331,12 +3252,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new item relative to the baseItem.</param>
       <returns>The newly created layout item.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddItem(System.String)">
+    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddItem(DevExpress.XtraLayout.BaseLayoutItem)">
       <summary>
-        <para>Creates a new layout item with the specified text and adds it to the current group.</para>
+        <para>Inserts the specified item to the current group.</para>
       </summary>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
-      <returns>The created layout item.</returns>
+      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant which represents the layout item to add to the collection.</param>
+      <returns>The added layout item.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.AddItem(System.String,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
@@ -3357,6 +3278,13 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new item relative to the specified item.</param>
       <returns>The newly created layout item.</returns>
     </member>
+    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddItem(System.String)">
+      <summary>
+        <para>Creates a new layout item with the specified text and adds it to the current group.</para>
+      </summary>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the layout item’s text.</param>
+      <returns>The created layout item.</returns>
+    </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.AddTabbedGroup">
       <summary>
         <para>Creates a new tabbed group and adds it to the current group.</para>
@@ -3371,13 +3299,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="insertType">The position of the new tabbed group relative to the specified item.</param>
       <returns>The newly added tabbed group.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup)">
-      <summary>
-        <para>Inserts the specified tabbed group to the current group.</para>
-      </summary>
-      <param name="newTabbedGroup">The tabbed group to add to the collection.</param>
-      <returns>The added group.</returns>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup,DevExpress.XtraLayout.BaseLayoutItem,DevExpress.XtraLayout.Utils.InsertType)">
       <summary>
         <para>Inserts the specified tabbed group at a position relative to an item within the current group.</para>
@@ -3386,6 +3307,13 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="baseItem">A <see cref="T:DevExpress.XtraLayout.BaseLayoutItem"/> descendant (owned by the current group) next to which the ‘newTabbedGroup’ is inserted.</param>
       <param name="insertType">A DevExpress.XtraLayout.Utils.InsertType enumeration value that specifies the position of the new tabbed group relative to the specified item.</param>
       <returns>The added tabbed group.</returns>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutGroup.AddTabbedGroup(DevExpress.XtraLayout.TabbedGroup)">
+      <summary>
+        <para>Inserts the specified tabbed group to the current group.</para>
+      </summary>
+      <param name="newTabbedGroup">The tabbed group to add to the collection.</param>
+      <returns>The added group.</returns>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.AllowBorderColorBlending">
       <summary>
@@ -3505,7 +3433,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Not supported.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.Clear">
       <summary>
@@ -3861,17 +3788,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions"/> class with specified settings.</para>
       </summary>
-      <param name="owner"></param>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.AllowGlyphSkinning">
       <summary>
         <para>Gets or sets whether the icon is filled with the control’s foreground color.</para>
       </summary>
       <value><see cref="F:DevExpress.Utils.DefaultBoolean.Default"/> to use the owner control’s <see cref="P:DevExpress.XtraLayout.OptionsView.AllowGlyphSkinning"/> option; <see cref="F:DevExpress.Utils.DefaultBoolean.True"/> to fill the icon with the control’s foreground color; <see cref="F:DevExpress.Utils.DefaultBoolean.False"/> to display the icon as it is.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.HasDefaultPadding">
-      <summary />
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.Location">
       <summary>
@@ -3983,13 +3905,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Provides data for the <see cref="E:DevExpress.XtraLayout.LayoutControl.PopupMenuShowing"/> event.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraLayout.LayoutMenuEventArgs.#ctor(DevExpress.Utils.Menu.DXPopupMenu,DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutMenuEventArgs"/> class with the specified settings.</para>
-      </summary>
-      <param name="menu">A <see cref="T:DevExpress.Utils.Menu.DXPopupMenu"/> object representing the menu to be displayed. This object is assigned to the Menu property.</param>
-      <param name="hitInfo">A <see cref="T:DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo"/> object that identifies the clicked object. This object is assigned to the HitInfo property.</param>
-    </member>
     <member name="M:DevExpress.XtraLayout.LayoutMenuEventArgs.#ctor(DevExpress.Utils.Menu.DXPopupMenu,DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo,System.Boolean)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutMenuEventArgs"/> class with the specified settings.</para>
@@ -3997,6 +3912,13 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="menu">A <see cref="T:DevExpress.Utils.Menu.DXPopupMenu"/> object representing the menu to be displayed. This object is assigned to the Menu property.</param>
       <param name="hitInfo">A <see cref="T:DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo"/> object that identifies the clicked object. This object is assigned to the HitInfo property.</param>
       <param name="allow">A Boolean value that specifies whether the menu is allowed to be displayed. This value is assigned to the Allow property.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.LayoutMenuEventArgs.#ctor(DevExpress.Utils.Menu.DXPopupMenu,DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutMenuEventArgs"/> class with the specified settings.</para>
+      </summary>
+      <param name="menu">A <see cref="T:DevExpress.Utils.Menu.DXPopupMenu"/> object representing the menu to be displayed. This object is assigned to the Menu property.</param>
+      <param name="hitInfo">A <see cref="T:DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo"/> object that identifies the clicked object. This object is assigned to the HitInfo property.</param>
     </member>
     <member name="T:DevExpress.XtraLayout.LayoutMenuEventHandler">
       <summary>
@@ -4055,10 +3977,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Gets the name of the item’s type.</para>
       </summary>
       <value>The “LayoutRepositoryItem” string.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutRepositoryItem.ViewInfo">
-      <summary />
-      <value></value>
     </member>
     <member name="T:DevExpress.XtraLayout.LayoutSerializationOptions">
       <summary>
@@ -4247,11 +4165,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <returns>A <see cref="T:DevExpress.Utils.Localization.XtraLocalizer`1"/> object, which provides resources based on the thread’s culture.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.Localization.LayoutLocalizer.GetString(DevExpress.XtraLayout.Localization.LayoutStringId)">
-      <summary />
-      <param name="id"></param>
-      <returns></returns>
-    </member>
     <member name="T:DevExpress.XtraLayout.Localization.LayoutResLocalizer">
       <summary>
         <para>A default localizer to translate resources for the WinForms Layout Manager.</para>
@@ -4286,7 +4199,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.OptionsCustomizationForm"/> class.</para>
       </summary>
-      <param name="ownerControl"></param>
     </member>
     <member name="P:DevExpress.XtraLayout.OptionsCustomizationForm.AllowHandleDeleteKey">
       <summary>
@@ -4405,7 +4317,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.OptionsFocus"/> class.</para>
       </summary>
-      <param name="ownerControl"></param>
     </member>
     <member name="M:DevExpress.XtraLayout.OptionsFocus.#ctor(DevExpress.XtraLayout.MoveFocusDirection,System.Boolean)">
       <summary>
@@ -4477,7 +4388,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.OptionsItemText"/> class.</para>
       </summary>
-      <param name="ownerControl"></param>
     </member>
     <member name="P:DevExpress.XtraLayout.OptionsItemText.AlignControlsWithHiddenText">
       <summary>
@@ -4489,7 +4399,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Specifies the alignment options.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraLayout.OptionsItemText.Dispose">
       <summary>
@@ -4500,7 +4409,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Gets or sets whether the automatic alignment of controls is enabled.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.OptionsItemText.TextAlignMode">
       <summary>
@@ -4553,10 +4461,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Gets or sets the distance between text regions and controls for the current group’s layout items.</para>
       </summary>
       <value>The distance between text regions and controls in the current group.</value>
-    </member>
-    <member name="M:DevExpress.XtraLayout.OptionsItemTextGroup.ToString">
-      <summary />
-      <returns></returns>
     </member>
     <member name="T:DevExpress.XtraLayout.OptionsPrintBase">
       <summary>
@@ -4614,7 +4518,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of an <see cref="T:DevExpress.XtraLayout.OptionsPrintControl"/> class with the specified owner.</para>
       </summary>
-      <param name="ownerControl"></param>
     </member>
     <member name="P:DevExpress.XtraLayout.OptionsPrintControl.AllowFitToPage">
       <summary>
@@ -4701,7 +4604,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.OptionsPrintItem"/> class with specified settings.</para>
       </summary>
-      <param name="owner"></param>
     </member>
     <member name="T:DevExpress.XtraLayout.OptionsTableLayoutGroup">
       <summary>
@@ -4883,7 +4785,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.OptionsView"/> class.</para>
       </summary>
-      <param name="ownerControl"></param>
     </member>
     <member name="P:DevExpress.XtraLayout.OptionsView.AllowExpandAnimation">
       <summary>
@@ -4925,7 +4826,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This property is now obsolete. Use the <see cref="P:DevExpress.XtraLayout.OptionsView.UseParentAutoScaleFactor"/> property instead.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.OptionsView.AllowTransparentBackColor">
       <summary>
@@ -5094,13 +4994,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Provides data for the <see cref="E:DevExpress.XtraLayout.LayoutControl.PopupMenuShowing"/> and <see cref="E:DevExpress.XtraLayout.LayoutControl.LayoutTreeViewPopupMenuShowing"/> events.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraLayout.PopupMenuShowingEventArgs.#ctor(DevExpress.Utils.Menu.DXPopupMenu,DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.PopupMenuShowingEventArgs"/> class with the specified settings.</para>
-      </summary>
-      <param name="menu">The menu to be displayed. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.Menu"/> property.</param>
-      <param name="hitInfo">The object that provides information on the clicked point. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.HitInfo"/> property.</param>
-    </member>
     <member name="M:DevExpress.XtraLayout.PopupMenuShowingEventArgs.#ctor(DevExpress.Utils.Menu.DXPopupMenu,DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo,System.Boolean)">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.PopupMenuShowingEventArgs"/> class with the specified settings.</para>
@@ -5108,6 +5001,13 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="menu">The menu to be displayed. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.Menu"/> property.</param>
       <param name="hitInfo">The object that provides information on the clicked point. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.HitInfo"/> property.</param>
       <param name="allow">A Boolean value that specifies whether a menu can be displayed. This value is used to initialize the <see cref="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.Allow"/> property.</param>
+    </member>
+    <member name="M:DevExpress.XtraLayout.PopupMenuShowingEventArgs.#ctor(DevExpress.Utils.Menu.DXPopupMenu,DevExpress.XtraLayout.HitInfo.BaseLayoutItemHitInfo)">
+      <summary>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.PopupMenuShowingEventArgs"/> class with the specified settings.</para>
+      </summary>
+      <param name="menu">The menu to be displayed. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.Menu"/> property.</param>
+      <param name="hitInfo">The object that provides information on the clicked point. This object is used to initialize the <see cref="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.HitInfo"/> property.</param>
     </member>
     <member name="P:DevExpress.XtraLayout.PopupMenuShowingEventArgs.Allow">
       <summary>
@@ -5143,11 +5043,10 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Initializes a new instance of a <see cref="T:DevExpress.XtraLayout.RowDefinition"/> class with the default settings.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraLayout.RowDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup)">
+    <member name="M:DevExpress.XtraLayout.RowDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup,System.Double,System.Windows.Forms.SizeType,System.Boolean)">
       <summary>
-        <para>Initializes a new instance of a <see cref="T:DevExpress.XtraLayout.RowDefinition"/> class with the specified owner.</para>
+        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.RowDefinition"/> class with specified settings.</para>
       </summary>
-      <param name="owner">A layout group that owns the created <see cref="T:DevExpress.XtraLayout.RowDefinition"/> object.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.RowDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup,System.Double,System.Windows.Forms.SizeType)">
       <summary>
@@ -5157,14 +5056,11 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="size">The height of the created row. This value is assigned to the <see cref="P:DevExpress.XtraLayout.RowDefinition.Height"/> property.</param>
       <param name="sizingType">The size type of the created row. This value is assigned to the <see cref="P:DevExpress.XtraLayout.RowDefinition.SizeType"/> property.</param>
     </member>
-    <member name="M:DevExpress.XtraLayout.RowDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup,System.Double,System.Windows.Forms.SizeType,System.Boolean)">
+    <member name="M:DevExpress.XtraLayout.RowDefinition.#ctor(DevExpress.XtraLayout.LayoutGroup)">
       <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.RowDefinition"/> class with specified settings.</para>
+        <para>Initializes a new instance of a <see cref="T:DevExpress.XtraLayout.RowDefinition"/> class with the specified owner.</para>
       </summary>
-      <param name="owner"></param>
-      <param name="size"></param>
-      <param name="sizingType"></param>
-      <param name="visible"></param>
+      <param name="owner">A layout group that owns the created <see cref="T:DevExpress.XtraLayout.RowDefinition"/> object.</param>
     </member>
     <member name="P:DevExpress.XtraLayout.RowDefinition.Height">
       <summary>
@@ -5359,7 +5255,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.SplitterItem.AppearanceItemCaption">
       <summary>
@@ -5376,7 +5271,6 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraLayout.SplitterItem.EndInit">
       <summary>
@@ -5583,12 +5477,14 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <returns>A <see cref="T:DevExpress.XtraLayout.LayoutControlGroup"/> object that represents the new page.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.TabbedControlGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup)">
+    <member name="M:DevExpress.XtraLayout.TabbedControlGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup,System.String,System.Boolean)">
       <summary>
-        <para>Appends the specified tab page to the <see cref="P:DevExpress.XtraLayout.TabbedControlGroup.TabPages"/> collection.</para>
+        <para>Appends the specified tab page to the <see cref="P:DevExpress.XtraLayout.TabbedGroup.TabPages"/> collection.</para>
       </summary>
-      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents the new tab page.</param>
-      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutControlGroup"/> object that represents the new page. null (Nothing in Visual Basic) if the collection contains the specified tab page.</returns>
+      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</param>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the text displayed within the page header. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
+      <param name="selectTabPage">true if the tab page is selected; otherwise, false.</param>
+      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.TabbedControlGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup,System.String)">
       <summary>
@@ -5598,14 +5494,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="text">A <see cref="T:System.String"/> value that specifies the text displayed within the page header. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
       <returns>A <see cref="T:DevExpress.XtraLayout.LayoutControlGroup"/> object that represents the new page. null (Nothing in Visual Basic) if the collection contains the specified tab page.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.TabbedControlGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup,System.String,System.Boolean)">
+    <member name="M:DevExpress.XtraLayout.TabbedControlGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup)">
       <summary>
-        <para>Appends the specified tab page to the <see cref="P:DevExpress.XtraLayout.TabbedGroup.TabPages"/> collection.</para>
+        <para>Appends the specified tab page to the <see cref="P:DevExpress.XtraLayout.TabbedControlGroup.TabPages"/> collection.</para>
       </summary>
-      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</param>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the text displayed within the page header. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
-      <param name="selectTabPage">true if the tab page is selected; otherwise, false.</param>
-      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</returns>
+      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents the new tab page.</param>
+      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutControlGroup"/> object that represents the new page. null (Nothing in Visual Basic) if the collection contains the specified tab page.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.TabbedControlGroup.AddTabPage(System.String)">
       <summary>
@@ -5637,12 +5531,14 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant which represents the new page.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.TabbedGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup)">
+    <member name="M:DevExpress.XtraLayout.TabbedGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup,System.String,System.Boolean)">
       <summary>
         <para>Appends the specified tab page to the <see cref="P:DevExpress.XtraLayout.TabbedGroup.TabPages"/> collection.</para>
       </summary>
-      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents the new tab page.</param>
-      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents the new page. null (Nothing in Visual Basic) if the collection contains the specified tab page.</returns>
+      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</param>
+      <param name="text">A <see cref="T:System.String"/> value that specifies the text displayed within the page header. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
+      <param name="selectTabPage">true if the tab page is selected; otherwise, false.</param>
+      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.TabbedGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup,System.String)">
       <summary>
@@ -5652,14 +5548,12 @@ is dependent on the type of control embedded in this layout item.</value>
       <param name="text">A <see cref="T:System.String"/> value that specifies the text displayed within the page header. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
       <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents the new page. null (Nothing in Visual Basic) if the collection contains the specified tab page.</returns>
     </member>
-    <member name="M:DevExpress.XtraLayout.TabbedGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup,System.String,System.Boolean)">
+    <member name="M:DevExpress.XtraLayout.TabbedGroup.AddTabPage(DevExpress.XtraLayout.LayoutGroup)">
       <summary>
         <para>Appends the specified tab page to the <see cref="P:DevExpress.XtraLayout.TabbedGroup.TabPages"/> collection.</para>
       </summary>
-      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</param>
-      <param name="text">A <see cref="T:System.String"/> value that specifies the text displayed within the page header. This value is assigned to the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property.</param>
-      <param name="selectTabPage">true if the tab page is selected; otherwise, false.</param>
-      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents a new tab page.</returns>
+      <param name="newItem">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents the new tab page.</param>
+      <returns>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object or descendant that represents the new page. null (Nothing in Visual Basic) if the collection contains the specified tab page.</returns>
     </member>
     <member name="M:DevExpress.XtraLayout.TabbedGroup.AddTabPage(System.String)">
       <summary>
@@ -5793,9 +5687,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <param name="item">A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object which represents the tab page to be removed from the collection.</param>
       <returns>true if the tab page has been removed; otherwise, false.</returns>
-    </member>
-    <member name="E:DevExpress.XtraLayout.TabbedGroup.SelectedPageChangeAnimationCompleted">
-      <summary />
     </member>
     <member name="E:DevExpress.XtraLayout.TabbedGroup.SelectedPageChanged">
       <summary>
@@ -6050,12 +5941,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Returns a <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> that owns this <see cref="T:DevExpress.XtraLayout.Utils.LayoutGroupItemCollection"/>.</para>
       </summary>
       <value>A <see cref="T:DevExpress.XtraLayout.LayoutGroup"/> object that owns this <see cref="T:DevExpress.XtraLayout.Utils.LayoutGroupItemCollection"/>.</value>
-    </member>
-    <member name="M:DevExpress.XtraLayout.Utils.LayoutGroupItemCollection.RaiseOnChanged(System.ComponentModel.CollectionChangeEventArgs)">
-      <summary>
-        <para>Raises the OnChanged event that notifies about changes made to this <see cref="T:DevExpress.XtraLayout.Utils.LayoutGroupItemCollection"/>.</para>
-      </summary>
-      <param name="e">A  object that represents the OnChanged event arguments.</param>
     </member>
     <member name="T:DevExpress.XtraLayout.Utils.LayoutMode">
       <summary>

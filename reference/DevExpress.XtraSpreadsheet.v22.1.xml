@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
   <assembly>
     <name>DevExpress.XtraSpreadsheet.v22.1</name>
   </assembly>
@@ -525,13 +525,6 @@
       </summary>
       <value>A <see cref="T:DevExpress.Spreadsheet.Worksheet"/> object that specifies the active worksheet.</value>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
-      <summary>
-        <para>Adds the specified service to the service container.</para>
-      </summary>
-      <param name="serviceType">The type of service to add.</param>
-      <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
-    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback,System.Boolean)">
       <summary>
         <para>Adds the specified service to the service container.</para>
@@ -540,12 +533,12 @@
       <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
       <param name="promote">true, to promote this request to any parent service containers; otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.AddService(System.Type,System.Object)">
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
       <summary>
         <para>Adds the specified service to the service container.</para>
       </summary>
       <param name="serviceType">The type of service to add.</param>
-      <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
+      <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.AddService(System.Type,System.Object,System.Boolean)">
       <summary>
@@ -554,6 +547,13 @@
       <param name="serviceType">The type of service to add.</param>
       <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
       <param name="promote">true, to promote this request to any parent service containers; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.AddService(System.Type,System.Object)">
+      <summary>
+        <para>Adds the specified service to the service container.</para>
+      </summary>
+      <param name="serviceType">The type of service to add.</param>
+      <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.AddToolbarToMenuManager(DevExpress.XtraSpreadsheet.SpreadsheetToolbarType)">
       <summary>
@@ -599,19 +599,19 @@
       <summary>
         <para>This property is not supported by the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControl"/> class.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="P:DevExpress.XtraSpreadsheet.SpreadsheetControl.BackgroundImage">
       <summary>
         <para>This property has no effect on the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControl"/>.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="P:DevExpress.XtraSpreadsheet.SpreadsheetControl.BackgroundImageLayout">
       <summary>
         <para>This property has no effect on the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControl"/>.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="E:DevExpress.XtraSpreadsheet.SpreadsheetControl.BeforeDispose">
       <summary>
@@ -841,19 +841,19 @@
       <param name="toolbarType">The <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetToolbarType"/> enumeration members that specify ribbon tabs to add to the control.</param>
       <returns>The created ribbon.</returns>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.CreateRibbonStatusBar(DevExpress.XtraBars.Ribbon.RibbonControl)">
-      <summary>
-        <para>Creates a <see cref="T:DevExpress.XtraBars.Ribbon.RibbonStatusBar"/> with all Spreadsheet-related items and binds it to the specified <see cref="T:DevExpress.XtraBars.Ribbon.RibbonControl"/>.</para>
-      </summary>
-      <param name="ribbon">Specifies a Ribbon control to which the status bar should be bound.</param>
-      <returns>The created status bar.</returns>
-    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.CreateRibbonStatusBar(DevExpress.XtraBars.Ribbon.RibbonControl,DevExpress.XtraSpreadsheet.SpreadsheetStatusBarItems)">
       <summary>
         <para>Creates a <see cref="T:DevExpress.XtraBars.Ribbon.RibbonStatusBar"/> with the specified items and binds it to the <see cref="T:DevExpress.XtraBars.Ribbon.RibbonControl"/>.</para>
       </summary>
       <param name="ribbon">Specifies a Ribbon control to which the status bar should be bound.</param>
       <param name="statusBarItems">Specifies items to display on the status bar.</param>
+      <returns>The created status bar.</returns>
+    </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.CreateRibbonStatusBar(DevExpress.XtraBars.Ribbon.RibbonControl)">
+      <summary>
+        <para>Creates a <see cref="T:DevExpress.XtraBars.Ribbon.RibbonStatusBar"/> with all Spreadsheet-related items and binds it to the specified <see cref="T:DevExpress.XtraBars.Ribbon.RibbonControl"/>.</para>
+      </summary>
+      <param name="ribbon">Specifies a Ribbon control to which the status bar should be bound.</param>
       <returns>The created status bar.</returns>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.CreateStatusBarManager">
@@ -1063,12 +1063,6 @@
       <param name="fileName">A <see cref="T:System.String"/> value which contains the full path (including the file name and extension) specifying where the HTML file will be created.</param>
       <param name="sheetIndex">An integer value that is the index of the worksheet to be exported to HTML.</param>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.ExportToPdf(System.IO.Stream)">
-      <summary>
-        <para>Exports the content of the SpreadsheetControl to the specified stream in PDF format.</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object to which the created document is exported.</param>
-    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.ExportToPdf(System.IO.Stream,DevExpress.XtraPrinting.PdfExportOptions)">
       <summary>
         <para>Exports the content of the SpreadsheetControl to the specified stream in PDF format using the specified options.</para>
@@ -1076,11 +1070,11 @@
       <param name="stream">A <see cref="T:System.IO.Stream"/> object, to which the created document is exported.</param>
       <param name="pdfExportOptions">A <see cref="T:DevExpress.XtraPrinting.PdfExportOptions"/> object which specifies the PDF export options.</param>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.ExportToPdf(System.String)">
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.ExportToPdf(System.IO.Stream)">
       <summary>
-        <para>Exports the content of the SpreadsheetControl to the specified file in PDF format.</para>
+        <para>Exports the content of the SpreadsheetControl to the specified stream in PDF format.</para>
       </summary>
-      <param name="fileName">A <see cref="T:System.String"/> which specifies the name (including the full path) of the PDF file to which the data is exported.</param>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object to which the created document is exported.</param>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.ExportToPdf(System.String,DevExpress.XtraPrinting.PdfExportOptions)">
       <summary>
@@ -1089,17 +1083,23 @@
       <param name="fileName">A <see cref="T:System.String"/> which specifies the name (including the full path) of the PDF file to which the data is exported.</param>
       <param name="pdfExportOptions">A <see cref="T:DevExpress.XtraPrinting.PdfExportOptions"/> object which specifies the PDF export options.</param>
     </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.ExportToPdf(System.String)">
+      <summary>
+        <para>Exports the content of the SpreadsheetControl to the specified file in PDF format.</para>
+      </summary>
+      <param name="fileName">A <see cref="T:System.String"/> which specifies the name (including the full path) of the PDF file to which the data is exported.</param>
+    </member>
     <member name="P:DevExpress.XtraSpreadsheet.SpreadsheetControl.Font">
       <summary>
         <para>This property is not supported by the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControl"/> class.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="P:DevExpress.XtraSpreadsheet.SpreadsheetControl.ForeColor">
       <summary>
         <para>This property is not supported by the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControl"/> class.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.GetCellBounds(System.Int32,System.Int32)">
       <summary>
@@ -1202,13 +1202,6 @@
         <para>Invokes the Open dialog, creates a specific importer and loads the file.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.Byte[])">
-      <summary>
-        <para>Load the document from a <see cref="T:System.Byte"/>[] array.</para>
-      </summary>
-      <param name="buffer">A System.Byte[] object that is an array of bytes containing document data.</param>
-      <returns>true if the document is loaded succesfully; otherwise, false.</returns>
-    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.Byte[],DevExpress.Spreadsheet.DocumentFormat)">
       <summary>
         <para>Loads a document from a byte array.</para>
@@ -1217,11 +1210,11 @@
       <param name="format">A <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> enumeration member specifying the format of the document to be loaded.</param>
       <returns>true if the document is successfully loaded; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.IO.Stream)">
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.Byte[])">
       <summary>
-        <para>Loads the document from a stream.</para>
+        <para>Load the document from a <see cref="T:System.Byte"/>[] array.</para>
       </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream used to load a document.</param>
+      <param name="buffer">A System.Byte[] object that is an array of bytes containing document data.</param>
       <returns>true if the document is loaded succesfully; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.IO.Stream,DevExpress.Spreadsheet.DocumentFormat)">
@@ -1232,12 +1225,12 @@
       <param name="format">One of the <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> members.</param>
       <returns>true if a document is loaded successfully; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.String)">
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.IO.Stream)">
       <summary>
-        <para>Loads a document from a file.</para>
+        <para>Loads the document from a stream.</para>
       </summary>
-      <param name="fileName">A string specifying the file to load (including the full path).</param>
-      <returns>true if a document is loaded successfully; otherwise, false.</returns>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream used to load a document.</param>
+      <returns>true if the document is loaded succesfully; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.String,DevExpress.Spreadsheet.DocumentFormat)">
       <summary>
@@ -1245,6 +1238,13 @@
       </summary>
       <param name="fileName">A string specifying the file to load (including the full path).</param>
       <param name="format">One of the <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> members.</param>
+      <returns>true if a document is loaded successfully; otherwise, false.</returns>
+    </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.String)">
+      <summary>
+        <para>Loads a document from a file.</para>
+      </summary>
+      <param name="fileName">A string specifying the file to load (including the full path).</param>
       <returns>true if a document is loaded successfully; otherwise, false.</returns>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.LoadDocument(System.Windows.Forms.IWin32Window)">
@@ -1346,18 +1346,18 @@
         <para>Occurs when the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControl"/>‘s read-only state is changed.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.RemoveService(System.Type)">
-      <summary>
-        <para>Removes the service of the specified type from the service container.</para>
-      </summary>
-      <param name="serviceType">The type of service to remove.</param>
-    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.RemoveService(System.Type,System.Boolean)">
       <summary>
         <para>Removes the service of the specified type from the service container.</para>
       </summary>
       <param name="serviceType">The type of service to remove.</param>
       <param name="promote">true, to promote this request to any parent service containers; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.RemoveService(System.Type)">
+      <summary>
+        <para>Removes the service of the specified type from the service container.</para>
+      </summary>
+      <param name="serviceType">The type of service to remove.</param>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.RemoveShortcutKey(System.Windows.Forms.Keys,System.Windows.Forms.Keys)">
       <summary>
@@ -1383,7 +1383,7 @@
       <summary>
         <para>This property is not in effect for the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControl"/> class.</para>
       </summary>
-      <value></value>
+      <value />
     </member>
     <member name="E:DevExpress.XtraSpreadsheet.SpreadsheetControl.RowHeightChanged">
       <summary>
@@ -1416,13 +1416,6 @@
       </summary>
       <returns>true if a document has been successfully saved; otherwise, false.</returns>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(DevExpress.Spreadsheet.DocumentFormat)">
-      <summary>
-        <para>Saves a document to an array of bytes in the specified format.</para>
-      </summary>
-      <param name="format">A <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> enumeration member specifying the format of the document to be saved.</param>
-      <returns>A <see cref="T:System.Byte"/>[] object that is an array of bytes containing document data in the specified format.</returns>
-    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(DevExpress.Spreadsheet.DocumentFormat,DevExpress.Spreadsheet.EncryptionSettings)">
       <summary>
         <para>Saves a document to an array of bytes in the specified format and with specified encryption settings.</para>
@@ -1431,12 +1424,12 @@
       <param name="encryptionSettings">Document encryption settings.</param>
       <returns>An array of bytes containing document data in the specified format.</returns>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.IO.Stream,DevExpress.Spreadsheet.DocumentFormat)">
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(DevExpress.Spreadsheet.DocumentFormat)">
       <summary>
-        <para>Saves the workbook to a stream, specifying the export format.</para>
+        <para>Saves a document to an array of bytes in the specified format.</para>
       </summary>
-      <param name="stream">The <see cref="T:System.IO.Stream"/> object to output the document to.</param>
-      <param name="format">One of the <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> values that is the format of the exported document.</param>
+      <param name="format">A <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> enumeration member specifying the format of the document to be saved.</param>
+      <returns>A <see cref="T:System.Byte"/>[] object that is an array of bytes containing document data in the specified format.</returns>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.IO.Stream,DevExpress.Spreadsheet.DocumentFormat,DevExpress.Spreadsheet.EncryptionSettings)">
       <summary>
@@ -1446,18 +1439,12 @@
       <param name="format">The format of the exported document.</param>
       <param name="encryptionSettings">Document encryption settings.</param>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.String)">
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.IO.Stream,DevExpress.Spreadsheet.DocumentFormat)">
       <summary>
-        <para>Saves the document to the specified file in the Excel or text format. The file format is identified by the file extension.</para>
+        <para>Saves the workbook to a stream, specifying the export format.</para>
       </summary>
-      <param name="fileName">Specifies the file path to save the document to.</param>
-    </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.String,DevExpress.Spreadsheet.DocumentFormat)">
-      <summary>
-        <para>Saves the control’s document to a file, specifying the document format.</para>
-      </summary>
-      <param name="fileName">A string value specifying the path to a file in which to save the control’s document.</param>
-      <param name="format">One of the <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> enumeration values.</param>
+      <param name="stream">The <see cref="T:System.IO.Stream"/> object to output the document to.</param>
+      <param name="format">One of the <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> values that is the format of the exported document.</param>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.String,DevExpress.Spreadsheet.DocumentFormat,DevExpress.Spreadsheet.EncryptionSettings)">
       <summary>
@@ -1467,12 +1454,25 @@
       <param name="format">The format of exported document.</param>
       <param name="encryptionSettings">Document encryption settings.</param>
     </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.String,DevExpress.Spreadsheet.DocumentFormat)">
+      <summary>
+        <para>Saves the control’s document to a file, specifying the document format.</para>
+      </summary>
+      <param name="fileName">A string value specifying the path to a file in which to save the control’s document.</param>
+      <param name="format">One of the <see cref="T:DevExpress.Spreadsheet.DocumentFormat"/> enumeration values.</param>
+    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.String,DevExpress.Spreadsheet.EncryptionSettings)">
       <summary>
         <para>Saves the document to a file with the specified encryption settings.</para>
       </summary>
       <param name="fileName">The path to a file in which to save the document.</param>
       <param name="encryptionSettings">Document encryption settings.</param>
+    </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.String)">
+      <summary>
+        <para>Saves the document to the specified file in the Excel or text format. The file format is identified by the file extension.</para>
+      </summary>
+      <param name="fileName">Specifies the file path to save the document to.</param>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SaveDocument(System.Windows.Forms.IWin32Window)">
       <summary>
@@ -1532,13 +1532,6 @@
         <para>Fires when the selection changes in an active worksheet.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SetSelectedRanges(System.Collections.Generic.IList{DevExpress.Spreadsheet.CellRange})">
-      <summary>
-        <para>Sets cell ranges selected in the active worksheet.</para>
-      </summary>
-      <param name="ranges">A list of the <see cref="T:DevExpress.Spreadsheet.CellRange"/> objects.</param>
-      <returns>true if cell ranges are selected successfully; otherwise false. If you pass null (Nothing in Visual Basic), or an empty list, or a list that contains at least one cell range located in a worksheet other than the current worksheet, the method returns false.</returns>
-    </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SetSelectedRanges(System.Collections.Generic.IList{DevExpress.Spreadsheet.CellRange},System.Boolean)">
       <summary>
         <para>Selects cell ranges in the worksheet and specifies whether the selection expands to fit merged cells.</para>
@@ -1546,6 +1539,13 @@
       <param name="ranges">A list of the <see cref="T:DevExpress.Spreadsheet.CellRange"/> objects.</param>
       <param name="expandToMergedCellsSize">true, to expand the selection to include merged cells; otherwise, false.</param>
       <returns>true, if cell ranges are selected successfully; otherwise false.</returns>
+    </member>
+    <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SetSelectedRanges(System.Collections.Generic.IList{DevExpress.Spreadsheet.CellRange})">
+      <summary>
+        <para>Sets cell ranges selected in the active worksheet.</para>
+      </summary>
+      <param name="ranges">A list of the <see cref="T:DevExpress.Spreadsheet.CellRange"/> objects.</param>
+      <returns>true if cell ranges are selected successfully; otherwise false. If you pass null (Nothing in Visual Basic), or an empty list, or a list that contains at least one cell range located in a worksheet other than the current worksheet, the method returns false.</returns>
     </member>
     <member name="M:DevExpress.XtraSpreadsheet.SpreadsheetControl.SetSelectedShapes(System.Collections.Generic.IList{DevExpress.Spreadsheet.Shape})">
       <summary>
@@ -1693,7 +1693,7 @@
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraSpreadsheet.SpreadsheetControlOptions"/> class with the specified settings.</para>
       </summary>
-      <param name="documentServer"></param>
+      <param name="documentServer" />
     </member>
     <member name="P:DevExpress.XtraSpreadsheet.SpreadsheetControlOptions.Behavior">
       <summary>

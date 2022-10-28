@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
   <assembly>
     <name>DevExpress.XtraNavBar.v22.1</name>
   </assembly>
@@ -159,8 +159,8 @@
     <member name="F:DevExpress.XtraNavBar.LinkSelectionModeType.OneInGroupAndAllowAutoSelect">
       <summary>
         <para>Each group has a selected link independent of other groups. Unlike the <see cref="F:DevExpress.XtraNavBar.LinkSelectionModeType.OneInGroup"/> mode, the OneInGroupAndAllowAutoSelect mode enables automatic link selection in a group (on group activation) if the group does not already have a selection. By default, the first link in the group is auto-selected. To prevent a specific link from being auto-selected, use the <see cref="P:DevExpress.XtraNavBar.NavBarItem.AllowAutoSelect"/> and <see cref="P:DevExpress.XtraNavBar.NavBarItemLink.AllowAutoSelect"/> properties.</para>
-        <para></para>
-        <para></para>
+        <para />
+        <para />
       </summary>
     </member>
     <member name="T:DevExpress.XtraNavBar.NavBarAppearances">
@@ -385,7 +385,6 @@
       <summary>
         <para>This member supports the .NET Framework infrastructure and cannot be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraNavBar.NavBarControl.AllowDrop">
       <summary>
@@ -434,7 +433,6 @@ The Default value is equivalent to False.</value>
       <summary>
         <para>This property is not supported by the <see cref="T:DevExpress.XtraNavBar.NavBarControl"/> class.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraNavBar.NavBarControl.BackgroundImageLayout">
       <summary>
@@ -527,7 +525,6 @@ The Default value is equivalent to False.</value>
       <summary>
         <para>Gets the default paint style name.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraNavBar.NavBarControl.DragDropFlags">
       <summary>
@@ -1031,7 +1028,6 @@ The Default value is equivalent to False.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraNavBar.NavBarControl.TabStop">
       <summary>
@@ -1322,14 +1318,11 @@ The Default value is equivalent to False.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <returns></returns>
     </member>
     <member name="M:DevExpress.XtraNavBar.NavBarGroup.GetPreferredImageSize(System.Drawing.Size)">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <param name="r"></param>
-      <returns></returns>
     </member>
     <member name="M:DevExpress.XtraNavBar.NavBarGroup.GetShowAsIconsView">
       <summary>
@@ -1530,10 +1523,10 @@ The Default value is equivalent to False.</value>
     <member name="F:DevExpress.XtraNavBar.NavBarGroupStyle.ControlContainer">
       <summary>
         <para>This setting allows you to display any controls within the group. In this case, the group does not display its links. Instead, it provides a container control - a surface on which you can place any arbitrary controls. For more information, see the <see cref="T:DevExpress.XtraNavBar.NavBarGroupControlContainer"/> topic.</para>
-        <para></para>
+        <para />
         <para>In the image below the NavBarControl’s group displays a Tree List control.</para>
-        <para></para>
-        <para></para>
+        <para />
+        <para />
       </summary>
     </member>
     <member name="F:DevExpress.XtraNavBar.NavBarGroupStyle.Default">
@@ -1546,38 +1539,38 @@ The Default value is equivalent to False.</value>
     <member name="F:DevExpress.XtraNavBar.NavBarGroupStyle.LargeIconsList">
       <summary>
         <para>A group’s links are displayed across then down, using large icons and without captions.</para>
-        <para></para>
+        <para />
         <para>This mode is supported in the following paint Views: BaseView, FlatView, Office1View, Office2View, Office3View, UltraFlatExplorerBarView, XP1View, XP2View and NavigationPane.</para>
         <para>In other paint Views, links are painted differently:</para>
-        <para></para>
-        <para></para>
+        <para />
+        <para />
       </summary>
     </member>
     <member name="F:DevExpress.XtraNavBar.NavBarGroupStyle.LargeIconsText">
       <summary>
         <para>A group’s links are displayed in one column, using large icons and with captions.</para>
-        <para></para>
-        <para></para>
-        <para></para>
+        <para />
+        <para />
+        <para />
         <para>In the VSToolBoxView paint style, links are painted in the SmallIconsText mode.</para>
       </summary>
     </member>
     <member name="F:DevExpress.XtraNavBar.NavBarGroupStyle.SmallIconsList">
       <summary>
         <para>A group’s links are displayed across then down, using small icons and without captions.</para>
-        <para></para>
-        <para></para>
-        <para></para>
+        <para />
+        <para />
+        <para />
         <para>This mode is supported in the following paint Views: BaseView, FlatView, Office1View, Office2View, Office3View, VSToolBoxView, UltraFlatExplorerBarView, XP1View, XP2View and NavigationPane.</para>
-        <para></para>
+        <para />
         <para>In other paint Views, links are painted in the SmallIconsText mode.</para>
       </summary>
     </member>
     <member name="F:DevExpress.XtraNavBar.NavBarGroupStyle.SmallIconsText">
       <summary>
         <para>A group’s links are displayed in one column, using small icons and with captions.</para>
-        <para></para>
-        <para></para>
+        <para />
+        <para />
       </summary>
     </member>
     <member name="T:DevExpress.XtraNavBar.NavBarHitInfo">
@@ -2267,22 +2260,16 @@ The Default value is equivalent to False.</value>
       <summary>
         <para>Stores the original size of an image assigned to the <see cref="P:DevExpress.XtraNavBar.NavElement.LargeImage"/> or <see cref="P:DevExpress.XtraNavBar.NavElement.SmallImage"/> property.</para>
       </summary>
-      <value></value>
-    </member>
-    <member name="M:DevExpress.XtraNavBar.NavElement.GetPreferredImageSize(System.Drawing.Size)">
-      <summary>
-        <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
-      </summary>
-      <param name="r"></param>
-      <returns></returns>
     </member>
     <member name="M:DevExpress.XtraNavBar.NavElement.GetPreferredImageSize(System.Drawing.Size,System.Boolean)">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <param name="r"></param>
-      <param name="isLarge"></param>
-      <returns></returns>
+    </member>
+    <member name="M:DevExpress.XtraNavBar.NavElement.GetPreferredImageSize(System.Drawing.Size)">
+      <summary>
+        <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
+      </summary>
     </member>
     <member name="P:DevExpress.XtraNavBar.NavElement.Hint">
       <summary>
@@ -2652,7 +2639,6 @@ The Default value is equivalent to False.</value>
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
       </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraNavBar.OptionsNavPane.Dispose">
       <summary>

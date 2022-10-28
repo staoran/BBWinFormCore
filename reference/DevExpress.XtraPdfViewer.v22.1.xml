@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
   <assembly>
     <name>DevExpress.XtraPdfViewer.v22.1</name>
   </assembly>
@@ -4437,13 +4437,6 @@
       </summary>
       <value>true if a tab is accepted in the PDF viewer; otherwise, false.</value>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
-      <summary>
-        <para>Adds the specified service to the service container.</para>
-      </summary>
-      <param name="serviceType">The type of service to add.</param>
-      <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback,System.Boolean)">
       <summary>
         <para>Adds the specified service to the service container.</para>
@@ -4452,12 +4445,12 @@
       <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
       <param name="promote">true, to promote this request to any parent service containers; otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddService(System.Type,System.Object)">
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddService(System.Type,System.ComponentModel.Design.ServiceCreatorCallback)">
       <summary>
         <para>Adds the specified service to the service container.</para>
       </summary>
       <param name="serviceType">The type of service to add.</param>
-      <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
+      <param name="callback">A callback object that is used to create the service. This allows a service to be declared as available, but delays the creation of the object until the service is requested.</param>
     </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddService(System.Type,System.Object,System.Boolean)">
       <summary>
@@ -4467,18 +4460,12 @@
       <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
       <param name="promote">true, to promote this request to any parent service containers; otherwise, false.</param>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddStickyNote(DevExpress.Pdf.PdfDocumentPosition)">
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddService(System.Type,System.Object)">
       <summary>
-        <para>Creates a text annotations (sticky note) at the specified document position.</para>
+        <para>Adds the specified service to the service container.</para>
       </summary>
-      <param name="position">The position of the sticky note on the page.</param>
-    </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddStickyNote(DevExpress.Pdf.PdfDocumentPosition,System.String)">
-      <summary>
-        <para>Creates a text annotations (sticky note) at the specified document position with the specified comment.</para>
-      </summary>
-      <param name="position">The position on the page to locate the sticky note.</param>
-      <param name="comment">The annotation comment.</param>
+      <param name="serviceType">The type of service to add.</param>
+      <param name="serviceInstance">An instance of the service type to add. This object must implement or inherit from the type indicated by the serviceType parameter.</param>
     </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddStickyNote(DevExpress.Pdf.PdfDocumentPosition,System.String,System.Drawing.Color)">
       <summary>
@@ -4487,6 +4474,19 @@
       <param name="position">The position of the sticky note on the page.</param>
       <param name="comment">The annotation comment.</param>
       <param name="color">The annotation color.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddStickyNote(DevExpress.Pdf.PdfDocumentPosition,System.String)">
+      <summary>
+        <para>Creates a text annotations (sticky note) at the specified document position with the specified comment.</para>
+      </summary>
+      <param name="position">The position on the page to locate the sticky note.</param>
+      <param name="comment">The annotation comment.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.AddStickyNote(DevExpress.Pdf.PdfDocumentPosition)">
+      <summary>
+        <para>Creates a text annotations (sticky note) at the specified document position.</para>
+      </summary>
+      <param name="position">The position of the sticky note on the page.</param>
     </member>
     <member name="P:DevExpress.XtraPdfViewer.PdfViewer.AllowCommentFiltering">
       <summary>
@@ -4646,13 +4646,6 @@
       <param name="pageNumbers">A list of page numbers.</param>
       <param name="imageDpi">The image’s DPI.</param>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.CreateTiff(System.IO.Stream,System.Int32)">
-      <summary>
-        <para>Exports a PDF document to a TIFF image using the document’s stream and the image’s largest edge length.</para>
-      </summary>
-      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream containing a PDF document.</param>
-      <param name="largestEdgeLength">An integer value, specifying the length of the image’s largest dimension.</param>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.CreateTiff(System.IO.Stream,System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
       <summary>
         <para>Exports a PDF document to a TIFF image using the document’s stream, the image’s largest edge length and page numbers.</para>
@@ -4660,6 +4653,13 @@
       <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream containing a PDF document.</param>
       <param name="largestEdgeLength">An integer value, specifying the length of the image’s largest dimension.</param>
       <param name="pageNumbers">A list of page numbers which implements the <see cref="T:System.Collections.Generic.IEnumerable`1"/>&lt;<see cref="T:System.Int32"/>,&gt; interface.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.CreateTiff(System.IO.Stream,System.Int32)">
+      <summary>
+        <para>Exports a PDF document to a TIFF image using the document’s stream and the image’s largest edge length.</para>
+      </summary>
+      <param name="stream">A <see cref="T:System.IO.Stream"/> object that is the stream containing a PDF document.</param>
+      <param name="largestEdgeLength">An integer value, specifying the length of the image’s largest dimension.</param>
     </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.CreateTiff(System.String,System.Collections.Generic.IEnumerable{System.Int32},System.Single)">
       <summary>
@@ -4669,13 +4669,6 @@
       <param name="pageNumbers">A list of page numbers.</param>
       <param name="imageDpi">The image’s DPI.</param>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.CreateTiff(System.String,System.Int32)">
-      <summary>
-        <para>Exports a PDF document to a TIFF image using the document’s file path and the image’s largest edge length.</para>
-      </summary>
-      <param name="fileName">A <see cref="T:System.String"/> which specifies the file name (including the full path) for the PDF document.</param>
-      <param name="largestEdgeLength">An integer value, specifying the length of the image’s largest dimension.</param>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.CreateTiff(System.String,System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
       <summary>
         <para>Exports a PDF document to a TIFF image using the document’s file path, the image’s largest edge length and page numbers.</para>
@@ -4683,6 +4676,13 @@
       <param name="fileName">A <see cref="T:System.String"/> which specifies the file name (including the full path) for the PDF document.</param>
       <param name="largestEdgeLength">An integer value, specifying the length of the image’s largest dimension.</param>
       <param name="pageNumbers">A list of page numbers which implements the <see cref="T:System.Collections.Generic.IEnumerable`1"/>&lt;<see cref="T:System.Int32"/>,&gt; interface.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.CreateTiff(System.String,System.Int32)">
+      <summary>
+        <para>Exports a PDF document to a TIFF image using the document’s file path and the image’s largest edge length.</para>
+      </summary>
+      <param name="fileName">A <see cref="T:System.String"/> which specifies the file name (including the full path) for the PDF document.</param>
+      <param name="largestEdgeLength">An integer value, specifying the length of the image’s largest dimension.</param>
     </member>
     <member name="E:DevExpress.XtraPdfViewer.PdfViewer.CurrentPageChanged">
       <summary>
@@ -4775,12 +4775,14 @@
         <para>Occurs when the visibility state of the Find dialog window has changed.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.FindText(System.String)">
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.FindText(System.String,DevExpress.Pdf.PdfTextSearchParameters,System.Func{System.Int32,System.Boolean})">
       <summary>
-        <para>Searches for the specified text in the current document with default parameters.</para>
+        <para>Searches for the specified text in the current document with the given parameters and allows you to specify a delegate to terminate the text search.</para>
       </summary>
       <param name="text">Specifies the text to find in the PDF document.</param>
-      <returns>Contains information related to search results.</returns>
+      <param name="parameters">Contains information related to search results.</param>
+      <param name="terminate">A delegate that encapsulates a method used to terminate the text search on a specific page. The delegate should take the index of the currently processed page and return true to terminate the search; otherwise, false.</param>
+      <returns>A <see cref="T:DevExpress.Pdf.PdfTextSearchResults"/> object.</returns>
     </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.FindText(System.String,DevExpress.Pdf.PdfTextSearchParameters)">
       <summary>
@@ -4790,14 +4792,12 @@
       <param name="parameters">Specifies the search parameters.</param>
       <returns>Contains information related to search results.</returns>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.FindText(System.String,DevExpress.Pdf.PdfTextSearchParameters,System.Func{System.Int32,System.Boolean})">
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.FindText(System.String)">
       <summary>
-        <para>Searches for the specified text in the current document with the given parameters and allows you to specify a delegate to terminate the text search.</para>
+        <para>Searches for the specified text in the current document with default parameters.</para>
       </summary>
       <param name="text">Specifies the text to find in the PDF document.</param>
-      <param name="parameters">Contains information related to search results.</param>
-      <param name="terminate">A delegate that encapsulates a method used to terminate the text search on a specific page. The delegate should take the index of the currently processed page and return true to terminate the search; otherwise, false.</param>
-      <returns>A <see cref="T:DevExpress.Pdf.PdfTextSearchResults"/> object.</returns>
+      <returns>Contains information related to search results.</returns>
     </member>
     <member name="E:DevExpress.XtraPdfViewer.PdfViewer.FormFieldEditorShowing">
       <summary>
@@ -4843,13 +4843,6 @@
       <param name="clientPoint">A <see cref="T:System.Drawing.PointF"/> structure.</param>
       <returns>A <see cref="T:DevExpress.Pdf.PdfDocumentContent"/> object.</returns>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.GetDocumentPosition(System.Drawing.PointF)">
-      <summary>
-        <para>Converts the specified point coordinates relative to the PDF Viewer’s client area to the page coordinates.</para>
-      </summary>
-      <param name="clientPoint">A <see cref="T:System.Drawing.PointF"/> structure, specifying the coordinates of a point (in pixels) relative to the PDF Viewer’s client area.</param>
-      <returns>A <see cref="T:DevExpress.Pdf.PdfDocumentPosition"/> object that returns the page coordinates and the page number.</returns>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.GetDocumentPosition(System.Drawing.PointF,System.Boolean)">
       <summary>
         <para>Converts the specified point coordinates relative to the PDF Viewer’s client area (in pixels) to the page coordinates in a document.</para>
@@ -4857,6 +4850,20 @@
       <param name="clientPoint">A <see cref="T:System.Drawing.PointF"/> structure, specifying the coordinates of a point (in pixels) relative to the PDF Viewer’s client area.</param>
       <param name="inPageBounds">A <see cref="T:System.Boolean"/> value that determines how the method interprets the point located outside page bounds in a document; if true - when the point is outside page bounds, the method returns the point coordinates that belong to the closest page in a document; false -  if the point is outside page bounds, this method returns null.</param>
       <returns>A <see cref="T:DevExpress.Pdf.PdfDocumentPosition"/> object that returns the page coordinates and the page number in a document.</returns>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.GetDocumentPosition(System.Drawing.PointF)">
+      <summary>
+        <para>Converts the specified point coordinates relative to the PDF Viewer’s client area to the page coordinates.</para>
+      </summary>
+      <param name="clientPoint">A <see cref="T:System.Drawing.PointF"/> structure, specifying the coordinates of a point (in pixels) relative to the PDF Viewer’s client area.</param>
+      <returns>A <see cref="T:DevExpress.Pdf.PdfDocumentPosition"/> object that returns the page coordinates and the page number.</returns>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.GetPageInfo(System.Int32)">
+      <summary>
+        <para>Obtains information (crop box and rotation angle) about a specific page.</para>
+      </summary>
+      <param name="pageNumber">The page number for which information should be obtained.</param>
+      <returns>An object that contains page information (crop box and rotation angle).</returns>
     </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.GetPageSize(System.Int32)">
       <summary>
@@ -4875,7 +4882,6 @@
       <summary>
         <para>Gets the specified service.</para>
       </summary>
-      <typeparam name="T"></typeparam>
       <returns>A service object of the specified generic type, or a null reference (Nothing in Visual Basic) if there is no service object of this type.</returns>
     </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.GoToBookmark(DevExpress.Pdf.PdfViewerBookmark)">
@@ -4937,18 +4943,18 @@
       </summary>
       <param name="color">A <see cref="T:System.Drawing.Color"/> value that specifies the color used to highlight a selected text.</param>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.HighlightSelectedText(System.String)">
-      <summary>
-        <para>Highlights a selected text and adds a comment to this text that will be shown in a pop-up window.</para>
-      </summary>
-      <param name="comment">A string that specifies the comment for a highlighted text. The comment will be shown in a pop-up window.</param>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.HighlightSelectedText(System.String,System.Drawing.Color)">
       <summary>
         <para>Highlights a selected text with a color and adds a comment to this text that will be shown in a pop-up window.</para>
       </summary>
       <param name="comment">A string that specifies the comment for a highlighted text. The comment will be shown in a pop-up window.</param>
       <param name="color">A <see cref="T:System.Drawing.Color"/> value that specifies the color used to highlight a selected text.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.HighlightSelectedText(System.String)">
+      <summary>
+        <para>Highlights a selected text and adds a comment to this text that will be shown in a pop-up window.</para>
+      </summary>
+      <param name="comment">A string that specifies the comment for a highlighted text. The comment will be shown in a pop-up window.</param>
     </member>
     <member name="P:DevExpress.XtraPdfViewer.PdfViewer.HorizontalScrollPosition">
       <summary>
@@ -5158,18 +5164,18 @@
         <para>Occurs when opening an embedded or external document by clicking its corresponding link in a PDF document.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.RemoveService(System.Type)">
-      <summary>
-        <para>Removes the service of the specified type from the service container.</para>
-      </summary>
-      <param name="serviceType">The type of service to remove.</param>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.RemoveService(System.Type,System.Boolean)">
       <summary>
         <para>Removes the service of the specified type from the service container.</para>
       </summary>
       <param name="serviceType">The type of service to remove.</param>
       <param name="promote">true, to promote this request to any parent service containers; otherwise, false.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.RemoveService(System.Type)">
+      <summary>
+        <para>Removes the service of the specified type from the service container.</para>
+      </summary>
+      <param name="serviceType">The type of service to remove.</param>
     </member>
     <member name="P:DevExpress.XtraPdfViewer.PdfViewer.RenderingEngine">
       <summary>
@@ -5344,18 +5350,18 @@
       </summary>
       <param name="color">A <see cref="T:System.Drawing.Color"/> value that specifies the color used to strikethrough a text.</param>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.StrikethroughSelectedText(System.String)">
-      <summary>
-        <para>Strikethroughs a selected text and adds a comment to this text that will be shown in a pop-up window.</para>
-      </summary>
-      <param name="comment">A string that specifies the comment for a strikethroughed text. The comment will be shown in a pop-up window.</param>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.StrikethroughSelectedText(System.String,System.Drawing.Color)">
       <summary>
         <para>Strikethroughs a selected text with a color and adds a comment to this text that will be shown in a pop-up window.</para>
       </summary>
       <param name="comment">A string that specifies the comment for a strikethroughed text. The comment will be shown in a pop-up window.</param>
       <param name="color">A <see cref="T:System.Drawing.Color"/> value that specifies the color used to strikethrough a selected text.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.StrikethroughSelectedText(System.String)">
+      <summary>
+        <para>Strikethroughs a selected text and adds a comment to this text that will be shown in a pop-up window.</para>
+      </summary>
+      <param name="comment">A string that specifies the comment for a strikethroughed text. The comment will be shown in a pop-up window.</param>
     </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.UnderlineSelectedText">
       <summary>
@@ -5368,18 +5374,18 @@
       </summary>
       <param name="color">A <see cref="T:System.Drawing.Color"/> value that specifies the color used to underline a selected text.</param>
     </member>
-    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.UnderlineSelectedText(System.String)">
-      <summary>
-        <para>Underlines a selected text and adds a comment to this text that will be shown in a pop-up window.</para>
-      </summary>
-      <param name="comment">A string that specifies the comment for an underlined text. The comment will be shown in a pop-up window.</param>
-    </member>
     <member name="M:DevExpress.XtraPdfViewer.PdfViewer.UnderlineSelectedText(System.String,System.Drawing.Color)">
       <summary>
         <para>Underlines a selected text with a color and adds a comment to this text that will be shown in a pop-up window.</para>
       </summary>
       <param name="comment">A string that specifies the comment for an underlined text. The comment will be shown in a pop-up window.</param>
       <param name="color">A <see cref="T:System.Drawing.Color"/> value that specifies the color used to underline a selected text.</param>
+    </member>
+    <member name="M:DevExpress.XtraPdfViewer.PdfViewer.UnderlineSelectedText(System.String)">
+      <summary>
+        <para>Underlines a selected text and adds a comment to this text that will be shown in a pop-up window.</para>
+      </summary>
+      <param name="comment">A string that specifies the comment for an underlined text. The comment will be shown in a pop-up window.</param>
     </member>
     <member name="E:DevExpress.XtraPdfViewer.PdfViewer.UpdateUI">
       <summary>
@@ -5447,25 +5453,25 @@
     <member name="F:DevExpress.XtraPdfViewer.PdfViewerToolbarKind.All">
       <summary>
         <para>All PDF Viewer’s toolbars.</para>
-        <para></para>
+        <para />
       </summary>
     </member>
     <member name="F:DevExpress.XtraPdfViewer.PdfViewerToolbarKind.Comment">
       <summary>
         <para>The PDF Viewer’s Comment toolbar.</para>
-        <para></para>
+        <para />
       </summary>
     </member>
     <member name="F:DevExpress.XtraPdfViewer.PdfViewerToolbarKind.InteractiveForm">
       <summary>
         <para>The PDF Viewer’s Interactive Form toolbar.</para>
-        <para></para>
+        <para />
       </summary>
     </member>
     <member name="F:DevExpress.XtraPdfViewer.PdfViewerToolbarKind.Main">
       <summary>
         <para>The PDF Viewer’s Main toolbar.</para>
-        <para></para>
+        <para />
       </summary>
     </member>
     <member name="T:DevExpress.XtraPdfViewer.PdfZoomChangedEventArgs">
