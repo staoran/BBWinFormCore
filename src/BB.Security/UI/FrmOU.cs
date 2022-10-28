@@ -21,18 +21,13 @@ public partial class FrmOu : BaseForm
     private List<int> _addedUserList = new();
     private List<int> _deletedUserList = new();
     private readonly OUHttpService _bll;
-    private readonly RoleHttpService _roleBLL;
-    private readonly UserHttpService _userBLL;
     private readonly OURoleHttpService _ouRoleBll;
     private readonly OUUserHttpService _ouUserBll;
 
-    public FrmOu(OUHttpService bll, RoleHttpService roleBll, UserHttpService userBll,
-        OURoleHttpService ouRoleBll, OUUserHttpService ouUserBll)
+    public FrmOu(OUHttpService bll, OURoleHttpService ouRoleBll, OUUserHttpService ouUserBll)
     {
         InitializeComponent();
         _bll = bll;
-        _roleBLL = roleBll;
-        _userBLL = userBll;
         _ouRoleBll = ouRoleBll;
         _ouUserBll = ouUserBll;
     }
@@ -293,7 +288,7 @@ public partial class FrmOu : BaseForm
         if (e.Node != null)
         {
             string id = e.Node.Name;
-            OUInfo info = await _bll.FindByIdAsync(ID);
+            OUInfo info = await _bll.FindByIdAsync(id);
 
             if (info != null)
             {
