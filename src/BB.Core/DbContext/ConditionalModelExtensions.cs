@@ -87,15 +87,12 @@ public static class ConditionalModelExtensions
                 }
                 else
                 {
-                    if (value.IsDateTime())
+                    conditionalModels.Add(new ConditionalModel()
                     {
-                        conditionalModels.Add(new ConditionalModel()
-                        {
-                            FieldName = fieldConditionType.FieldName,
-                            ConditionalType = fieldConditionType.SqlOperator.ToConditionalType(),
-                            FieldValue = value
-                        });
-                    }
+                        FieldName = fieldConditionType.FieldName,
+                        ConditionalType = fieldConditionType.SqlOperator.ToConditionalType(),
+                        FieldValue = value
+                    });
                 }
             }
         }
