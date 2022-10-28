@@ -423,9 +423,13 @@ public partial class FrmUser : BaseDock
     /// </summary>
     private async Task BindData()
     {
-        //entity
-        winGridViewPager1.DisplayColumns = "HandNo,Name,FullName,Title,MobilePhone,OfficePhone,Email,Gender,QQ,AuditStatus,IsExpire,Deleted,Note";
-        winGridViewPager1.ColumnNameAlias = await _bll.GetColumnNameAliasAsync();//字段列显示名称转义
+        try
+        {
+            ShowWaitForm();
+            WaitForm.SetWaitFormDescription("数据加载中...");
+            //entity
+            winGridViewPager1.DisplayColumns = "HandNo,Name,FullName,Title,MobilePhone,OfficePhone,Email,Gender,QQ,AuditStatus,IsExpire,Deleted,Note";
+            winGridViewPager1.ColumnNameAlias = await _bll.GetColumnNameAliasAsync();//字段列显示名称转义
 
         #region 添加别名解析
 

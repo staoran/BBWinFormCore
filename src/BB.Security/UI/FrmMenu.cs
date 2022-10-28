@@ -213,38 +213,44 @@ public partial class FrmMenu : BaseForm
     /// </summary>
     private async Task BindData()
     {
-        ShowWaitForm();
-        WaitForm.SetWaitFormDescription("数据加载中...");
-        //entity
-        winGridViewPager1.DisplayColumns =
-            $"{nameof(MenuInfo.Name)},{nameof(MenuInfo.Icon)},{nameof(MenuInfo.Seq)},{nameof(MenuInfo.MenuType)},{nameof(MenuInfo.FunctionId)},{nameof(MenuInfo.Visible)},{nameof(MenuInfo.WinformType)},{nameof(MenuInfo.WebIcon)},{nameof(MenuInfo.Url)},{nameof(MenuInfo.SystemTypeId)}";
-        #region 添加别名解析
+        try
+        {
+            ShowWaitForm();
+            WaitForm.SetWaitFormDescription("数据加载中...");
+            //entity
+            winGridViewPager1.DisplayColumns =
+                $"{nameof(MenuInfo.Name)},{nameof(MenuInfo.Icon)},{nameof(MenuInfo.Seq)},{nameof(MenuInfo.MenuType)},{nameof(MenuInfo.FunctionId)},{nameof(MenuInfo.Visible)},{nameof(MenuInfo.WinformType)},{nameof(MenuInfo.WebIcon)},{nameof(MenuInfo.Url)},{nameof(MenuInfo.SystemTypeId)}";
+            #region 添加别名解析
 
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.ID), "");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Name), "显示名称");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Icon), "图标");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Seq), "排序");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.MenuType), "菜单类型");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.FunctionId), "功能ID");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Visible), "菜单可见");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.WinformType), "Winform窗体类型");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.WebIcon), "Web界面的菜单图标");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Url), "Web界面Url地址");
-        winGridViewPager1.AddColumnAlias(nameof(MenuInfo.SystemTypeId), "系统类型ID");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.ID), "");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Name), "显示名称");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Icon), "图标");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Seq), "排序");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.MenuType), "菜单类型");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.FunctionId), "功能ID");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Visible), "菜单可见");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.WinformType), "Winform窗体类型");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.WebIcon), "Web界面的菜单图标");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.Url), "Web界面Url地址");
+            winGridViewPager1.AddColumnAlias(nameof(MenuInfo.SystemTypeId), "系统类型ID");
 
-        #endregion
+            #endregion
 
-        #region 添加列字段数据源
+            #region 添加列字段数据源
 
-        winGridViewPager1.SetColumnDataSource(MenuInfo.FieldMenuType, "菜单类型");
+            winGridViewPager1.SetColumnDataSource(MenuInfo.FieldMenuType, "菜单类型");
 
-        #endregion
+            #endregion
 
-        Dictionary<string,string> condition = GetConditionSql();
-        PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
-        PageResult<MenuInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
-        winGridViewPager1.InitDataSource(list, "功能菜单信息报表");
-        HideWaitForm();
+            Dictionary<string,string> condition = GetConditionSql();
+            PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
+            PageResult<MenuInfo> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
+            winGridViewPager1.InitDataSource(list, "功能菜单信息报表");
+        }
+        finally
+        {
+            HideWaitForm();
+        }
     }
 
     /// <summary>
