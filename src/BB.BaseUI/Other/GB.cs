@@ -20,13 +20,14 @@ using BB.Tools.Extension;
 using BB.Tools.File;
 using BB.Tools.Utils;
 using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
 using Furion;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Win32;
 
 namespace BB.BaseUI.Other;
 
- public static class GB
+public static class GB
 {
     #region 系统全局变量
         
@@ -86,6 +87,11 @@ namespace BB.BaseUI.Other;
     /// 用户具有的角色集合
     /// </summary>
     public static List<RoleInfo> RoleList { get; set; } = new();
+
+    /// <summary>
+    /// 菜单中注册的功能按钮
+    /// </summary>
+    public static readonly Dictionary<string, string> AllFunctionDict = new();
         
     /// <summary>
     /// 是否注册
@@ -279,8 +285,46 @@ namespace BB.BaseUI.Other;
     /// <returns></returns>
     public static bool HasFunction(string controlId)
     {
-        return string.IsNullOrEmpty(controlId) || DataCanManage(LoginUserInfo.CompanyId) ||
-               FunctionDict.ContainsKey(controlId);
+        return DataCanManage(LoginUserInfo.CompanyId) || (!string.IsNullOrEmpty(controlId) &&
+            (!AllFunctionDict.ContainsKey(controlId) || FunctionDict.ContainsKey(controlId)));
+    }
+
+    /// <summary>
+    /// 看用户是否具有某个功能（管理员和功能ID为空都视为有权）
+    /// </summary>
+    /// <param name="control"></param>
+    /// <returns></returns>
+    public static bool HasFunction(object control)
+    {
+        bool hsaFunction;
+        switch (control)
+        {
+            case BarItem barItem:
+            {
+                Type form = barItem.Manager.Form.GetType();
+                var fullName = $"{form.FullName ?? form.Name}/{barItem.Name}";
+                hsaFunction = HasFunction(fullName);
+                barItem.Visibility = hsaFunction ? BarItemVisibility.Always : BarItemVisibility.Never;
+                break;
+            }
+            case BaseButton baseButton:
+            {
+                Type form = baseButton.Parent!.GetType();
+                var fullName = $"{form.FullName ?? form.Name}/{baseButton.Name}";
+                hsaFunction = HasFunction(fullName);
+                baseButton.Visible = hsaFunction;
+                baseButton.Enabled = hsaFunction;
+                break;
+            }
+            case string text:
+                hsaFunction = HasFunction(text);
+                break;
+            default:
+                hsaFunction = false;
+                break;
+        }
+
+        return  hsaFunction;
     }
 
     /// <summary>
@@ -572,21 +616,22 @@ namespace BB.BaseUI.Other;
     }
 
     /// <summary>
-    /// 加载菜单功能权限
+    /// 加载按钮功能权限
     /// </summary>
+    /// <param name="dic"></param>
     /// <param name="menuNodeInfos"></param>
-    public static void LoadFunction(List<MenuNodeInfo> menuNodeInfos)
+    public static void LoadFunction(this Dictionary<string, string> dic, List<MenuNodeInfo> menuNodeInfos)
     {
         menuNodeInfos.ForEach(x =>
         {
-            if (!x.FunctionId.IsNullOrEmpty() && !FunctionDict.ContainsKey(x.FunctionId))
+            if (x.MenuType == "3" && !x.FunctionId.IsNullOrEmpty())
             {
-                FunctionDict.Add(x.FunctionId, x.Name);
+                dic.Add(x.FunctionId, x.Name);
             }
 
             if (x.Children.Count > 0)
             {
-                LoadFunction(x.Children);
+                dic.LoadFunction(x.Children);
             }
         });
     }
@@ -603,11 +648,14 @@ namespace BB.BaseUI.Other;
     {
         #region 用户权限
 
-        UserMenuNode = await App.GetService<MenuHttpService>().GetMenuNodesByUser(LoginUserInfo.ID, SystemType);
+        var menuHttpService = App.GetService<MenuHttpService>();
+        AllFunctionDict.Clear();
+        AllFunctionDict.LoadFunction(await menuHttpService.GetTreeAsync(SystemType));
+        UserMenuNode = await menuHttpService.GetMenuNodesByUser(LoginUserInfo.ID, SystemType);
         if (UserMenuNode is { Count: > 0 })
         {
             FunctionDict.Clear();
-            LoadFunction(UserMenuNode);
+            FunctionDict.LoadFunction(UserMenuNode);
         }
 
         #endregion
