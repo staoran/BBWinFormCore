@@ -44,16 +44,6 @@ public partial class FrmCostMsg : BaseViewDock<CostMsg, CostMsgHttpService, FrmE
 
         #region 按钮和按钮权限
 
-        addButton.Visibility = BarItemVisibility.Always;
-        editButton.Visibility = BarItemVisibility.Always;
-        checkButton.Visibility = BarItemVisibility.Always;
-        importButton.Visibility = BarItemVisibility.Always;
-        queryButton.Visibility = BarItemVisibility.Always;
-        clearButton.Visibility = BarItemVisibility.Always;
-        advQueryButton.Visibility = BarItemVisibility.Always;
-        exportButton.Visibility = BarItemVisibility.Always;
-        hideTreeButton.Visibility = BarItemVisibility.Always;
-
         #endregion
     }
 

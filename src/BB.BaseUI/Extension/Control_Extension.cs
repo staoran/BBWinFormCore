@@ -777,25 +777,30 @@ public static class ControlExtension
     /// <param name="barShortcut">按钮快捷键</param>
     /// <param name="beginGroup">新分组</param>
     /// <param name="alignment">按钮对齐方式</param>
+    /// <param name="verifyPermissions">验证权限</param>
     /// <param name="tag">标签</param>
     /// <returns></returns>
     public static BarButtonItem AddBarButtonItem(this Bar bar, string name, string caption, 
-        string imageId, ItemClickEventHandler itemClick, BarShortcut barShortcut = null, bool beginGroup = false,
-        BarItemLinkAlignment alignment = BarItemLinkAlignment.Default, object tag = null)
+        string imageId, ItemClickEventHandler itemClick, BarShortcut? barShortcut = null, bool beginGroup = false,
+        BarItemLinkAlignment alignment = BarItemLinkAlignment.Default, bool verifyPermissions = true,
+        object? tag = null)
     {
         var barButton = new BarButtonItem()
         {
             Caption = caption,
             Name = name,
-            ItemShortcut = barShortcut,
+            ItemShortcut = barShortcut ?? BarShortcut.Empty,
             LargeGlyph = ImageResourceCache.Default.GetImageById(imageId, ImageSize.Size32x32, ImageType.Colored),
             Glyph = ImageResourceCache.Default.GetImageById(imageId, ImageSize.Size16x16, ImageType.Colored),
             PaintStyle = BarItemPaintStyle.CaptionGlyph,
+            Visibility = verifyPermissions ? BarItemVisibility.Never : BarItemVisibility.Always,
             Alignment = alignment,
             Tag = tag
         };
         barButton.ItemClick += itemClick;
         bar.AddItem(barButton).BeginGroup = beginGroup;
+
+        if (verifyPermissions) GB.HasFunction(barButton);
         return barButton;
     }
 
@@ -810,25 +815,30 @@ public static class ControlExtension
     /// <param name="barShortcut">按钮快捷键</param>
     /// <param name="beginGroup">新分组</param>
     /// <param name="alignment">按钮对齐方式</param>
+    /// <param name="verifyPermissions">验证权限</param>
     /// <param name="tag">标签</param>
     /// <returns></returns>
     public static BarCheckItem AddBarCheckItem(this Bar bar, string name, string caption, 
-        string imageId, ItemClickEventHandler itemClick, BarShortcut barShortcut = null, bool beginGroup = false,
-        BarItemLinkAlignment alignment = BarItemLinkAlignment.Default, object tag = null)
+        string imageId, ItemClickEventHandler itemClick, BarShortcut? barShortcut = null, bool beginGroup = false,
+        BarItemLinkAlignment alignment = BarItemLinkAlignment.Default, bool verifyPermissions = true,
+        object? tag = null)
     {
         var barCheck = new BarCheckItem()
         {
             Caption = caption,
             Name = name,
-            ItemShortcut = barShortcut,
+            ItemShortcut = barShortcut ?? BarShortcut.Empty,
             LargeGlyph = ImageResourceCache.Default.GetImageById(imageId, ImageSize.Size32x32, ImageType.Colored),
             Glyph = ImageResourceCache.Default.GetImageById(imageId, ImageSize.Size16x16, ImageType.Colored),
             PaintStyle = BarItemPaintStyle.CaptionGlyph,
+            Visibility = verifyPermissions ? BarItemVisibility.Never : BarItemVisibility.Always,
             Alignment = alignment,
             Tag = tag
         };
         barCheck.CheckedChanged += itemClick;
         bar.AddItem(barCheck).BeginGroup = beginGroup;
+
+        if (verifyPermissions) GB.HasFunction(barCheck);
         return barCheck;
     }
 
@@ -843,25 +853,30 @@ public static class ControlExtension
     /// <param name="barShortcut">按钮快捷键</param>
     /// <param name="beginGroup">新分组</param>
     /// <param name="alignment">按钮对齐方式</param>
+    /// <param name="verifyPermissions">验证权限</param>
     /// <param name="tag">标签</param>
     /// <returns></returns>
     public static BarToggleSwitchItem AddBarSwitchItem(this Bar bar, string name, string caption, 
-        string imageId, ItemClickEventHandler itemClick, BarShortcut barShortcut = null, bool beginGroup = false,
-        BarItemLinkAlignment alignment = BarItemLinkAlignment.Default, object tag = null)
+        string imageId, ItemClickEventHandler itemClick, BarShortcut? barShortcut = null, bool beginGroup = false,
+        BarItemLinkAlignment alignment = BarItemLinkAlignment.Default, bool verifyPermissions = true,
+        object? tag = null)
     {
         var barSwitch = new BarToggleSwitchItem()
         {
             Caption = caption,
             Name = name,
-            ItemShortcut = barShortcut,
+            ItemShortcut = barShortcut ?? BarShortcut.Empty,
             LargeGlyph = ImageResourceCache.Default.GetImageById(imageId, ImageSize.Size32x32, ImageType.Colored),
             Glyph = ImageResourceCache.Default.GetImageById(imageId, ImageSize.Size16x16, ImageType.Colored),
             PaintStyle = BarItemPaintStyle.CaptionGlyph,
+            Visibility = verifyPermissions ? BarItemVisibility.Never : BarItemVisibility.Always,
             Alignment = alignment,
             Tag = tag
         };
         barSwitch.CheckedChanged += itemClick;
         bar.AddItem(barSwitch).BeginGroup = beginGroup;
+
+        if (verifyPermissions) GB.HasFunction(barSwitch);
         return barSwitch;
     }
 

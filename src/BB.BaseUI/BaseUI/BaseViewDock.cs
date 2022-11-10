@@ -3,6 +3,7 @@ using System.Data;
 using System.Reflection;
 using BB.BaseUI.AdvanceSearch;
 using BB.BaseUI.Extension;
+using BB.BaseUI.Other;
 using BB.Entity.Base;
 using BB.Entity.TMS;
 using BB.HttpServices.Base;
@@ -103,7 +104,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
         queryButton = bar1.AddBarButtonItem("Query", "查询(&Q)", "functionslookupandreference", btnSearch_Click,
             new BarShortcut(Keys.Alt | Keys.Q), false, BarItemLinkAlignment.Right);
         clearButton = bar1.AddBarButtonItem("Clear", "清空(&C)", "clearall", btnClear_Click,
-            new BarShortcut(Keys.Alt | Keys.C), false, BarItemLinkAlignment.Right);
+            new BarShortcut(Keys.Alt | Keys.C), false, BarItemLinkAlignment.Right, false);
         advQueryButton = bar1.AddBarButtonItem("AdvQuery", "高级查询", "filter", btnAdvanceSearch_Click, null, false,
             BarItemLinkAlignment.Right);
         exportButton = bar1.AddBarButtonItem("Export", "导出", "outbox", btnExport_Click, null, true,
@@ -111,29 +112,26 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
         hideTreeButton = bar1.AddBarSwitchItem("HideTree", "隐藏快查", "left", chkHideTree_CheckedChanged, null, true,
             BarItemLinkAlignment.Right);
         tableDirectionButton = bar1.AddBarSwitchItem("TableDirection", "列表横向布局", "chartswitchrowcolumn",
-            chkTableDirection_CheckedChanged, null, true,
-            BarItemLinkAlignment.Right);
-        clearButton =
-            bar1.AddBarButtonItem("Close", "关闭", "close", btnClose_Click, null, true, BarItemLinkAlignment.Right);
+            chkTableDirection_CheckedChanged, null, true, BarItemLinkAlignment.Right, false);
+        clearButton = bar1.AddBarButtonItem("Close", "关闭", "close", btnClose_Click, null, 
+            true, BarItemLinkAlignment.Right, false);
 
-        addButton.Enabled = HasFunction($"{Name}/Add");
-        editButton.Enabled = HasFunction($"{Name}/Edit");
-        checkButton.Enabled = HasFunction($"{Name}/Check");
-        importButton.Enabled = HasFunction($"{Name}/Import");
-        queryButton.Enabled = HasFunction($"{Name}/Query");
-        clearButton.Enabled = HasFunction($"{Name}/Clear");
-        advQueryButton.Enabled = HasFunction($"{Name}/AdvQuery");
-        exportButton.Enabled = HasFunction($"{Name}/Export");
-        addButton.Visibility = BarItemVisibility.Never;
-        editButton.Visibility = BarItemVisibility.Never;
-        checkButton.Visibility = BarItemVisibility.Never;
-        importButton.Visibility = BarItemVisibility.Never;
-        queryButton.Visibility = BarItemVisibility.Never;
-        clearButton.Visibility = BarItemVisibility.Never;
-        advQueryButton.Visibility = BarItemVisibility.Never;
-        exportButton.Visibility = BarItemVisibility.Never;
-        hideTreeButton.Visibility = BarItemVisibility.Never;
-        tableDirectionButton.Visibility = BarItemVisibility.Never;
+        // 快查权限
+        string fullName = GetType().FullName ?? Name;
+        if (GB.HasFunction($"{fullName}/QuickQuery"))
+        {
+            hideTreeButton.Visibility = BarItemVisibility.Always;
+            splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
+        }
+
+        // addButton.Enabled = HasFunction($"{fullName}/addButton");
+        // editButton.Enabled = HasFunction($"{fullName}/editButton");
+        // checkButton.Enabled = HasFunction($"{fullName}/checkButton");
+        // importButton.Enabled = HasFunction($"{fullName}/importButton");
+        // queryButton.Enabled = HasFunction($"{fullName}/queryButton");
+        // clearButton.Enabled = HasFunction($"{fullName}/clearButton");
+        // advQueryButton.Enabled = HasFunction($"{fullName}/advQueryButton");
+        // exportButton.Enabled = HasFunction($"{fullName}/exportButton");
 
         #endregion
         

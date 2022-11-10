@@ -1,7 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Data;
 using BB.BaseUI.AdvanceSearch;
-using BB.Tools.Entity;
 using DevExpress.XtraBars;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
