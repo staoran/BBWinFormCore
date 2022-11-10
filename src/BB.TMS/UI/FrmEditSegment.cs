@@ -139,8 +139,8 @@ public partial class FrmEditSegment : BaseEditForm<Segment, SegmentHttpService, 
         txtSegmentType.BindDictItems("线路类型", "1", false, false);
         txtSegmentBeginNode.BindDictItems(GB.AllOuDict, null, false, false);
         txtSegmentEndNode.BindDictItems(GB.AllOuDict, null, false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         return Task.CompletedTask;

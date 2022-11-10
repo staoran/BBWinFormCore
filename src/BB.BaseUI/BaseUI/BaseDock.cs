@@ -1,11 +1,8 @@
 ﻿using System.ComponentModel;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
-using BB.BaseUI.PlugInInterface;
 using BB.BaseUI.WinForm;
-using BB.Entity.Base;
 using BB.Tools.Entity;
-using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.MultiLanuage;
 using BB.Tools.Utils;
@@ -21,7 +18,7 @@ namespace BB.BaseUI.BaseUI;
 /// <summary>
 /// 用于一般列表界面的基类
 /// </summary>
-public partial class BaseDock : XtraForm, IFunction, ILoadFormActived, ITransient
+public partial class BaseDock : XtraForm, ILoadFormActived, ITransient//, IFunction
 {
     /// <summary>
     /// 子窗体数据保存的触发
@@ -56,10 +53,12 @@ public partial class BaseDock : XtraForm, IFunction, ILoadFormActived, ITransien
     {
         ShowWaitForm();
         WaitForm.SetWaitFormDescription("界面加载中...");
-        //为了保证一些界面控件的权限控制和身份确认，以及简化操作，在界面初始化的时候，从缓存里面内容（如果存在的话）
-        //继承的子模块，也可以通过InitFunction()进行指定用户相关信息
-        LoginUserInfo = Cache.Instance.Get<LoginUserInfo>("LoginUserInfo");
-        FunctionDict = Cache.Instance.Get<Dictionary<string, string>>("FunctionDict");
+
+        // 直接使用 GB.X
+        // //为了保证一些界面控件的权限控制和身份确认，以及简化操作，在界面初始化的时候，从缓存里面内容（如果存在的话）
+        // //继承的子模块，也可以通过InitFunction()进行指定用户相关信息
+        // LoginUserInfo = GB.LoginUserInfo;
+        // FunctionDict = GB.FunctionDict;
 
         // 进行数据过滤的Sql条件
         DataFilterCondition = Cache.Instance.GetString("DataFilterCondition");
@@ -199,41 +198,27 @@ public partial class BaseDock : XtraForm, IFunction, ILoadFormActived, ITransien
         }
     }
 
-    /// <summary>
-    /// 初始化权限控制信息
-    /// </summary>
-    public void InitFunction(LoginUserInfo userInfo, Dictionary<string, string> functionDict)
-    {
-        if (userInfo != null)
-        {
-            LoginUserInfo = userInfo;
-        }
-        if (functionDict != null && functionDict.Count > 0)
-        {
-            FunctionDict = functionDict;
-        }
-    }
+    // /// <summary>
+    // /// 初始化权限控制信息
+    // /// </summary>
+    // public void InitFunction(LoginUserInfo userInfo, Dictionary<string, string> functionDict)
+    // {
+    //     LoginUserInfo = userInfo;
+    //     if (functionDict.Count > 0)
+    //     {
+    //         FunctionDict = functionDict;
+    //     }
+    // }
 
-    /// <summary>
-    /// 是否具有访问指定控制ID的权限
-    /// </summary>
-    /// <param name="controlId">功能控制ID</param>
-    /// <returns></returns>
-    public bool HasFunction(string controlId)
-    {
-        return string.IsNullOrEmpty(controlId) || GB.DataCanManage(LoginUserInfo.CompanyId) ||
-               FunctionDict != null && FunctionDict.ContainsKey(controlId);
-    }
-
-    /// <summary>
-    /// 登陆用户基础信息
-    /// </summary>
-    public LoginUserInfo LoginUserInfo { get; set; }
-
-    /// <summary>
-    /// 登录用户具有的功能字典集合
-    /// </summary>
-    public Dictionary<string, string> FunctionDict { get; set; }
+    // /// <summary>
+    // /// 登陆用户基础信息
+    // /// </summary>
+    // public LoginUserInfo LoginUserInfo { get; set; }
+    //
+    // /// <summary>
+    // /// 登录用户具有的功能字典集合
+    // /// </summary>
+    // public Dictionary<string, string> FunctionDict { get; set; }
 
     private AppInfo _mAppInfo = new AppInfo();
     /// <summary>

@@ -539,7 +539,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 
             // 保存成功后事件
             _baseForm.Value.OnDataSaved += edit_OnDataSaved;
-            _baseForm.Value.InitFunction(LoginUserInfo, FunctionDict); //给子窗体赋值用户权限信息
+            // _baseForm.Value.InitFunction(LoginUserInfo, FunctionDict); //给子窗体赋值用户权限信息
 
             if (DialogResult.OK == _baseForm.Value.ShowDialog())
             {

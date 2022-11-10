@@ -211,15 +211,15 @@ public class RibbonPageHelper
             // tableForm = (Form)Activator.CreateInstance(formType);
             tableForm = (Form)App.GetService(formType);
 
-            //如果窗体集成了IFunction接口(第一次创建需要设置)
-            if (tableForm is IFunction function)
-            {
-                //初始化权限控制信息
-                function.InitFunction(GB.LoginUserInfo, GB.FunctionDict);
-
-                //记录程序的相关信息
-                function.AppInfo = new AppInfo(GB.AppUnit, GB.AppName, GB.AppWholeName, GB.SystemType);
-            }
+            // //如果窗体集成了IFunction接口(第一次创建需要设置)
+            // if (tableForm is IFunction function)
+            // {
+            //     //初始化权限控制信息
+            //     function.InitFunction(GB.LoginUserInfo, GB.FunctionDict);
+            //
+            //     //记录程序的相关信息
+            //     function.AppInfo = new AppInfo(GB.AppUnit, GB.AppName, GB.AppWholeName, GB.SystemType);
+            // }
         }
 
         if (tableForm == null)

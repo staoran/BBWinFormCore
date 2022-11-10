@@ -1,6 +1,5 @@
 ﻿using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
-using BB.BaseUI.PlugInInterface;
 using BB.Entity.Base;
 using BB.Tools.Entity;
 using BB.Tools.MultiLanuage;
@@ -14,7 +13,7 @@ namespace BB.BaseUI.BaseUI;
 /// <summary>
 /// 自定义控件基类
 /// </summary>
-public partial class BaseUserControl : XtraUserControl, IFunction
+public partial class BaseUserControl : XtraUserControl//, IFunction
 {
     /// <summary>
     /// 子窗体数据保存的触发
@@ -82,39 +81,31 @@ public partial class BaseUserControl : XtraUserControl, IFunction
         ex.Message.ShowUxError();//临时处理
     }
 
-    /// <summary>
-    /// 初始化权限控制信息
-    /// </summary>
-    public void InitFunction(LoginUserInfo userInfo, Dictionary<string, string> functionDict)
-    {
-        if (userInfo != null)
-        {
-            LoginUserInfo = userInfo;
-        }
-        if (functionDict != null && functionDict.Count > 0)
-        {
-            FunctionDict = functionDict;
-        }
-    }
-
-    /// <summary>
-    /// 是否具有访问指定控制ID的权限
-    /// </summary>
-    /// <param name="controlId">功能控制ID</param>
-    /// <returns></returns>
-    public bool HasFunction(string controlId)
-    {
-        bool result = false;
-        if (string.IsNullOrEmpty(controlId))
-        {
-            result = true;
-        }
-        else if (FunctionDict != null && FunctionDict.ContainsKey(controlId))
-        {
-            result = true;
-        }
-        return result;
-    }
+    // /// <summary>
+    // /// 初始化权限控制信息
+    // /// </summary>
+    // public void InitFunction(LoginUserInfo userInfo, Dictionary<string, string> functionDict)
+    // {
+    //     if (userInfo != null)
+    //     {
+    //         LoginUserInfo = userInfo;
+    //     }
+    //     if (functionDict != null && functionDict.Count > 0)
+    //     {
+    //         FunctionDict = functionDict;
+    //     }
+    // }
+    //
+    // /// <summary>
+    // /// 是否具有访问指定控制ID的权限
+    // /// </summary>
+    // /// <param name="controlId">功能控制ID</param>
+    // /// <returns></returns>
+    // public bool HasFunction(string controlId)
+    // {
+    //     return !FunctionDict.Any() || GB.DataCanManage(LoginUserInfo.CompanyId) || (!string.IsNullOrEmpty(controlId) &&
+    //         FunctionDict.ContainsKey(controlId));
+    // }
 
 
     /// <summary>

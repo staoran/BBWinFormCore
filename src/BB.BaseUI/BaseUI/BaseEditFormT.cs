@@ -1,4 +1,5 @@
 ﻿using BB.BaseUI.Extension;
+using BB.BaseUI.Other;
 using BB.Entity.Base;
 using BB.HttpServices.Base;
 using BB.Tools.Extension;
@@ -58,8 +59,10 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
 
             #region 按钮权限
 
-            btnOK.Enabled = HasFunction($"{ParentForm}/Edit");
-            btnAdd.Enabled = HasFunction($"{ParentForm}/Add") && HasFunction($"{ParentForm}/Edit");
+            // btnOK.Enabled = HasFunction($"{ParentForm}/Edit");
+            // btnAdd.Enabled = HasFunction($"{ParentForm}/Add") && HasFunction($"{ParentForm}/Edit");
+            GB.HasFunction(btnOK);
+            GB.HasFunction(btnAdd);
 
             #endregion
 
@@ -77,8 +80,10 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
 
             #region 按钮权限
 
-            btnOK.Enabled = HasFunction($"{ParentForm}/Add");
-            btnAdd.Enabled = HasFunction($"{ParentForm}/Add") && HasFunction($"{ParentForm}/Edit");
+            // btnOK.Enabled = HasFunction($"{ParentForm}/Add");
+            // btnAdd.Enabled = HasFunction($"{ParentForm}/Add") && HasFunction($"{ParentForm}/Edit");
+            GB.HasFunction(btnOK);
+            GB.HasFunction(btnAdd);
 
             #endregion
 

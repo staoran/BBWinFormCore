@@ -34,10 +34,10 @@ public partial class FrmEditBasicCostBillType : BaseEditForm<BasicCostBillType, 
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         return Task.CompletedTask;
     }
 

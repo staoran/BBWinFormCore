@@ -34,14 +34,14 @@ public partial class FrmEditCar : BaseEditForm<Car, CarHttpService>
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtTranNode.BindDictItems(GB.AllOuDict, LoginUserInfo.CompanyId, false, false);
+        txtTranNode.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, false);
         txtProperty.BindDictItems("车辆性质", null, false, false);
         txtModel.BindDictItems("车型", null, false, false);
         txtCarType.BindDictItems("车体状况", null, false, false);
         txtServiceRange.BindDictItems("服务范围", null, false, false);
         txtTrustLevel.BindDictItems("信誉类型", null, false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), true, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), true, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), true, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), true, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         return Task.CompletedTask;

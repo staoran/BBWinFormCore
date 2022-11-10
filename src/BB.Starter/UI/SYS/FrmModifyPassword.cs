@@ -1,5 +1,6 @@
 ﻿using BB.BaseUI.BaseUI;
 using BB.BaseUI.Extension;
+using BB.BaseUI.Other;
 using BB.HttpServices.Core.User;
 
 namespace BB.Starter.UI.SYS;
@@ -16,7 +17,7 @@ public partial class FrmModifyPassword : BaseDock
 
     private void FrmModifyPassword_Load(object? sender, EventArgs e)
     {
-        txtLogin.Text = LoginUserInfo.FullName;
+        txtLogin.Text = GB.LoginUserInfo.FullName;
     }
 
     private async void btnOK_Click(object? sender, EventArgs e)
@@ -32,7 +33,7 @@ public partial class FrmModifyPassword : BaseDock
 
         try
         {
-            bool result = await _userHttpService.ModifyPasswordAsync(LoginUserInfo.Name, txtPassword.Text);
+            bool result = await _userHttpService.ModifyPasswordAsync(GB.LoginUserInfo.Name, txtPassword.Text);
 
             if (result)
             {

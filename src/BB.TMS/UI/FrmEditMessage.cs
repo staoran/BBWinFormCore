@@ -150,8 +150,8 @@ public partial class FrmEditMessage : BaseEditForm<Message, MessageHttpService, 
         txtSendMsgNode.BindDictItems(GB.AllOuDict, null, false, false);
         txtRecvMsgNode.BindDictItems(GB.AllOuDict, null, false, false);
         txtDealStatus.BindDictItems("问题件处理类型", "0", false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         return Task.CompletedTask;

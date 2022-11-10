@@ -36,8 +36,8 @@ public partial class FrmEditBasicGroupList : BaseEditForm<BasicGroupList, BasicG
         //初始化代码
         txtGroupType.BindDictItems("分组类型", null, false, false);
         txtCostType.BindDictItems(GB.AllCostType, null, false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         return Task.CompletedTask;

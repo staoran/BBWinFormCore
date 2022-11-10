@@ -34,10 +34,10 @@ public partial class FrmEditLogisticCompany : BaseEditForm<LogisticCompany, Logi
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtOrgCode.BindDictItems(GB.AllOuDict, LoginUserInfo.CompanyId, false, false);
+        txtOrgCode.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, false);
         txtTrustLevel.BindDictItems("信誉类型", null, false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         return Task.CompletedTask;

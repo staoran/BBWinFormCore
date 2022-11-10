@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
-using BB.BaseUI.PlugInInterface;
 using BB.BaseUI.WinForm;
-using BB.Entity.Base;
 using BB.Tools.Entity;
 using BB.Tools.MultiLanuage;
 using DevExpress.XtraBars.Alerter;
@@ -17,7 +15,7 @@ namespace BB.BaseUI.BaseUI;
 /// <summary>
 /// 常规界面基类
 /// </summary>
-public partial class BaseForm : XtraForm, IFunction, ILoadFormActived, ITransient
+public partial class BaseForm : XtraForm, ILoadFormActived, ITransient//, IFunction
 {
     /// <summary>
     /// 子窗体数据保存的触发
@@ -35,15 +33,15 @@ public partial class BaseForm : XtraForm, IFunction, ILoadFormActived, ITransien
     /// </summary>
     public event FormActiveHandler LoadFormActived;
 
-    /// <summary>
-    /// 登陆用户基础信息
-    /// </summary>
-    public LoginUserInfo LoginUserInfo { get; set; }
-
-    /// <summary>
-    /// 登录用户具有的功能字典集合
-    /// </summary>
-    public Dictionary<string, string> FunctionDict { get; set; }
+    // /// <summary>
+    // /// 登陆用户基础信息
+    // /// </summary>
+    // public LoginUserInfo LoginUserInfo { get; set; }
+    //
+    // /// <summary>
+    // /// 登录用户具有的功能字典集合
+    // /// </summary>
+    // public Dictionary<string, string> FunctionDict { get; set; }
 
     /// <summary>
     /// 应用程序基础信息
@@ -68,10 +66,11 @@ public partial class BaseForm : XtraForm, IFunction, ILoadFormActived, ITransien
         ShowWaitForm();
         WaitForm.SetWaitFormDescription("界面加载中...");
 
-        //为了保证一些界面控件的权限控制和身份确认，以及简化操作，在界面初始化的时候，从缓存里面内容（如果存在的话）
-        //继承的子模块，也可以通过InitFunction()进行指定用户相关信息
-        LoginUserInfo = GB.LoginUserInfo;
-        FunctionDict = GB.FunctionDict;
+        // 直接使用 GB.X
+        // //为了保证一些界面控件的权限控制和身份确认，以及简化操作，在界面初始化的时候，从缓存里面内容（如果存在的话）
+        // //继承的子模块，也可以通过InitFunction()进行指定用户相关信息
+        // LoginUserInfo = GB.LoginUserInfo;
+        // FunctionDict = GB.FunctionDict;
 
         //此处放最后，防止部分控件使用上面缓存内容出现问题
         InitializeComponent();
@@ -181,31 +180,20 @@ public partial class BaseForm : XtraForm, IFunction, ILoadFormActived, ITransien
         HideWaitForm();
     }
 
-    /// <summary>
-    /// 手动指定权限和身份信息，默认在构造函数中在缓存中获取
-    /// </summary>
-    public void InitFunction(LoginUserInfo userInfo, Dictionary<string, string> functionDict)
-    {
-        if (userInfo != null)
-        {
-            LoginUserInfo = userInfo;
-        }
-        if (functionDict is { Count: > 0 })
-        {
-            FunctionDict = functionDict;
-        }
-    }
-
-    /// <summary>
-    /// 是否具有访问指定控制ID的权限
-    /// </summary>
-    /// <param name="controlId">功能控制ID</param>
-    /// <returns></returns>
-    public bool HasFunction(string controlId)
-    {
-        return string.IsNullOrEmpty(controlId) || GB.DataCanManage(LoginUserInfo.CompanyId) ||
-               FunctionDict != null && FunctionDict.ContainsKey(controlId);
-    }
+    // /// <summary>
+    // /// 手动指定权限和身份信息，默认在构造函数中在缓存中获取
+    // /// </summary>
+    // public void InitFunction(LoginUserInfo userInfo, Dictionary<string, string> functionDict)
+    // {
+    //     if (userInfo != null)
+    //     {
+    //         LoginUserInfo = userInfo;
+    //     }
+    //     if (functionDict is { Count: > 0 })
+    //     {
+    //         FunctionDict = functionDict;
+    //     }
+    // }
 
     /// <summary>
     /// 窗体激活的事件处理

@@ -104,8 +104,8 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
                 "true",
                 "false",
                 "DateTime.Now",
-                "LoginUserInfo.ID.ToString()",
-                "LoginUserInfo.CompanyId",
+                "GB.LoginUserInfo.ID.ToString()",
+                "GB.LoginUserInfo.CompanyId",
                 "0",
                 "\"0\"",
                 "Snowflake.Instance().GetId().ToString()"

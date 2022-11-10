@@ -143,7 +143,7 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtTranNode.BindDictItems(GB.AllOuDict, LoginUserInfo.CompanyId, false, false);
+        txtTranNode.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, false);
         txtAreaNo.BindCityItems(true);
         txtInUse.BindDictItems("是,否", true);
         txtPaymentType.BindDictItems("付款方式", null, false, false);
@@ -152,8 +152,8 @@ public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpServic
         txtProjectManager.BindDictItems(GB.AllUserDict, null, true, false);
         txtFlagInvoice.BindDictItems("是,否", false);
         txtSalesPerson.BindDictItems(GB.AllUserDict, null, true, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         return Task.CompletedTask;

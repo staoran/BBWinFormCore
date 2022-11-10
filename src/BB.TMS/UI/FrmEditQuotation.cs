@@ -142,11 +142,11 @@ public partial class FrmEditQuotation : BaseEditForm<Quotation, QuotationHttpSer
         //初始化代码
         txtCostType.BindDictItems(GB.AllCostBillType, null, false, false);
         txtCargoTypePerYN.BindDictItems("是,否", false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
-        txtTranNodeNO.BindDictItems(GB.AllOuDict, LoginUserInfo.CompanyId, false, false);
+        txtTranNodeNO.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, false);
         return Task.CompletedTask;
     }
 

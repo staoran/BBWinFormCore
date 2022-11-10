@@ -128,14 +128,14 @@ public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQ
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtTranNodeNO.BindDictItems(GB.AllOuDict, LoginUserInfo.CompanyId, false, false);
+        txtTranNodeNO.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, false);
         txtCostType.BindDictItems(GB.AllCostType, null, false, false);
         txtCargoType.BindDictItems("货物名称", "", true, false);
         txtPickUpType.BindDictItems("收货类型", "", true, false);
         txtDeliveryType.BindDictItems("交货方式", "", true, false);
         txtTransportType.BindDictItems("运输类型", "", true, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         txtRakeMarkYN.BindDictItems("是,否", false);

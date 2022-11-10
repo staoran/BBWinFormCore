@@ -35,9 +35,9 @@ public partial class FrmEditCostMsgs : BaseEditForm<CostMsgs, CostMsgsHttpServic
     {
         //初始化代码
         txtStatusID.BindDictItems("费用调整状态", "1", false, false);
-        txtRecvMsgNode.BindDictItems(GB.AllOuDict, LoginUserInfo.CompanyId, false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtRecvMsgNode.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         return Task.CompletedTask;
     }
 

@@ -37,8 +37,8 @@ public partial class FrmEditBasicTranslateWords : BaseEditForm<BasicTranslateWor
         txtTranslateType.BindDictItems("公式关键字类型", "", true, false);
         txtCanSelectYN.BindDictItems("是,否", false);
         txtCancelYN.BindDictItems("是,否", false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         return Task.CompletedTask;
     }
 

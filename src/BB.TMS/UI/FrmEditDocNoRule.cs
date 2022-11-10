@@ -46,7 +46,7 @@ public partial class FrmEditDocNoRule : BaseEditForm<DocNoRule, DocNoRuleHttpSer
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         List<string> list = new()
         {
             "<年年年年>",

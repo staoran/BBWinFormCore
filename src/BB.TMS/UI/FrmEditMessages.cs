@@ -35,8 +35,8 @@ public partial class FrmEditMessages : BaseEditForm<Messages, MessagesHttpServic
     {
         //初始化代码
         txtDealStatus.BindDictItems("问题件处理类型", "8", false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdateBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdateBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         return Task.CompletedTask;
     }
 

@@ -547,7 +547,7 @@ public partial class MainForm : RibbonForm
     private void tool_ModifyPass_ItemClick(object sender, ItemClickEventArgs e)
     {
         FrmModifyPassword dlg = App.GetService<FrmModifyPassword>();
-        dlg.InitFunction(GB.LoginUserInfo, GB.FunctionDict);//初始化权限控制信息
+        // dlg.InitFunction(GB.LoginUserInfo, GB.FunctionDict);//初始化权限控制信息
         dlg.ShowDialog();
     }
 

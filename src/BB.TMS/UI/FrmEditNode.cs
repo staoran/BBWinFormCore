@@ -147,8 +147,8 @@ public partial class FrmEditNode : BaseEditForm<Node, NodeHttpService,  Nodes, N
         txtISLocked.BindDictItems("是,否", false);
         txtAckRec.BindDictItems("是,否", false);
         txtAreaNo.BindCityItems(true);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
         txtTranNodeStatus.BindDictItems("网点状态类型", "1", false, false);
         txtPublicYN.BindDictItems("是,否", false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
