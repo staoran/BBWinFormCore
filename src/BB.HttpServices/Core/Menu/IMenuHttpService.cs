@@ -19,10 +19,10 @@ public interface IMenuHttpService : IHttpDispatchProxy, IBaseHttpService<MenuInf
     Task<RESTfulResultControl<List<MenuNodeInfo>>> GetTreeAsync([QueryString]string systemType);
 
     /// <summary>
-    /// 获取所有的菜单列表
+    /// 获取所有的按钮列表
     /// </summary>
     [Get("allTree")]
-    Task<RESTfulResultControl<List<MenuInfo>>> GetAllTreeAsync([QueryString]string systemType);
+    Task<RESTfulResultControl<List<MenuInfo>>> GetAllButtonsAsync([QueryString]string systemType);
 
     /// <summary>
     /// 获取第一级的菜单列表

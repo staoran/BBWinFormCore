@@ -29,11 +29,11 @@ public class MenuHttpService : BaseHttpService<MenuInfo>
     }
 
     /// <summary>
-    /// 获取所有的菜单列表
+    /// 获取所有的按钮列表
     /// </summary>
-    public async Task<List<MenuInfo>> GetAllTreeAsync(string systemType)
+    public async Task<List<MenuInfo>> GetAllButtonsAsync(string systemType)
     {
-        return (await _menuHttpService.GetAllTreeAsync(systemType)).Handling();
+        return (await _menuHttpService.GetAllButtonsAsync(systemType)).Handling();
     }
 
     /// <summary>

@@ -56,12 +56,12 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     }
 
     /// <summary>
-    /// 获取所有的菜单列表
+    /// 获取所有的按钮列表
     /// </summary>
-    public async Task<List<MenuInfo>> GetAllTreeAsync(string systemType)
+    public async Task<List<MenuInfo>> GetAllButtonsAsync(string systemType)
     {
         return await Repository.AsQueryable()
-            .Where(x => x.Visible)
+            .Where(x => x.Visible && x.MenuType == "3")
             .WhereIF(!systemType.IsNullOrEmpty(), x => x.SystemTypeId == systemType)
             .OrderBy(x => x.PID)
             .OrderBy(x => x.Seq)
@@ -117,6 +117,21 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
         children.ForEach(x =>
         {
             MenuNodeInfo child = GetNode(x.ID, dt);
+            // 如果当前是按钮节点，上级是叶子节点
+            if (child.MenuType == "3" && menuInfo.MenuType == "2")
+            {
+                // 如果叶子节点的功能 ID 不是空的，直接使用叶子节点功能 ID
+                // 如果叶子节点功能 ID 和 Winform 类型都是空的，name 为 空
+                // 否则取 Winform 类型的前半部分
+                string name = menuInfo.FunctionId.IsNullOrEmpty()
+                        ? !menuInfo.WinformType.IsNullOrEmpty() ? menuInfo.WinformType.Split(',')[0] : string.Empty
+                        : menuInfo.FunctionId;
+                if (!name.IsNullOrEmpty())
+                {
+                    child.FunctionId = $"{name}/{child.FunctionId}";
+                }
+            }
+
             menuNodeInfo.Children.Add(child);
         });
 
@@ -181,13 +196,8 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<List<MenuInfo>> GetMenusByRoleAsync(int[] roleIds, string typeId)
     {
-        int[] enumerable = roleIds as int[] ?? roleIds.ToArray();
-        if (!enumerable.Any())
-        {
-            enumerable = new[] { -1 };
-        }
+        int[] enumerable = roleIds as int[] ?? new[] { -1 };
 
-        List<MenuNodeInfo> arrReturn = new();
         return await Repository.AsQueryable()
             .Where(x => x.Visible)
             .WhereIF(!typeId.IsNullOrEmpty(), f => f.SystemTypeId == typeId)
