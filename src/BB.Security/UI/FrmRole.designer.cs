@@ -89,7 +89,7 @@ namespace BB.Security.UI
             this.chkMenuSelectAll = new DevExpress.XtraEditors.CheckEdit();
             this.btnRefreshMenu = new DevExpress.XtraEditors.SimpleButton();
             this.btnSaveMenu = new DevExpress.XtraEditors.SimpleButton();
-            this.treeMenu = new Sunny.UI.UITreeView();
+            this.treeMenu = new System.Windows.Forms.TreeView();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menu_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_ExpandAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -587,7 +587,6 @@ namespace BB.Security.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeMenu.CheckBoxes = true;
             this.treeMenu.ContextMenuStrip = this.contextMenuStrip3;
-            this.treeMenu.FillColor = System.Drawing.Color.White;
             this.treeMenu.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.treeMenu.ImageIndex = 0;
             this.treeMenu.ImageList = this.imageMenu;
@@ -607,13 +606,9 @@ namespace BB.Security.UI
             treeNode4,
             treeNode6});
             this.treeMenu.SelectedImageIndex = 0;
-            this.treeMenu.ShowText = false;
             this.treeMenu.Size = new System.Drawing.Size(741, 651);
-            this.treeMenu.Style = Sunny.UI.UIStyle.Custom;
             this.treeMenu.TabIndex = 5;
             this.treeMenu.Text = null;
-            this.treeMenu.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.treeMenu.ZoomScaleRect = new System.Drawing.Rectangle(0, 0, 0, 0);
             this.treeMenu.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeMenu_AfterCheck);
             // 
             // contextMenuStrip3
@@ -916,7 +911,7 @@ namespace BB.Security.UI
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
         private DevExpress.XtraTab.XtraTabPage tabBasic;
         private DevExpress.XtraTab.XtraTabPage tabMenu;
-        private Sunny.UI.UITreeView treeMenu;
+        private System.Windows.Forms.TreeView treeMenu;
         private DevExpress.XtraEditors.SimpleButton btnSaveMenu;
         private DevExpress.XtraEditors.SimpleButton btnRefreshMenu;
         private DevExpress.XtraTab.XtraTabPage tabFunction;
