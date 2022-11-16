@@ -1,8 +1,9 @@
-using BB.Framework.Commons.Entity;
-using BB.Framework.Entity.${NameSpace};
+using BB.Entity${NameSpace};
+using BB.Tools.Entity;
+using BB.Tools.Validation;
 using FluentValidation;
 
-namespace BB.Framework.EntityVerification.${NameSpace};
+namespace BB.EntityVerification.${NameSpace};
 
 /// <summary>
 #if(${Display})
@@ -80,26 +81,6 @@ public class ${Name}Validator : AbstractValidator<${Name}>
 ## ↑end 查空或查长度
 #end
 ## ↑end 是否有验证规则
-#end
-
-        #endregion
-
-#######################
-        #region 参数值唯一性验证
-
-#foreach($FieldInfo in ${MetadataImports})
-## ↓查重
-#if($FieldInfo.IsCheckDuplicate)
-#if(${EntityProperty.CSharpFieldDes})
-        // ${FieldInfo.CSharpFieldDes}
-#end
-#set($when = "IsAdd")
-#if(!$FieldInfo.IsKey)
-#set($when = "${when}OrEdit")
-#end
-        RuleFor(x => x.${FieldInfo.CSharpFieldName}).IsUnique(${primaryKey}).${when}().IsGo();
-#end
-## ↑end 查重
 #end
 
         #endregion

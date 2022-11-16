@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BB.BaseUI.BaseUI;
+using BB.BaseUI.Extension;
+using BB.BaseUI.Other;
+using BB.Entity.${NameSpace};
+using BB.HttpServices.${NameSpace};
 
-using BB.Framework.BaseUI.BaseUI;
-using BB.Framework.BaseUI.Extension;
-using BB.Framework.BaseUI.Other;
-using BB.Framework.IBLL.${NameSpace};
-using BB.Framework.Commons.Extension;
-using BB.Framework.Entity.${NameSpace};
-using BB.Framework.EntityVerification.${NameSpace};
+using FluentValidation;
 
 namespace BB.${NameSpace}.UI;
 
@@ -18,9 +15,9 @@ namespace BB.${NameSpace}.UI;
 /// ${Name}
 #end
 /// </summary>
-public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}Validator>
+public partial class FrmEdit${Name} : BaseEditForm<${Name}, ${Name}HttpService>
 {
-    public FrmEdit${Name}()
+    public FrmEdit${Name}(${Name}HttpService bll, IValidator<${Name}> validator) : base(bll, validator)
     {
         InitializeComponent();
 
@@ -32,7 +29,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEdit${Name}_Load(object sender, EventArgs e)
+    private void FrmEdit${Name}_Load(object? sender, EventArgs e)
     {
     }
 
@@ -110,7 +107,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
     /// <summary>
     /// 初始化数据字典
     /// </summary>
-    private void InitDictItem()
+    protected override Task InitDictItem()
     {
         //初始化代码
 #foreach($FieldInfo in $MetadataImports)
@@ -146,8 +143,9 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
 #end
 #end
 #end
+        return Task.CompletedTask;
     }
-## 
+##
 ##     /// <summary>
 ##     /// 数据显示的函数
 ##     /// </summary>
@@ -214,7 +212,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
     /// <summary>
     /// 设置控件字段的权限显示或者隐藏(默认不使用字段权限)
     /// </summary>
-    protected override void SetPermit()
+    protected override async Task SetPermit()
     {
         #region 设置控件和字段的对应关系，字段权限判断也用到，无权字段赋值：*
 
@@ -226,7 +224,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
 
         #endregion
 
-        base.SetPermit();
+        await base.SetPermit();
     }
 
     // /// <summary>

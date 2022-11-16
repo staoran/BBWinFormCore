@@ -39,7 +39,7 @@ public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
     /// <returns></returns>
     public override ${ChildName} NewEntity()
     {
-        ${ChildName} entity = base.NewEntity();
+        ${ChildName} entity = await base.NewEntityAsync();
 #foreach($EntityField in $ChildMetadataImports)
 #if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
         entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
@@ -124,11 +124,10 @@ public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
     }
 
     /// <summary>
-    /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示
+    /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
     /// </summary>
-    /// <param name="isNew">是否新增</param>
     /// <returns></returns>
-    public override Dictionary<string, int> GetPermitDict(bool isNew)
+    public override async Task<Dictionary<string, int>> GetPermitDictAsync()
     {
         var permitDict = new Dictionary<string, int>
         {
@@ -141,7 +140,7 @@ public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
 #if($ColumnInfo.IsKey)
             // 主键不为空则只读
 #end
-            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, isNew ? 0 : 1 },
+            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 4 },
 ## #elseif($ColumnInfo.IsAdd && $ColumnInfo.IsEdit)
 ##             { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 0 },
 #end
@@ -149,22 +148,21 @@ public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
-        return permitDict;
+        return await Task.FromResult(permitDict);
     }
 
     /// <summary>
     /// 新增一条数据
     /// </summary>
     /// <param name="obj">指定的对象</param>
-    /// <param name="trans">事务对象</param>
     /// <returns>执行操作是否成功。</returns>
-    public override bool Insert(${ChildName} obj, DbTransaction trans = null)
+    public override async Task<bool> InsertAsync(${ChildName} obj)
     {
         #region 新增前
 
         #endregion
 
-        bool succeed = base.Insert(obj, trans);
+        bool succeed = await base.InsertAsync(obj);
 
         #region 新增后
 
@@ -185,7 +183,7 @@ public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
     /// <param name="optimisticLock">乐观锁验证</param>
     /// <param name="trans">事务对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public override bool Update(${ChildName} obj, object primaryKeyValue, bool optimisticLock = true, DbTransaction trans = null)
+    public override async Task<bool> UpdateAsync(${ChildName} obj, object primaryKeyValue, bool optimisticLock = true, DbTransaction trans = null)
     {
         #region 修改前
 
@@ -208,15 +206,14 @@ public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
     /// 删除一条数据
     /// </summary>
     /// <param name="key">指定对象的ID</param>
-    /// <param name="trans">事务对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public override bool Delete(object key, DbTransaction trans = null)
+    public override async Task<bool> DeleteAsync(object key)
     {
         #region 删除前
 
         #endregion
 
-        bool succeed = base.Delete(key, trans);
+        bool succeed = await base.DeleteAsync(key);
         if (!succeed) return false;
 
         #region 删除后
@@ -233,31 +230,31 @@ public class ${ChildName}BLL : BaseBLL<${ChildName}>, I${ChildName}BLL
     /// </summary>
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override async Task<string> GetConditionSql(NameValueCollection searchInfos)
     {
         var condition = new SearchCondition();
 #foreach($ColumnInfo in ${ChildMetadataImports})
 #if($ColumnInfo.IsSearch || $ColumnInfo.IsAdvSearch)
 #if($ColumnInfo.ControlType=="ComboBoxEdit")
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit")
 #if($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1)
         bool areaNoLength = !searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].IsNullOrEmpty() && searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].Length < 6;
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}],
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}],
             areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
 #else
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #end
 #elseif($ColumnInfo.ControlType=="SpinEdit")
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Between);
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Between),
 #elseif($ColumnInfo.ControlType=="DateEdit")
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Between);
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Between),
 #elseif($ColumnInfo.ControlType=="ToggleSwitch")
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #elseif($ColumnInfo.ControlType=="CheckEdit")
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #else
-        condition.AddCondition(${ChildName}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Like);
+        new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Like),
 #end
 #end
 #end

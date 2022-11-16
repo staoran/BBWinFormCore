@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-
-using BB.Framework.BaseUI.BaseUI;
-using BB.Framework.BaseUI.Extension;
-using BB.Framework.BaseUI.Other;
-using BB.Framework.IBLL.${NameSpace};
-using BB.Framework.Commons.Extension;
-using BB.Framework.Entity.${NameSpace};
-using BB.Framework.EntityVerification.${NameSpace};
+﻿using BB.BaseUI.BaseUI;
+using BB.BaseUI.Extension;
+using BB.BaseUI.Other;
+using BB.Entity.${NameSpace};
+using BB.HttpServices.${NameSpace};
 
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using FluentValidation;
 
 namespace BB.${NameSpace}.UI;
 
@@ -22,9 +18,9 @@ namespace BB.${NameSpace}.UI;
 /// ${Name}
 #end
 /// </summary>
-public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}Validator, ${ChildName}, I${ChildName}BLL, ${ChildName}Validator>
+public partial class FrmEdit${Name} : BaseEditForm<${Name}, ${Name}HttpService, ${ChildName}, ${ChildName}HttpService>
 {
-    public FrmEdit${Name}()
+    public FrmEdit${Name}(${Name}HttpService bll, ${ChildName}HttpService childBll, IValidator<${Name}> validator, IValidator<${ChildName}> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();
 
@@ -36,19 +32,17 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEdit${Name}_Load(object sender, EventArgs e)
+    private void FrmEdit${Name}_Load(object? sender, EventArgs e)
     {
     }
 
     /// <summary>
     /// 初始化明细表的GridView数据显示
     /// </summary>
-    private void InitDetailGrid()
+    protected override async Task InitDetailGrid()
     {
         #region 列初始化
 
-        gridView1.Columns.Clear();
-        gridView1.CreateColumn("Operate", "操作", 60).CreateButtonEdit(repositoryBtn_ButtonClick);
 #foreach($ColumnInfo in ${ChildMetadataImports})
 #if($ColumnInfo.IsAdd || $ColumnInfo.IsEdit)
 #if(!$ColumnInfo.IsVisible)
@@ -76,7 +70,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
 
         #endregion
 
-        base.InitDetailGrid();
+        await base.InitDetailGrid();
     }
 
     #region GridView事件
@@ -448,7 +442,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
     /// <summary>
     /// 初始化数据字典
     /// </summary>
-    private void InitDictItem()
+    protected override Task InitDictItem()
     {
         //初始化代码
 #foreach($FieldInfo in $MetadataImports)
@@ -484,6 +478,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
 #end
 #end
 #end
+        return Task.CompletedTask;
     }
 ## 
 ##     /// <summary>
@@ -608,7 +603,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
     /// <summary>
     /// 设置控件字段的权限显示或者隐藏(默认不使用字段权限)
     /// </summary>
-    protected override void SetPermit()
+    protected override async Task SetPermit()
     {
         #region 设置控件和字段的对应关系，字段权限判断也用到，无权字段赋值：*
 
@@ -620,7 +615,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
 
         #endregion
 
-        base.SetPermit();
+        await base.SetPermit();
     }
 
     // /// <summary>
@@ -638,7 +633,7 @@ public partial class FrmEdit${Name} : BaseEditForm<${Name}, I${Name}BLL, ${Name}
     //        this.attachmentGUID.Init(dir, info.OrgCode, LoginUserInfo.Name);
     //    }
     //}
-## 
+##
 ##     /// <summary>
 ##     /// 编辑或者保存状态下取值函数
 ##     /// </summary>

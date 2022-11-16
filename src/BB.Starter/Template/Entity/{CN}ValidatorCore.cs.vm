@@ -1,0 +1,49 @@
+using BB.Entity${NameSpace};
+using BB.Tools.Entity;
+using BB.Tools.Validation;
+using FluentValidation;
+
+namespace BB.EntityVerification.${NameSpace};
+
+/// <summary>
+#if(${ChildDisplay})
+/// ${ChildDisplay} 验证类
+#else
+/// ${ChildName} 验证类
+#end
+/// </summary>
+public class ${ChildName}ValidatorCore : AbstractValidator<${ChildName}>
+{
+    /// <summary>
+    /// 无参构造函数
+    /// </summary>
+    public ${ChildName}ValidatorCore() : this(OperationType.View)
+    {
+    }
+
+    /// <summary>
+    /// 验证规则构造函数
+    /// </summary>
+    /// <param name="operationType">当前操作类型</param>
+    public ${ChildName}ValidatorCore(OperationType operationType = OperationType.View)
+    {
+        #region 参数值唯一性验证
+
+#foreach($FieldInfo in ${ChildMetadataImports})
+## ↓查重
+#if($FieldInfo.IsCheckDuplicate)
+#if(${EntityProperty.CSharpFieldDes})
+        // ${FieldInfo.CSharpFieldDes}
+#end
+#set($when = "IsAdd")
+#if(!$FieldInfo.IsKey)
+#set($when = "${when}OrEdit")
+#end
+        RuleFor(x => x.${FieldInfo.CSharpFieldName}).IsUnique(u => u.${primaryKey}).${when}().IsGo();
+#end
+## ↑end 查重
+#end
+
+        #endregion
+    }
+}

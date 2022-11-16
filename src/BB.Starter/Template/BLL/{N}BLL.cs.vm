@@ -51,7 +51,7 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
     /// <returns></returns>
     public override ${Name} NewEntity()
     {
-        ${Name} entity = base.NewEntity();
+        ${Name} entity = await base.NewEntityAsync();
 #foreach($EntityField in $MetadataImports)
 #if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
         entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
@@ -135,11 +135,10 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
     }
 
     /// <summary>
-    /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示
+    /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
     /// </summary>
-    /// <param name="isNew">是否新增</param>
     /// <returns></returns>
-    public override Dictionary<string, int> GetPermitDict(bool isNew)
+    public override async Task<Dictionary<string, int>> GetPermitDictAsync()
     {
         var permitDict = new Dictionary<string, int>
         {
@@ -152,7 +151,7 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
 #if($ColumnInfo.IsKey)
             // 主键不为空则只读
 #end
-            { ${Name}.Field${ColumnInfo.CSharpFieldName}, isNew ? 0 : 1 },
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, 4 },
 ## #elseif($ColumnInfo.IsAdd && $ColumnInfo.IsEdit)
 ##             { ${Name}.Field${ColumnInfo.CSharpFieldName}, 0 },
 #end
@@ -160,7 +159,7 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
-        return permitDict;
+        return await Task.FromResult(permitDict);
     }
 #if(${ChildName} && ${ChildName} != "")
 
@@ -171,7 +170,7 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
     /// <param name="childObj">指定对象的子对象</param>
     /// <param name="trans">事务对象</param>
     /// <returns>执行操作是否成功。</returns>
-    public override bool Insert(${Name} obj, List<${ChildName}> childObj, DbTransaction trans = null)
+    public override async Task<bool> InsertAsync(${Name} obj, List<${ChildName}> childObj, DbTransaction trans = null)
     {
 #if($IsChildListNull)
         // if (!childObj.Any()) throw new Exception("子表数据不可为空");
@@ -196,7 +195,7 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
     /// <param name="optimisticLock">乐观锁验证</param>
     /// <param name="trans">事务对象</param>
     /// <returns>执行操作是否成功。</returns>
-    public override bool Update(${Name} obj, EditedList<${ChildName}> childObj, bool optimisticLock = true, DbTransaction trans = null)
+    public override async Task<bool> UpdateAsync(${Name} obj, EditedList<${ChildName}> childObj, bool optimisticLock = true, DbTransaction trans = null)
     {
         return _dal.UseTransaction(() =>
         {
@@ -208,38 +207,20 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
         });
     }
 
-    /// <summary>
-    /// 级联删除主表和关联子表数据
-    /// </summary>
-    /// <param name="key">指定对象的ID</param>
-    /// <param name="trans">事务对象</param>
-    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public override bool CascadeDelete(object key, DbTransaction trans = null)
-    {
-        return _dal.UseTransaction(() =>
-        {
-            base.CascadeDelete(key, trans);
-        }, e =>
-        {
-            LogHelper.Error(e.Message, e);
-            throw e;
-        });
-    }
 #end
 
     /// <summary>
     /// 新增一条数据
     /// </summary>
     /// <param name="obj">指定的对象</param>
-    /// <param name="trans">事务对象</param>
     /// <returns>执行操作是否成功。</returns>
-    public override bool Insert(${Name} obj, DbTransaction trans = null)
+    public override async Task<bool> InsertAsync(${Name} obj)
     {
         #region 新增前
 
         #endregion
 
-        bool succeed = base.Insert(obj, trans);
+        bool succeed = await base.InsertAsync(obj);
 
         #region 新增后
 
@@ -259,7 +240,7 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
     /// <param name="optimisticLock">乐观锁验证</param>
     /// <param name="trans">事务对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public override bool Update(${Name} obj, bool optimisticLock = true, DbTransaction trans = null)
+    public override async Task<bool> UpdateAsync(${Name} obj, bool optimisticLock = true, DbTransaction trans = null)
     {
         #region 修改前
 
@@ -282,15 +263,14 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
     /// 删除一条数据
     /// </summary>
     /// <param name="key">指定对象的ID</param>
-    /// <param name="trans">事务对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
-    public override bool Delete(object key, DbTransaction trans = null)
+    public override async Task<bool> DeleteAsync(object key)
     {
         #region 删除前
 
         #endregion
 
-        bool succeed = base.Delete(key, trans);
+        bool succeed = await base.DeleteAsync(key);
 
         #region 删除后
 
@@ -304,64 +284,35 @@ public class ${Name}BLL : BaseBLL<${Name}>, I${Name}BLL
     }
 
     /// <summary>
-    /// 审批一条数据
-    /// </summary>
-    /// <param name="key">主键</param>
-    /// <param name="optimisticLock">乐观锁</param>
-    /// <param name="trans">事务对象</param>
-    /// <returns></returns>
-    public override bool Approve(object key, object optimisticLock = null, DbTransaction trans = null)
-    {
-        CheckDAL();
-        ${Name} info = FindById(key);
-
-        if (info == null || info.CreatedBy.IsNullOrEmpty())
-            throw new Exception("数据异常，实体或创建时间为空！");
-
-        if(optimisticLock != null && info.LastUpdateDate != (DateTime)optimisticLock)
-            throw new Exception("数据已被其他用户修改，请刷新后重试");
-
-        var hashTable = new Hashtable()
-        {
-            { ${Name}.FieldFlagApp, info.FlagApp.ObjToBool() ? 0 : 1 },
-            { ${Name}.FieldAppUser, LoginUserInfo.ID },
-            { ${Name}.FieldAppDate, DateTime.Now},
-            { ${Name}.FieldLastUpdatedBy, LoginUserInfo.ID },
-            { ${Name}.FieldLastUpdateDate, DateTime.Now}
-        };
-        return UpdateFields(hashTable, key, optimisticLock);
-    }
-
-    /// <summary>
     /// 构造查询语句
     /// </summary>
     /// <param name="searchInfos">查询参数</param>
     /// <returns></returns>
-    public override string GetConditionSql(NameValueCollection searchInfos)
+    public override async Task<string> GetConditionSql(NameValueCollection searchInfos)
     {
         var condition = new SearchCondition();
 #foreach($ColumnInfo in ${MetadataImports})
 #if($ColumnInfo.IsSearch || $ColumnInfo.IsAdvSearch)
 #if($ColumnInfo.ControlType=="ComboBoxEdit")
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit")
 #if($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1)
         bool areaNoLength = !searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}].IsNullOrEmpty() && searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}].Length < 6;
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}],
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}],
             areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
 #else
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #end
 #elseif($ColumnInfo.ControlType=="SpinEdit")
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Between);
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Between),
 #elseif($ColumnInfo.ControlType=="DateEdit")
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Between);
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Between),
 #elseif($ColumnInfo.ControlType=="ToggleSwitch")
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #elseif($ColumnInfo.ControlType=="CheckEdit")
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Equal);
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #else
-        condition.AddCondition(${Name}.Field${ColumnInfo.CSharpFieldName}, searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}], SqlOperator.Like);
+        new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Like),
 #end
 #end
 #end

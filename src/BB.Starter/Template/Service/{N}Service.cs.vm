@@ -1,0 +1,177 @@
+using BB.Core.DbContext;
+using BB.Core.Services.Base;
+using BB.Entity.${NameSpace};
+using BB.Tools.Entity;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
+using FluentValidation;
+
+namespace BB.Application.${NameSpace};
+
+/// <summary>
+#if(${Display})
+/// ${Display} 业务逻辑类
+#else
+/// ${Name} 业务逻辑类
+#end
+/// </summary>
+[ApiDescriptionSettings("初始区域")]
+public class ${Name}Service : BaseMultiService<${Name}, ${ChildName}>, IDynamicApiController, ITransient
+{
+    public ${Name}Service(BaseRepository<${Name}> repository, BaseRepository<${ChildName}> childRepository, IValidator<${Name}> validator, IValidator<${ChildName}> childValidator)
+        : base(repository, childRepository, validator, childValidator)
+    {
+    }
+
+    /// <summary>
+    /// 初始化实体并附加默认值
+    /// </summary>
+    /// <returns></returns>
+    public override async Task<${Name}> NewEntityAsync()
+    {
+        ${Name} entity = await base.NewEntityAsync();
+#foreach($EntityField in $MetadataImports)
+#if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
+        entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
+#end
+#end
+        return entity;
+    }
+
+    /// <summary>
+    /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
+    /// </summary>
+    /// <returns></returns>
+    public override async Task<Dictionary<string, int>> GetPermitDictAsync()
+    {
+        var permitDict = new Dictionary<string, int>
+        {
+#foreach($ColumnInfo in ${MetadataImports})
+#if(!$ColumnInfo.IsVisible || (!$ColumnInfo.IsAdd && !$ColumnInfo.IsEdit))
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, 3 },
+#elseif($ColumnInfo.IsReadonly)
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, 1 },
+#elseif($ColumnInfo.IsAdd && (!$ColumnInfo.IsEdit || $ColumnInfo.IsKey))
+#if($ColumnInfo.IsKey)
+            // 主键不为空则只读
+#end
+            { ${Name}.Field${ColumnInfo.CSharpFieldName}, 4 },
+## #elseif($ColumnInfo.IsAdd && $ColumnInfo.IsEdit)
+##             { ${Name}.Field${ColumnInfo.CSharpFieldName}, 0 },
+#end
+#end
+        };
+        // 后端权限控制
+        // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
+        return await Task.FromResult(permitDict);
+    }
+
+    /// <summary>
+    /// 新增一条数据
+    /// </summary>
+    /// <param name="obj">指定的对象</param>
+    /// <returns>执行操作是否成功。</returns>
+    public override async Task<bool> InsertAsync(${Name} obj)
+    {
+        #region 新增前
+
+        #endregion
+
+        bool succeed = await base.InsertAsync(obj);
+
+        #region 新增后
+
+        if (!succeed) return false;
+
+        //可添加其他关联操作
+
+        return true;
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 更新一条数据
+    /// </summary>
+    /// <param name="obj">指定的对象</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    public override async Task<bool> UpdateAsync(${Name} obj)
+    {
+        #region 修改前
+
+        #endregion
+
+        bool succeed = await base.UpdateAsync(obj);
+
+        #region 修改后
+
+        if (!succeed) return false;
+
+        //可添加其他关联操作
+
+        return true;
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 删除一条数据
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
+    /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    public override async Task<bool> DeleteAsync(object key)
+    {
+        #region 删除前
+
+        #endregion
+
+        bool succeed = await base.DeleteAsync(key);
+
+        #region 删除后
+
+        if (!succeed) return false;
+
+        //可添加其他关联操作
+
+        return true;
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 获取查询参数配置
+    /// </summary>
+    /// <returns></returns>
+    public override List<FieldConditionType> GetConditionTypes()
+    {
+        return Cache.Instance.GetOrCreate($"{nameof(${Name})}ConditionTypes",
+            () => new List<FieldConditionType>
+            {
+#foreach($ColumnInfo in ${MetadataImports})
+#if($ColumnInfo.IsSearch || $ColumnInfo.IsAdvSearch)
+#if($ColumnInfo.ControlType=="ComboBoxEdit")
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
+#elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit")
+#if($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1)
+                bool areaNoLength = !searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}].IsNullOrEmpty() && searchInfos[${Name}.Field${ColumnInfo.CSharpFieldName}].Length < 6;
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}],
+                    areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
+#else
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
+#end
+#elseif($ColumnInfo.ControlType=="SpinEdit")
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Between),
+#elseif($ColumnInfo.ControlType=="DateEdit")
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Between),
+#elseif($ColumnInfo.ControlType=="ToggleSwitch")
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
+#elseif($ColumnInfo.ControlType=="CheckEdit")
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
+#else
+                new(${Name}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Like),
+#end
+#end
+#end
+            });
+    }
+}

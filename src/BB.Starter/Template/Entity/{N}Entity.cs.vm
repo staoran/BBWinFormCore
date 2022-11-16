@@ -1,12 +1,11 @@
-﻿using System;
+﻿using System.Runtime.Serialization;
+using BB.Entity.Base;
+using BB.Tools.Entity;
 #if(${ChildName} && ${ChildName} != "")
-using System.Collections.Generic;
+using SqlSugar;
 #end
-using System.Runtime.Serialization;
-using BB.Framework.Commons.Entity;
-using BB.Framework.Entity.Base;
 
-namespace BB.Framework.Entity.${NameSpace};
+namespace BB.Entity.${NameSpace};
 
 /// <summary>
 #if(${Display})
@@ -118,6 +117,26 @@ public sealed class ${Name} : BaseEntity
     /// </summary>
     [NonSerialized]
     public new const string OptimisticLockKey = Field${optimisticLock};
+
+#end
+#if(${ChildName} && ${ChildName} != "")
+    /// <summary>
+    /// 子表数据
+    /// </summary>
+    [DataMember]
+    [Ignore]
+    [Navigate(NavigateType.OneToMany, ChildForeignKey)]
+    public new List<${ChildName}>? ChildTableList
+    {
+        get => base.ChildTableList;
+        set => base.ChildTableList = value;
+    }
+
+    /// <summary>
+    /// 子表外键
+    /// </summary>
+    [NonSerialized]
+    public new const string ChildForeignKey = ${ChildName}.ForeignKey;
 
 #end
     #region 列名

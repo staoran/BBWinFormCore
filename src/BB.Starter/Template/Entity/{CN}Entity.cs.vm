@@ -1,9 +1,8 @@
-using System;
 using System.Runtime.Serialization;
-using BB.Framework.Commons.Entity;
-using BB.Framework.Entity.Base;
+using BB.Entity.Base;
+using BB.Tools.Entity;
 
-namespace BB.Framework.Entity.${NameSpace};
+namespace BB.Entity.${NameSpace};
 
 /// <summary>
 #if(${ChildDisplay})

@@ -1,25 +1,21 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-using BB.Framework.BaseUI.AdvanceSearch;
-using BB.Framework.BaseUI.BaseUI;
-using BB.Framework.BaseUI.Extension;
-using BB.Framework.BaseUI.Other;
-using BB.Framework.IBLL.${NameSpace};
-using BB.Framework.Commons.Database;
-using BB.Framework.Commons.File;
-using BB.Framework.Commons.Format;
-using BB.Framework.Commons.Office;
-using BB.Framework.Commons.Others;
+using BB.BaseUI.BaseUI;
+using BB.BaseUI.DocViewer;
+using BB.BaseUI.Extension;
+using BB.BaseUI.Other;
+using BB.BaseUI.WinForm;
+using BB.HttpServices.${NameSpace};
+using BB.Tools.Extension;
+using BB.Tools.Format;
 
-using BB.Framework.Entity.${NameSpace};
+using BB.Entity.${NameSpace};
 
-using DevExpress.Data;
 using DevExpress.XtraBars;
+using Furion.Logging.Extensions;
 
 namespace BB.${NameSpace}.UI;
 
@@ -30,25 +26,23 @@ namespace BB.${NameSpace}.UI;
 /// ${Name}
 #end
 /// </summary>
-public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Name}, ${ChildName}, I${ChildName}BLL>
+public partial class Frm${Name} : BaseViewDock<${Name}, ${Name}HttpService, FrmEdit${Name}, ${ChildName}, ${ChildName}HttpService>
 {
-#if(${Display})
-    public Frm${Name}() : base("${Display}")
-#else
-    public Frm${Name}() : base("${Name}")
-#end
+    public Frm${Name}(${Name}HttpService bll, ${ChildName}HttpService childBll, LazilyResolved<FrmEdit${Name}> baseForm) : base(bll, childBll, baseForm)
     {
-        InitializeComponent();
+        moduleName = "${Display}";
 
-        InitDictItem();
+        InitializeComponent();
     }
 
     /// <summary>
     /// 编写初始化窗体的实现
     /// </summary>
-    public override void FormOnLoad()
+    public override async Task FormOnLoad()
     {
-        base.FormOnLoad();
+        await base.FormOnLoad();
+
+        await InitDictItem();
 #if(${IsQuery})
 
         #region 查询表单
@@ -65,29 +59,29 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
 
         #region 按钮和按钮权限
 
-#if(${IsAdd})
-        addButton.Visibility = BarItemVisibility.Always;
-#end
-#if(${IsEdit})
-        editButton.Visibility = BarItemVisibility.Always;
-#end
-#if(${IsCheck})
-        checkButton.Visibility = BarItemVisibility.Always;
-#end
-#if(${IsImport})
-        importButton.Visibility = BarItemVisibility.Always;
-#end
-#if(${IsQuery})
-        queryButton.Visibility = BarItemVisibility.Always;
-        clearButton.Visibility = BarItemVisibility.Always;
-        advQueryButton.Visibility = BarItemVisibility.Always;
-#end
-#if(${IsExport})
-        exportButton.Visibility = BarItemVisibility.Always;
-#end
-#if(${IsTree})
-        hideTreeButton.Visibility = BarItemVisibility.Always;
-#end
+## #if(${IsAdd})
+##         addButton.Visibility = BarItemVisibility.Always;
+## #end
+## #if(${IsEdit})
+##         editButton.Visibility = BarItemVisibility.Always;
+## #end
+## #if(${IsCheck})
+##         checkButton.Visibility = BarItemVisibility.Always;
+## #end
+## #if(${IsImport})
+##         importButton.Visibility = BarItemVisibility.Always;
+## #end
+## #if(${IsQuery})
+##         queryButton.Visibility = BarItemVisibility.Always;
+##         clearButton.Visibility = BarItemVisibility.Always;
+##         advQueryButton.Visibility = BarItemVisibility.Always;
+## #end
+## #if(${IsExport})
+##         exportButton.Visibility = BarItemVisibility.Always;
+## #end
+## #if(${IsTree})
+##         hideTreeButton.Visibility = BarItemVisibility.Always;
+## #end
 
         #endregion
     }
@@ -97,7 +91,7 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void Frm${Name}_Shown(object sender, EventArgs e)
+    private void Frm${Name}_Shown(object? sender, EventArgs e)
     {
     }
 
@@ -140,7 +134,7 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
     /// <summary>
     /// 初始化字典列表内容
     /// </summary>
-    protected sealed override void InitDictItem()
+    protected sealed override async Task InitDictItem()
     {
 #if(${IsQuery})
         #region 查询表单初始化
@@ -180,7 +174,7 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
 #end
         #region Grid初始化
 
-        base.InitDictItem();
+        await base.InitDictItem();
 
         #region 主表列
 
@@ -290,7 +284,7 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
     /// <summary>
     /// 数据源变更时，分配各列的宽度
     /// </summary>
-    protected override void gridView1_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView1_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView1_DataSourceChanged(sender, e);
         if (winGridViewPager1.gridView1.Columns.Count > 0 && winGridViewPager1.gridView1.RowCount > 0)
@@ -319,7 +313,7 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
     /// <summary>
     /// 明细表数据源变更时
     /// </summary>
-    protected override void gridView2_DataSourceChanged(object sender, EventArgs e)
+    protected override void gridView2_DataSourceChanged(object? sender, EventArgs e)
     {
         base.gridView2_DataSourceChanged(sender, e);
         // 绑定数据后，分配各列的宽度
@@ -347,13 +341,13 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
     /// <summary>
     /// 根据查询条件构造查询条件对象
     /// </summary>
-    protected override NameValueCollection GetQueryCondition()
+    protected override Dictionary<string,string> GetQueryCondition()
     {
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
 #if(${IsTree})
-        return _treeCondition ?? _advanceCondition ?? new NameValueCollection
+        return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
 #else
-        return _advanceCondition ?? new NameValueCollection
+        return (_advanceCondition ?? new NameValueCollection
 #end
         {
 #foreach($ColumnInfo in ${MetadataImports})
@@ -389,7 +383,7 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
 #end
 #end
 #end
-        };
+        }).ToDicString();
 ##         SearchCondition condition = _advanceCondition;
 ##         if (condition == null)
 ##         {
@@ -439,7 +433,7 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
     /// </summary>
     /// <param name="dr"></param>
     /// <returns></returns>
-    protected override bool ExcelData_OnDataSave(DataRow dr)
+    protected override async Task<bool> ExcelData_OnDataSave(DataRow dr)
     {
         DateTime dtNow = DateTime.Now;
         var info = new ${Name}
@@ -466,18 +460,20 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
 #end
         };
 
-        return _bll.Insert(info);
+        return await _bll.InsertAsync(info);
     }
 
     /// <summary>
     /// 导出的操作
     /// </summary>
-    protected override void ExportData()
+    protected override async Task ExportData()
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
         if (string.IsNullOrEmpty(file)) return;
-        NameValueCollection condition = GetQueryCondition();
-        List<${Name}> list = _bll.GetEntities(condition);
+
+        Dictionary<string,string> condition = GetQueryCondition();
+        List<${Name}> list = await _bll.FindAsync(condition);
+
         DataTable dtNew = DataTableHelper.CreateTable(
             "${ColumnFieldDesString}");
         var j = 1;
@@ -530,33 +526,24 @@ public partial class Frm${Name} : BaseViewDock<${Name}, I${Name}BLL, FrmEdit${Na
     /// <summary>
     /// 高级查询的操作
     /// </summary>
-    protected override void AdvanceSearch()
+    protected override async Task AdvanceSearch()
     {
-        if (_advDlg == null)
-        {
-            _advDlg = new FrmAdvanceSearch();
-            _advDlg.FieldTypeTable = Cache.Instance.Get("${Name}FieldTypeList",
-                () => _bll.GetFieldTypeList(), new TimeSpan(3, 0, 0));
-            _advDlg.ColumnNameAlias = Cache.Instance.Get("${Name}ColumnNameAlias",
-                () => _bll.GetColumnNameAlias(), new TimeSpan(3, 0, 0));
+        await base.AdvanceSearch();
 
-            #region 下拉列表数据
+        #region 下拉列表数据
 
-            // _advDlg.AddColumnListItem("UserType", Portal.gc.GetDictData("人员类型"));// 字典列表
-            // _advDlg.AddColumnListItem("Sex", "男,女");// 固定列表
-            // _advDlg.AddColumnListItem("Credit", _bll.GetFieldList("Credit"));// 动态列表
+        // _advDlg.AddColumnListItem("UserType", Portal.gc.GetDictData("人员类型"));// 字典列表
+        // _advDlg.AddColumnListItem("Sex", "男,女");// 固定列表
+        // _advDlg.AddColumnListItem("Credit", _bll.GetFieldList("Credit"));// 动态列表
 #foreach($FieldInfo in $MetadataImports)
 #if($FieldInfo.IsAdvSearch && ${FieldInfo.DataTableName} && ${FieldInfo.DataTableName} != "" && ${FieldInfo.ControlType} != "ToggleSwitch")
-            _advDlg.AddColumnListItem(${Name}.Field${FieldInfo.CSharpFieldName}, ${FieldInfo.DataTableName});
+        AdvDlg?.AddColumnListItem(${Name}.Field${FieldInfo.CSharpFieldName}, ${FieldInfo.DataTableName});
 #end
 #end
 
-            #endregion
+        #endregion
 
-            _advDlg.ConditionChanged += advDlg_ConditionChanged;
-        }
-
-        _advDlg.ShowDialog();
+        AdvDlg?.ShowDialog();
     }
 
     #endregion

@@ -1,0 +1,18 @@
+using BB.Entity.${NameSpace};
+using BB.HttpServices.Base;
+
+namespace BB.HttpServices.${NameSpace};
+
+/// <summary>
+#if(${Display})
+/// ${Display} 接口请求类
+#else
+/// ${Name} 接口请求类
+#end
+/// </summary>
+public class ${Name}HttpService : BaseHttpService<${Name}>
+{
+    public ${Name}HttpService(I${Name}HttpService httpService) : base(httpService)
+    {
+    }
+}
