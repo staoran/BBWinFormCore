@@ -9,12 +9,12 @@ using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.BaseUI.WinForm;
 using BB.HttpServices.${NameSpace};
+using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
 
 using BB.Entity.${NameSpace};
 
-using DevExpress.XtraBars;
 using Furion.Logging.Extensions;
 
 namespace BB.${NameSpace}.UI;

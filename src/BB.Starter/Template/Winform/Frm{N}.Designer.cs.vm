@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm${Name}));
-            this.winGridViewPager1 = new BB.Framework.BaseUI.Pager.WinGridViewPager();
+            this.winGridViewPager1 = new BB.BaseUI.Pager.WinGridViewPager();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
 #if(${IsTree})

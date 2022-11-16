@@ -17,7 +17,11 @@ namespace BB.Entity.${NameSpace};
 [DataContract]
 [Serializable]
 [Table(DBTableName)]
+#if(${ChildName} && ${ChildName} != "")
+public sealed class ${Name} : BaseEntity<${ChildName}>
+#else
 public sealed class ${Name} : BaseEntity
+#end
 {
     /// <summary>
     /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过重写 _bll.NewEntity 方法实现）
