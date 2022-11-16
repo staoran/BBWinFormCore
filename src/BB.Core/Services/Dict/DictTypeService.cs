@@ -81,7 +81,7 @@ public class DictTypeService : BaseService<DictTypeInfo>, IDynamicApiController,
     /// <returns></returns>
     public async Task<List<CListItem>> GetEndpointItemsAsync(List<DictTypeNodeInfo> nodeInfos = null, List<CListItem> items = null)
     {
-        nodeInfos ??= await GetTreeAsync();
+        if (nodeInfos == null || nodeInfos.Count == 0) nodeInfos = await GetTreeAsync();
         items ??= new List<CListItem>();
 
         foreach (DictTypeNodeInfo x in nodeInfos)
