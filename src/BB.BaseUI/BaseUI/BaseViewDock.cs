@@ -110,7 +110,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
         exportButton = bar1.AddBarButtonItem("Export", "导出", "outbox", btnExport_Click, null, true,
             BarItemLinkAlignment.Right);
         hideTreeButton = bar1.AddBarSwitchItem("HideTree", "隐藏快查", "left", chkHideTree_CheckedChanged, null, true,
-            BarItemLinkAlignment.Right);
+            BarItemLinkAlignment.Right, false);
         tableDirectionButton = bar1.AddBarSwitchItem("TableDirection", "列表横向布局", "chartswitchrowcolumn",
             chkTableDirection_CheckedChanged, null, true, BarItemLinkAlignment.Right, false);
         clearButton = bar1.AddBarButtonItem("Close", "关闭", "close", btnClose_Click, null, 
@@ -118,10 +118,15 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 
         // 快查权限
         string fullName = GetType().FullName ?? Name;
-        if (GB.HasFunction($"{fullName}/QuickQuery"))
+        if (treeView1 == null || GB.HasFunction($"{fullName}/QuickQuery"))
         {
             hideTreeButton.Visibility = BarItemVisibility.Always;
             splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
+        }
+
+        if (splitContainer1 == null)
+        {
+            tableDirectionButton.Visibility = BarItemVisibility.Always;
         }
 
         // addButton.Enabled = HasFunction($"{fullName}/addButton");

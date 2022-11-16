@@ -287,6 +287,7 @@ public static class GB
     {
         return DataCanManage(LoginUserInfo.CompanyId) || (!string.IsNullOrEmpty(controlId) &&
             (!AllFunctionDict.ContainsKey(controlId) || FunctionDict.ContainsKey(controlId)));
+        // 当前 功能ID 未注册到菜单按钮中，或者当前用户 包含此 功能ID 权限
     }
 
     /// <summary>
