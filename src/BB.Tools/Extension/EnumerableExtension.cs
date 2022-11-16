@@ -227,11 +227,11 @@ public static class EnumerableExtension
     {
         if (dic.GetValues(name) == null)
         {
-            dic.Add(name, "0");
+            dic.Add(name, value);
         }
         else
         {
-            dic.Set(name, "0");
+            dic.Set(name, value);
         }
     }
 }
