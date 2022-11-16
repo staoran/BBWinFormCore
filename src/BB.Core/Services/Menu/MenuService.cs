@@ -139,7 +139,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     }
 
     /// <summary>
-    /// 快速新增自动生成模块的菜单
+    /// 快速新增自动生成模块的菜单和功能权限按钮
     /// </summary>
     /// <param name="name">菜单名</param>
     /// <param name="winFormType">模块地址</param>
@@ -157,7 +157,76 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             SystemTypeId = "WareMis",
             CurrentLoginUserId = LoginUserInfo.ID.ToString()
         };
-        return await InsertAsync(menu);
+
+        var menus = new List<MenuInfo>()
+        {
+            menu,
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-新增",
+                Visible = true,
+                FunctionId = "Add",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-修改",
+                Visible = true,
+                FunctionId = "Edit",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-审核",
+                Visible = true,
+                FunctionId = "Check",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-导入",
+                Visible = true,
+                FunctionId = "Import",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-查询",
+                Visible = true,
+                FunctionId = "Query",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-高级查询",
+                Visible = true,
+                FunctionId = "AdvQuery",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-导出",
+                Visible = true,
+                FunctionId = "Export",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+            new() {
+                PID = menu.ID,
+                Name = $"{menu.Name}-快查",
+                Visible = true,
+                FunctionId = "QuickQuery",
+                SystemTypeId = "WareMis",
+                CurrentLoginUserId = LoginUserInfo.ID.ToString()
+            },
+        };
+        return await InsertRangeAsync(menus);
     }
 
 
