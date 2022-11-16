@@ -318,12 +318,6 @@ public sealed class LogisticCompany : BaseEntity
     public const string Fieldisid = "isid";
 
     /// <summary>
-    /// 乐观锁
-    /// </summary>
-    [NonSerialized]
-    public const string FieldTS = "TS";
-
-    /// <summary>
     /// 网点名称
     /// </summary>
     [NonSerialized]
@@ -535,12 +529,6 @@ public sealed class LogisticCompany : BaseEntity
     /// </summary>
     [NonSerialized]
     public const string Disisid = "自增ID";
-
-    /// <summary>
-    /// 乐观锁
-    /// </summary>
-    [NonSerialized]
-    public const string DisTS = "乐观锁";
 
     /// <summary>
     /// 网点名称
