@@ -13,7 +13,6 @@ using BB.HttpServices.TMS;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using DevExpress.Data;
-using DevExpress.XtraBars;
 using Furion.Logging.Extensions;
 
 namespace BB.TMS.UI;

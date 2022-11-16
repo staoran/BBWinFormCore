@@ -12,7 +12,6 @@ using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Entity.TMS;
 using BB.Tools.Entity;
-using DevExpress.XtraBars;
 using Furion.Logging.Extensions;
 
 namespace BB.TMS.UI;
