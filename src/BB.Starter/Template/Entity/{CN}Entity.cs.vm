@@ -47,7 +47,7 @@ public sealed class ${ChildName} : BaseEntity
 #if(${EntityProperty.IsIdentity})
     [Identity]
 #end
-#if(!$ColumnInfo.IsColumn)
+#if(!$EntityProperty.IsColumn)
     [Hide]
 #end
 #if(${EntityProperty.OptimisticLock})
