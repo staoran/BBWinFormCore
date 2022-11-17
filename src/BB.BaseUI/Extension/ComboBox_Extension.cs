@@ -355,7 +355,7 @@ public static class ComboBoxExtension
             if (combo.Properties.Items[i] is CListItem item && value != null && item.Value == string.Concat(value))
             {
                 combo.SelectedIndex = i;
-                combo.SelectedText = item.Text;
+                // combo.SelectedText = item.Text; // 注释掉，会重复显示
             }
         }
     }
