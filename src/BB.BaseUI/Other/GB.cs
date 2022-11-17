@@ -627,7 +627,7 @@ public static class GB
         {
             if (x.MenuType == "3" && !x.FunctionId.IsNullOrEmpty())
             {
-                dic.Add(x.FunctionId, x.Name);
+                dic.TryAdd(x.FunctionId, x.Name);
             }
 
             if (x.Children.Count > 0)
