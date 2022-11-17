@@ -151,6 +151,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             PID = "363811f1-a57e-4b9f-bc26-ad39379e1f0d",
             Name = name,
             Icon = "Images\\MenuIcon\\301.ico",
+            MenuType = "2",
             Visible = true,
             WinformType = winFormType,
             Url = "#",
@@ -164,6 +165,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-新增",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "Add",
                 SystemTypeId = "WareMis",
@@ -172,6 +174,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-修改",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "Edit",
                 SystemTypeId = "WareMis",
@@ -180,6 +183,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-审核",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "Check",
                 SystemTypeId = "WareMis",
@@ -188,6 +192,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-导入",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "Import",
                 SystemTypeId = "WareMis",
@@ -196,6 +201,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-查询",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "Query",
                 SystemTypeId = "WareMis",
@@ -204,6 +210,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-高级查询",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "AdvQuery",
                 SystemTypeId = "WareMis",
@@ -212,6 +219,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-导出",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "Export",
                 SystemTypeId = "WareMis",
@@ -220,6 +228,7 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
             new() {
                 PID = menu.ID,
                 Name = $"{menu.Name}-快查",
+                MenuType = "3",
                 Visible = true,
                 FunctionId = "QuickQuery",
                 SystemTypeId = "WareMis",
@@ -306,7 +315,8 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
                 new(MenuInfo.FieldFunctionId, SqlOperator.Like ),
                 new(MenuInfo.FieldWinformType, SqlOperator.Like ),
                 new(MenuInfo.FieldUrl, SqlOperator.Like ),
-                new(MenuInfo.FieldVisible, SqlOperator.Equal )
+                new(MenuInfo.FieldVisible, SqlOperator.Equal ),
+                new(MenuInfo.FieldPID, SqlOperator.Equal ), // todo 增加没有就等于
             });
     }
 }
