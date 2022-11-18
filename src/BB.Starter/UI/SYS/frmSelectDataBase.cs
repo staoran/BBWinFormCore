@@ -458,7 +458,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
 
         // 初始化生成代码所用的元数据
         var m = new ModuleImport();
-        SetInfo(m);
+        await SetInfo(m);
 
         if (!m.MetadataImports.Any())
         {
@@ -583,7 +583,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
     /// 准备生成代码所用的数据
     /// </summary>
     /// <param name="info"></param>
-    private void SetInfo(ModuleImport info)
+    private async Task SetInfo(ModuleImport info)
     {
         // 基础名称、命名空间和操作项
         info.NameSpace = txtNameSpace.Text;
@@ -619,30 +619,51 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
 
         // 初始化一个异步任务管理器，传入缓存全部字段配置的委托
         if (_list == null || !_list.Any()) return;
-        var tm = new TaskManager(x =>
+        await Parallel.ForEachAsync(_list.Select(f => f.TableName).Distinct(), async (s, _) =>
         {
-            if (x is not List<FieldControlConfig> fieldList || fieldList.Count == 0) return;
-            EnumerableExtension.ForEach(fieldList.Select(s=>s.TableName).Distinct(), e =>
-            {
-                List<FieldControlConfig> fileList = fieldList.Where(w => w.TableName == e).ToList();
-                if (!fileList.Any()) return;
+            List<FieldControlConfig> fileList = _list.Where(w => w.TableName == s).ToList();
+            if (!fileList.Any()) return;
 
-                // 序列化 字段配置
-                string fileText = JsonHelper.Serialize(fileList);
-                if (fileText.Length == 0) return;
+            // 序列化 字段配置
+            string fileText = JsonHelper.Serialize(fileList);
+            if (fileText.Length == 0) return;
 
-                // 是否存在文件夹
-                DirectoryUtil.CreateDirectory(_dataPath);
+            // 是否存在文件夹
+            DirectoryUtil.CreateDirectory(_dataPath);
 
-                // 写文件
-                var filePath = $"{_dataPath}{e}.json";
-                FileUtil.CreateFile(filePath);
-                FileUtil.WriteText(filePath, fileText);
-            });
-        }, "AddFieldControlConfigList");
-
-        // 结束前执行异步任务
-        tm.Append(_list);
+            // 写文件
+            var filePath = $"{_dataPath}{s}.json";
+            FileUtil.CreateFile(filePath);
+            await FileUtil.WriteTextAsync(filePath, fileText);
+        });
+        // var tm = new TaskManager(x =>
+        // {
+        //     if (x is not List<FieldControlConfig> fieldList || fieldList.Count == 0) return;
+        //     fieldList.Select(s=>s.TableName).Distinct().ForEach(e =>
+        //     {
+        //         List<FieldControlConfig> fileList = fieldList.Where(w => w.TableName == e).ToList();
+        //         if (!fileList.Any()) return;
+        //
+        //         // 序列化 字段配置
+        //         string fileText = JsonHelper.Serialize(fileList);
+        //         if (fileText.Length == 0) return;
+        //
+        //         // 是否存在文件夹
+        //         DirectoryUtil.CreateDirectory(_dataPath);
+        //
+        //         // 写文件
+        //         var filePath = $"{_dataPath}{e}.json";
+        //         FileUtil.CreateFile(filePath);
+        //         FileUtil.WriteText(filePath, fileText);
+        //     });
+        // }, "AddFieldControlConfigList");
+        //
+        // // 结束前执行异步任务
+        // tm.Append(_list);
+        // tm.TaskExecuted += _ =>
+        // {
+        //     tm.Dispose();
+        // };
     }
 
     private async void txtTable_EditValueChanged(object? sender, EventArgs e)
