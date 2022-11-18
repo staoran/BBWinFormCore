@@ -127,7 +127,7 @@ public interface IOUHttpService : IHttpDispatchProxy, IBaseHttpService<OUInfo>
     /// <param name="id">记录ID</param>
     /// <param name="deleted">是否删除</param>
     /// <returns></returns>
-    [Post("setDeletedFlang")]
+    [Post("setDeletedFlag")]
     Task<RESTfulResultControl<bool>> SetDeletedFlagAsync([QueryString]object id, [QueryString]bool deleted = true);
 
     /// <summary>
