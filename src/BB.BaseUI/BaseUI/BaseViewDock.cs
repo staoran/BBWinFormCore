@@ -118,7 +118,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 
         // 快查权限
         string fullName = GetType().FullName ?? Name;
-        if (treeView1 == null || GB.HasFunction($"{fullName}/QuickQuery"))
+        if (treeView1 != null && GB.HasFunction($"{fullName}/QuickQuery"))
         {
             hideTreeButton.Visibility = BarItemVisibility.Always;
             splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
@@ -126,7 +126,7 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 
         if (splitContainer1 == null)
         {
-            tableDirectionButton.Visibility = BarItemVisibility.Always;
+            tableDirectionButton.Visibility = BarItemVisibility.Never;
         }
 
         // addButton.Enabled = HasFunction($"{fullName}/addButton");
