@@ -438,6 +438,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <param name="id">记录ID</param>
     /// <param name="deleted">是否删除</param>
     /// <returns></returns>
+    [QueryParameters]
     public async Task<bool> SetDeletedFlagAsync(object id, bool deleted = true)
     {
         return await UpdateFieldsAsync(new Hashtable()
