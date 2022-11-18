@@ -337,7 +337,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     public virtual async Task<int> Insert2Async(Hashtable recordField, string targetTable)
     {
         return recordField != null
-            ? await _db.Insertable(recordField.ToDictionary() as Dictionary<string, object>)
+            ? await _db.Insertable(recordField.ToDictionary<string, object>())
                 .AS(targetTable)
                 .ExecuteCommandAsync()
             : 0;
@@ -440,7 +440,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
 
         await UpdateVersionValidationAsync(primaryKeyValue, optimisticLockValue);
 
-        Dictionary<string, object> dic = recordField.ToDictionary() as Dictionary<string, object>;
+        var dic = recordField.ToDictionary<string, object>();
         return await _db.Updateable<T>(dic).ExecuteCommandHasChangeAsync();
     }
 
@@ -451,7 +451,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="condition">查询的条件</param>
     public virtual async Task<bool> UpdateFieldsByConditionAsync(Hashtable recordField, string condition)
     {
-        return await _db.Updateable<T>(recordField.ToDictionary() as Dictionary<string, object>)
+        return await _db.Updateable<T>(recordField.ToDictionary<string, object>())
             .Where(condition)
             .ExecuteCommandHasChangeAsync();
     }
@@ -463,7 +463,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="expression">查询的条件</param>
     public virtual async Task<bool> UpdateFieldsByConditionAsync(Hashtable recordField, Expression<Func<T,bool>> expression)
     {
-        return await _db.Updateable<T>(recordField.ToDictionary() as Dictionary<string, object>)
+        return await _db.Updateable<T>(recordField.ToDictionary<string, object>())
             .Where(expression)
             .ExecuteCommandHasChangeAsync();
     }
@@ -1221,7 +1221,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
 
         fields = fields[..^3]; // 除去最后的AND，等于 fields.Substring(0, fields.Length - 3);
         return await base.AsQueryable().Where(fields)
-            .AddParameters(recordTable.ToDictionary() as Dictionary<string, object>).AnyAsync();
+            .AddParameters(recordTable.ToDictionary<string, object>()).AnyAsync();
     }
 
     /// <summary>

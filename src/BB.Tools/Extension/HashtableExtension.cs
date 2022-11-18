@@ -117,4 +117,15 @@ public static class HashtableExtension
    
         return hash;
     }
+
+    /// <summary>
+    /// 将 hashtable 转换为一个字典
+    /// </summary>
+    /// <param name="value">对象</param>
+    /// <returns>对象属性字典</returns>
+    public static Dictionary<K,V> ToDictionary<K,V>(this Hashtable value)
+    {
+        return value.Cast<DictionaryEntry>()
+            .ToDictionary(d => (K)d.Key, d => (V)d.Value);
+    }
 }
