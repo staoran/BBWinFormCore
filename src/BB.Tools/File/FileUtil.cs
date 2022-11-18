@@ -342,10 +342,10 @@ public class FileUtil
     /// </summary>
     /// <param name="filePath">文件的绝对路径</param>
     /// <param name="content">写入的内容</param>
-    public static void WriteText(string filePath, string content)
+    public static async Task WriteTextAsync(string filePath, string content)
     {
         //向文件写入内容
-        System.IO.File.WriteAllText(filePath, content, Encoding.Default);
+        await System.IO.File.WriteAllTextAsync(filePath, content, Encoding.Default);
     }
 
     /// <summary>
