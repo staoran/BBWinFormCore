@@ -31,9 +31,14 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     private readonly IDistributedCache _cache;
 
     /// <summary>
+    /// 对象属性
+    /// </summary>
+    private readonly Type _entityType;
+
+    /// <summary>
     /// 需要初始化的对象表名
     /// </summary>
-    private string _tableName;
+    private readonly string _tableName;
 
     /// <summary>
     /// 数据库访问对象的主键约束
@@ -90,6 +95,11 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     public string OptimisticLockKey { get; set; }
 
     /// <summary>
+    /// 当前实体的类型
+    /// </summary>
+    public Type EntityType => _entityType;
+
+    /// <summary>
     /// 数据库访问对象的表名
     /// </summary>
     public string TableName => _tableName;
@@ -123,13 +133,13 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         _cache = cache;
         Context = _dbBase;
         _loginUserInfo = App.User.Adapt<LoginUserInfo>();
-        Type type = typeof(T);
-        _primaryKey = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.PrimaryKey)).ObjToStr();
-        _foreignKey = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.ForeignKey)).ObjToStr();
-        _tableName = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.DBTableName)).ObjToStr();
-        SortField = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.SortKey)).ObjToStr();
-        IsDescending = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.IsDesc)).ObjToBool();
-        OptimisticLockKey = ReflectionExtension.GetFieldValue(type, nameof(BaseEntity.OptimisticLockKey)).ObjToStr();
+        _entityType = typeof(T);
+        _primaryKey = _entityType.GetFieldValue(nameof(BaseEntity.PrimaryKey)).ObjToStr();
+        _foreignKey = _entityType.GetFieldValue(nameof(BaseEntity.ForeignKey)).ObjToStr();
+        _tableName = _entityType.GetFieldValue(nameof(BaseEntity.DBTableName)).ObjToStr();
+        SortField = _entityType.GetFieldValue(nameof(BaseEntity.SortKey)).ObjToStr();
+        IsDescending = _entityType.GetFieldValue(nameof(BaseEntity.IsDesc)).ObjToBool();
+        OptimisticLockKey = _entityType.GetFieldValue(nameof(BaseEntity.OptimisticLockKey)).ObjToStr();
     }
 
     #endregion
@@ -1386,10 +1396,10 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <exception cref="NotSupportedException"></exception>
     public virtual Dictionary<string, int> GetPermitDict()
     {
-        return _cache.GetOrCreate($"{typeof(T).Name}PermitDict", () =>
+        return _cache.GetOrCreate($"{_entityType.Name}PermitDict", () =>
         {
             Dictionary<string, int> dic = new();
-            PropertyInfo[] properties = typeof(T).GetProperties();
+            PropertyInfo[] properties = _entityType.GetProperties();
             foreach (PropertyInfo prop in properties)
             {
                 object attribute = prop.GetCustomAttribute(typeof(ColumnAttribute), false);
@@ -1413,10 +1423,10 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual Dictionary<string, string> GetColumnNameAlias()
     {
-        return _cache.GetOrCreate($"{typeof(T).Name}ColumnNameAlias", () =>
+        return _cache.GetOrCreate($"{_entityType.Name}ColumnNameAlias", () =>
         {
             Dictionary<string, string> dic = new();
-            PropertyInfo[] properties = typeof(T).GetProperties();
+            PropertyInfo[] properties = _entityType.GetProperties();
             List<DbColumnInfo> dbCols = new();
             foreach (PropertyInfo prop in properties)
             {
@@ -1455,10 +1465,10 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <exception cref="NotSupportedException"></exception>
     public virtual List<FieldConditionType> GetFieldConditionTypes()
     {
-        return _cache.GetOrCreate($"{typeof(T).Name}ConditionType", () =>
+        return _cache.GetOrCreate($"{_entityType.Name}ConditionType", () =>
         {
             List<FieldConditionType> dic = new();
-            PropertyInfo[] properties = typeof(T).GetProperties();
+            PropertyInfo[] properties = _entityType.GetProperties();
             foreach (PropertyInfo prop in properties)
             {
                 object attribute = prop.GetCustomAttribute(typeof(ColumnAttribute), false);
