@@ -810,13 +810,16 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="whereExpression">查询的条件</param>
     /// <param name="info">分页参数</param>
+    /// <param name="isDisabledGlobalFilter">是否禁用全局过滤，默认否</param>
     /// <returns>指定对象的集合</returns>
-    public virtual async Task<PageResult<T>> FindWithPagerAsync(Expression<Func<T, bool>> whereExpression, PageInput info)
+    public virtual async Task<PageResult<T>> FindWithPagerAsync(Expression<Func<T, bool>> whereExpression, PageInput info,
+        bool isDisabledGlobalFilter = false)
     {
         //如果不指定排序字段，用默认的
         string fieldToSort = !string.IsNullOrEmpty(info.SortField) ? info.SortField : SortField;
 
         return await _db.Queryable<T>()
+            .Filter($"{_entityType.Name}-DataPermissionFilter", isDisabledGlobalFilter)
             .Where(whereExpression)
             .OrderByIF(!fieldToSort.IsNullOrEmpty(), $"{fieldToSort} {info.SortOrder}")
             .ToPagedListAsync(info.PageNo, info.PageSize);

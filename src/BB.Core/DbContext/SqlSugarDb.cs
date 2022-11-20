@@ -10,6 +10,7 @@ using BB.Tools.Const;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
+using BB.Tools.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar.Extensions;
 
@@ -199,37 +200,52 @@ public static class SqlSugarDb
 
         #region 查询过滤器
 
-        // var userId = App.User?.FindFirstValue(nameof(LoginUserInfo.ID));
-        // if (!userId.IsNullOrEmpty())
-        // {
-        //     // 获取所有实体类型
-        //     var entityTypes = App.EffectiveTypes.Where(t => t.IsClass && t.IsPublic && !t.IsInterface
-        //                                                     && !t.IsAbstract && (t.BaseType == typeof(BaseEntity) ||
-        //                                                         t.BaseType == typeof(BaseEntity<>))).ToList();
-        //
-        //     var userCompanyId = App.User?.FindFirstValue(nameof(LoginUserInfo.CompanyId));
-        //     // todo 用缓存，程序启动就缓存，精简 App.User 信息，尽量不在其中写角色和数据权限，就用 userId 配合缓存的权限，用滑动的缓存
-        //     // todo 每次查询都会循环，需优化
-        //     
-        //     // todo 暂时取消，后续细化数据权限配置，有些表需要多个字段配合，比如，可能需要显示本网点本身+本人创建+属于本网点的数据
-        //     var roles = App.User?.FindFirstValue(nameof(LoginUserInfo.RoleIdList))?.Split(",");
-        //     if (roles != null && !roles.Contains(RoleInfo.SUPER_ADMIN_NAME) && !userCompanyId.IsNullOrEmpty())
-        //     {
-        //         // 循环配置查询过滤器
-        //         foreach (Type entityType in entityTypes)
-        //         {
-        //             // 获取 数据权限字段
-        //             var dataPermissionKey = entityType.GetFieldValue(nameof(BaseEntity.DataPermissionKey)).ObjToString();
-        //             if (dataPermissionKey.IsNullOrEmpty()) continue;
-        //
-        //             // 构建动态过滤语句
-        //             var lambda = DynamicExpressionParser.ParseLambda(entityType, typeof(bool), $"{dataPermissionKey} == @0",
-        //                 userCompanyId!);
-        //             // 网点机构过滤
-        //             db.QueryFilter.Add(new TableFilterItem<object>(entityType, lambda));
-        //         }
-        //     }
-        // }
+        var userId = App.User?.FindFirstValue(nameof(LoginUserInfo.ID));
+        if (!userId.IsNullOrEmpty())
+        {
+            var filterItems = Cache.Instance.GetOrCreate("DataPermission", () =>
+            {
+                var tableFilterItems = new List<TableFilterItem<object>>();
+                // 获取所有实体类型
+                var entityTypes = App.EffectiveTypes.Where(t => t.IsClass && t.IsPublic && !t.IsInterface
+                                                                && !t.IsAbstract && (t.BaseType == typeof(BaseEntity) ||
+                                                                    t.BaseType == typeof(BaseEntity<>))).ToList();
+
+                var userCompanyId = App.User?.FindFirstValue(nameof(LoginUserInfo.CompanyId));
+                // todo 用缓存，程序启动就缓存，精简 App.User 信息，尽量不在其中写角色和数据权限，就用 userId 配合缓存的权限，用滑动的缓存
+                // todo 每次查询都会循环，需优化
+
+                // todo 暂时取消，后续细化数据权限配置，有些表需要多个字段配合，比如，可能需要显示本网点本身+本人创建+属于本网点的数据
+                var roles = App.User?.FindFirstValue(nameof(LoginUserInfo.RoleIdList))?.Split(",");
+                if (roles != null && !roles.Contains(RoleInfo.SUPER_ADMIN_NAME) && !userCompanyId.IsNullOrEmpty())
+                {
+                    // 循环配置查询过滤器
+                    foreach (Type entityType in entityTypes)
+                    {
+                        // 获取 数据权限字段
+                        var dataPermissionKey =
+                            entityType.GetFieldValue(nameof(BaseEntity.DataPermissionKey)).ObjToString();
+                        if (dataPermissionKey.IsNullOrEmpty()) continue;
+
+                        // 构建动态过滤语句
+                        var lambda = DynamicExpressionParser.ParseLambda(entityType, typeof(bool),
+                            $"{dataPermissionKey} == @0",
+                            userCompanyId!);
+                        tableFilterItems.Add(new TableFilterItem<object>(entityType, lambda)
+                        {
+                            FilterName = $"{entityType.Name}-DataPermissionFilter"
+                        });
+                    }
+                }
+
+                return tableFilterItems;
+            });
+
+            // 网点机构过滤
+            filterItems.ForEach(x => db.QueryFilter.Add(x));
+        }
+        
+        // 三种数据权限，多机构，自定义过滤器，指定过滤器，指定排除过滤器
 
         #endregion
 
