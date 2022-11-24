@@ -694,6 +694,7 @@ public static class GB
         #region 获取用户信息
 
         AllUserDict.Clear();
+        AllUserDict.Add(new CListItem("当前用户", "*当前用户*"));
         EnabledUserDict.Clear();
 
         List<UserInfo> lst = await App.GetService<UserHttpService>().GetAllAsync();
@@ -715,6 +716,7 @@ public static class GB
         #region 获取部门信息
 
         AllOuDict.Clear();
+        AllOuDict.Add(new CListItem("当前机构", "*当前机构*"));
         EnabledOuDict.Clear();
 
         List<OUInfo> ouList = await App.GetService<OUHttpService>().GetAllAsync();
