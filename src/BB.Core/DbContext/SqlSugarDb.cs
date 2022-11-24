@@ -7,6 +7,7 @@ using System.Security.Claims;
 using BB.Entity.Base;
 using BB.Entity.Security;
 using BB.Tools.Const;
+using BB.Tools.Encrypt;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
@@ -183,10 +184,28 @@ public static class SqlSugarDb
                 }
             }
 
-            // 处理日期最小值问题
-            if (oldValue is DateTime { Year: < 1900 })
+            switch (oldValue)
             {
-                entityInfo.SetValue(Const.DEFAULT_MINIMUM_TIME);
+                // 处理日期最小值问题
+                case DateTime { Year: < 1900 }:
+                    entityInfo.SetValue(Const.DEFAULT_MINIMUM_TIME);
+                    break;
+                // 关键字默认值
+                case "*当前机构*":
+                {
+                    var companyId = App.User.FindFirstValue(nameof(LoginUserInfo.CompanyId));
+                    if (companyId.IsNullOrEmpty())
+                    {
+                        throw Oops.Bah("登陆用户机构ID为空，请登陆后再操作！");
+                    }
+                    entityInfo.SetValue(companyId);
+                    break;
+                }
+                case "*自动生成*":
+                {
+                    entityInfo.SetValue(Snowflake.Instance().GetId().ToString());
+                    break;
+                }
             }
 
             //根据当前列修改另一列 可以么写

@@ -29,6 +29,7 @@ public static class ConditionalModelExtensions
         }
 
         List<IConditionalModel> conditionalModels = new();
+        // 循环预设的查询字段，避免错误的非法的查询参数名
         foreach (FieldConditionType fieldConditionType in dic)
         {
             if (!conditionData.TryGetValue(fieldConditionType.FieldName, out string value) && fieldConditionType.QueryRequired)
