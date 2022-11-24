@@ -197,13 +197,19 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
     /// </summary>
     protected virtual async Task BindData()
     {
-        ShowWaitForm();
-        WaitForm.SetWaitFormDescription("数据加载中...");
-        Dictionary<string,string> condition = GetQueryCondition();
-        PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
-        PageResult<T> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
-        winGridViewPager1.InitDataSource(list, $"{moduleName}报表");
-        HideWaitForm();
+        try
+        {
+            ShowWaitForm();
+            WaitForm.SetWaitFormDescription("数据加载中...");
+            Dictionary<string,string> condition = GetQueryCondition();
+            PageInput pagerInfo = winGridViewPager1.PagerInfo.Adapt<PageInput>();
+            PageResult<T> list = await _bll.GetEntitiesByPageAsync(new PaginatedSearchInfos(condition, pagerInfo));
+            winGridViewPager1.InitDataSource(list, $"{moduleName}报表");
+        }
+        finally
+        {
+            HideWaitForm();
+        }
     }
 
     /// <summary>
