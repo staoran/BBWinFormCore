@@ -846,13 +846,13 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 初始化一个实体
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    [HttpGet]
-    public virtual async Task<T> NewEntityAsync()
+    [NonAction]
+    public virtual Task<T> SetDynamicDefaults(T entity)
     {
-        return await Repository.NewEntityAsync();
+        return Task.FromResult(entity);
     }
 
     /// <summary>

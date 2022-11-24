@@ -595,15 +595,6 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
-    /// 初始化一个实体
-    /// </summary>
-    /// <returns></returns>
-    public virtual async Task<T> NewEntityAsync()
-    {
-        return await Task.FromResult(new T());
-    }
-
-    /// <summary>
     /// 根据条件获取第一条记录
     /// </summary>
     /// <param name="condition">查询语句</param>
