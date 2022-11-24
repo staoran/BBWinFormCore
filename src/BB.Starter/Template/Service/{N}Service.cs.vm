@@ -24,19 +24,27 @@ public class ${Name}Service : BaseMultiService<${Name}, ${ChildName}>, IDynamicA
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<${Name}> NewEntityAsync()
+    public override Task<${Name}> SetDynamicDefaults(${Name} entity)
     {
-        ${Name} entity = await base.NewEntityAsync();
-#foreach($EntityField in $MetadataImports)
-#if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
-        entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
-#end
-#end
-        return entity;
+        return Task.FromResult(entity);
     }
+##     /// <summary>
+##     /// 初始化实体并附加默认值
+##     /// </summary>
+##     /// <returns></returns>
+##     public override async Task<${Name}> NewEntityAsync()
+##     {
+##         ${Name} entity = await base.NewEntityAsync();
+## #foreach($EntityField in $MetadataImports)
+## #if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
+##         entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
+## #end
+## #end
+##         return entity;
+##     }
 
     /// <summary>
     /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑

@@ -28,11 +28,11 @@ public sealed class ${Name} : BaseEntity
     /// </summary>
     public ${Name}()
     {
-## #foreach($EntityField in $MetadataImports)
-## ## #if(${EntityField.Defaults})
-## ##         ${EntityField.CSharpFieldName} = ${EntityField.Defaults};
-## ## #end
-## #end
+#foreach($EntityField in $MetadataImports)
+#if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
+        ${EntityField.CSharpFieldName} = ${EntityField.Defaults};
+#end
+#end
     }
 
     #region Property Members

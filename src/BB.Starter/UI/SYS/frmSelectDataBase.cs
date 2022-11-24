@@ -104,11 +104,14 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
                 "true",
                 "false",
                 "DateTime.Now",
-                "GB.LoginUserInfo.ID.ToString()",
-                "GB.LoginUserInfo.CompanyId",
+                // "GB.LoginUserInfo.ID.ToString()",
+                "*当前用户*",
+                // "GB.LoginUserInfo.CompanyId",
+                "*当前机构*",
                 "0",
                 "\"0\"",
-                "Snowflake.Instance().GetId().ToString()"
+                // "Snowflake.Instance().GetId().ToString()"
+                "*自动生成*"
             });
         gridView1.CreateColumn("Validation", "验证", 35).CreateComboBoxEdit()
             .BindDictItems(new List<CListItem>

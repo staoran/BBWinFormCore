@@ -23,19 +23,27 @@ public class ${ChildName}Service : BaseService<${ChildName}>, IDynamicApiControl
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<${ChildName}> NewEntityAsync()
+    public override Task<${ChildName}> SetDynamicDefaults(${ChildName} entity)
     {
-        ${ChildName} entity = await base.NewEntityAsync();
-#foreach($EntityField in $ChildMetadataImports)
-#if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
-        entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
-#end
-#end
-        return entity;
+        return Task.FromResult(entity);
     }
+##     /// <summary>
+##     /// 初始化实体并附加默认值
+##     /// </summary>
+##     /// <returns></returns>
+##     public override async Task<${ChildName}> NewEntityAsync()
+##     {
+##         ${ChildName} entity = await base.NewEntityAsync();
+## #foreach($EntityField in $ChildMetadataImports)
+## #if(${EntityField.Defaults} && ${EntityField.Defaults} != "")
+##         entity.${EntityField.CSharpFieldName} = ${EntityField.Defaults};
+## #end
+## #end
+##         return entity;
+##     }
 
     /// <summary>
     /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
