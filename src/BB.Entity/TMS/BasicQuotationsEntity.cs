@@ -17,6 +17,10 @@ public sealed class BasicQuotations : BaseEntity
     /// </summary>
     public BasicQuotations()
     {
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
     }
 
     #region Property Members

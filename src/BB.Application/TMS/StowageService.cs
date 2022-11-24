@@ -21,30 +21,12 @@ public class StowageService : BaseMultiService<Stowage, Stowages>, IDynamicApiCo
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Stowage> NewEntityAsync()
+    public override Task<Stowage> SetDynamicDefaults(Stowage entity)
     {
-        Stowage entity = await base.NewEntityAsync();
-        entity.StowageNo = Snowflake.Instance().GetId().ToString();
-        entity.TranNodeNO = LoginUserInfo.CompanyId;
-        entity.StowageType = "01";
-        entity.TransType = "01";
-        entity.TransDate = DateTime.Now;
-        entity.TotalQty = 0;
-        entity.TotalWeight = 0;
-        entity.TotalCubage = 0;
-        entity.TotalCarriage = 0;
-        entity.TransCarriage = 0;
-        entity.CheckInYN = false;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        entity.Income = 0;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

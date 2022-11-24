@@ -14,10 +14,40 @@ namespace BB.Entity.TMS;
 public sealed class Node : BaseEntity<Nodes>
 {
     /// <summary>
-    /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过重写 _bll.NewEntity 方法实现）
+    /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过关键字替换或重写 SetDynamicDefaults 方法实现）
     /// </summary>
     public Node()
-    {
+    {       
+        TranNodeType = "9";
+        LockLimit = false;
+        LockLimitAmt = 3000;
+        WarningLimitAmt = 5000;
+        SendSMS = false;
+        ISLocked = false;
+        TranNodeBeginDate = DateTime.Now;
+        TranNodeEndDate = DateTime.Now.AddYears(1);
+        AckRec = false;
+        AgencyRecLimitAmt = 0;
+        // AgencyRecLimitAmtBKP = 0;
+        CarriageForwardLimitAmt = 0;
+        // CarriageForwardLimitAmtBKP = 0;
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
+        TranNodeStatus = "1";
+        PublicYN = false;
+        FlagApp = false;
+        SignDays = 1;
+        AckRecDays = 2;
+        CostMasterYN = false;
+        ManagementFee = 0;
+        UsageFee = 0;
+        Deposit = 0;
+        DispatchOnly = false;
+        PickupWeightLimit = 9999;
+        PickupVolumeLimit = 999;
+        IsLockLimitKPI = false;
     }
 
     #region Property Members

@@ -17,6 +17,18 @@ public sealed class Quotations : BaseEntity
     /// </summary>
     public Quotations()
     {
+        MinCost = 0;
+        MaxCost = 999999;
+        FirstCost = 0;
+        FirstValue = 0;
+        MinValue = 0;
+        MaxValue = 99999;
+        UnitPrice = 0;
+        UnitPricePer = 1;
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
     }
 
     #region Property Members

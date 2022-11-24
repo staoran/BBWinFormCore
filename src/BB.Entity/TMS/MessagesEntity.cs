@@ -17,6 +17,13 @@ public sealed class Messages : BaseEntity
     /// </summary>
     public Messages()
     {
+        DealStatus = "8";
+        LastReadTime = DateTime.Now;
+        LaseRealAccount = "*当前机构*";
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdateBy = "*当前用户*";
     }
 
     #region Property Members

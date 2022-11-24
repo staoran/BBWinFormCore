@@ -19,21 +19,12 @@ public class DocNoRuleService : BaseService<DocNoRule>, IDynamicApiController, I
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<DocNoRule> NewEntityAsync()
+    public override Task<DocNoRule> SetDynamicDefaults(DocNoRule entity)
     {
-        DocNoRule entity = await base.NewEntityAsync();
-        entity.NoLength = 5;
-        entity.ResetZero = false;
-        entity.FlagSpilitNo = true;
-        entity.FlagIncludeDocCode = false;
-        entity.FlagLastMillisecond = false;
-        entity.CurrentValue = 0;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

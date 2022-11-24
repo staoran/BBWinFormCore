@@ -19,20 +19,12 @@ public class NodesService : BaseService<Nodes>, IDynamicApiController, ITransien
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Nodes> NewEntityAsync()
+    public override Task<Nodes> SetDynamicDefaults(Nodes entity)
     {
-        Nodes entity = await base.NewEntityAsync();
-        entity.DeliveryType = "01";
-        entity.ConvertVK = 250;
-        entity.CancelYN = false;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

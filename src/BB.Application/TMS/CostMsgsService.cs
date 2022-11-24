@@ -19,19 +19,12 @@ public class CostMsgsService : BaseService<CostMsgs>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<CostMsgs> NewEntityAsync()
+    public override Task<CostMsgs> SetDynamicDefaults(CostMsgs entity)
     {
-        CostMsgs entity = await base.NewEntityAsync();
-        entity.StatusID = "1";
-        entity.RecvMsgNode = LoginUserInfo.CompanyId;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

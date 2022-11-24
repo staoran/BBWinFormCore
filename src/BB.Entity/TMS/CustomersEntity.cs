@@ -17,6 +17,11 @@ public sealed class Customers : BaseEntity
     /// </summary>
     public Customers()
     {
+        TranNode = "*当前机构*";
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
     }
 
     #region Property Members

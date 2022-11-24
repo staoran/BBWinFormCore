@@ -19,24 +19,12 @@ public class CarService : BaseService<Car>, IDynamicApiController, ITransient
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Car> NewEntityAsync()
+    public override Task<Car> SetDynamicDefaults(Car entity)
     {
-        Car entity = await base.NewEntityAsync();
-        entity.TranNode = LoginUserInfo.CompanyId;
-        entity.Tonnage = "0";
-        entity.Long = 0;
-        entity.Width = 0;
-        entity.Height = 0;
-        entity.Volume = 0;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

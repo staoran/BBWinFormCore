@@ -21,22 +21,12 @@ public class CustomerService : BaseMultiService<Customer, Customers>, IDynamicAp
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Customer> NewEntityAsync()
+    public override Task<Customer> SetDynamicDefaults(Customer entity)
     {
-        Customer entity = await base.NewEntityAsync();
-        entity.CustomerCode = Snowflake.Instance().GetId().ToString();
-        entity.TranNode = LoginUserInfo.CompanyId;
-        entity.InUse = true;
-        entity.FlagInvoice = false;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

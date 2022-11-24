@@ -17,6 +17,13 @@ public sealed class Nodes : BaseEntity
     /// </summary>
     public Nodes()
     {
+        DeliveryType = "01";
+        ConvertVK = 250;
+        CancelYN = false;
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
     }
 
     #region Property Members

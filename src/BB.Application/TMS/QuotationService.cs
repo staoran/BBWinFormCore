@@ -21,21 +21,12 @@ public class QuotationService : BaseMultiService<Quotation, Quotations>, IDynami
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Quotation> NewEntityAsync()
+    public override Task<Quotation> SetDynamicDefaults(Quotation entity)
     {
-        Quotation entity = await base.NewEntityAsync();
-        entity.QuotationNo = Snowflake.Instance().GetId().ToString();
-        entity.CargoTypePerYN = false;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        entity.TranNodeNO = LoginUserInfo.CompanyId;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

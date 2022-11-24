@@ -17,6 +17,15 @@ public sealed class Segments : BaseEntity
     /// </summary>
     public Segments()
     {
+        PayNodeType = "1";
+        RecvNodeType = "4";
+        OpenTime = DateTime.Now;
+        Closetime = DateTime.Now;
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
+        FinancialCenterType = "4";
     }
 
     #region Property Members

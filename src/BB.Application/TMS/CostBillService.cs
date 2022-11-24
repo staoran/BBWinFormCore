@@ -20,23 +20,12 @@ public class CostBillService : BaseService<CostBill>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<CostBill> NewEntityAsync()
+    public override Task<CostBill> SetDynamicDefaults(CostBill entity)
     {
-        CostBill entity = await base.NewEntityAsync();
-        entity.CostBillType = "1";
-        entity.CostBillNo = Snowflake.Instance().GetId().ToString();
-        entity.PostYN = false;
-        entity.StatusID = "0";
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.CreatedByNode = LoginUserInfo.CompanyId;
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

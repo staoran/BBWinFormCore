@@ -19,20 +19,12 @@ public class MessagesService : BaseService<Messages>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Messages> NewEntityAsync()
+    public override Task<Messages> SetDynamicDefaults(Messages entity)
     {
-        Messages entity = await base.NewEntityAsync();
-        entity.DealStatus = "8";
-        entity.LastReadTime = DateTime.Now;
-        entity.LaseRealAccount = LoginUserInfo.CompanyId;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdateBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

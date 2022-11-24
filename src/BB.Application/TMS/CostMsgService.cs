@@ -21,26 +21,12 @@ public class CostMsgService : BaseMultiService<CostMsg, CostMsgs>, IDynamicApiCo
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<CostMsg> NewEntityAsync()
+    public override Task<CostMsg> SetDynamicDefaults(CostMsg entity)
     {
-        CostMsg entity = await base.NewEntityAsync();
-        entity.CostMsgNo = Snowflake.Instance().GetId().ToString();
-        entity.SourceType = "1";
-        entity.SendMsgNode = LoginUserInfo.CompanyId;
-        entity.RecvMsgType = "1";
-        entity.ValueType = "1";
-        entity.SourceValue = 0;
-        entity.ActiveValue = 0;
-        entity.StatusID = "0";
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

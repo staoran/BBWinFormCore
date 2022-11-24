@@ -13,10 +13,21 @@ namespace BB.Entity.TMS;
 public sealed class Car : BaseEntity
 {
     /// <summary>
-    /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过重写 _bll.NewEntity 方法实现）
+    /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过关键字替换或重写 SetDynamicDefaults 方法实现）
     /// </summary>
     public Car()
     {
+        TranNode = "*当前机构*";
+        Tonnage = "0";
+        Long = 0;
+        Width = 0;
+        Height = 0;
+        Volume = 0;
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
+        FlagApp = false;
     }
 
     #region Property Members

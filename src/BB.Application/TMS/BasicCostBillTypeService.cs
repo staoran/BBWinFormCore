@@ -19,18 +19,12 @@ public class BasicCostBillTypeService : BaseService<BasicCostBillType>, IDynamic
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<BasicCostBillType> NewEntityAsync()
+    public override Task<BasicCostBillType> SetDynamicDefaults(BasicCostBillType entity)
     {
-        BasicCostBillType entity = await base.NewEntityAsync();
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.CreationDate = DateTime.Now;
-        entity.FlagApp = false;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

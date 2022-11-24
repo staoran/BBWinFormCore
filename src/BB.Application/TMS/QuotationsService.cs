@@ -19,25 +19,12 @@ public class QuotationsService : BaseService<Quotations>, IDynamicApiController,
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Quotations> NewEntityAsync()
+    public override Task<Quotations> SetDynamicDefaults(Quotations entity)
     {
-        Quotations entity = await base.NewEntityAsync();
-        entity.MinCost = 0;
-        entity.MaxCost = 999999;
-        entity.FirstCost = 0;
-        entity.FirstValue = 0;
-        entity.MinValue = 0;
-        entity.MaxValue = 99999;
-        entity.UnitPrice = 0;
-        entity.UnitPricePer = 1;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

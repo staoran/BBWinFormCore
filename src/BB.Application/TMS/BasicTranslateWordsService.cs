@@ -19,19 +19,12 @@ public class BasicTranslateWordsService : BaseService<BasicTranslateWords>, IDyn
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<BasicTranslateWords> NewEntityAsync()
+    public override Task<BasicTranslateWords> SetDynamicDefaults(BasicTranslateWords entity)
     {
-        BasicTranslateWords entity = await base.NewEntityAsync();
-        entity.CanSelectYN = false;
-        entity.CancelYN = false;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

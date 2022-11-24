@@ -19,27 +19,12 @@ public class StowagesService : BaseService<Stowages>, IDynamicApiController, ITr
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Stowages> NewEntityAsync()
+    public override Task<Stowages> SetDynamicDefaults(Stowages entity)
     {
-        Stowages entity = await base.NewEntityAsync();
-        entity.InputType = "1";
-        entity.AckRecQty = 0;
-        entity.Qty = 0;
-        entity.Weight = 0;
-        entity.Cubage = 0;
-        entity.UnloadYN = false;
-        entity.UpstairYN = false;
-        entity.UpstairNum = 0;
-        entity.SmsYN = false;
-        entity.StowageCarriage = 0;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

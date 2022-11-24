@@ -19,18 +19,12 @@ public class BasicGroupListService : BaseService<BasicGroupList>, IDynamicApiCon
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<BasicGroupList> NewEntityAsync()
+    public override Task<BasicGroupList> SetDynamicDefaults(BasicGroupList entity)
     {
-        BasicGroupList entity = await base.NewEntityAsync();
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

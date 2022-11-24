@@ -19,20 +19,12 @@ public class BasicCostTypeService : BaseService<BasicCostType>, IDynamicApiContr
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<BasicCostType> NewEntityAsync()
+    public override Task<BasicCostType> SetDynamicDefaults(BasicCostType entity)
     {
-        BasicCostType entity = await base.NewEntityAsync();
-        entity.UseYN = false;
-        entity.CostYN = false;
-        entity.FlagApp = false;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.CreationDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

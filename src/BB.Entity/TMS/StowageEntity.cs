@@ -6,124 +6,158 @@ using SqlSugar;
 namespace BB.Entity.TMS;
 
 /// <summary>
-/// 公式报价 实体类
+/// 送货配载 实体类
 /// </summary>
 [DataContract]
 [Serializable]
-[IsChildListNull]
 [Table(DBTableName)]
-public sealed class BasicQuotation : BaseEntity<BasicQuotations>
+public sealed class Stowage : BaseEntity<Stowages>
 {
     /// <summary>
     /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过关键字替换或重写 SetDynamicDefaults 方法实现）
     /// </summary>
-    public BasicQuotation()
+    public Stowage()
     {
+        StowageNo = "*自动生成*";
         TranNodeNO = "*当前机构*";
+        StowageType = "01";
+        TransType = "01";
+        TransDate = DateTime.Now;
+        TotalQty = 0;
+        TotalWeight = 0;
+        TotalCubage = 0;
+        TotalCarriage = 0;
+        TransCarriage = 0;
+        CheckInYN = false;
         CreationDate = DateTime.Now;
         CreatedBy = "*当前用户*";
         LastUpdateDate = DateTime.Now;
         LastUpdatedBy = "*当前用户*";
         FlagApp = false;
-        RakeMarkYN = false;
+        Income = 0;
     }
 
     #region Property Members
 
     /// <summary>
-    /// 自增ID
-    /// </summary>
-    [DataMember]
-    [Identity]
-    [Hide]
-    [Sort(IsDesc)]
-    [Column(FieldISID, DisISID)]
-    public int ISID { get; set; }
-
-    /// <summary>
-    /// 报价编号
+    /// 配载编号
     /// </summary>
     [DataMember]
     [Key]
-    [Column(FieldQuotationNo, DisQuotationNo)]
-    public string QuotationNo { get; set; }
+    [Column(FieldStowageNo, DisStowageNo)]
+    public string StowageNo { get; set; }
 
     /// <summary>
-    /// 报价名称
-    /// </summary>
-    [DataMember]
-    [Column(FieldQuotationDesc, DisQuotationDesc)]
-    public string QuotationDesc { get; set; }
-
-    /// <summary>
-    /// 所属网点
+    /// 网点编号
     /// </summary>
     [DataMember]
     [Column(FieldTranNodeNO, DisTranNodeNO)]
     public string TranNodeNO { get; set; }
 
     /// <summary>
-    /// 费用类型
+    /// 配载单类型
     /// </summary>
     [DataMember]
-    [Column(FieldCostType, DisCostType)]
-    public string CostType { get; set; }
+    [Column(FieldStowageType, DisStowageType)]
+    public string StowageType { get; set; }
 
     /// <summary>
-    /// 货物类型
+    /// 配载运输类型
     /// </summary>
     [DataMember]
-    [Column(FieldCargoType, DisCargoType)]
-    public string CargoType { get; set; }
+    [Column(FieldTransType, DisTransType)]
+    public string TransType { get; set; }
 
     /// <summary>
-    /// 收货方式
+    /// 配载车标号
     /// </summary>
     [DataMember]
-    [Column(FieldPickUpType, DisPickUpType)]
-    public string PickUpType { get; set; }
+    [Column(FieldTransMarkNo, DisTransMarkNo)]
+    public string TransMarkNo { get; set; }
 
     /// <summary>
-    /// 交货方式
+    /// 车辆编号
     /// </summary>
     [DataMember]
-    [Column(FieldDeliveryType, DisDeliveryType)]
-    public string DeliveryType { get; set; }
+    [Column(FieldTransNo, DisTransNo)]
+    public string TransNo { get; set; }
 
     /// <summary>
-    /// 运输方式
+    /// 司机
     /// </summary>
     [DataMember]
-    [Column(FieldTransportType, DisTransportType)]
-    public string TransportType { get; set; }
+    [Column(FieldTransDriver, DisTransDriver)]
+    public string TransDriver { get; set; }
 
     /// <summary>
-    /// 起始区域
+    /// 司机电话
     /// </summary>
     [DataMember]
-    [Column(FieldFroms, DisFroms)]
-    public string Froms { get; set; }
+    [Column(FieldTransDriverPhone, DisTransDriverPhone)]
+    public string TransDriverPhone { get; set; }
 
     /// <summary>
-    /// 目的区域
+    /// 承运时间
     /// </summary>
     [DataMember]
-    [Column(FieldTos, DisTos)]
-    public string Tos { get; set; }
+    [Column(FieldTransDate, DisTransDate)]
+    public DateTime TransDate { get; set; }
 
     /// <summary>
-    /// 生效时间
+    /// 总件数
     /// </summary>
     [DataMember]
-    [Column(FieldBeginTime, DisBeginTime)]
-    public DateTime BeginTime { get; set; }
+    [Column(FieldTotalQty, DisTotalQty)]
+    public int TotalQty { get; set; }
 
     /// <summary>
-    /// 过期时间
+    /// 总重量
     /// </summary>
     [DataMember]
-    [Column(FieldEndTime, DisEndTime)]
-    public DateTime EndTime { get; set; }
+    [Column(FieldTotalWeight, DisTotalWeight)]
+    public decimal TotalWeight { get; set; }
+
+    /// <summary>
+    /// 总体积
+    /// </summary>
+    [DataMember]
+    [Column(FieldTotalCubage, DisTotalCubage)]
+    public decimal TotalCubage { get; set; }
+
+    /// <summary>
+    /// 总运费
+    /// </summary>
+    [DataMember]
+    [Column(FieldTotalCarriage, DisTotalCarriage)]
+    public decimal TotalCarriage { get; set; }
+
+    /// <summary>
+    /// 支付费用
+    /// </summary>
+    [DataMember]
+    [Column(FieldTransCarriage, DisTransCarriage)]
+    public decimal TransCarriage { get; set; }
+
+    /// <summary>
+    /// 核销
+    /// </summary>
+    [DataMember]
+    [Column(FieldCheckInYN, DisCheckInYN)]
+    public bool CheckInYN { get; set; }
+
+    /// <summary>
+    /// 核销人
+    /// </summary>
+    [DataMember]
+    [Column(FieldCheckInAccount, DisCheckInAccount)]
+    public string CheckInAccount { get; set; }
+
+    /// <summary>
+    /// 核销时间
+    /// </summary>
+    [DataMember]
+    [Column(FieldCheckInDate, DisCheckInDate)]
+    public DateTime? CheckInDate { get; set; }
 
     /// <summary>
     /// 备注
@@ -136,6 +170,7 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     /// 创建时间
     /// </summary>
     [DataMember]
+    [Sort(IsDesc)]
     [Column(FieldCreationDate, DisCreationDate)]
     public DateTime CreationDate { get; set; }
 
@@ -162,38 +197,45 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     public string LastUpdatedBy { get; set; }
 
     /// <summary>
-    /// 审批
+    /// 审核
     /// </summary>
     [DataMember]
     [Column(FieldFlagApp, DisFlagApp)]
     public bool FlagApp { get; set; }
 
     /// <summary>
-    /// 审批人
+    /// 审核人
     /// </summary>
     [DataMember]
     [Column(FieldAppUser, DisAppUser)]
     public string AppUser { get; set; }
 
     /// <summary>
-    /// 审批时间
+    /// 审核时间
     /// </summary>
     [DataMember]
     [Column(FieldAppDate, DisAppDate)]
     public DateTime? AppDate { get; set; }
 
     /// <summary>
-    /// 仅用于抽成
+    /// 收入
     /// </summary>
     [DataMember]
-    [Column(FieldRakeMarkYN, DisRakeMarkYN)]
-    public bool RakeMarkYN { get; set; }
+    [Column(FieldIncome, DisIncome)]
+    public decimal Income { get; set; }
 
     /// <summary>
-    /// 公式报价明细 集合
+    /// 分摊类型
+    /// </summary>
+    [DataMember]
+    [Column(FieldSharType, DisSharType)]
+    public string SharType { get; set; }
+
+    /// <summary>
+    /// 配载明细表 集合
     /// </summary>
     [Ignore]
-    public IEnumerable<BasicQuotations> BasicQuotationsList { get; set; }
+    public IEnumerable<Stowages> StowagesList { get; set; }
 
     #endregion
 
@@ -203,19 +245,19 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     /// 表名
     /// </summary>
     [NonSerialized]
-    public new const string DBTableName = "tb_BasicQuotation";
+    public new const string DBTableName = "tb_TranStowage";
 
     /// <summary>
     /// 主键名
     /// </summary>
     [NonSerialized]
-    public new const string PrimaryKey = FieldQuotationNo;
+    public new const string PrimaryKey = FieldStowageNo;
 
     /// <summary>
     /// 排序字段
     /// </summary>
     [NonSerialized]
-    public new const string SortKey = FieldISID;
+    public new const string SortKey = FieldCreationDate;
 
     /// <summary>
     /// 排序方式
@@ -235,7 +277,7 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     [DataMember]
     [Ignore]
     [Navigate(NavigateType.OneToMany, ChildForeignKey)]
-    public new List<BasicQuotations>? ChildTableList
+    public new List<Stowages>? ChildTableList
     {
         get => base.ChildTableList;
         set => base.ChildTableList = value;
@@ -245,86 +287,110 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     /// 子表外键
     /// </summary>
     [NonSerialized]
-    public new const string ChildForeignKey = BasicQuotations.ForeignKey;
+    public new const string ChildForeignKey = Stowages.ForeignKey;
 
     #region 列名
     /// <summary>
-    /// 自增ID
+    /// 配载编号
     /// </summary>
     [NonSerialized]
-    public const string FieldISID = "ISID";
+    public const string FieldStowageNo = "StowageNo";
 
     /// <summary>
-    /// 报价编号
-    /// </summary>
-    [NonSerialized]
-    public const string FieldQuotationNo = "QuotationNo";
-
-    /// <summary>
-    /// 报价名称
-    /// </summary>
-    [NonSerialized]
-    public const string FieldQuotationDesc = "QuotationDesc";
-
-    /// <summary>
-    /// 所属网点
+    /// 网点编号
     /// </summary>
     [NonSerialized]
     public const string FieldTranNodeNO = "TranNodeNO";
 
     /// <summary>
-    /// 费用类型
+    /// 配载单类型
     /// </summary>
     [NonSerialized]
-    public const string FieldCostType = "CostType";
+    public const string FieldStowageType = "StowageType";
 
     /// <summary>
-    /// 货物类型
+    /// 配载运输类型
     /// </summary>
     [NonSerialized]
-    public const string FieldCargoType = "CargoType";
+    public const string FieldTransType = "TransType";
 
     /// <summary>
-    /// 收货方式
+    /// 配载车标号
     /// </summary>
     [NonSerialized]
-    public const string FieldPickUpType = "PickUpType";
+    public const string FieldTransMarkNo = "TransMarkNo";
 
     /// <summary>
-    /// 交货方式
+    /// 车辆编号
     /// </summary>
     [NonSerialized]
-    public const string FieldDeliveryType = "DeliveryType";
+    public const string FieldTransNo = "TransNo";
 
     /// <summary>
-    /// 运输方式
+    /// 司机
     /// </summary>
     [NonSerialized]
-    public const string FieldTransportType = "TransportType";
+    public const string FieldTransDriver = "TransDriver";
 
     /// <summary>
-    /// 起始区域
+    /// 司机电话
     /// </summary>
     [NonSerialized]
-    public const string FieldFroms = "Froms";
+    public const string FieldTransDriverPhone = "TransDriverPhone";
 
     /// <summary>
-    /// 目的区域
+    /// 承运时间
     /// </summary>
     [NonSerialized]
-    public const string FieldTos = "Tos";
+    public const string FieldTransDate = "TransDate";
 
     /// <summary>
-    /// 生效时间
+    /// 总件数
     /// </summary>
     [NonSerialized]
-    public const string FieldBeginTime = "BeginTime";
+    public const string FieldTotalQty = "TotalQty";
 
     /// <summary>
-    /// 过期时间
+    /// 总重量
     /// </summary>
     [NonSerialized]
-    public const string FieldEndTime = "EndTime";
+    public const string FieldTotalWeight = "TotalWeight";
+
+    /// <summary>
+    /// 总体积
+    /// </summary>
+    [NonSerialized]
+    public const string FieldTotalCubage = "TotalCubage";
+
+    /// <summary>
+    /// 总运费
+    /// </summary>
+    [NonSerialized]
+    public const string FieldTotalCarriage = "TotalCarriage";
+
+    /// <summary>
+    /// 支付费用
+    /// </summary>
+    [NonSerialized]
+    public const string FieldTransCarriage = "TransCarriage";
+
+    /// <summary>
+    /// 核销
+    /// </summary>
+    [NonSerialized]
+    public const string FieldCheckInYN = "CheckInYN";
+
+    /// <summary>
+    /// 核销人
+    /// </summary>
+    [NonSerialized]
+    public const string FieldCheckInAccount = "CheckInAccount";
+
+    /// <summary>
+    /// 核销时间
+    /// </summary>
+    [NonSerialized]
+    public const string FieldCheckInDate = "CheckInDate";
 
     /// <summary>
     /// 备注
@@ -357,109 +423,139 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     public const string FieldLastUpdatedBy = "LastUpdatedBy";
 
     /// <summary>
-    /// 审批
+    /// 审核
     /// </summary>
     [NonSerialized]
     public const string FieldFlagApp = "FlagApp";
 
     /// <summary>
-    /// 审批人
+    /// 审核人
     /// </summary>
     [NonSerialized]
     public const string FieldAppUser = "AppUser";
 
     /// <summary>
-    /// 审批时间
+    /// 审核时间
     /// </summary>
     [NonSerialized]
     public const string FieldAppDate = "AppDate";
 
     /// <summary>
-    /// 仅用于抽成
+    /// 收入
     /// </summary>
     [NonSerialized]
-    public const string FieldRakeMarkYN = "RakeMarkYN";
+    public const string FieldIncome = "Income";
+
+    /// <summary>
+    /// 分摊类型
+    /// </summary>
+    [NonSerialized]
+    public const string FieldSharType = "SharType";
 
     #endregion
 
     #region 列显示名
     /// <summary>
-    /// 自增ID
+    /// 配载编号
     /// </summary>
     [NonSerialized]
-    public const string DisISID = "自增ID";
+    public const string DisStowageNo = "配载编号";
 
     /// <summary>
-    /// 报价编号
+    /// 网点编号
     /// </summary>
     [NonSerialized]
-    public const string DisQuotationNo = "报价编号";
+    public const string DisTranNodeNO = "网点编号";
 
     /// <summary>
-    /// 报价名称
+    /// 配载单类型
     /// </summary>
     [NonSerialized]
-    public const string DisQuotationDesc = "报价名称";
+    public const string DisStowageType = "配载单类型";
 
     /// <summary>
-    /// 所属网点
+    /// 配载运输类型
     /// </summary>
     [NonSerialized]
-    public const string DisTranNodeNO = "所属网点";
+    public const string DisTransType = "配载运输类型";
 
     /// <summary>
-    /// 费用类型
+    /// 配载车标号
     /// </summary>
     [NonSerialized]
-    public const string DisCostType = "费用类型";
+    public const string DisTransMarkNo = "配载车标号";
 
     /// <summary>
-    /// 货物类型
+    /// 车辆编号
     /// </summary>
     [NonSerialized]
-    public const string DisCargoType = "货物类型";
+    public const string DisTransNo = "车辆编号";
 
     /// <summary>
-    /// 收货方式
+    /// 司机
     /// </summary>
     [NonSerialized]
-    public const string DisPickUpType = "收货方式";
+    public const string DisTransDriver = "司机";
 
     /// <summary>
-    /// 交货方式
+    /// 司机电话
     /// </summary>
     [NonSerialized]
-    public const string DisDeliveryType = "交货方式";
+    public const string DisTransDriverPhone = "司机电话";
 
     /// <summary>
-    /// 运输方式
+    /// 承运时间
     /// </summary>
     [NonSerialized]
-    public const string DisTransportType = "运输方式";
+    public const string DisTransDate = "承运时间";
 
     /// <summary>
-    /// 起始区域
+    /// 总件数
     /// </summary>
     [NonSerialized]
-    public const string DisFroms = "起始区域";
+    public const string DisTotalQty = "总件数";
 
     /// <summary>
-    /// 目的区域
+    /// 总重量
     /// </summary>
     [NonSerialized]
-    public const string DisTos = "目的区域";
+    public const string DisTotalWeight = "总重量";
 
     /// <summary>
-    /// 生效时间
+    /// 总体积
     /// </summary>
     [NonSerialized]
-    public const string DisBeginTime = "生效时间";
+    public const string DisTotalCubage = "总体积";
 
     /// <summary>
-    /// 过期时间
+    /// 总运费
     /// </summary>
     [NonSerialized]
-    public const string DisEndTime = "过期时间";
+    public const string DisTotalCarriage = "总运费";
+
+    /// <summary>
+    /// 支付费用
+    /// </summary>
+    [NonSerialized]
+    public const string DisTransCarriage = "支付费用";
+
+    /// <summary>
+    /// 核销
+    /// </summary>
+    [NonSerialized]
+    public const string DisCheckInYN = "核销";
+
+    /// <summary>
+    /// 核销人
+    /// </summary>
+    [NonSerialized]
+    public const string DisCheckInAccount = "核销人";
+
+    /// <summary>
+    /// 核销时间
+    /// </summary>
+    [NonSerialized]
+    public const string DisCheckInDate = "核销时间";
 
     /// <summary>
     /// 备注
@@ -492,28 +588,34 @@ public sealed class BasicQuotation : BaseEntity<BasicQuotations>
     public const string DisLastUpdatedBy = "修改人";
 
     /// <summary>
-    /// 审批
+    /// 审核
     /// </summary>
     [NonSerialized]
-    public const string DisFlagApp = "审批";
+    public const string DisFlagApp = "审核";
 
     /// <summary>
-    /// 审批人
+    /// 审核人
     /// </summary>
     [NonSerialized]
-    public const string DisAppUser = "审批人";
+    public const string DisAppUser = "审核人";
 
     /// <summary>
-    /// 审批时间
+    /// 审核时间
     /// </summary>
     [NonSerialized]
-    public const string DisAppDate = "审批时间";
+    public const string DisAppDate = "审核时间";
 
     /// <summary>
-    /// 仅用于抽成
+    /// 收入
     /// </summary>
     [NonSerialized]
-    public const string DisRakeMarkYN = "仅用于抽成";
+    public const string DisIncome = "收入";
+
+    /// <summary>
+    /// 分摊类型
+    /// </summary>
+    [NonSerialized]
+    public const string DisSharType = "分摊类型";
 
     #endregion
 

@@ -17,6 +17,12 @@ public sealed class CostMsgs : BaseEntity
     /// </summary>
     public CostMsgs()
     {
+        StatusID = "1";
+        RecvMsgNode = "*当前机构*";
+        CreationDate = DateTime.Now;
+        CreatedBy = "*当前用户*";
+        LastUpdateDate = DateTime.Now;
+        LastUpdatedBy = "*当前用户*";
     }
 
     #region Property Members

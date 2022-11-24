@@ -19,18 +19,12 @@ public class CustomersService : BaseService<Customers>, IDynamicApiController, I
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Customers> NewEntityAsync()
+    public override Task<Customers> SetDynamicDefaults(Customers entity)
     {
-        Customers entity = await base.NewEntityAsync();
-        entity.TranNode = LoginUserInfo.CompanyId;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>

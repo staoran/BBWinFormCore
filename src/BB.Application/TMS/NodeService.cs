@@ -27,44 +27,15 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<Node> NewEntityAsync()
+    public override async Task<Node> SetDynamicDefaults(Node entity)
     {
-        Node entity = await base.NewEntityAsync();
         // entity.TranNodeNO = Snowflake.Instance().GetId().ToString();
         entity.TranNodeNO = await _docNoRuleService.GetSNNoAsync("NO");
-        entity.TranNodeType = "9";
-        entity.LockLimit = false;
-        entity.LockLimitAmt = 3000;
-        entity.WarningLimitAmt = 5000;
-        entity.SendSMS = false;
-        entity.ISLocked = false;
-        entity.TranNodeBeginDate = DateTime.Now;
-        entity.TranNodeEndDate = DateTime.Now.AddYears(1);
-        entity.AckRec = false;
-        entity.AgencyRecLimitAmt = 0;
-        // entity.AgencyRecLimitAmtBKP = 0;
-        entity.CarriageForwardLimitAmt = 0;
-        // entity.CarriageForwardLimitAmtBKP = 0;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.TranNodeStatus = "1";
-        entity.PublicYN = false;
-        entity.FlagApp = false;
-        entity.SignDays = 1;
-        entity.AckRecDays = 2;
-        entity.CostMasterYN = false;
-        entity.ManagementFee = 0;
-        entity.UsageFee = 0;
-        entity.Deposit = 0;
-        entity.DispatchOnly = false;
-        entity.PickupWeightLimit = 9999;
-        entity.PickupVolumeLimit = 999;
-        entity.IsLockLimitKPI = false;
+        // entity.CreatedBy = LoginUserInfo.ID.ToString();
+        // entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
         return entity;
     }
 

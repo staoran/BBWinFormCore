@@ -20,23 +20,12 @@ public class LogisticCompanyService : BaseService<LogisticCompany>, IDynamicApiC
     }
 
     /// <summary>
-    /// 初始化实体并附加默认值
+    /// 实体动态默认值
     /// </summary>
     /// <returns></returns>
-    public override async Task<LogisticCompany> NewEntityAsync()
+    public override Task<LogisticCompany> SetDynamicDefaults(LogisticCompany entity)
     {
-        LogisticCompany entity = await base.NewEntityAsync();
-        entity.OrgCode = LoginUserInfo.CompanyId;
-        entity.LogisticCode = Snowflake.Instance().GetId().ToString();
-        entity.InUse = false;
-        entity.FlagInvoice = false;
-        entity.CreationDate = DateTime.Now;
-        entity.CreatedBy = LoginUserInfo.ID.ToString();
-        entity.LastUpdateDate = DateTime.Now;
-        entity.LastUpdatedBy = LoginUserInfo.ID.ToString();
-        entity.FlagApp = false;
-        entity.CancelYN = false;
-        return entity;
+        return Task.FromResult(entity);
     }
 
     /// <summary>
