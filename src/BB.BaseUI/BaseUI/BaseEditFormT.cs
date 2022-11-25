@@ -24,7 +24,7 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
     /// <summary>
     /// 创建一个临时对象，方便在附件管理中获取存在的GUID
     /// </summary>
-    protected T? TempInfo;
+    protected T TempInfo = new();
 
     public BaseEditForm(IT bll, IValidator<T> validator)
     {
@@ -76,7 +76,7 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
         else
         {
             // 新增时
-            TempInfo = await Bll.NewEntityAsync();
+            // TempInfo = await Bll.NewEntityAsync();
 
             #region 按钮权限
 
@@ -113,7 +113,7 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
     /// <param name="info"></param>
     protected virtual void DisplayInfo(T info)
     {
-        if (TempInfo == null || !TempInfo.Equals(info))
+        if (!TempInfo.Equals(info))
             TempInfo = info; //重新给临时对象赋值，使之指向存在的记录对象
 
         layoutControlGroup1.DoBindingEditorPanel(TempInfo, "txt"); //绑定编辑面板
@@ -158,7 +158,7 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
     /// </summary>
     public override async Task ClearScreen()
     {
-        TempInfo = await Bll.NewEntityAsync();
+        TempInfo = new();
 
         ID = ""; ////需要设置为空，表示新增
         ClearControlValue(this);
@@ -171,7 +171,7 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
     /// <returns></returns>
     public override async Task<bool> SaveUpdated()
     {
-        if (TempInfo == null) return false;
+        // if (TempInfo == null) return false;
         // SetInfo(_tempInfo);
 
         #region 更新数据
@@ -201,8 +201,8 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
     /// <returns></returns>
     public override async Task<bool> SaveAddNew()
     {
-        //必须使用存在的局部变量，因为部分信息可能被附件使用
-        if (TempInfo == null) return false;
+        // //必须使用存在的局部变量，因为部分信息可能被附件使用
+        // if (TempInfo == null) return false;
         // SetInfo(_tempInfo);
 
         #region 新增数据

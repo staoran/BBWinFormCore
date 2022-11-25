@@ -230,15 +230,6 @@ public class BaseHttpService<T> : ITransient
     }
 
     /// <summary>
-    /// 初始化一个实体
-    /// </summary>
-    /// <returns></returns>
-    public async Task<T> NewEntityAsync()
-    {
-        return (await _baseHttpService.NewEntityAsync()).Handling();
-    }
-
-    /// <summary>
     /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
     /// </summary>
     /// <returns></returns>

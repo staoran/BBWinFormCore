@@ -35,7 +35,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     /// <summary>
     /// 子表初始数据
     /// </summary>
-    protected T1? ChildNewEntity;
+    protected T1 ChildNewEntity = new();
 
     /// <summary>
     /// 子表验证接口
@@ -131,7 +131,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
         {
             #region 编辑时的显示信息
 
-            var key = TempInfo?.GetPrimaryKeyValue();
+            var key = TempInfo.GetPrimaryKeyValue();
             if (key != null)
             {
                 list = await ChildBll.FindByForeignKeyAsync(key); //根据外键获取明细列表记录
@@ -182,8 +182,8 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     /// <returns></returns>
     public override async Task<bool> SaveAddNew()
     {
-        //必须使用存在的局部变量，因为部分信息可能被附件使用
-        if (TempInfo == null) return false;
+        // //必须使用存在的局部变量，因为部分信息可能被附件使用
+        // if (TempInfo == null) return false;
         // SetInfo(_tempInfo);
 
         #region 新增数据
@@ -210,7 +210,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     /// <returns></returns>
     public override async Task<bool> SaveUpdated()
     {
-        if (TempInfo == null) return false;
+        // if (TempInfo == null) return false;
         // SetInfo(_tempInfo);
 
         #region 更新数据
@@ -259,7 +259,7 @@ public partial class BaseEditForm<T, IT, T1, IT1> : BaseEditForm<T, IT>
     {
         if (s is not ColumnView view) throw new Exception("行数据获取异常");
 
-        ChildNewEntity ??= await ChildBll.NewEntityAsync(); // 数据在此初始化
+        // ChildNewEntity ??= await ChildBll.NewEntityAsync(); // 数据在此初始化
         
         string foreignKey = ChildNewEntity.GetFieldValue("ForeignKey").ObjToStr(); // 外键字段名称
         if (!ID.IsNullOrEmpty())
