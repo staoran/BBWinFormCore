@@ -8,14 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Aspose.Cells" Version="22.10.1" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
-      <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="4.6.9" />
-      <PackageReference Include="Furion.Pure" Version="4.6.9" />
+      <PackageReference Include="Aspose.Cells" Version="22.11.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
+      <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="4.8.1.5" />
+      <PackageReference Include="Furion.Pure" Version="4.8.1.5" />
       <PackageReference Include="NVelocity" Version="1.2.0" />
-      <PackageReference Include="System.Drawing.Common" Version="7.0.0-rc.2.22472.3" />
-      <PackageReference Include="System.Management" Version="7.0.0-rc.2.22472.3" />
-      <PackageReference Include="System.Security.Permissions" Version="7.0.0-rc.2.22472.3" />
+      <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+      <PackageReference Include="System.Management" Version="7.0.0" />
+      <PackageReference Include="System.Security.Permissions" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
