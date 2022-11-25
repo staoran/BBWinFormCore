@@ -35,6 +35,7 @@ public class BaseMultiService<T, T1> : BaseService<T>
     /// <returns>执行操作是否成功。</returns>
     public override async Task<bool> InsertAsync(T obj)
     {
+        await SetDynamicDefaults(obj);
         await CheckEntityAsync(OperationType.Add, obj);
         if (obj.ChildTableList != null)
         {
@@ -54,7 +55,11 @@ public class BaseMultiService<T, T1> : BaseService<T>
     [ApiDescriptionSettings(KeepVerb = true)]
     public override async Task<bool> InsertRangeAsync([Required]List<T> list)
     {
-        await Parallel.ForEachAsync(list, async (entity, _) => await CheckEntityAsync(OperationType.Add, entity));
+        await Parallel.ForEachAsync(list, async (entity, _) =>
+        {
+            await SetDynamicDefaults(entity);
+            await CheckEntityAsync(OperationType.Add, entity);
+        });
 
         return await Repository.Db.InsertNav(list)
             .Include(x => x.ChildTableList)

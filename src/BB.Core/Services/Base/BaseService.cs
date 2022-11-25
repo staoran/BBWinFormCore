@@ -61,6 +61,7 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     /// <returns>执行操作是否成功。</returns>
     public virtual async Task<bool> InsertAsync(T obj)
     {
+        await SetDynamicDefaults(obj);
         await CheckEntityAsync(OperationType.Add, obj);
 
         return await Repository.InsertAsync(obj);
@@ -74,7 +75,11 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     [ApiDescriptionSettings(KeepVerb = true)]
     public virtual async Task<bool> InsertRangeAsync([Required]List<T> list)
     {
-        await Parallel.ForEachAsync(list, async (x, _) => await CheckEntityAsync(OperationType.Add, x));
+        await Parallel.ForEachAsync(list, async (x, _) =>
+        {
+            await SetDynamicDefaults(x);
+            await CheckEntityAsync(OperationType.Add, x);
+        });
 
         return await Repository.InsertRangeAsync(list);
     }
