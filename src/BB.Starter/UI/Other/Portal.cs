@@ -25,22 +25,23 @@ using FluentValidation;
 using Furion;
 using Furion.Logging.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-#if DEBUG
-// 控制台输出，需加入此库
-using System.Runtime.InteropServices;
-#endif
+
+// #if DEBUG
+// // 控制台输出，需加入此库
+// using System.Runtime.InteropServices;
+// #endif
 
 namespace BB.Starter.UI.Other;
 
 public class Portal
 {
 
-#if DEBUG
-    [DllImport("kernel32.dll")]
-    static extern bool AllocConsole();
-    [DllImport("kernel32.dll")]
-    static extern bool FreeConsole();
-#endif
+// #if DEBUG
+//     [DllImport("kernel32.dll")]
+//     static extern bool AllocConsole();
+//     [DllImport("kernel32.dll")]
+//     static extern bool FreeConsole();
+// #endif
     
     private static BackgroundWorker? _updateWorker;
 
@@ -78,10 +79,10 @@ public class Portal
 
         GlobalExceptionCapture(() =>
         {
-#if DEBUG
-            // 允许调用控制台输出
-            AllocConsole();
-#endif
+// #if DEBUG
+//             // 允许调用控制台输出
+//             AllocConsole();
+// #endif
 
             //DateTime dtEnd = Convert.ToDateTime("6/1/2009");
             //if (DateTime.Now.CompareTo(dtEnd) > 0)
@@ -118,10 +119,10 @@ public class Portal
                 LoginNormal();
             }
 
-#if DEBUG
-            // 释放控制台
-            FreeConsole();
-#endif
+// #if DEBUG
+//             // 释放控制台
+//             FreeConsole();
+// #endif
         });
     }
 
