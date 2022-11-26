@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Security.Claims;
+using BB.Core.Services.OU;
 using BB.Entity.Base;
 using BB.Entity.Security;
 using BB.Tools.Const;
@@ -222,7 +223,8 @@ public static class SqlSugarDb
         var userId = App.User?.FindFirstValue(nameof(LoginUserInfo.ID));
         if (!userId.IsNullOrEmpty())
         {
-            var filterItems = Cache.Instance.GetOrCreate("DataPermission", () =>
+            // 缓存，1 小时滑动过期，6 小时绝对过期
+            var filterItems = Cache.Instance.GetOrCreate($"DataPermission_{userId}", () =>
             {
                 var tableFilterItems = new List<TableFilterItem<object>>();
                 // 获取所有实体类型
@@ -230,13 +232,14 @@ public static class SqlSugarDb
                                                                 && !t.IsAbstract && (t.BaseType == typeof(BaseEntity) ||
                                                                     t.BaseType == typeof(BaseEntity<>))).ToList();
 
-                var userCompanyId = App.User?.FindFirstValue(nameof(LoginUserInfo.CompanyId));
-                // todo 用缓存，程序启动就缓存，精简 App.User 信息，尽量不在其中写角色和数据权限，就用 userId 配合缓存的权限，用滑动的缓存
-                // todo 每次查询都会循环，需优化
+                // var userCompanyId = App.User?.FindFirstValue(nameof(LoginUserInfo.CompanyId));
+                using var scope = App.RootServices.CreateScope();
+                var ouUserService = scope.ServiceProvider.GetRequiredService<OUUserService>();
+                var userCompanyIds = ouUserService.GetOuIdsByUserIdAsync(ConvertHelper.ObjToInt(userId)).Result;
 
-                // todo 暂时取消，后续细化数据权限配置，有些表需要多个字段配合，比如，可能需要显示本网点本身+本人创建+属于本网点的数据
+                // todo 后续细化数据权限配置，有些表需要多个字段配合，比如，可能需要显示本网点本身+本人创建+属于本网点的数据
                 var roles = App.User?.FindFirstValue(nameof(LoginUserInfo.RoleIdList))?.Split(",");
-                if (roles != null && !roles.Contains(RoleInfo.SUPER_ADMIN_NAME) && !userCompanyId.IsNullOrEmpty())
+                if (roles != null && !roles.Contains(RoleInfo.SUPER_ADMIN_NAME) && !userCompanyIds.Any())
                 {
                     // 循环配置查询过滤器
                     foreach (Type entityType in entityTypes)
@@ -248,8 +251,7 @@ public static class SqlSugarDb
 
                         // 构建动态过滤语句
                         var lambda = DynamicExpressionParser.ParseLambda(entityType, typeof(bool),
-                            $"{dataPermissionKey} == @0",
-                            userCompanyId!);
+                            $"@0.Contains({dataPermissionKey})", userCompanyIds);
                         tableFilterItems.Add(new TableFilterItem<object>(entityType, lambda)
                         {
                             FilterName = $"{entityType.Name}-DataPermissionFilter"
@@ -258,7 +260,7 @@ public static class SqlSugarDb
                 }
 
                 return tableFilterItems;
-            });
+            }, TimeSpan.FromHours(1), TimeSpan.FromHours(6));
 
             // 网点机构过滤
             filterItems.ForEach(x => db.QueryFilter.Add(x));
