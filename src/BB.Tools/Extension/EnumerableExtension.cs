@@ -96,7 +96,7 @@ public static class EnumerableExtension
     }
 
     /// <summary>
-    /// Alternates the specified first.
+    /// 替换指定的第一个。
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <param name="first">The first.</param>
@@ -162,7 +162,7 @@ public static class EnumerableExtension
     }
 
     /// <summary>
-    /// Prepends the specified source.
+    /// 前置指定的源。
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <param name="source">The source.</param>

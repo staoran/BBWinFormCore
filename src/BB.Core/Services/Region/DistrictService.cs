@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
+using BB.Tools.Format;
 using FluentValidation;
 
 namespace BB.Core.Services.Region;
@@ -58,11 +59,10 @@ public class DistrictService : BaseService<DistrictInfo>, IDynamicApiController,
     public async Task<string> GetIdByNameAsync([Required] string name)
     {
         var result = "";
-        var condition = $"Name ='{name}'";
-        List<string> list = await Repository.GetFieldListByConditionAsync("ID", condition);
+        var list = await Repository.GetFieldListByExpressionAsync(x => x.ID, x => x.DistrictName == name);
         if (list is { Count: > 0 })
         {
-            result = list[0];
+            result = list[0].ObjToStr();
         }
         return result;
     }

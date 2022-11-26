@@ -576,9 +576,21 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     /// <param name="condition">查询的条件</param>
     /// <returns></returns>
     [NonAction]
-    public virtual async Task<List<string>> GetFieldListAsync(string fieldName, string condition)
+    public virtual async Task<List<TF>> GetFieldListAsync<TF>(string fieldName, string condition)
     {
-        return await Repository.GetFieldListByConditionAsync(fieldName, condition);
+        return await Repository.GetFieldListByConditionAsync<TF>(fieldName, condition);
+    }
+
+    /// <summary>
+    /// 获取字段列表
+    /// </summary>
+    /// <param name="filedExpression">字段名称</param>
+    /// <param name="expression">查询的条件</param>
+    /// <returns></returns>
+    [NonAction]
+    public virtual async Task<List<TF>> GetFieldListAsync<TF>(Expression<Func<T,TF>> filedExpression, Expression<Func<T,bool>> expression)
+    {
+        return await Repository.GetFieldListByExpressionAsync<TF>(filedExpression, expression);
     }
 
     /// <summary>
@@ -588,7 +600,7 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     /// <returns></returns>
     public virtual async Task<List<string>> GetFieldListAsync([Required]string fieldName)
     {
-        return await GetFieldListAsync(fieldName, string.Empty);
+        return await GetFieldListAsync<string>(fieldName, string.Empty);
     }
 
     /// <summary>

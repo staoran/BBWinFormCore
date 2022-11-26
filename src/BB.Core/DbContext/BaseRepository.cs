@@ -872,7 +872,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         }
 
         var condition = $"{foreignKeyName} = '{foreignKeyId}'";
-        return await GetFieldListByConditionAsync(_primaryKey, condition);
+        return await GetFieldListByConditionAsync<string>(_primaryKey, condition);
     }
 
     /// <summary>
@@ -982,7 +982,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="fieldName">字段名称</param>
     /// <param name="condition">查询的条件</param>
     /// <returns></returns>
-    public virtual async Task<List<string>> GetFieldListByConditionAsync(string fieldName, string condition = null)
+    public virtual async Task<List<TF>> GetFieldListByConditionAsync<TF>(string fieldName, string condition = null)
     {
         ISugarQueryable<T> query = AsQueryable();
         if (!string.IsNullOrEmpty(condition))
@@ -990,7 +990,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
             query = query.Where(condition);
         }
 
-        return await query.Select<string>(fieldName)
+        return await query.Select<TF>(fieldName)
             .OrderBy($"{fieldName} {(IsDescending ? "desc" : "asc")}")
             .ToListAsync();
     }
@@ -1001,10 +1001,10 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="fieldName">字段名称</param>
     /// <param name="expression">查询的条件</param>
     /// <returns></returns>
-    public virtual async Task<List<string>> GetFieldListByConditionAsync(string fieldName, Expression<Func<T,bool>> expression)
+    public virtual async Task<List<TF>> GetFieldListByExpressionAsync<TF>(string fieldName, Expression<Func<T,bool>> expression)
     {
         var query = AsQueryable().Where(expression);
-        return await query.Select<string>(fieldName)
+        return await query.Select<TF>(fieldName)
             .OrderBy($"{fieldName} {(IsDescending ? "desc" : "asc")}")
             .ToListAsync();
     }
@@ -1015,7 +1015,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="filedExpression">字段名称</param>
     /// <param name="expression">查询的条件</param>
     /// <returns></returns>
-    public virtual async Task<List<string>> GetFieldListByConditionAsync(Expression<Func<T,string>> filedExpression, Expression<Func<T,bool>> expression)
+    public virtual async Task<List<TF>> GetFieldListByExpressionAsync<TF>(Expression<Func<T,TF>> filedExpression, Expression<Func<T,bool>> expression)
     {
         var query = AsQueryable().Where(expression);
         return await query.Select(filedExpression)

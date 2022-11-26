@@ -54,8 +54,9 @@ public class RoleFunctionService : BaseService<RoleFunction>, IDynamicApiControl
     /// <returns></returns>
     public async Task<bool> EditRoleFunctionsAsync(int roleId, List<string> newFunctionList)
     {
-        List<string> fList =
-            await Repository.GetFieldListByConditionAsync(RoleFunction.FieldFunctionId, x => x.RoleId == roleId);
+        var fList = await Repository.GetFieldListByExpressionAsync(
+            x => x.FunctionId, 
+            x => x.RoleId == roleId);
 
         var newList = newFunctionList.Where(x => !fList.Contains(x))
             .Select(x => new RoleFunction() { RoleId = roleId, FunctionId = x }).ToList();
