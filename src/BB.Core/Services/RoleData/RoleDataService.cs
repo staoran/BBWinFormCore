@@ -13,17 +13,15 @@ namespace BB.Core.Services.RoleData;
 public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController, ITransient
 {
     private readonly UserRoleService _userRoleService;
-    private readonly UserService _userService;
 
     public RoleDataService(BaseRepository<RoleDataInfo> repository, IValidator<RoleDataInfo> validator,
-        UserRoleService userRoleService, UserService userService) : base(repository, validator)
+        UserRoleService userRoleService) : base(repository, validator)
     {
         _userRoleService = userRoleService;
-        _userService = userService;
     }
 
     /// <summary>
-    /// 获取用户所属角色对应的管理公司列表
+    /// 获取用户所属角色对应的管理机构列表
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
@@ -48,7 +46,7 @@ public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController,
     }
 
     /// <summary>
-    /// 获取用户所属角色对应的管理公司列表
+    /// 获取用户所属角色对应的管理部门列表
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
@@ -72,7 +70,6 @@ public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController,
         return deptList;
     }
 
-
     /// <summary>
     /// 获取用户所属角色对应的数据权限集合
     /// </summary>
@@ -81,71 +78,85 @@ public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController,
     public async Task<List<RoleDataInfo>> FindByUserAsync(int userId)
     {
         //获取用户包含的角色
-        List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
-        List<int> roleList = new();
-        foreach (RoleInfo info in rolesByUser)
-        {
-            roleList.Add(info.ID);
-        }
+        var roles =
+            await _userRoleService.GetFieldListAsync(x => x.RoleId, x => x.UserId == userId);
 
-        //获取用户信息
-        UserInfo userInfo = await _userService.FindByIdAsync(userId);
-
-        //根据角色获取对应的数据权限集合
-        List<RoleDataInfo> list = new();
-        foreach (int roleId in roleList)
-        {
-            RoleDataInfo info = await FindByRoleIdAsync(roleId);
-            if (info == null) continue;
-
-            #region 替换所在部门和所在公司的值
-            if (!string.IsNullOrEmpty(info.BelongCompanys))
-            {
-                //不重复出现的公司列表
-                List<string> notDuplicatedCompanyList = new();
-
-                string[] companyList = info.BelongCompanys.Split(',');
-                for (var i = 0; i < companyList.Length; i++)
-                {
-                    if (companyList[i] == "-1") // -1代表用户所在公司
-                    {
-                        companyList[i] = userInfo.CompanyId;
-                    }
-
-                    if (!notDuplicatedCompanyList.Contains(companyList[i]))
-                    {
-                        notDuplicatedCompanyList.Add(companyList[i]);
-                    }
-                }
-                info.BelongCompanys = string.Join(",", notDuplicatedCompanyList);
-            }
-            if (!string.IsNullOrEmpty(info.BelongDepts))
-            {
-                //不重复出现的部门列表
-                List<string> notDuplicatedDeptList = new();
-
-                string[] deptList = info.BelongDepts.Split(',');
-                for (var i = 0; i < deptList.Length; i++)
-                {
-                    if (deptList[i] == "-11") // -11代表用户所在部门
-                    {
-                        deptList[i] = userInfo.DeptId;
-                    }
-
-                    if (!notDuplicatedDeptList.Contains(deptList[i]))
-                    {
-                        notDuplicatedDeptList.Add(deptList[i]);
-                    }
-                }
-
-                info.BelongDepts = string.Join(",", deptList);
-            } 
-            #endregion
-
-            list.Add(info);
-        }
-        return list;
+        return await FindAsync(x => roles.Contains(x.RoleId));
     }
+
+    // /// <summary>
+    // /// 获取用户所属角色对应的数据权限集合
+    // /// </summary>
+    // /// <param name="userId">用户ID</param>
+    // /// <returns></returns>
+    // public async Task<List<RoleDataInfo>> FindByUserAsync(int userId)
+    // {
+    //     //获取用户包含的角色
+    //     List<RoleInfo> rolesByUser = await _userRoleService.GetRolesByUserAsync(userId);
+    //     List<int> roleList = new();
+    //     foreach (RoleInfo info in rolesByUser)
+    //     {
+    //         roleList.Add(info.ID);
+    //     }
+    //
+    //     //获取用户信息
+    //     UserInfo userInfo = await _userService.FindByIdAsync(userId);
+    //
+    //     //根据角色获取对应的数据权限集合
+    //     List<RoleDataInfo> list = new();
+    //     foreach (int roleId in roleList)
+    //     {
+    //         RoleDataInfo info = await FindByRoleIdAsync(roleId);
+    //         if (info == null) continue;
+    //
+    //         #region 替换所在部门和所在公司的值
+    //         if (!string.IsNullOrEmpty(info.BelongCompanys))
+    //         {
+    //             //不重复出现的公司列表
+    //             List<string> notDuplicatedCompanyList = new();
+    //
+    //             string[] companyList = info.BelongCompanys.Split(',');
+    //             for (var i = 0; i < companyList.Length; i++)
+    //             {
+    //                 if (companyList[i] == "-1") // -1代表用户所在公司
+    //                 {
+    //                     companyList[i] = userInfo.CompanyId;
+    //                 }
+    //
+    //                 if (!notDuplicatedCompanyList.Contains(companyList[i]))
+    //                 {
+    //                     notDuplicatedCompanyList.Add(companyList[i]);
+    //                 }
+    //             }
+    //             info.BelongCompanys = string.Join(",", notDuplicatedCompanyList);
+    //         }
+    //         if (!string.IsNullOrEmpty(info.BelongDepts))
+    //         {
+    //             //不重复出现的部门列表
+    //             List<string> notDuplicatedDeptList = new();
+    //
+    //             string[] deptList = info.BelongDepts.Split(',');
+    //             for (var i = 0; i < deptList.Length; i++)
+    //             {
+    //                 if (deptList[i] == "-11") // -11代表用户所在部门
+    //                 {
+    //                     deptList[i] = userInfo.DeptId;
+    //                 }
+    //
+    //                 if (!notDuplicatedDeptList.Contains(deptList[i]))
+    //                 {
+    //                     notDuplicatedDeptList.Add(deptList[i]);
+    //                 }
+    //             }
+    //
+    //             info.BelongDepts = string.Join(",", deptList);
+    //         } 
+    //         #endregion
+    //
+    //         list.Add(info);
+    //     }
+    //     return list;
+    // }
 
     /// <summary>
     /// 根据角色ID获取对应的记录对象
@@ -154,8 +165,7 @@ public class RoleDataService : BaseService<RoleDataInfo>, IDynamicApiController,
     /// <returns></returns>
     public async Task<RoleDataInfo> FindByRoleIdAsync(int roleId)
     {
-        string condition = $"Role_ID = {roleId}";
-        return await FindSingleAsync(condition);
+        return await FindSingleAsync(x => x.RoleId == roleId);
     }
 
     /// <summary>
