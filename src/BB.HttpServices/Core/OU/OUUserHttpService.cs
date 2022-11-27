@@ -33,6 +33,26 @@ public class OUUserHttpService : BaseHttpService<OUUserEntity>
     }
 
     /// <summary>
+    /// 通过用户ID获取对应的机构列表
+    /// </summary>
+    /// <param name="userId">用户ID</param>
+    /// <returns></returns>
+    public async Task<List<OUInfo>> GetOusByUserIdAsync(int userId)
+    {
+        return (await _ouUserHttpService.GetOusByUserIdAsync(userId)).Handling();
+    }
+
+    /// <summary>
+    /// 通过用户ID获取对应的机构数据权限列表
+    /// </summary>
+    /// <param name="userId">用户ID</param>
+    /// <returns></returns>
+    public async Task<List<string>> GetOuIdsByUserIdAsync(int userId)
+    {
+        return (await _ouUserHttpService.GetOuIdsByUserIdAsync(userId)).Handling();
+    }
+
+    /// <summary>
     /// 在机构中移除指定的用户
     /// </summary>
     /// <param name="userId">用户ID</param>

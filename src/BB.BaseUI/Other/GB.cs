@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Text;
 using BB.BaseUI.BaseUI;
 using BB.BaseUI.Extension;
 using BB.Entity.Base;
@@ -10,7 +9,6 @@ using BB.HttpServices.Core.Dict;
 using BB.HttpServices.Core.Menu;
 using BB.HttpServices.Core.OU;
 using BB.HttpServices.Core.Region;
-using BB.HttpServices.Core.RoleData;
 using BB.HttpServices.Core.User;
 using BB.HttpServices.TMS;
 using BB.Tools.Device;
@@ -22,7 +20,6 @@ using BB.Tools.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using Furion;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Win32;
 
 namespace BB.BaseUI.Other;
@@ -132,7 +129,7 @@ public static class GB
     /// <summary>
     /// 有效的公司和部门字典
     /// </summary>
-    public static List<CListItem> EnabledOuDict { get; } = new();
+    public static List<CListItem> EnabledOuDict { get; private set; } = new();
 
     /// <summary>
     /// 全部费用类型
@@ -661,36 +658,6 @@ public static class GB
 
         #endregion
 
-        #region 获取角色对应的用户操作部门及公司范围
-        List<string> companyLst = await App.GetService<RoleDataHttpService>().GetBelongCompanysByUserAsync(LoginUserInfo.ID);
-        List<string> deptLst = await App.GetService<RoleDataHttpService>().GetBelongDeptsByUserAsync(LoginUserInfo.ID);
-        var companysb = new StringBuilder();
-        var deptsb = new StringBuilder();
-        companysb.Append(" in (");
-        foreach (string t in companyLst)
-        {
-            companysb.Append(" '" + t + "', ");
-        }
-        companysb.Append(" '')");
-
-        if (companyLst.Contains("-1"))
-        {
-            companysb.Append(" or (1 = 1)");
-        }
-
-        deptsb.Append(" in (");
-        for (var i = 0; i < deptLst.Count; i++)
-        {
-            deptsb.Append(" '" + deptsb[i] + "', ");
-        }
-        deptsb.Append(" '')");
-
-        if (deptLst.Contains("-11"))
-        {
-            deptsb.Append(" or (1 = 1)");
-        }
-        #endregion
-
         #region 获取用户信息
 
         AllUserDict.Clear();
@@ -733,6 +700,17 @@ public static class GB
             });
         }
             
+        #endregion
+
+        #region 获取用户和角色对应的操作部门及公司范围
+
+        var ouIds = await App.GetService<OUUserHttpService>().GetOuIdsByUserIdAsync(LoginUserInfo.ID);
+        if (AllOuDict.Any())
+        {
+            EnabledOuDict.Clear();
+            EnabledOuDict = AllOuDict.Where(x => ouIds.Contains(x.Value)).ToList();
+        }
+
         #endregion
         
         #region 获取费用类型
@@ -816,21 +794,19 @@ public static class GB
         // await Cache.Instance.SetAsync("LoginUserInfo", LoginUserInfo);//缓存用户信息，方便后续处理
         // // 权限
         // await Cache.Instance.SetAsync("FunctionDict", FunctionDict);//缓存权限信息，方便后续使用
-        // 角色
-        await Cache.Instance.SetAsync("RoleList", await App.GetService<UserRoleHttpService>().GetRolesByUserAsync(LoginUserInfo.ID));
-        await Cache.Instance.SetStringAsync("canOptCompanyId", companysb.ToString());
-        await Cache.Instance.SetStringAsync("canOptDeptId", deptsb.ToString());
-        await Cache.Instance.SetAsync("AppConfig", Config);
-        // 所有行政区
-        await Cache.Instance.SetAsync("AllRegion", allRegion);
-        // 所有用户
-        await Cache.Instance.SetAsync("AllUserInfo", AllUserDict);
-        // 所有公司和部门
-        await Cache.Instance.SetAsync("AllOuInfo", AllOuDict);
-        // 所有字典类型
-        await Cache.Instance.SetAsync("AllDictType", AllDictType);
-        // 所有字典数据
-        await Cache.Instance.SetAsync("AllDictData", AllDictData);
+        // // 角色
+        // await Cache.Instance.SetAsync("RoleList", await App.GetService<UserRoleHttpService>().GetRolesByUserAsync(LoginUserInfo.ID));
+        // await Cache.Instance.SetAsync("AppConfig", Config);
+        // // 所有行政区
+        // await Cache.Instance.SetAsync("AllRegion", allRegion);
+        // // 所有用户
+        // await Cache.Instance.SetAsync("AllUserInfo", AllUserDict);
+        // // 所有公司和部门
+        // await Cache.Instance.SetAsync("AllOuInfo", AllOuDict);
+        // // 所有字典类型
+        // await Cache.Instance.SetAsync("AllDictType", AllDictType);
+        // // 所有字典数据
+        // await Cache.Instance.SetAsync("AllDictData", AllDictData);
 
         #endregion
     }
