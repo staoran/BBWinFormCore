@@ -281,7 +281,7 @@ public class FunctionService : BaseService<FunctionInfo>, IDynamicApiController,
             throw Oops.Bah("指定功能控制ID重复，请重新输入！");
         }
         
-        return await Repository.UseTransactionAsync(async () =>
+        return await UseTransactionAsync(async () =>
         {
             if (await InsertAsync(mainInfo))
             {

@@ -355,7 +355,7 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public async Task<bool> UpdateUserLoginDataAsync(int id, string ip, string macAddr)
     {
-        return await Repository.UseTransactionAsync(async () =>
+        return await UseTransactionAsync(async () =>
         {
             await Repository.AsUpdateable()
                 .SetColumns(x => x.LastLoginIP == x.CurrentLoginIP)

@@ -158,7 +158,7 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     /// <returns></returns>
     public async Task<bool> EditOuUsersAsync(string ouId, List<int> newUserList)
     {
-        return await Repository.UseTransactionAsync(async () =>
+        return await UseTransactionAsync(async () =>
         {
             if (await Repository.Db.Deleteable<OUUserEntity>().Where(x=>x.OUId == ouId).ExecuteCommandHasChangeAsync())
             {
