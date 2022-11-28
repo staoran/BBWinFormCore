@@ -192,21 +192,18 @@ public class UnitOfWork : IUnitOfWork
     /// <returns></returns>
     public async Task<DbResult<T>> UseTranAsync<T>(Func<Task<T>> action, Action<Exception> errorCallBack = null)
     {
-        DbResult<T> result = new();
+        // return await _sqlSugarClient.Ado.UseTranAsync(action, errorCallBack);
+        // UseTran / UseTranAsync 抄 SqlSugar 的逻辑，使用自己的 BeginTran / CommitTran，因为自己代码做了事务嵌套处理
+        var result = new DbResult<T>();
         try
         {
             BeginTran();
+            var data = default(T);
             if (action != null)
-            {
-                DbResult<T> dbResult = result;
-                T obj = await action();
-                dbResult.Data = obj;
-                dbResult = null;
-                obj = default(T);
-            }
-
+                data = await action();
             CommitTran();
             result.IsSuccess = true;
+            result.Data = data;
         }
         catch (Exception ex)
         {
@@ -217,8 +214,6 @@ public class UnitOfWork : IUnitOfWork
             errorCallBack?.Invoke(ex);
         }
 
-        DbResult<T> dbResult1 = result;
-        result = null;
-        return dbResult1;
+        return result;
     }
 }
