@@ -30,7 +30,7 @@ public partial class MainForm : RibbonForm
     //全局热键
     private readonly RegisterHotKeyHelper _hotKey2 = new();
     //用来第一次创建动态菜单
-    private RibbonPageHelper? _ribbonHelper;
+    private RibbonPageHelper _ribbonHelper;
 
     /// <summary>
     /// 设置窗体的标题信息
@@ -67,6 +67,9 @@ public partial class MainForm : RibbonForm
     {
         InitializeComponent();
 
+        // 初始化菜单帮助类
+        _ribbonHelper = new RibbonPageHelper(this, ref ribbonControl);
+
         #region 注册右下角显示时间
 
         _backgroundWorker = new BackgroundWorker();
@@ -89,7 +92,17 @@ public partial class MainForm : RibbonForm
     private async Task InitUserRelated()
     {
         // 必须首先加载缓存，用户权限在其中
-        await GB.LoadCache();
+        // await GB.LoadCache(); // 注释掉，下面刷新菜单时会刷新缓存
+
+        #region 初始化菜单
+            
+        //刷新菜单
+        await _ribbonHelper.RefreshMenu();
+
+        //根据权限屏蔽内置的静态菜单对象
+        InitAuthorizedUi();
+
+        #endregion
             
         #region 根据权限显示对象的初始化窗体(首页，启动后默认打开的窗体)
 
@@ -122,20 +135,6 @@ public partial class MainForm : RibbonForm
         {
             // ignored
         }
-
-        #endregion
-
-        #region 初始化菜单
-            
-        //动态创建界面菜单对象(防止重复构建）
-        if (_ribbonHelper == null)
-        {
-            _ribbonHelper = new RibbonPageHelper(this, ref ribbonControl);
-            await _ribbonHelper.AddPages();
-        }
-
-        //根据权限屏蔽静态构建的菜单对象
-        InitAuthorizedUi();
 
         #endregion
     }
