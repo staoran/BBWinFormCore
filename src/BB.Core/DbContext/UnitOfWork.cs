@@ -1,219 +1,69 @@
 ﻿using System;
-using System.Data;
-using System.Threading.Tasks;
+using Furion.DatabaseAccessor;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BB.Core.DbContext;
 
 /// <summary>
-/// 单例的 SqlSugar 工作单元
+/// 工作单元特性实现类
 /// </summary>
 public class UnitOfWork : IUnitOfWork
 {
     /// <summary>
-    /// 单例的 SqlSugar 实例
+    /// SqlSugar 对象
     /// </summary>
-    private readonly ISqlSugarClient _sqlSugarClient;
-
-    /// <summary>
-    /// 事务计数
-    /// </summary>
-    private int TranCount { get; set; }
+    private readonly SqlSugarScope _sqlSugarScope;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="sqlSugarClient">SqlSugar 实例</param>
+    /// <param name="sqlSugarClient"></param>
     public UnitOfWork(ISqlSugarClient sqlSugarClient)
     {
-        _sqlSugarClient = sqlSugarClient;
-        TranCount = 0;
+        _sqlSugarScope = sqlSugarClient as SqlSugarScope;
     }
 
     /// <summary>
-    /// 获取单例 SqlSugarScope 实例
+    /// 开启工作单元处理
     /// </summary>
-    /// <returns></returns>
-    public SqlSugarScope GetDbClient() => (SqlSugarScope)_sqlSugarClient;
-
-    /// <summary>
-    /// 开启事务
-    /// </summary>
-    public void BeginTran()
+    /// <param name="context"></param>
+    /// <param name="unitOfWork"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public void BeginTransaction(FilterContext context, UnitOfWorkAttribute unitOfWork)
     {
-        lock (this)
-        {
-            TranCount++;
-            GetDbClient().BeginTran();
-        }
+        _sqlSugarScope.BeginTran();
     }
 
     /// <summary>
-    /// 开启事务
+    /// 提交工作单元处理
     /// </summary>
-    /// <param name="level">事务隔离级别</param>
-    public void BeginTran(IsolationLevel level)
+    /// <param name="resultContext"></param>
+    /// <param name="unitOfWork"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public void CommitTransaction(FilterContext resultContext, UnitOfWorkAttribute unitOfWork)
     {
-        lock (this)
-        {
-            TranCount++;
-            GetDbClient().Ado.BeginTran(level);
-        }
+        _sqlSugarScope.CommitTran();
     }
 
     /// <summary>
-    /// 提交事务
+    /// 回滚工作单元处理
     /// </summary>
-    public void CommitTran()
+    /// <param name="resultContext"></param>
+    /// <param name="unitOfWork"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public void RollbackTransaction(FilterContext resultContext, UnitOfWorkAttribute unitOfWork)
     {
-        lock (this)
-        {
-            TranCount--;
-            if (TranCount == 0)
-            {
-                try
-                {
-                    // 注意 多租户（多库） 不能用 db.Ado.CommitTran，单库可以用 db.Ado.CommitTran
-                    GetDbClient().CommitTran();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    GetDbClient().RollbackTran();
-                }
-            }
-        }
+        _sqlSugarScope.RollbackTran();
     }
 
     /// <summary>
-    /// 回滚事务
+    /// 执行完毕（无论成功失败）
     /// </summary>
-    public void RollbackTran()
+    /// <param name="context"></param>
+    /// <param name="resultContext"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public void OnCompleted(FilterContext context, FilterContext resultContext)
     {
-        lock (this)
-        {
-            TranCount--;
-            GetDbClient().RollbackTran();
-        }
-    }
-
-    /// <summary>
-    /// 执行事务，自动提交和回滚
-    /// </summary>
-    /// <param name="action">事务逻辑</param>
-    /// <param name="errorCallBack">错误回调</param>
-    /// <returns></returns>
-    public DbResult<bool> UseTran(Action action, Action<Exception> errorCallBack = null)
-    {
-        DbResult<bool> dbResult = new();
-        try
-        {
-            BeginTran();
-            action?.Invoke();
-            CommitTran();
-            dbResult.Data = dbResult.IsSuccess = true;
-        }
-        catch (Exception ex)
-        {
-            dbResult.ErrorException = ex;
-            dbResult.ErrorMessage = ex.Message;
-            dbResult.IsSuccess = false;
-            RollbackTran();
-            errorCallBack?.Invoke(ex);
-        }
-
-        return dbResult;
-    }
-
-    /// <summary>
-    /// 执行事务，自动提交和回滚
-    /// </summary>
-    /// <param name="action">事务逻辑</param>
-    /// <param name="errorCallBack">错误回调</param>
-    /// <returns></returns>
-    public async Task<DbResult<bool>> UseTranAsync(Func<Task> action, Action<Exception> errorCallBack = null)
-    {
-        DbResult<bool> result = new();
-        try
-        {
-            BeginTran();
-
-            if (action != null) await action();
-
-            CommitTran();
-            result.Data = result.IsSuccess = true;
-        }
-        catch (Exception ex)
-        {
-            result.ErrorException = ex;
-            result.ErrorMessage = ex.Message;
-            result.IsSuccess = false;
-            RollbackTran();
-            errorCallBack?.Invoke(ex);
-        }
-
-        DbResult<bool> dbResult = result;
-        result = null;
-        return dbResult;
-    }
-
-    /// <summary>
-    /// 执行事务，自动提交和回滚
-    /// </summary>
-    /// <param name="action">事务逻辑</param>
-    /// <param name="errorCallBack">错误回调</param>
-    /// <returns></returns>
-    public DbResult<T> UseTran<T>(Func<T> action, Action<Exception> errorCallBack = null)
-    {
-        DbResult<T> dbResult = new DbResult<T>();
-        try
-        {
-            BeginTran();
-            if (action != null) dbResult.Data = action();
-            CommitTran();
-            dbResult.IsSuccess = true;
-        }
-        catch (Exception ex)
-        {
-            dbResult.ErrorException = ex;
-            dbResult.ErrorMessage = ex.Message;
-            dbResult.IsSuccess = false;
-            RollbackTran();
-            errorCallBack?.Invoke(ex);
-        }
-
-        return dbResult;
-    }
-
-    /// <summary>
-    /// 执行事务，自动提交和回滚
-    /// </summary>
-    /// <param name="action">事务逻辑</param>
-    /// <param name="errorCallBack">错误回调</param>
-    /// <returns></returns>
-    public async Task<DbResult<T>> UseTranAsync<T>(Func<Task<T>> action, Action<Exception> errorCallBack = null)
-    {
-        // return await _sqlSugarClient.Ado.UseTranAsync(action, errorCallBack);
-        // UseTran / UseTranAsync 抄 SqlSugar 的逻辑，使用自己的 BeginTran / CommitTran，因为自己代码做了事务嵌套处理
-        var result = new DbResult<T>();
-        try
-        {
-            BeginTran();
-            var data = default(T);
-            if (action != null)
-                data = await action();
-            CommitTran();
-            result.IsSuccess = true;
-            result.Data = data;
-        }
-        catch (Exception ex)
-        {
-            result.ErrorException = ex;
-            result.ErrorMessage = ex.Message;
-            result.IsSuccess = false;
-            RollbackTran();
-            errorCallBack?.Invoke(ex);
-        }
-
-        return result;
+        _sqlSugarScope.Dispose();
     }
 }

@@ -128,7 +128,9 @@ public static class SqlSugarDb
 
         // 单例注入 SqlSugar 和 工作单元
         services.AddSingleton<ISqlSugarClient>(new SqlSugarScope(connectionConfig, ConfigAction));
-        services.AddSingleton<IUnitOfWork, UnitOfWork>();
+        services.AddSingleton<ISqlSugarUnitOfWork, SqlSugarUnitOfWork>();
+        // 基于单个请求的工作单与
+        services.AddUnitOfWork<UnitOfWork>();
         // 作用域注入仓储
         services.AddScoped(typeof(BaseRepository<>));
     }

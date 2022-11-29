@@ -7,7 +7,7 @@ namespace BB.Core.DbContext;
 /// <summary>
 /// 单例的 SqlSugar 工作单元
 /// </summary>
-public interface IUnitOfWork
+public interface ISqlSugarUnitOfWork
 {
     /// <summary>
     /// 获取单例 SqlSugarScope 实例

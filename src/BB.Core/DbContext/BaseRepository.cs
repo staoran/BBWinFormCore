@@ -53,7 +53,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <summary>
     /// 工作单元
     /// </summary>
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ISqlSugarUnitOfWork _sqlSugarUnitOfWork;
 
     /// <summary>
     /// 构造函数中初始化的 DbContext
@@ -124,12 +124,12 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="unitOfWork">工作单元</param>
+    /// <param name="sqlSugarUnitOfWork">工作单元</param>
     /// <param name="cache">分布式缓存</param>
-    public BaseRepository(IUnitOfWork unitOfWork, IDistributedCache cache) : base(unitOfWork.GetDbClient())
+    public BaseRepository(ISqlSugarUnitOfWork sqlSugarUnitOfWork, IDistributedCache cache) : base(sqlSugarUnitOfWork.GetDbClient())
     {
-        _unitOfWork = unitOfWork;
-        _dbBase = unitOfWork.GetDbClient();
+        _sqlSugarUnitOfWork = sqlSugarUnitOfWork;
+        _dbBase = sqlSugarUnitOfWork.GetDbClient();
         _cache = cache;
         Context = _dbBase;
         _loginUserInfo = App.User.Adapt<LoginUserInfo>();
@@ -228,7 +228,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// </summary>
     public virtual DbTransaction CreateTransaction()
     {
-        _unitOfWork.BeginTran();
+        _sqlSugarUnitOfWork.BeginTran();
         return (DbTransaction)_db.Ado.Transaction;
     }
 
@@ -238,7 +238,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="level">事务级别</param>
     public virtual DbTransaction CreateTransaction(IsolationLevel level)
     {
-        _unitOfWork.BeginTran(level);
+        _sqlSugarUnitOfWork.BeginTran(level);
         return (DbTransaction)_db.Ado.Transaction;
     }
 
@@ -247,7 +247,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// </summary>
     public virtual void CommitTransaction()
     {
-        _unitOfWork.CommitTran();
+        _sqlSugarUnitOfWork.CommitTran();
     }
 
     /// <summary>
@@ -255,7 +255,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// </summary>
     public virtual void RollbackTransaction()
     {
-        _unitOfWork.RollbackTran();
+        _sqlSugarUnitOfWork.RollbackTran();
     }
 
     /// <summary>
@@ -265,7 +265,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <param name="errorCallBack">错误回调</param>
     public virtual async Task<bool> UseTransactionAsync(Func<Task> action, Action<Exception> errorCallBack = null)
     {
-        return (await _unitOfWork.UseTranAsync(() => action?.Invoke(), e => errorCallBack?.Invoke(e)))
+        return (await _sqlSugarUnitOfWork.UseTranAsync(() => action?.Invoke(), e => errorCallBack?.Invoke(e)))
             .IsSuccess;
     }
 
