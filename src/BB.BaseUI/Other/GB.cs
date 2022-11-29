@@ -152,22 +152,27 @@ public static class GB
     public static List<CListItem> EnabledCostBillType { get; } = new();
 
     /// <summary>
-    /// 全部省信息
+    /// 全部省市区数据
+    /// </summary>
+    public static List<RegionInfo> AllRegion { get; private set; } = new();
+
+    /// <summary>
+    /// 全部省字典
     /// </summary>
     public static List<CListItem> AllProvince { get; } = new();
 
     /// <summary>
-    /// 全部市信息
+    /// 全部市字典
     /// </summary>
     public static List<CListItem> AllCity { get; } = new();
 
     /// <summary>
-    /// 全部区信息
+    /// 全部区字典
     /// </summary>
     public static List<CListItem> AllDistrict { get; } = new();
 
     /// <summary>
-    /// 全部省市区信息
+    /// 全部省市区字典
     /// </summary>
     public static List<CListItem> AllRegions { get; } = new();
 
@@ -760,15 +765,15 @@ public static class GB
 
         #region 处理和缓存行政区
 
-        var allRegion = await App.GetService<RegionHttpService>().GetAllRegionAsync();
+        AllRegion = await App.GetService<RegionHttpService>().GetAllRegionAsync();
 
-        if (allRegion.Any())
+        if (AllRegion.Any())
         {
             AllProvince.Clear();
             AllCity.Clear();
             AllDistrict.Clear();
             AllRegions.Clear();
-            allRegion.ForEach(x =>
+            AllRegion.ForEach(x =>
             {
                 switch (x.Type)
                 {

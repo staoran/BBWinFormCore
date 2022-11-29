@@ -129,12 +129,12 @@ public partial class FrmException : Form
         // 把日志打包以附件的形式发送到邮箱
         if (chkCanHelp.Checked)
         {
-            AppConfig? config = Cache.Instance.Get<AppConfig>("AppConfig");
-            if (config == null)
-            {
-                config = new AppConfig();
-                Cache.Instance.Set<AppConfig>("AppConfig", config);
-            }	
+            var config = GB.Config;
+            // if (config == null)
+            // {
+            //     config = new AppConfig();
+            //     Cache.Instance.Set<AppConfig>("AppConfig", config);
+            // }
             string licensePath = config.AppConfigGet("LicensePath");
             if (FileUtil.IsExistFile(licensePath))
             {

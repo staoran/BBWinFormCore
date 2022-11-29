@@ -279,7 +279,7 @@ namespace BB.BaseUI.Extension;
      /// <param name="cityCombo">市下拉框</param>
      public static void BindCityItems(this SearchLookUpEdit combo, ComboBoxEdit provinceCombo, ComboBoxEdit cityCombo)
      {
-         var data = Cache.Instance.Get<List<RegionInfo>>("AllRegion")?.Where(x => x.Type == 3).ToList();
+         var data = GB.AllRegion.Where(x => x.Type == 3).ToList();
          combo.BindDictItems(data, "Name", "Id", 400, new[]
          {
              new LookUpColumnInfo("Id", "地区编号", 80),
@@ -316,11 +316,10 @@ namespace BB.BaseUI.Extension;
      /// 绑定下拉列表控件为省市区
      /// </summary>
      /// <param name="combo">区级搜索下拉控件</param>
-     /// <param name="gridView">所属网格控件</param>
      /// <param name="isAreaOnly">仅限区县数据</param>
      public static void BindCityItems(this SearchLookUpEdit combo, bool isAreaOnly = true)
      {
-         var data = EnumerableExtension.Where(Cache.Instance.Get<List<RegionInfo>>("AllRegion"), isAreaOnly, x => x.Type == 3).ToList();
+         var data = EnumerableExtension.Where(GB.AllRegion, isAreaOnly, x => x.Type == 3).ToList();
          combo.BindDictItems(data, "FullName", "Id", 400, new[]
          {
              new LookUpColumnInfo("Id", "地区编号", 80),
@@ -339,7 +338,7 @@ namespace BB.BaseUI.Extension;
      public static void BindCityItems(this RepositoryItemSearchLookUpEdit combo, GridView gridView,
          RepositoryItemComboBox provinceCombo, RepositoryItemComboBox cityCombo)
      {
-         var data = Cache.Instance.Get<List<RegionInfo>>("AllRegion")?.Where(x => x.Type == 3).ToList();
+         var data = GB.AllRegion.Where(x => x.Type == 3).ToList();
          combo.BindDictItems(data, "Name", "Id", 400, new[]
          {
              new LookUpColumnInfo("Id", "地区编号", 80),
@@ -390,7 +389,7 @@ namespace BB.BaseUI.Extension;
      /// <param name="isAreaOnly">仅限区县数据</param>
      public static void BindCityItems(this RepositoryItemSearchLookUpEdit combo, bool isAreaOnly = true)
      {
-         var data = EnumerableExtension.Where(Cache.Instance.Get<List<RegionInfo>>("AllRegion"), isAreaOnly, x => x.Type == 3).ToList();
+         var data = EnumerableExtension.Where(GB.AllRegion, isAreaOnly, x => x.Type == 3).ToList();
          combo.BindDictItems(data, "FullName", "Id", 400, new[]
          {
              new LookUpColumnInfo("Id", "地区编号", 80),
