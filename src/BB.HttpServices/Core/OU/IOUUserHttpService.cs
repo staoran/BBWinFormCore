@@ -27,6 +27,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Get("ousByUserId")]
     Task<RESTfulResultControl<List<OUInfo>>> GetOusByUserIdAsync(int userId);
 
     /// <summary>
@@ -34,6 +35,7 @@ public interface IOUUserHttpService : IHttpDispatchProxy, IBaseHttpService<OUUse
     /// </summary>
     /// <param name="userId">用户ID</param>
     /// <returns></returns>
+    [Get("ouIdsByUserId")]
     Task<RESTfulResultControl<List<string>>> GetOuIdsByUserIdAsync(int userId);
 
     /// <summary>
