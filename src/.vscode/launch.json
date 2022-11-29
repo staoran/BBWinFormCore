@@ -1,0 +1,52 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/BB.Starter/bin/Debug/net7.0-windows/BB.Starter.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/BB.Starter",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        },
+        {
+            "name": "BB.Web.Entry",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-BB.Web.Entry",
+            "program": "${workspaceFolder}/../output/Debug/net7.0/BB.Web.Entry.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/BB.Web.Entry",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/BB.Web.Entry/Views"
+            }
+        },
+        {
+            "name": "BB.Starter",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-BB.Starter",
+            "program": "${workspaceFolder}/../output/Debug/net7.0-windows/BB.Starter.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/BB.Starter",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        }
+    ]
+}

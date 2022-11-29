@@ -23,8 +23,4 @@
         <ProjectReference Include="..\BB.Core\BB.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="System\Services\" />
-    </ItemGroup>
-
 </Project>
