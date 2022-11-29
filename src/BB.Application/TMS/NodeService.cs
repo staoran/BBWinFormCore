@@ -6,6 +6,7 @@ using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Utils;
 using FluentValidation;
+using Furion.DatabaseAccessor;
 
 namespace BB.Application.TMS;
 
@@ -70,6 +71,7 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行操作是否成功。</returns>
+    [UnitOfWork]
     public override async Task<bool> InsertAsync(Node obj)
     {
         #region 新增前
@@ -109,6 +111,7 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
     /// </summary>
     /// <param name="obj">指定的对象</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [UnitOfWork]
     public override async Task<bool> UpdateAsync(Node obj)
     {
         #region 修改前
@@ -148,6 +151,7 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
     /// </summary>
     /// <param name="key">指定对象的ID</param>
     /// <returns>执行成功返回<c>true</c>，否则为<c>false</c>。</returns>
+    [UnitOfWork]
     public override async Task<bool> DeleteAsync(object key)
     {
         #region 删除前

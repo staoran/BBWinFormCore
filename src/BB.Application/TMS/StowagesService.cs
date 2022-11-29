@@ -11,7 +11,7 @@ namespace BB.Application.TMS;
 /// <summary>
 /// 配载明细表 业务逻辑类
 /// </summary>
-[ApiDescriptionSettings("初始区域")]
+[ApiDescriptionSettings("运输与配载")]
 public class StowagesService : BaseService<Stowages>, IDynamicApiController, ITransient
 {
     public StowagesService(BaseRepository<Stowages> repository, IValidator<Stowages> validator) : base(repository, validator)

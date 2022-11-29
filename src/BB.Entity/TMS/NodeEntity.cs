@@ -17,7 +17,8 @@ public sealed class Node : BaseEntity<Nodes>
     /// 默认构造函数（需要初始化属性的在此处理，复杂的属性值初始化通过关键字替换或重写 SetDynamicDefaults 方法实现）
     /// </summary>
     public Node()
-    {       
+    {
+        TranNodeNO = "*自动单号*";
         TranNodeType = "9";
         LockLimit = false;
         LockLimitAmt = 3000;
