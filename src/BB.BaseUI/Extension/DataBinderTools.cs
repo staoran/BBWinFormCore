@@ -314,6 +314,11 @@ public static class DataBinderTools
         ((BaseEdit)sender).ErrorText = string.Empty;
     }
 
+    /// <summary>
+    /// 统一更新配置项
+    /// OnValidation 验证控件属性时，数据源将更新。验证后，控件属性中的值也会重新格式化。
+    /// OnPropertyChanged 每当控件属性的值更改时，数据源都会更新。
+    /// </summary>
     private const DataSourceUpdateMode CustomerDataSourceUpdateMode = DataSourceUpdateMode.OnValidation;
 
     /// <summary>

@@ -38,6 +38,7 @@ public static class ComboBoxExtension
         {
             list.Add(y);
         }
+
         control.BindDictItems(list, dateTime.Year, emptyFlag);
         return list;
     }
@@ -56,6 +57,7 @@ public static class ComboBoxExtension
         {
             list.Add(i.ToString("00"));
         }
+
         control.BindDictItems(list, dateTime.Month.ToString("00"), emptyFlag);
         return list;
     }
@@ -74,6 +76,7 @@ public static class ComboBoxExtension
         {
             list.Add($"{dateTime.Year.ToString("0000")}{i.ToString("00")}");
         }
+
         control.BindDictItems(list, dateTime.Month.ToString("00"), emptyFlag);
         return list;
     }
@@ -86,7 +89,8 @@ public static class ComboBoxExtension
     /// <param name="displayMember">显示字段</param>
     /// <param name="valueMember">值字段</param>
     /// <returns></returns>
-    public static DataTable BindDictItems(this CheckedComboBoxEdit control, DataTable dataSource, string displayMember, string valueMember)
+    public static DataTable BindDictItems(this CheckedComboBoxEdit control, DataTable dataSource, string displayMember,
+        string valueMember)
     {
         control.Properties.DataSource = dataSource;
         control.Properties.DisplayMember = displayMember;
@@ -104,7 +108,8 @@ public static class ComboBoxExtension
     /// <param name="displayMember">显示字段</param>
     /// <param name="valueMember">值字段</param>
     /// <returns></returns>
-    public static DataTable BindDictItems(this RepositoryItemCheckedComboBoxEdit control, DataTable dataSource, string displayMember, string valueMember)
+    public static DataTable BindDictItems(this RepositoryItemCheckedComboBoxEdit control, DataTable dataSource,
+        string displayMember, string valueMember)
     {
         control.DataSource = dataSource;
         control.DisplayMember = displayMember;
@@ -113,7 +118,7 @@ public static class ComboBoxExtension
 
         return dataSource;
     }
-        
+
     /// <summary>
     /// 获取下拉列表的值
     /// </summary>
@@ -141,7 +146,8 @@ public static class ComboBoxExtension
     /// <param name="list">数据列表</param>
     /// <param name="emptyFlag">是否增加空值</param>
     /// <returns></returns>
-    public static ICollection BindDictItems(this RepositoryItemComboBox control, ICollection list, bool emptyFlag = true)
+    public static ICollection BindDictItems(this RepositoryItemComboBox control, ICollection list,
+        bool emptyFlag = true)
     {
 
         control.Items.Clear();
@@ -152,6 +158,7 @@ public static class ComboBoxExtension
             {
                 control.Items.Add(string.Empty);
             }
+
             control.Items.AddRange(list);
             control.ParseEditValue += (sender, e) =>
             {
@@ -174,13 +181,15 @@ public static class ComboBoxExtension
     /// <param name="list">数据列表</param>
     /// <param name="emptyFlag">是否增加空值</param>
     /// <returns></returns>
-    public static List<string> BindDictItems(this RepositoryItemComboBox control, List<string> list, bool emptyFlag = true)
+    public static List<string> BindDictItems(this RepositoryItemComboBox control, List<string> list,
+        bool emptyFlag = true)
     {
         control.Items.Clear();
         if (emptyFlag)
         {
             control.Items.Add(string.Empty);
         }
+
         control.Items.AddRange(list);
 
         return list;
@@ -242,7 +251,8 @@ public static class ComboBoxExtension
     /// <param name="list">数据列表</param>
     /// <param name="emptyFlag">是否增加空值</param>
     /// <returns></returns>
-    public static List<string> BindDictItems(this RepositoryItemCheckedComboBoxEdit control, List<string> list, bool emptyFlag = true)
+    public static List<string> BindDictItems(this RepositoryItemCheckedComboBoxEdit control, List<string> list,
+        bool emptyFlag = true)
     {
         if (emptyFlag)
         {
@@ -261,7 +271,8 @@ public static class ComboBoxExtension
     /// <param name="list">数据列表</param>
     /// <param name="emptyFlag">是否增加空值</param>
     /// <returns></returns>
-    public static List<CListItem> BindDictItems(this RepositoryItemCheckedComboBoxEdit control, List<CListItem> list, bool emptyFlag = true)
+    public static List<CListItem> BindDictItems(this RepositoryItemCheckedComboBoxEdit control, List<CListItem> list,
+        bool emptyFlag = true)
     {
         List<CheckedListBoxItem> checkList = new();
         foreach (CListItem item in list)
@@ -274,6 +285,7 @@ public static class ComboBoxExtension
         {
             control.Items.Add(new CListItem(string.Empty));
         }
+
         control.Items.AddRange(checkList.ToArray());
         return list;
     }
@@ -300,14 +312,15 @@ public static class ComboBoxExtension
     /// <returns></returns>
     public static string GetComboBoxValue(this ComboBoxEdit combo)
     {
-        if (combo?.SelectedItem is CListItem item)
+        if (combo.SelectedItem is CListItem item)
         {
             return item.Value;
         }
 
-        if(combo?.SelectedItem is string v && combo?.Properties.Items.Count > 0 && combo?.Properties.Items[0] is CListItem)
+        if (combo.SelectedItem is string v && combo.Properties.Items.Count > 0 &&
+            combo.Properties.Items[0] is CListItem)
         {
-            foreach (CListItem propertiesItem in combo?.Properties.Items)
+            foreach (CListItem propertiesItem in combo.Properties.Items)
             {
                 if (propertiesItem.Value == v || propertiesItem.Text == v)
                 {
@@ -317,7 +330,7 @@ public static class ComboBoxExtension
         }
         else
         {
-            return combo?.Text;
+            return combo.Text;
         }
 
         return string.Empty;
@@ -340,6 +353,7 @@ public static class ComboBoxExtension
                 break;
             }
         }
+
         return result;
     }
 
@@ -368,13 +382,15 @@ public static class ComboBoxExtension
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
     /// <param name="limitedContent">是否限定输入内容</param>
-    public static void BindDictItems(this ComboBoxEdit combo, Dictionary<string, string> dict, bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
+    public static void BindDictItems(this ComboBoxEdit combo, Dictionary<string, string> dict, bool emptyFlag = true,
+        bool freeInput = true, bool limitedContent = true)
     {
         List<CListItem> itemList = new List<CListItem>();
         foreach (string key in dict.Keys)
         {
             itemList.Add(new CListItem(dict[key], key));
         }
+
         BindDictItems(combo, itemList, null, emptyFlag, freeInput, limitedContent);
     }
 
@@ -387,7 +403,8 @@ public static class ComboBoxExtension
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
     /// <param name="limitedContent">是否限定输入内容</param>
-    public static void BindDictItems(this ComboBoxEdit combo, string dictTypeName, string? defaultValue, bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
+    public static void BindDictItems(this ComboBoxEdit combo, string dictTypeName, string? defaultValue,
+        bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
     {
         BindDictItems(combo, GB.GetDictByName(dictTypeName), defaultValue, emptyFlag, freeInput, limitedContent);
     }
@@ -400,7 +417,8 @@ public static class ComboBoxExtension
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
     /// <param name="limitedContent">是否限定输入内容</param>
-    public static void BindDictItems(this ComboBoxEdit combo, List<CListItem> itemList, bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
+    public static void BindDictItems(this ComboBoxEdit combo, List<CListItem> itemList, bool emptyFlag = true,
+        bool freeInput = true, bool limitedContent = true)
     {
         BindDictItems(combo, itemList, null, emptyFlag, freeInput, limitedContent);
     }
@@ -414,64 +432,70 @@ public static class ComboBoxExtension
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
     /// <param name="limitedContent">是否限定输入内容</param>
-    public static void BindDictItems(this ComboBoxEdit combo, List<CListItem> itemList, string? defaultValue, bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
+    public static void BindDictItems(this ComboBoxEdit combo, List<CListItem> itemList, string? defaultValue,
+        bool emptyFlag = true, bool freeInput = true, bool limitedContent = true)
     {
-        combo.Properties.BeginUpdate();//可以加快
-        combo.Properties.NullValuePromptShowForEmptyValue = true;
-        combo.Properties.NullValuePrompt = "请选择";
-        combo.Properties.Items.Clear();
-        combo.Properties.Items.AddRange(itemList);
-        if (emptyFlag)
+        try
         {
-            combo.Properties.Items.Insert(0, new CListItem("无", string.Empty));
-        }
-
-        if (itemList.Count > 0)
-        {
-            if (!string.IsNullOrEmpty(defaultValue))
+            combo.Properties.BeginUpdate(); //可以加快
+            combo.Properties.NullValuePromptShowForEmptyValue = true;
+            combo.Properties.NullValuePrompt = "请选择";
+            combo.Properties.Items.Clear();
+            combo.Properties.Items.AddRange(itemList);
+            if (emptyFlag)
             {
-                combo.SetComboBoxItem(defaultValue);
+                combo.Properties.Items.Insert(0, new CListItem("无", string.Empty));
             }
-            else
+
+            if (itemList.Count > 0)
             {
-                combo.SelectedIndex = 0;
-            }
-        }
-
-        // 自由输入
-        combo.Properties.TextEditStyle = freeInput ? TextEditStyles.Standard : TextEditStyles.DisableTextEditor;
-        combo.Properties.AutoComplete = freeInput;
-
-        // 按键事件，自动弹出下拉框
-        combo.KeyUp += OnRepositoryItemOnKeyUp;
-
-        // 自定义显示文本
-        combo.CustomDisplayText += (sender, args) =>
-        {
-            var com = (ComboBoxEdit)sender;
-            com.SetComboBoxItem(args.Value);
-        };
-
-        // 是否限定输入内容 是否允许自由输入
-        if (limitedContent && freeInput)
-            // 组件失去焦点时
-            combo.LostFocus += (sender, args) =>
-            {
-                if (sender is ComboBoxEdit com)
+                if (!string.IsNullOrEmpty(defaultValue))
                 {
-                    // 取当前输入的值
-                    string value = com.EditValue switch
-                    {
-                        CListItem c => c.Value,
-                        string s => s,
-                        _ => com.EditValue.ObjToStr()
-                    };
-                    com.EditValue = null;
-                    com.SetComboBoxItem(value);
+                    combo.SetComboBoxItem(defaultValue);
                 }
+                else
+                {
+                    combo.SelectedIndex = 0;
+                }
+            }
+
+            // 自由输入
+            combo.Properties.TextEditStyle = freeInput ? TextEditStyles.Standard : TextEditStyles.DisableTextEditor;
+            combo.Properties.AutoComplete = freeInput;
+
+            // 按键事件，自动弹出下拉框
+            combo.KeyUp += OnRepositoryItemOnKeyUp;
+
+            // 自定义显示文本
+            combo.CustomDisplayText += (sender, args) =>
+            {
+                var com = (ComboBoxEdit)sender;
+                com.SetComboBoxItem(args.Value);
             };
-            
-        combo.Properties.EndUpdate();//可以加快
+
+            // 是否限定输入内容 是否允许自由输入
+            if (limitedContent && freeInput)
+                // 组件失去焦点时
+                combo.LostFocus += (sender, args) =>
+                {
+                    if (sender is ComboBoxEdit com)
+                    {
+                        // 取当前输入的值
+                        string value = com.EditValue switch
+                        {
+                            CListItem c => c.Value,
+                            string s => s,
+                            _ => com.EditValue.ObjToStr()
+                        };
+                        com.EditValue = null;
+                        com.SetComboBoxItem(value);
+                    }
+                };
+        }
+        finally
+        {
+            combo.Properties.EndUpdate(); //可以加快
+        }
     }
 
     /// <summary>
@@ -483,38 +507,44 @@ public static class ComboBoxExtension
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
     /// <param name="limitedContent">是否限定输入内容</param>
-    public static void BindDictItems(this ComboBoxEdit combo, List<string> itemList, string defaultValue, bool emptyFlag = true, bool freeInput = false, bool limitedContent = true)
+    public static void BindDictItems(this ComboBoxEdit combo, List<string> itemList, string defaultValue,
+        bool emptyFlag = true, bool freeInput = false, bool limitedContent = true)
     {
-        combo.Properties.BeginUpdate();//可以加快
-        combo.Properties.NullValuePromptShowForEmptyValue = true;
-        combo.Properties.NullValuePrompt = "请选择";
-        combo.Properties.Items.Clear();
-        combo.Properties.Items.AddRange(itemList);
-        if (emptyFlag)
+        try
         {
-            combo.Properties.Items.Insert(0, string.Empty);
-        }
-
-        if (itemList.Count > 0)
-        {
-            combo.SetDropDownValue(defaultValue);
-        }
-
-        if (!freeInput)
-            combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
-        
-        combo.KeyUp += OnRepositoryItemOnKeyUp;
-
-        combo.Properties.EndUpdate();//可以加快
-
-        if (!limitedContent)
-            combo.LostFocus += (sender, args) =>
+            combo.Properties.BeginUpdate(); //可以加快
+            combo.Properties.NullValuePromptShowForEmptyValue = true;
+            combo.Properties.NullValuePrompt = "请选择";
+            combo.Properties.Items.Clear();
+            combo.Properties.Items.AddRange(itemList);
+            if (emptyFlag)
             {
-                var com = (ComboBoxEdit)sender;
-                bool contains = itemList.Contains(com.EditValue);
-                if (!contains)
-                    com.EditValue = null;
-            };
+                combo.Properties.Items.Insert(0, string.Empty);
+            }
+
+            if (itemList.Count > 0)
+            {
+                combo.SetDropDownValue(defaultValue);
+            }
+
+            if (!freeInput)
+                combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+
+            combo.KeyUp += OnRepositoryItemOnKeyUp;
+
+            if (!limitedContent)
+                combo.LostFocus += (sender, args) =>
+                {
+                    var com = (ComboBoxEdit)sender;
+                    bool contains = itemList.Contains(com.EditValue);
+                    if (!contains)
+                        com.EditValue = null;
+                };
+        }
+        finally
+        {
+            combo.Properties.EndUpdate(); //可以加快
+        }
     }
 
     /// <summary>
@@ -525,29 +555,35 @@ public static class ComboBoxExtension
     /// <param name="defaultValue">控件默认值</param>
     /// <param name="emptyFlag">是否加入空值选项</param>
     /// <param name="freeInput">是否允许自由输入</param>
-    public static void BindDictItems(this ComboBoxEdit combo, List<int> itemList, int defaultValue, bool emptyFlag = true, bool freeInput = false)
+    public static void BindDictItems(this ComboBoxEdit combo, List<int> itemList, int defaultValue,
+        bool emptyFlag = true, bool freeInput = false)
     {
-        combo.Properties.BeginUpdate();//可以加快
-        combo.Properties.NullValuePromptShowForEmptyValue = true;
-        combo.Properties.NullValuePrompt = "请选择";
-        combo.Properties.Items.Clear();
-        combo.Properties.Items.AddRange(itemList);
-        if (emptyFlag)
+        try
         {
-            combo.Properties.Items.Insert(0, string.Empty);
-        }
+            combo.Properties.BeginUpdate(); //可以加快
+            combo.Properties.NullValuePromptShowForEmptyValue = true;
+            combo.Properties.NullValuePrompt = "请选择";
+            combo.Properties.Items.Clear();
+            combo.Properties.Items.AddRange(itemList);
+            if (emptyFlag)
+            {
+                combo.Properties.Items.Insert(0, string.Empty);
+            }
 
-        if (itemList.Count > 0)
+            if (itemList.Count > 0)
+            {
+                combo.SetDropDownValue(defaultValue.ToString());
+            }
+
+            if (!freeInput)
+                combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+
+            combo.KeyUp += OnRepositoryItemOnKeyUp;
+        }
+        finally
         {
-            combo.SetDropDownValue(defaultValue.ToString());
+            combo.Properties.EndUpdate(); //可以加快
         }
-
-        if (!freeInput)
-            combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
-        
-        combo.KeyUp += OnRepositoryItemOnKeyUp;
-
-        combo.Properties.EndUpdate();//可以加快
     }
 
     /// <summary>
@@ -557,21 +593,26 @@ public static class ComboBoxExtension
     /// <param name="freeInput">是否允许自由输入</param>
     public static void BindDictItems<T>(this ComboBoxEdit combo, bool freeInput = false)
     {
-        Dictionary<string, object> dict = EnumHelper.GetMemberKeyValue<T>();
-        combo.Properties.BeginUpdate();//可以加快
-        combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
-        combo.Properties.Items.Clear();
-        foreach (string key in dict.Keys)
+        try
         {
-            combo.Properties.Items.Add(new CListItem(dict[key].ToString(), key));
-        }
-
-        if (!freeInput)
+            Dictionary<string, object> dict = EnumHelper.GetMemberKeyValue<T>();
+            combo.Properties.BeginUpdate(); //可以加快
             combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
-        
-        combo.KeyUp += OnRepositoryItemOnKeyUp;
-            
-        combo.Properties.EndUpdate();//可以加快
+            combo.Properties.Items.Clear();
+            foreach (string key in dict.Keys)
+            {
+                combo.Properties.Items.Add(new CListItem(dict[key].ToString(), key));
+            }
+
+            if (!freeInput)
+                combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+
+            combo.KeyUp += OnRepositoryItemOnKeyUp;
+        }
+        finally
+        {
+            combo.Properties.EndUpdate(); //可以加快
+        }
     }
 
     #endregion
@@ -619,7 +660,7 @@ public static class ComboBoxExtension
 
         BindDictItems(combo, itemList);
     }
-        
+
     /// <summary>
     /// 绑定下拉列表控件为指定的数据字典列表
     /// </summary>
@@ -638,29 +679,35 @@ public static class ComboBoxExtension
     /// <param name="defaultValue">控件默认值</param>
     public static void BindDictItems(this CheckedComboBoxEdit combo, List<CListItem> itemList, string defaultValue)
     {
-        List<CheckedListBoxItem> checkList = new List<CheckedListBoxItem>();
-        foreach (CListItem item in itemList)
+        try
         {
-            checkList.Add(new CheckedListBoxItem(item.Value, item.Text));
+            List<CheckedListBoxItem> checkList = new List<CheckedListBoxItem>();
+            foreach (CListItem item in itemList)
+            {
+                checkList.Add(new CheckedListBoxItem(item.Value, item.Text));
+            }
+
+            combo.Properties.BeginUpdate(); //可以加快
+            combo.Properties.Items.Clear();
+            combo.Properties.Items.AddRange(checkList.ToArray()); //可以加快
+
+            if (!string.IsNullOrEmpty(defaultValue))
+            {
+                combo.SetComboBoxItem(defaultValue);
+            }
+
+            combo.KeyUp += OnRepositoryItemOnKeyUp;
         }
-
-        combo.Properties.BeginUpdate();//可以加快
-        combo.Properties.Items.Clear();
-        combo.Properties.Items.AddRange(checkList.ToArray());//可以加快
-
-        if (!string.IsNullOrEmpty(defaultValue))
+        finally
         {
-            combo.SetComboBoxItem(defaultValue);
+            combo.Properties.EndUpdate(); //可以加快
         }
-        
-        combo.KeyUp += OnRepositoryItemOnKeyUp;
-
-        combo.Properties.EndUpdate();//可以加快
     }
 
     #endregion
 
     #region 单选框组RadioGroup
+
     /// <summary>
     /// 设置单选框组的选定内容
     /// </summary>
@@ -689,23 +736,28 @@ public static class ComboBoxExtension
     /// <param name="defaultValue">控件默认值</param>
     public static void BindDictItems(this RadioGroup radGroup, List<CListItem> itemList, string defaultValue)
     {
-        List<RadioGroupItem> groupList = new List<RadioGroupItem>();
-        foreach (CListItem item in itemList)
+        try
         {
-            groupList.Add(new RadioGroupItem(item.Value, item.Text));
+            List<RadioGroupItem> groupList = new List<RadioGroupItem>();
+            foreach (CListItem item in itemList)
+            {
+                groupList.Add(new RadioGroupItem(item.Value, item.Text));
+            }
+
+            radGroup.Properties.BeginUpdate(); //可以加快
+            radGroup.Properties.Items.Clear();
+            radGroup.Properties.Items.AddRange(groupList.ToArray()); //可以加快
+
+            if (!string.IsNullOrEmpty(defaultValue))
+            {
+                SetRaidioGroupItem(radGroup, defaultValue);
+            }
         }
-
-        radGroup.Properties.BeginUpdate();//可以加快
-        radGroup.Properties.Items.Clear();
-        radGroup.Properties.Items.AddRange(groupList.ToArray());//可以加快
-
-        if (!string.IsNullOrEmpty(defaultValue))
+        finally
         {
-            SetRaidioGroupItem(radGroup, defaultValue);
+            radGroup.Properties.EndUpdate(); //可以加快
         }
-        radGroup.Properties.EndUpdate();//可以加快
     }
-
 
     #endregion
 }
