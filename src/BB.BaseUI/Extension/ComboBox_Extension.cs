@@ -438,24 +438,28 @@ public static class ComboBoxExtension
             }
         }
 
-        if (!freeInput)
-            combo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
-        
-        combo.KeyUp += OnRepositoryItemOnKeyUp;
-            
-        combo.Properties.EndUpdate();//可以加快
+        // 自由输入
+        combo.Properties.TextEditStyle = freeInput ? TextEditStyles.Standard : TextEditStyles.DisableTextEditor;
+        combo.Properties.AutoComplete = freeInput;
 
+        // 按键事件，自动弹出下拉框
+        combo.KeyUp += OnRepositoryItemOnKeyUp;
+
+        // 自定义显示文本
         combo.CustomDisplayText += (sender, args) =>
         {
             var com = (ComboBoxEdit)sender;
             com.SetComboBoxItem(args.Value);
         };
 
-        if (limitedContent)
+        // 是否限定输入内容 是否允许自由输入
+        if (limitedContent && freeInput)
+            // 组件失去焦点时
             combo.LostFocus += (sender, args) =>
             {
-                if (freeInput && sender is ComboBoxEdit com)
+                if (sender is ComboBoxEdit com)
                 {
+                    // 取当前输入的值
                     string value = com.EditValue switch
                     {
                         CListItem c => c.Value,
@@ -466,6 +470,8 @@ public static class ComboBoxExtension
                     com.SetComboBoxItem(value);
                 }
             };
+            
+        combo.Properties.EndUpdate();//可以加快
     }
 
     /// <summary>
