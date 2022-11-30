@@ -13,9 +13,9 @@
 
     <ItemGroup>
         <PackageReference Include="FastExpressionCompiler" Version="3.3.3" />
-        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.8.1.5" />
-        <PackageReference Include="Furion.Pure" Version="4.8.1.5" />
-        <PackageReference Include="SqlSugarCore" Version="5.1.3.35-preview07" />
+        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.8.2.7" />
+        <PackageReference Include="Furion.Pure" Version="4.8.2.7" />
+        <PackageReference Include="SqlSugarCore" Version="5.1.3.35" />
         <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.23" />
     </ItemGroup>
 

@@ -16,6 +16,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+<!--		<PackageReference Include="DevExpress.Win.Design" Version="22.1.5" />-->
         <Reference Include="DevExpress.BonusSkins.v22.1">
             <HintPath>..\..\reference\DevExpress.BonusSkins.v22.1.dll</HintPath>
         </Reference>
@@ -85,7 +86,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="SunnyUI" Version="3.2.9" />
+      <PackageReference Include="SunnyUI" Version="3.3.0" />
     </ItemGroup>
 
     <ItemGroup>
