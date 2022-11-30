@@ -352,7 +352,7 @@ public static class ComboBoxExtension
     {
         for (var i = 0; i < combo.Properties.Items.Count; i++)
         {
-            if (combo.Properties.Items[i] is CListItem item && value != null && item.Value == string.Concat(value))
+            if (combo.Properties.Items[i] is CListItem item && value is string v && (item.Value == v || item.Text == v))
             {
                 combo.SelectedIndex = i;
                 // combo.SelectedText = item.Text; // 注释掉，会重复显示
