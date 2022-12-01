@@ -139,9 +139,9 @@ public partial class FrmEditNode : BaseEditForm<Node, NodeHttpService,  Nodes, N
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtTranNodeCostNo.BindDictItems(GB.AllOuDict, null, false, false);
+        txtTranNodeCostNo.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, true, true);
         txtTranNodeType.BindDictItems("网点类型", "9", false, false);
-        txtParentNo.BindDictItems(GB.AllOuDict, null, false, false);
+        txtParentNo.BindDictItems(GB.AllOuDict, GB.LoginUserInfo.CompanyId, false, true, true);
         txtLockLimit.BindDictItems("是,否", false);
         txtSendSMS.BindDictItems("是,否", false);
         txtISLocked.BindDictItems("是,否", false);
@@ -156,7 +156,7 @@ public partial class FrmEditNode : BaseEditForm<Node, NodeHttpService,  Nodes, N
         txtCostMasterYN.BindDictItems("是,否", false);
         txtDispatchOnly.BindDictItems("是,否", false);
         txtIsLockLimitKPI.BindDictItems("是,否", false);
-        txtFinancialCenter.BindDictItems(GB.AllOuDict, null, false, false);
+        txtFinancialCenter.BindDictItems(GB.AllOuDict, null, false, true, true);
         txtWhiteList.BindDictItems(GB.AllOuDict);
         txtBlackList.BindDictItems(GB.AllOuDict);
         return Task.CompletedTask;
