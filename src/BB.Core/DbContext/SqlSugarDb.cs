@@ -173,7 +173,7 @@ public static class SqlSugarDb
                         // 创建人名称
                         case "Creator" or "Editor":
                         {
-                            var userName = App.User.FindFirstValue(nameof(LoginUserInfo.Name));
+                            var userName = App.User.FindFirstValue(nameof(LoginUserInfo.FullName));
                             if (!userName.IsNullOrEmpty())
                             {
                                 entityInfo.SetValue(userName);
@@ -200,6 +200,17 @@ public static class SqlSugarDb
                             {
                                 entityInfo.SetValue(userId);
                             }
+                            break;
+                        }
+                        // 更新人名称
+                        case "Editor":
+                        {
+                            var userName = App.User.FindFirstValue(nameof(LoginUserInfo.FullName));
+                            if (!userName.IsNullOrEmpty())
+                            {
+                                entityInfo.SetValue(userName);
+                            }
+
                             break;
                         }
                     }
