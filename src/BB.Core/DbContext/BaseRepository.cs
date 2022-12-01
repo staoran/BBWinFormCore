@@ -403,6 +403,24 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     }
 
     /// <summary>
+    /// 乐观锁验证，正常返回 true，不正常抛异常
+    /// </summary>
+    /// <param name="obj">实体数据</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public virtual async Task<bool> UpdateVersionValidationAsync(T obj)
+    {
+        // 拿主键的值
+        object primaryKeyValue = obj.GetProperty(_primaryKey);
+
+        // 拿乐观锁的值，如果实体中没设置乐观锁则返回null，不会验证
+        object optimisticLockValue = obj.GetProperty(OptimisticLockKey);
+
+        // 乐观锁验证，正常返回 true，不正常抛异常，optimisticLockValue = null 返回 true
+        return await UpdateVersionValidationAsync(primaryKeyValue, optimisticLockValue);
+    }
+
+    /// <summary>
     /// 更新某个表一条记录(只适用于用单键)
     /// </summary>
     /// <param name="recordField">Hashtable:键[key]为字段名;值[value]为字段对应的值</param>
@@ -420,14 +438,8 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     {
         ArgumentValidation.CheckForNullReference(obj, "传入的对象obj为空");
 
-        // 拿主键的值
-        object primaryKeyValue = obj.GetProperty(_primaryKey);
-
-        // 拿乐观锁的值，如果实体中没设置乐观锁则返回null，不会验证
-        object optimisticLockValue = obj.GetProperty(OptimisticLockKey);
-
         // 乐观锁验证，正常返回 true，不正常抛异常，optimisticLockValue = null 返回 true
-        await UpdateVersionValidationAsync(primaryKeyValue, optimisticLockValue);
+        await UpdateVersionValidationAsync(obj);
 
         return await _db.Updateable(obj).ExecuteCommandHasChangeAsync();
     }

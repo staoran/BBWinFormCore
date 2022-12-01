@@ -70,6 +70,8 @@ public class BaseMultiService<T, T1> : BaseService<T>
     public override async Task<bool> UpdateAsync([Required]T obj)
     {
         await CheckEntityAsync(OperationType.Edit, obj);
+        // 乐观锁验证，正常返回 true，不正常抛异常，optimisticLockValue = null 返回 true
+        await Repository.UpdateVersionValidationAsync(obj);
 
         return await Repository.Db.UpdateNav(obj)
             .Include(x => x.ChildTableList)
