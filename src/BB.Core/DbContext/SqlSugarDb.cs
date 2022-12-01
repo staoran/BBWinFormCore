@@ -149,42 +149,62 @@ public static class SqlSugarDb
         // 数据过滤器
         db.Aop.DataExecuting = (oldValue, entityInfo) =>
         {
-            // 新增
-            if (entityInfo.OperationType is DataFilterType.InsertByObject)
+            switch (entityInfo.OperationType)
             {
-                if (entityInfo.PropertyName is "CreatedTime" or "CreationDate" or "EditTime" or "LastUpdateDate")
-                {
-                    entityInfo.SetValue(DateTime.Now);
-                }
-
-                if (entityInfo.PropertyName is "CreatorId" or "CreatedBy" or "EditorId" or "LastUpdatedBy")
-                {
-                    var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
-                    if (userId.IsNullOrEmpty())
+                // 新增
+                case DataFilterType.InsertByObject:
+                    switch (entityInfo.PropertyName)
                     {
-                        throw Oops.Bah("登陆用户信息为空，请登陆后再操作！");
+                        // 创建时间
+                        case "CreatedTime" or "CreationDate" or "EditTime" or "LastUpdateDate":
+                            entityInfo.SetValue(DateTime.Now);
+                            break;
+                        //创建人ID
+                        case "CreatorId" or "CreatedBy" or "EditorId" or "LastUpdatedBy":
+                        {
+                            var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
+                            if (!userId.IsNullOrEmpty())
+                            {
+                                entityInfo.SetValue(userId);
+                            }
+
+                            break;
+                        }
+                        // 创建人名称
+                        case "Creator" or "Editor":
+                        {
+                            var userName = App.User.FindFirstValue(nameof(LoginUserInfo.Name));
+                            if (!userName.IsNullOrEmpty())
+                            {
+                                entityInfo.SetValue(userName);
+                            }
+
+                            break;
+                        }
                     }
-                    entityInfo.SetValue(userId);
-                }
-            }
 
-            // 更新
-            if (entityInfo.OperationType is DataFilterType.UpdateByObject)
-            {
-                if (entityInfo.PropertyName is "EditTime" or "LastUpdateDate")
-                {
-                    entityInfo.SetValue(DateTime.Now);
-                }
-
-                if (entityInfo.PropertyName is "EditorId" or "LastUpdatedBy")
-                {
-                    var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
-                    if (userId.IsNullOrEmpty())
+                    break;
+                // 更新
+                case DataFilterType.UpdateByObject:
+                    switch (entityInfo.PropertyName)
                     {
-                        throw Oops.Bah("登陆用户信息为空，请登陆后再操作！");
+                        // 更新时间
+                        case "EditTime" or "LastUpdateDate":
+                            entityInfo.SetValue(DateTime.Now);
+                            break;
+                        // 更新人ID
+                        case "EditorId" or "LastUpdatedBy":
+                        {
+                            var userId = App.User.FindFirstValue(nameof(LoginUserInfo.ID));
+                            if (!userId.IsNullOrEmpty())
+                            {
+                                entityInfo.SetValue(userId);
+                            }
+                            break;
+                        }
                     }
-                    entityInfo.SetValue(userId);
-                }
+
+                    break;
             }
 
             switch (oldValue)
