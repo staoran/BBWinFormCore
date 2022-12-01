@@ -707,6 +707,30 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     /// 根据主键和字段名称，获取对应字段的内容
     /// </summary>
     /// <param name="key">指定对象的ID</param>
+    /// <param name="fieldName">字段名称</param>
+    /// <returns></returns>
+    [NonAction]
+    public virtual async Task<TF> GetFieldValueAsync<TF>(object key, string fieldName)
+    {
+        return await Repository.GetFieldValueAsync<TF>(key, fieldName);
+    }
+
+    /// <summary>
+    /// 根据主键和字段名称，获取对应字段的内容
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
+    /// <param name="filedExpression">字段名称</param>
+    /// <returns></returns>
+    [NonAction]
+    public virtual async Task<TF> GetFieldValueAsync<TF>(object key, Expression<Func<T,TF>> filedExpression)
+    {
+        return await Repository.GetFieldValueAsync(key, filedExpression);
+    }
+
+    /// <summary>
+    /// 根据主键和字段名称，获取对应字段的内容
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
     /// <param name="fieldNameList">字段名称列表</param>
     /// <returns></returns>
     [QueryParameters]

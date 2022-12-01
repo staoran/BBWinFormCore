@@ -1268,6 +1268,34 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// 根据主键和字段名称，获取对应字段的内容
     /// </summary>
     /// <param name="key">指定对象的ID</param>
+    /// <param name="fieldName">字段名称</param>
+    /// <returns></returns>
+    public virtual async Task<TF> GetFieldValueAsync<TF>(object key, string fieldName)
+    {
+        return await base.AsQueryable()
+            .Select<TF>(fieldName)
+            .Where($"{_primaryKey} = @id", new { id = key })
+            .FirstAsync();
+    }
+
+    /// <summary>
+    /// 根据主键和字段名称，获取对应字段的内容
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
+    /// <param name="filedExpression">字段名称</param>
+    /// <returns></returns>
+    public virtual async Task<TF> GetFieldValueAsync<TF>(object key, Expression<Func<T,TF>> filedExpression)
+    {
+        return await base.AsQueryable()
+            .Select(filedExpression)
+            .Where($"{_primaryKey} = @id", new { id = key })
+            .FirstAsync();
+    }
+
+    /// <summary>
+    /// 根据主键和字段名称，获取对应字段的内容
+    /// </summary>
+    /// <param name="key">指定对象的ID</param>
     /// <param name="fieldNameList">字段名称列表</param>
     /// <returns></returns>
     public virtual async Task<Dictionary<string, string>> GetFieldValueListAsync(string key, List<string> fieldNameList)
