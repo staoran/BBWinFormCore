@@ -85,21 +85,7 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
         if (!succeed) return false;
 
         // 同步新增部门机构
-        var ouInfo = new OUInfo
-        {
-            PID = obj.ParentNo,
-            HandNo = obj.TranNodeNO,
-            Name = obj.TranNodeName,
-            Category = obj.TranNodeType,
-            Address = obj.TranNodeAddress,
-            OuterPhone = obj.TranNodeMobile,
-            Note = obj.Remark,
-            Creator = obj.CreatedBy,
-            CreatedBy = obj.CreatedBy,
-            Enabled = true,
-            CompanyId = obj.CompanyNo
-        };
-        await _ouBaseService.InsertAsync(ouInfo);
+        await _ouBaseService.InsertAsync(obj.Adapt<OUInfo>());
 
         return true;
 
@@ -124,21 +110,9 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
 
         if (!succeed) return false;
 
+        var ouInfo = obj.Adapt<OUInfo>();
+        ouInfo.LastUpdateDate = await _ouBaseService.GetFieldValueAsync(obj.TranNodeNO, x => x.LastUpdateDate);
         // 同步修改部门机构
-        var ouInfo = new OUInfo
-        {
-            PID = obj.ParentNo,
-            HandNo = obj.TranNodeNO,
-            Name = obj.TranNodeName,
-            Category = obj.TranNodeType,
-            Address = obj.TranNodeAddress,
-            OuterPhone = obj.TranNodeMobile,
-            Note = obj.Remark,
-            Creator = obj.CreatedBy,
-            CreatedBy = obj.CreatedBy,
-            Enabled = true,
-            CompanyId = obj.CompanyNo
-        };
         await _ouBaseService.UpdateAsync(ouInfo);
 
         return true;
