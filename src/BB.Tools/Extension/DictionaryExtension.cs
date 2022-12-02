@@ -397,7 +397,7 @@ public static class DictionaryExtension
         var dicts = new List<Dictionary<string, object>>(objects.Length);
         foreach (var o in objects)
         {
-            var applyDict = o.ToDictionary() as Dictionary<string, object>;
+            var applyDict = DictionaryExtensions.ToDictionary(o) as Dictionary<string, object>;
             dicts.Add(applyDict);
         }
 

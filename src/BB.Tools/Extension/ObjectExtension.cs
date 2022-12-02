@@ -36,40 +36,6 @@ public static class ObjectExtension
     }
 
     /// <summary>
-    /// 将来多个对象合并成一个字典输出
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="overrideProperty"></param>
-    /// <param name="objects"></param>
-    /// <returns></returns>
-    public static Dictionary<string, object> ToDictionary(this object value, bool overrideProperty,
-        params object[] objects)
-    {
-        var dict = value.ToDictionary();
-        dict.Concat(overrideProperty, objects);
-        return dict as Dictionary<string, object>;
-    }
-
-    // /// <summary>
-    // /// 将对象所有属性转换为一个字典
-    // /// </summary>
-    // /// <param name="value">对象</param>
-    // /// <returns>对象属性字典</returns>
-    // public static Dictionary<string, object> ToDictionary(this object value)
-    // {
-    //     var dict = new Dictionary<string, object>();
-    //     if (value == null) return dict;
-    //     var properties = TypeDescriptor.GetProperties(value);
-    //     foreach (PropertyDescriptor p in properties)
-    //     {
-    //         var obj = p.GetValue(value);
-    //         dict.Add(p.Name, obj);
-    //     }
-    //
-    //     return dict;
-    // }
-
-    /// <summary>
     /// 检查输入对象值是否为空，为空返回默认值，否则将对象转换为输入类型
     /// </summary>
     /// <typeparam name="TFrom">源类型</typeparam>

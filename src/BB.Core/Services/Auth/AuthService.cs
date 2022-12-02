@@ -83,7 +83,7 @@ public class AuthService : IDynamicApiController, ITransient
                     {
                         // identity = EncryptHelper.EncryptStr(userName + Convert.ToString(Convert.ToChar(1)) + userPassword, systemType);
                         
-                        IDictionary<string,object> payload = loginUserInfo.ToDictionary();
+                        IDictionary<string,object> payload = DictionaryExtensions.ToDictionary(loginUserInfo);
                         
                         // 生成 Token
                         var token = JWTEncryption.Encrypt(payload);

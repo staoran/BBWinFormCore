@@ -1313,9 +1313,9 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     public virtual async Task<Dictionary<string, string>> GetFieldValueListAsync(string key, List<string> fieldNameList)
     {
         Dictionary<string, string> dict = new();
-        IDictionary<string, object> row = (await base.AsQueryable()
+        IDictionary<string, object> row = DictionaryExtensions.ToDictionary(await base.AsQueryable()
             .Select(fieldNameList.Splice())
-            .Where($"{_primaryKey} = @id", new { id = key }).FirstAsync()).ToDictionary();
+            .Where($"{_primaryKey} = @id", new { id = key }).FirstAsync());
         foreach (KeyValuePair<string, object> keyValuePair in row)
         {
             if (fieldNameList.Contains(keyValuePair.Key))
