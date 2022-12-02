@@ -5,8 +5,8 @@ using BB.HttpServices.Core.Auth;
 using BB.HttpServices.Core.Auth.dto;
 using BB.HttpServices.Core.OU;
 using BB.HttpServices.Core.User;
+using BB.Tools.Cache;
 using BB.Tools.Extension;
-using BB.Tools.Utils;
 using Furion;
 
 namespace BB.BaseUI.Other;

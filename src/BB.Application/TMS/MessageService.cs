@@ -1,10 +1,9 @@
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.TMS;
-using BB.Tools.Encrypt;
+using BB.Tools.Cache;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.TMS;

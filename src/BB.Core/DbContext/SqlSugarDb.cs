@@ -7,12 +7,12 @@ using System.Security.Claims;
 using BB.Core.Services.OU;
 using BB.Entity.Base;
 using BB.Entity.Security;
+using BB.Tools.Cache;
 using BB.Tools.Const;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
-using BB.Tools.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar.Extensions;
 

@@ -2,7 +2,6 @@ using BB.Entity.TMS;
 using BB.Tools.Entity;
 using BB.Tools.Validation;
 using FluentValidation;
-using FluentValidation.Results;
 
 namespace BB.EntityVerificationCore.TMS;
 

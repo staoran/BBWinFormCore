@@ -2,10 +2,10 @@
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.BaseUI.WinForm;
+using BB.Tools.Cache;
 using BB.Tools.Entity;
 using BB.Tools.Format;
 using BB.Tools.MultiLanuage;
-using BB.Tools.Utils;
 using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;

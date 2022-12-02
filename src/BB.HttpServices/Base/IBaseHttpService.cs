@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Data;
+using BB.Tools.Cache;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Utils;
 using Furion.DataEncryption;
 using Furion.FriendlyException;
 using Furion.RemoteRequest;

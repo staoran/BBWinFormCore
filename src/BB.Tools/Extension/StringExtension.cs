@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Globalization;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;

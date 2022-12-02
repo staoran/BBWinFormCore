@@ -5,7 +5,6 @@ using BB.Entity.Dictionary;
 using BB.Tools.Entity;
 using BB.Tools.Format;
 using BB.Tools.MultiLanuage;
-using BB.Tools.Utils;
 using BB.Tools.Extension;
 using DevExpress.Data;
 using DevExpress.Utils;

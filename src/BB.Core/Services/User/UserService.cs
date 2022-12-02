@@ -9,11 +9,11 @@ using BB.Core.DbContext;
 using BB.Core.Filter;
 using BB.Core.Services.Base;
 using BB.Entity.Security;
+using BB.Tools.Cache;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
-using BB.Tools.Utils;
 using FluentValidation;
 using Furion.EventBus;
 

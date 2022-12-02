@@ -1,5 +1,6 @@
 ﻿using BB.BaseUI.BaseUI;
 using BB.BaseUI.WinForm;
+using BB.Tools.Cache;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Utils;

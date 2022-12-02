@@ -3,7 +3,7 @@ using BB.Tools.Extension;
 using Furion;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace BB.Tools.Utils;
+namespace BB.Tools.Cache;
 
 /// <summary>
 /// 全局统一的缓存类

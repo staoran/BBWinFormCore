@@ -7,10 +7,10 @@ using BB.Security.UI;
 using BB.Starter.UI.Other;
 using BB.Starter.UI.Settings;
 using BB.Starter.UI.SplashScreen;
+using BB.Tools.Cache;
 using BB.Tools.Const;
 using BB.Tools.Extension;
 using BB.Tools.Format;
-using BB.Tools.Utils;
 using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Helpers;
@@ -448,7 +448,7 @@ public partial class MainForm : RibbonForm
         if ("您确定需要重新登录吗？".ShowYesNoAndUxWarning() != DialogResult.Yes) return;
 
         GB.MainDialog.Hide();
-        Cache.Instance.FlushAll();
+        await Cache.Instance.FlushAllAsync();
         
         Logon dlg = new Logon();
         dlg.StartPosition = FormStartPosition.CenterScreen;
