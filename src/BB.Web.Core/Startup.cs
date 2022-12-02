@@ -5,6 +5,7 @@ using BB.Core.DbContext;
 using BB.Core.Event;
 using BB.Core.Filter;
 using BB.Tools.Entity;
+using BB.Tools.RedisCache;
 using BB.Web.Core.Handlers;
 using FastExpressionCompiler;
 using FluentValidation;
@@ -26,7 +27,10 @@ public class Startup : AppStartup
         TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();
         // 开启目标类型映射继承
         TypeAdapterConfig.GlobalSettings.AllowImplicitDestinationInheritance = true;
-        
+
+        // Redis 缓存强类型配置项
+        services.AddConfigurableOptions<RedisCacheOptions>();
+
         // 注册日志监视器，默认读取 Logging:Monitor 下配置，支持传入参数自定义
         services.AddMonitorLogging();
 
@@ -35,6 +39,9 @@ public class Startup : AppStartup
         {
             options.FileNameRule = s => string.Format(s, DateTime.Now);
         });
+        
+        // 注册 Redis 缓存
+        services.AddRedisCache();
 
         // 注册数据库日志服务
         // services.AddDatabaseLogging<DbLoggingWriter>();
