@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using BB.Core.DbContext;
 using BB.Core.Services.Base;
 using BB.Entity.Dictionary;
+using BB.Tools.Extension;
+using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Core.Services.Region;
@@ -25,8 +27,12 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetRegionsByParentIdAsync([Required] long parentId)
     {
-        var sql = $"select Id, Name, ParentId, FullName from TB_Region where IsDeleted = 0 and ParentId = '{parentId}'";
-        return await Repository.GetListAsync(sql);
+        return await Cache.Instance.GetOrCreateAsync($"GetRegionsByParentIdAsync_{parentId}", async () =>
+            await Repository.AsQueryable()
+                .Where(x => !x.IsDeleted && x.ParentId == parentId)
+                .Select<RegionInfo>(
+                    $"{RegionInfo.FieldId},{RegionInfo.FieldName},{RegionInfo.FieldParentId},{RegionInfo.FieldFullName}")
+                .ToListAsync());
     }
 
     /// <summary>
@@ -35,8 +41,12 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllProvinceAsync()
     {
-        var sql = $"select Id, Name, ParentId, FullName from TB_Region where IsDeleted = 0 and Type = 1";
-        return await Repository.GetListAsync(sql);
+        return await Cache.Instance.GetOrCreateAsync("GetAllProvinceAsync", async () =>
+            await Repository.AsQueryable()
+                .Where(x => !x.IsDeleted && x.Type == 1)
+                .Select<RegionInfo>(
+                    $"{RegionInfo.FieldId},{RegionInfo.FieldName},{RegionInfo.FieldParentId},{RegionInfo.FieldFullName}")
+                .ToListAsync());
     }
 
     /// <summary>
@@ -45,8 +55,12 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllCityAsync()
     {
-        var sql = $"select Id, Name, ParentId, FullName from TB_Region where IsDeleted = 0 and Type = 2";
-        return await Repository.GetListAsync(sql);
+        return await Cache.Instance.GetOrCreateAsync("GetAllCityAsync", async () =>
+            await Repository.AsQueryable()
+                .Where(x => !x.IsDeleted && x.Type == 2)
+                .Select<RegionInfo>(
+                    $"{RegionInfo.FieldId},{RegionInfo.FieldName},{RegionInfo.FieldParentId},{RegionInfo.FieldFullName}")
+                .ToListAsync());
     }
 
     /// <summary>
@@ -55,8 +69,12 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllDistrictAsync()
     {
-        var sql = $"select Id, Name, ParentId, FullName  from TB_Region where IsDeleted = 0 and Type = 3";
-        return await Repository.GetListAsync(sql);
+        return await Cache.Instance.GetOrCreateAsync("GetAllDistrictAsync", async () =>
+            await Repository.AsQueryable()
+                .Where(x => !x.IsDeleted && x.Type == 3)
+                .Select<RegionInfo>(
+                    $"{RegionInfo.FieldId},{RegionInfo.FieldName},{RegionInfo.FieldParentId},{RegionInfo.FieldFullName}")
+                .ToListAsync());
     }
 
     /// <summary>
@@ -65,7 +83,11 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllRegionAsync()
     {
-        var sql = $"select Id, Name, ParentId, FullName, Type from TB_Region where IsDeleted = 0";
-        return await Repository.GetListAsync(sql);
+        return await Cache.Instance.GetOrCreateAsync("GetAllRegionAsync", async () =>
+            await Repository.AsQueryable()
+                .Where(x => !x.IsDeleted)
+                .Select<RegionInfo>(
+                    $"{RegionInfo.FieldId},{RegionInfo.FieldName},{RegionInfo.FieldParentId},{RegionInfo.FieldFullName},{RegionInfo.FieldType}")
+                .ToListAsync());
     }
 }
