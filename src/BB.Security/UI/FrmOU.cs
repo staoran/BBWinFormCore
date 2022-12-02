@@ -7,8 +7,6 @@ using BB.Tools.Entity;
 using BB.Tools.Format;
 using BB.Entity.Security;
 using BB.HttpServices.Core.OU;
-using BB.HttpServices.Core.Role;
-using BB.HttpServices.Core.User;
 using Furion;
 using Furion.Logging.Extensions;
 
@@ -44,13 +42,15 @@ public partial class FrmOu : BaseForm
     private void InitDictItem()
     {
         //初始化分类
-        string[] enumNames = EnumHelper.GetMemberNames<OuCategoryEnum>();
-        txtCategory.Properties.Items.Clear();
-        foreach (string item in enumNames)
-        {
-            txtCategory.Properties.Items.Add(item);
-        }
+        // string[] enumNames = EnumHelper.GetMemberNames<OuCategoryEnum>();
+        // txtCategory.Properties.Items.Clear();
+        // foreach (string item in enumNames)
+        // {
+        //     txtCategory.Properties.Items.Add(item);
+        // }
+        txtCategory.BindDictItems("网点类型", "9", false, false);
     }
+    
 
     private async Task RefreshTreeView()
     {
@@ -239,12 +239,12 @@ public partial class FrmOu : BaseForm
         if (pInfo != null)
         {   
             //pInfo.Category == "集团" ||
-            if ( pInfo.Category == "公司")
+            if ( pInfo.Category == "1")
             {
                 info.CompanyId = pInfo.HandNo;
                 info.CompanyName = pInfo.Name;
             }
-            else if (pInfo.Category == "部门" || pInfo.Category == "工作组")
+            else if (pInfo.Category == "9")
             {
                 info.CompanyId = pInfo.CompanyId;
                 info.CompanyName = pInfo.CompanyName;

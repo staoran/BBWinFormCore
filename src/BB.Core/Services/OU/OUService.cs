@@ -329,7 +329,7 @@ public class OUService : BaseService<OUInfo>, IDynamicApiController, ITransient
     private async Task<OUInfo> GetCompanyInfoAsync(string ouId)
     {
         OUInfo info = await FindByIdAsync(ouId);
-        if (info.Category == "公司")
+        if (info.Category == "1")
         {
             return info;
         }

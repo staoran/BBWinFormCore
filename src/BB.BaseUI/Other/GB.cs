@@ -505,15 +505,15 @@ public static class GB
     public static int GetImageIndex(string category)
     {
         int index = 0;
-        if (category == OuCategoryEnum.公司.ToString())
+        if (category == "1")
         {
             index = 1;
         }
-        else if (category == OuCategoryEnum.部门.ToString())
+        else if (category == "2")
         {
             index = 2;
         }
-        else if (category == OuCategoryEnum.工作组.ToString())
+        else if (category == "9")
         {
             index = 3;
         }
