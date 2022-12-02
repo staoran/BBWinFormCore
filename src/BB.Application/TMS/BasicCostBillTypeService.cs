@@ -128,8 +128,8 @@ public class BasicCostBillTypeService : BaseService<BasicCostBillType>, IDynamic
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(BasicCostBillType)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(BasicCostBillType)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(BasicCostBillType.FieldCostType, SqlOperator.Like),
                 new(BasicCostBillType.FieldCostDesc, SqlOperator.Like),

@@ -139,8 +139,8 @@ public class StowagesService : BaseService<Stowages>, IDynamicApiController, ITr
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Stowages)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Stowages)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Stowages.FieldISID, SqlOperator.Like),
                 new(Stowages.FieldStowageNo, SqlOperator.Like),

@@ -102,8 +102,8 @@ public class MessagesService : BaseService<Messages>, IDynamicApiController, ITr
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Messages)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Messages)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Messages.FieldMsgNo, SqlOperator.Like),
                 new(Messages.FieldDealStatus, SqlOperator.Like),

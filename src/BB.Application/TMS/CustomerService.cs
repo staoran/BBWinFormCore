@@ -134,8 +134,8 @@ public class CustomerService : BaseMultiService<Customer, Customers>, IDynamicAp
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Customer)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Customer)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Customer.FieldCustomerCode, SqlOperator.Like),
                 new(Customer.FieldMnemonicCode, SqlOperator.Like),

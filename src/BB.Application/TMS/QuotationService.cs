@@ -106,8 +106,8 @@ public class QuotationService : BaseMultiService<Quotation, Quotations>, IDynami
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Quotation)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Quotation)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Quotation.FieldQuotationNo, SqlOperator.Like),
                 new(Quotation.FieldQuotationDesc, SqlOperator.Like),

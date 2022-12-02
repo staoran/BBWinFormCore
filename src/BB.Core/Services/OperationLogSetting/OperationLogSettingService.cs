@@ -56,8 +56,8 @@ public class OperationLogSettingService : BaseService<OperationLogSettingInfo>, 
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(OperationLogSettingInfo)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(OperationLogSettingInfo)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(OperationLogSettingInfo.FieldTableName, SqlOperator.Like),
                 new(OperationLogSettingInfo.FieldNote, SqlOperator.Like ),

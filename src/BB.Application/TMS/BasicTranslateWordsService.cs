@@ -124,8 +124,8 @@ public class BasicTranslateWordsService : BaseService<BasicTranslateWords>, IDyn
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(BasicTranslateWords)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(BasicTranslateWords)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(BasicTranslateWords.FieldWordsInFront, SqlOperator.Like),
                 new(BasicTranslateWords.FieldWordsBehind, SqlOperator.Like),

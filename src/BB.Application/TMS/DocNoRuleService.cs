@@ -125,8 +125,8 @@ public class DocNoRuleService : BaseService<DocNoRule>, IDynamicApiController, I
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(DocNoRule)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(DocNoRule)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(DocNoRule.FieldDocCode, SqlOperator.Like),
                 new(DocNoRule.FieldRuleFormat, SqlOperator.Like),

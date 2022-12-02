@@ -130,8 +130,8 @@ public class BasicCostTypeService : BaseService<BasicCostType>, IDynamicApiContr
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(BasicCostType)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(BasicCostType)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(BasicCostType.FieldCostType, SqlOperator.Equal),
                 new(BasicCostType.FieldCostTypeDesc, SqlOperator.Equal),

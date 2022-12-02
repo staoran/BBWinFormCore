@@ -127,8 +127,8 @@ public class CustomersService : BaseService<Customers>, IDynamicApiController, I
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Customers)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Customers)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Customers.FieldISID, SqlOperator.Like),
                 new(Customers.FieldCustomerCode, SqlOperator.Like),

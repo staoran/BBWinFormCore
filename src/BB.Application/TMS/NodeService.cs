@@ -152,8 +152,8 @@ public class NodeService : BaseMultiService<Node, Nodes>, IDynamicApiController,
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Node)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Node)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Node.FieldTranNodeNO, SqlOperator.Like),
                 new(Node.FieldTranNodeCostNo, SqlOperator.Equal),

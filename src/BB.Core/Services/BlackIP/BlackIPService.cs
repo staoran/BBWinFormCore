@@ -132,8 +132,8 @@ public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, I
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(BlackIpInfo)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(BlackIpInfo)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(BlackIpInfo.FieldName, SqlOperator.Like),
                 new(BlackIpInfo.FieldAuthorizeType, SqlOperator.Equal ),

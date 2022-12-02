@@ -136,8 +136,8 @@ public class CostBillService : BaseService<CostBill>, IDynamicApiController, ITr
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(CostBill)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(CostBill)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(CostBill.FieldCostBillType, SqlOperator.Equal),
                 new(CostBill.FieldCostBillNo, SqlOperator.Like),

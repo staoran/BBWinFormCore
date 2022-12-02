@@ -15,6 +15,7 @@ using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.Validation;
 using FluentValidation;
+using NewLife.Caching;
 
 namespace BB.Core.Services.Base;
 
@@ -30,12 +31,17 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     /// <summary>
     /// 数据验证器
     /// </summary>
-    public IValidator<T> Validator { get; }
+    protected IValidator<T> Validator { get; }
 
     /// <summary>
     /// 登陆用户基础信息（泛型类继承的父类中的静态对象是共享的）
     /// </summary>
     protected readonly LoginUserInfo LoginUserInfo;
+
+    /// <summary>
+    /// 缓存
+    /// </summary>
+    protected readonly ICache Cache;
 
     /// <summary>
     /// 构造函数
@@ -46,7 +52,7 @@ public class BaseService<T> : ITransient where T : BaseEntity, new()
     {
         Validator = validator;
         Repository = repository;
-        
+        Cache = repository.Cache;
         LoginUserInfo = App.User.Adapt<LoginUserInfo>();
     }
 

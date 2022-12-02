@@ -133,8 +133,8 @@ public class LoginLogService : BaseService<LoginLogInfo>, IDynamicApiController,
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(LoginLogInfo)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(LoginLogInfo)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(LoginLogInfo.FieldLoginName, SqlOperator.Like),
                 new(LoginLogInfo.FieldFullName, SqlOperator.Like),

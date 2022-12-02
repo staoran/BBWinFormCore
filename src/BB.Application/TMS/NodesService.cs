@@ -127,25 +127,22 @@ public class NodesService : BaseService<Nodes>, IDynamicApiController, ITransien
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Nodes)}ConditionTypes",
-            () =>
+        return Cache.GetOrAdd($"{nameof(Nodes)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
-                return new List<FieldConditionType>
-                {
-                    new(Nodes.FieldTranNodeAreaName, SqlOperator.Like),
-                    new(Nodes.FieldTranNodeAreaDesc, SqlOperator.Like),
-                    new(Nodes.FieldDeliveryType, SqlOperator.Equal),
-                    new(Nodes.FieldEFence, SqlOperator.Like),
-                    new(Nodes.FieldCenterCoordinate, SqlOperator.Like),
-                    new(Nodes.FieldConvertVK, SqlOperator.Between),
-                    new(Nodes.FieldAreaId, SqlOperator.Equal),
-                    new(Nodes.FieldAddress, SqlOperator.Like),
-                    new(Nodes.FieldPerson, SqlOperator.Like),
-                    new(Nodes.FieldPhone, SqlOperator.Like),
-                    new(Nodes.FieldSignLimitHour, SqlOperator.Between),
-                    new(Nodes.FieldCancelYN, SqlOperator.Equal),
-                    new(Nodes.FieldRemark, SqlOperator.Like)
-                };
+                new(Nodes.FieldTranNodeAreaName, SqlOperator.Like),
+                new(Nodes.FieldTranNodeAreaDesc, SqlOperator.Like),
+                new(Nodes.FieldDeliveryType, SqlOperator.Equal),
+                new(Nodes.FieldEFence, SqlOperator.Like),
+                new(Nodes.FieldCenterCoordinate, SqlOperator.Like),
+                new(Nodes.FieldConvertVK, SqlOperator.Between),
+                new(Nodes.FieldAreaId, SqlOperator.Equal),
+                new(Nodes.FieldAddress, SqlOperator.Like),
+                new(Nodes.FieldPerson, SqlOperator.Like),
+                new(Nodes.FieldPhone, SqlOperator.Like),
+                new(Nodes.FieldSignLimitHour, SqlOperator.Between),
+                new(Nodes.FieldCancelYN, SqlOperator.Equal),
+                new(Nodes.FieldRemark, SqlOperator.Like)
             });
     }
 

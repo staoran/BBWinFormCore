@@ -124,8 +124,8 @@ public class BasicQuotationsService : BaseService<BasicQuotations>, IDynamicApiC
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(BasicQuotations)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(BasicQuotations)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(BasicQuotations.FieldMathConditional, SqlOperator.Like),
                 new(BasicQuotations.FieldMathContent, SqlOperator.Like),

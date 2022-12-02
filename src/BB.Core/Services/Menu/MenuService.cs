@@ -307,8 +307,8 @@ public class MenuService : BaseService<MenuInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(MenuInfo)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(MenuInfo)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(MenuInfo.FieldName, SqlOperator.Like ),
                 new(MenuInfo.FieldFunctionId, SqlOperator.Like ),

@@ -27,7 +27,7 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetRegionsByParentIdAsync([Required] long parentId)
     {
-        return await Cache.Instance.GetOrCreateAsync($"GetRegionsByParentIdAsync_{parentId}", async () =>
+        return await Cache.GetOrAdd($"GetRegionsByParentIdAsync_{parentId}", async _ =>
             await Repository.AsQueryable()
                 .Where(x => !x.IsDeleted && x.ParentId == parentId)
                 .Select<RegionInfo>(
@@ -41,7 +41,7 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllProvinceAsync()
     {
-        return await Cache.Instance.GetOrCreateAsync("GetAllProvinceAsync", async () =>
+        return await Cache.GetOrAdd("GetAllProvinceAsync", async _ =>
             await Repository.AsQueryable()
                 .Where(x => !x.IsDeleted && x.Type == 1)
                 .Select<RegionInfo>(
@@ -55,7 +55,7 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllCityAsync()
     {
-        return await Cache.Instance.GetOrCreateAsync("GetAllCityAsync", async () =>
+        return await Cache.GetOrAdd("GetAllCityAsync", async _ =>
             await Repository.AsQueryable()
                 .Where(x => !x.IsDeleted && x.Type == 2)
                 .Select<RegionInfo>(
@@ -69,7 +69,7 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllDistrictAsync()
     {
-        return await Cache.Instance.GetOrCreateAsync("GetAllDistrictAsync", async () =>
+        return await Cache.GetOrAdd("GetAllDistrictAsync", async _ =>
             await Repository.AsQueryable()
                 .Where(x => !x.IsDeleted && x.Type == 3)
                 .Select<RegionInfo>(
@@ -83,7 +83,7 @@ public class RegionService : BaseService<RegionInfo>, IDynamicApiController, ITr
     /// <returns></returns>
     public async Task<List<RegionInfo>> GetAllRegionAsync()
     {
-        return await Cache.Instance.GetOrCreateAsync("GetAllRegionAsync", async () =>
+        return await Cache.GetOrAdd("GetAllRegionAsync", async _ =>
             await Repository.AsQueryable()
                 .Where(x => !x.IsDeleted)
                 .Select<RegionInfo>(

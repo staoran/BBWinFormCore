@@ -14,6 +14,7 @@ using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Format;
 using Microsoft.Extensions.DependencyInjection;
+using NewLife.Caching;
 using SqlSugar.Extensions;
 
 namespace BB.Core.DbContext;
@@ -256,8 +257,9 @@ public static class SqlSugarDb
         var userId = App.User?.FindFirstValue(nameof(LoginUserInfo.ID));
         if (!userId.IsNullOrEmpty())
         {
-            // 缓存，1 小时滑动过期，6 小时绝对过期
-            var filterItems = Cache.Instance.GetOrCreate($"DataPermission_{userId}", () =>
+            // todo 不按用户ID缓存，太冗余，应该按角色或其他重复唯一的 key 缓存
+            // 缓存，6 小时绝对过期
+            var filterItems = App.GetService<ICache>().GetOrAdd($"DataPermission_{userId}", _ =>
             {
                 var tableFilterItems = new List<TableFilterItem<object>>();
                 // 获取所有实体类型
@@ -293,7 +295,7 @@ public static class SqlSugarDb
                 }
 
                 return tableFilterItems;
-            }, TimeSpan.FromHours(1), TimeSpan.FromHours(6));
+            }, 6 * 60 * 60);
 
             // 网点机构过滤
             filterItems.ForEach(x => db.QueryFilter.Add(x));

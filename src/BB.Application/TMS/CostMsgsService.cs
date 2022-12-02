@@ -126,8 +126,8 @@ public class CostMsgsService : BaseService<CostMsgs>, IDynamicApiController, ITr
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(CostMsgs)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(CostMsgs)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(CostMsgs.FieldCostMsgNo, SqlOperator.Like),
                 new(CostMsgs.FieldStatusID, SqlOperator.Equal),

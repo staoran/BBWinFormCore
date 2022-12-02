@@ -128,8 +128,8 @@ public class CarService : BaseService<Car>, IDynamicApiController, ITransient
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Car)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Car)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Car.FieldTranNode, SqlOperator.Equal),
                 new(Car.FieldCarNo, SqlOperator.Like),

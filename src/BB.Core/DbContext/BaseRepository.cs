@@ -13,7 +13,7 @@ using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.Validation;
 using Furion.ClayObject.Extensions;
-using Microsoft.Extensions.Caching.Distributed;
+using NewLife.Caching;
 
 namespace BB.Core.DbContext;
 
@@ -28,7 +28,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <summary>
     /// 分布式缓存
     /// </summary>
-    private readonly IDistributedCache _cache;
+    public readonly ICache Cache;
 
     /// <summary>
     /// 对象属性
@@ -126,11 +126,11 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// </summary>
     /// <param name="sqlSugarUnitOfWork">工作单元</param>
     /// <param name="cache">分布式缓存</param>
-    public BaseRepository(ISqlSugarUnitOfWork sqlSugarUnitOfWork, IDistributedCache cache) : base(sqlSugarUnitOfWork.GetDbClient())
+    public BaseRepository(ISqlSugarUnitOfWork sqlSugarUnitOfWork, ICache cache) : base(sqlSugarUnitOfWork.GetDbClient())
     {
         _sqlSugarUnitOfWork = sqlSugarUnitOfWork;
         _dbBase = sqlSugarUnitOfWork.GetDbClient();
-        _cache = cache;
+        Cache = cache;
         Context = _dbBase;
         _loginUserInfo = App.User.Adapt<LoginUserInfo>();
         _entityType = typeof(T);
@@ -1430,7 +1430,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <exception cref="NotSupportedException"></exception>
     public virtual Dictionary<string, int> GetPermitDict()
     {
-        return _cache.GetOrCreate($"{_entityType.Name}PermitDict", () =>
+        return Cache.GetOrAdd($"{_entityType.Name}PermitDict", _ =>
         {
             Dictionary<string, int> dic = new();
             PropertyInfo[] properties = _entityType.GetProperties();
@@ -1457,7 +1457,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <returns></returns>
     public virtual Dictionary<string, string> GetColumnNameAlias()
     {
-        return _cache.GetOrCreate($"{_entityType.Name}ColumnNameAlias", () =>
+        return Cache.GetOrAdd($"{_entityType.Name}ColumnNameAlias", _ =>
         {
             Dictionary<string, string> dic = new();
             PropertyInfo[] properties = _entityType.GetProperties();
@@ -1483,13 +1483,14 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
 
                             display = dbCols.First(x => x.DbColumnName == name).ColumnDescription ?? string.Empty;
                         }
+
                         dic.Add(name, display);
                     }
                 }
             }
 
             return dic;
-        }, new TimeSpan(6, 0, 0));
+        }, 6 * 60 * 60);
     }
 
     /// <summary>
@@ -1499,7 +1500,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
     /// <exception cref="NotSupportedException"></exception>
     public virtual List<FieldConditionType> GetFieldConditionTypes()
     {
-        return _cache.GetOrCreate($"{_entityType.Name}ConditionType", () =>
+        return Cache.GetOrAdd($"{_entityType.Name}ConditionType", _ =>
         {
             List<FieldConditionType> dic = new();
             PropertyInfo[] properties = _entityType.GetProperties();

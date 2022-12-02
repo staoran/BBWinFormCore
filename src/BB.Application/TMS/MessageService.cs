@@ -61,8 +61,8 @@ public class MessageService : BaseMultiService<Message, Messages>, IDynamicApiCo
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Message)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Message)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Message.FieldMsgNo, SqlOperator.Like),
                 new(Message.FieldMsgType, SqlOperator.Equal),

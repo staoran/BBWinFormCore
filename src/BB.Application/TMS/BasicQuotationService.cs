@@ -131,8 +131,8 @@ public class BasicQuotationService : BaseMultiService<BasicQuotation, BasicQuota
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(BasicQuotation)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(BasicQuotation)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(BasicQuotation.FieldQuotationNo, SqlOperator.Like),
                 new(BasicQuotation.FieldQuotationDesc, SqlOperator.Like),

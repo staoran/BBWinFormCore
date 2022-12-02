@@ -135,8 +135,8 @@ public class StowageService : BaseMultiService<Stowage, Stowages>, IDynamicApiCo
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Stowage)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Stowage)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Stowage.FieldStowageNo, SqlOperator.Like),
                 new(Stowage.FieldTranNodeNO, SqlOperator.Equal),

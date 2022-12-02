@@ -128,8 +128,8 @@ public class QuotationsService : BaseService<Quotations>, IDynamicApiController,
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Quotations)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Quotations)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Quotations.FieldQuotationType, SqlOperator.Equal),
                 new(Quotations.FieldFromGroups, SqlOperator.Like),

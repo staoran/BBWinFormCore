@@ -138,8 +138,8 @@ public class LogisticCompanyService : BaseService<LogisticCompany>, IDynamicApiC
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(LogisticCompany)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(LogisticCompany)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(LogisticCompany.FieldOrgCode, SqlOperator.Equal),
                 new(LogisticCompany.FieldLogisticCode, SqlOperator.Like),

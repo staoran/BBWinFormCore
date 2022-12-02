@@ -82,8 +82,8 @@ public class OperationLog : BaseService<OperationLogInfo>, IDynamicApiController
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(OperationLogInfo)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(OperationLogInfo)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(OperationLogInfo.FieldLoginName, SqlOperator.Like),
                 new(OperationLogInfo.FieldTableName, SqlOperator.Like ),

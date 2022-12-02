@@ -575,8 +575,8 @@ public class UserService : BaseService<UserInfo>, IDynamicApiController, ITransi
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(UserInfo)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(UserInfo)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(UserInfo.FieldHandNo, SqlOperator.Equal),
                 new(UserInfo.FieldDeptId, SqlOperator.Equal),

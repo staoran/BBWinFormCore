@@ -124,8 +124,8 @@ public class SegmentsService : BaseService<Segments>, IDynamicApiController, ITr
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Segments)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Segments)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Segments.FieldCostType, SqlOperator.Equal),
                 new(Segments.FieldQuotationNo, SqlOperator.Equal),

@@ -129,8 +129,8 @@ public class BasicGroupListService : BaseService<BasicGroupList>, IDynamicApiCon
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(BasicGroupList)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(BasicGroupList)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(BasicGroupList.FieldGroupName, SqlOperator.Like),
                 new(BasicGroupList.FieldGroupType, SqlOperator.Equal),

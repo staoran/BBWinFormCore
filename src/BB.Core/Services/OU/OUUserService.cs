@@ -66,7 +66,7 @@ public class OUUserService : BaseService<OUUserEntity>, IDynamicApiController, I
     /// <returns></returns>
     public async Task<List<string>> GetOuIdsByUserIdAsync(int userId)
     {
-        return await Cache.Instance.GetOrCreateAsync($"GetOuIdsByUserIdAsync_{userId}", async () =>
+        return await Cache.GetOrAdd($"GetOuIdsByUserIdAsync_{userId}", async _ =>
         {
             // 用户关联的机构
             var userOuList = await GetFieldListAsync(x => x.OUId, x => x.UserId == userId);
@@ -81,7 +81,7 @@ public class OUUserService : BaseService<OUUserEntity>, IDynamicApiController, I
 
             // 合并去重
             return userOuList.Union(userRoleOuList).ToList();
-        }, TimeSpan.FromMinutes(1), TimeSpan.FromHours(10));
+        }, 10 * 60 * 60);
     }
 
     /// <summary>

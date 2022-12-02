@@ -130,8 +130,8 @@ public class SegmentService : BaseMultiService<Segment, Segments>, IDynamicApiCo
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(Segment)}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(Segment)}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
                 new(Segment.FieldSegmentNo, SqlOperator.Like),
                 new(Segment.FieldSegmentType, SqlOperator.Equal),
