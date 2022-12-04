@@ -480,18 +480,17 @@ public static class ControlExtension
     /// <param name="panel">控件对象</param>
     /// <param name="permitDict">字段和权限字典，字典值为权限控制：0可读写，1只读，2隐藏值，3不显示</param>
     /// <param name="layoutControl">如果存在布局，则使用布局控件，否则为空</param>
-    public static void SetControlPermit(this System.Windows.Forms.Control panel, Dictionary<string, int> permitDict, LayoutControl layoutControl = null)
+    public static void SetControlPermit(this System.Windows.Forms.Control panel, Dictionary<string, int> permitDict, LayoutControl? layoutControl = null)
     {
         foreach (System.Windows.Forms.Control ctrl in panel.Controls)
         {
-            BaseEdit baseCtrl = ctrl as BaseEdit;
-            if (baseCtrl != null)
+            if (ctrl is BaseEdit baseCtrl)
             {
                 var tag = string.Concat(baseCtrl.Tag);
                 if (!string.IsNullOrEmpty(tag) && permitDict.ContainsKey(tag))
                 {
                     var permit = permitDict[tag];
-                    var visible = (permit == 0 || permit == 1);//2、3不可见
+                    var visible = (permit != 2 && permit != 3);//2、3不可见
 
                     if (layoutControl != null)
                     {
@@ -503,6 +502,7 @@ public static class ControlExtension
                     }
                     baseCtrl.Visible = visible;
                     baseCtrl.ReadOnly = permit == 1;
+                    baseCtrl.Enabled = permit == 1;
                 }
             }
             ctrl.SetControlPermit(permitDict, layoutControl);

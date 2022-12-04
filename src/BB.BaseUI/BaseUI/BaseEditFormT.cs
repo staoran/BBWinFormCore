@@ -134,7 +134,7 @@ public partial class BaseEditForm<T, IT> : BaseEditForm
             {
                 if (x.Value==4)
                 {
-                    permitDict[x.Key] = ID.IsNullOrEmpty() ? 0 : 3;
+                    permitDict[x.Key] = ID.IsNullOrEmpty() ? 0 : 1;
                 }
             });
         }
