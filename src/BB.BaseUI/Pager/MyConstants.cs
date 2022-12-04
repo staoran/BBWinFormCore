@@ -1,4 +1,5 @@
-﻿using BB.Tools.Encrypt;
+﻿using System.IO;
+using BB.Tools.Encrypt;
 using BB.Tools.File;
 
 namespace BB.BaseUI.Pager;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Drawing.Imaging;
+using System.IO;
 using Microsoft.Reporting.WinForms;
 
 namespace BB.BaseUI.LocalReport;

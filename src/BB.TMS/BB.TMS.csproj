@@ -12,7 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="DevExpress.Utils.v22.1">
+		<PackageReference Include="DevExpress.Win" Version="22.1.5" />
+        <!--<Reference Include="DevExpress.Utils.v22.1">
             <HintPath>..\..\reference\DevExpress.Utils.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.XtraEditors.v22.1">
@@ -41,7 +42,7 @@
         </Reference>
         <Reference Include="DevExpress.XtraTreeList.v22.1">
             <HintPath>..\..\reference\DevExpress.XtraTreeList.v22.1.dll</HintPath>
-        </Reference>
+        </Reference>-->
     </ItemGroup>
 
 </Project>

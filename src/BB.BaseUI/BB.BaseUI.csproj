@@ -16,13 +16,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-<!--		<PackageReference Include="DevExpress.Win.Design" Version="22.1.5" />-->
-        <Reference Include="DevExpress.BonusSkins.v22.1">
+		<PackageReference Include="DevExpress.Win" Version="22.1.5" />
+        <Reference Include="DevExpress.XtraPdfViewer.v22.1">
+            <HintPath>..\..\reference\DevExpress.XtraPdfViewer.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraRichEdit.v22.1">
+            <HintPath>..\..\reference\DevExpress.XtraRichEdit.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.XtraSpreadsheet.v22.1">
+            <HintPath>..\..\reference\DevExpress.XtraSpreadsheet.v22.1.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Spreadsheet.v22.1.Core">
+            <HintPath>..\..\reference\DevExpress.Spreadsheet.v22.1.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Images.v22.1">
+            <HintPath>..\..\reference\DevExpress.Images.v22.1.dll</HintPath>
+        </Reference>
+        <!--<Reference Include="DevExpress.BonusSkins.v22.1">
             <HintPath>..\..\reference\DevExpress.BonusSkins.v22.1.dll</HintPath>
         </Reference>
-        <Reference Include="DevExpress.Drawing.v22.1">
-            <HintPath>..\..\reference\DevExpress.Drawing.v22.1.dll</HintPath>
-        </Reference>
+		<Reference Include="DevExpress.Drawing.v22.1">
+			<HintPath>..\..\reference\DevExpress.Drawing.v22.1.dll</HintPath>
+		</Reference>
         <Reference Include="DevExpress.Printing.v22.1.Core">
             <HintPath>..\..\reference\DevExpress.Printing.v22.1.Core.dll</HintPath>
         </Reference>
@@ -70,7 +85,7 @@
         </Reference>
         <Reference Include="DevExpress.Images.v22.1">
             <HintPath>..\..\reference\DevExpress.Images.v22.1.dll</HintPath>
-        </Reference>
+        </Reference>-->
         <Reference Include="Microsoft.ReportViewer.WinForms">
           <HintPath>..\..\reference\Microsoft.ReportViewer.WinForms.dll</HintPath>
         </Reference>

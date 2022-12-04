@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using BB.BaseUI.DocViewer;
 using BB.BaseUI.Extension;

@@ -1,4 +1,6 @@
-﻿namespace BB.BaseUI.LocalReport;
+﻿using System.IO;
+
+namespace BB.BaseUI.LocalReport;
 
 /// <summary>
 /// 文件管理包装类
