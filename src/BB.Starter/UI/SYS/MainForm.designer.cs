@@ -120,7 +120,50 @@
             this.ribbonControl.ApplicationButtonText = null;
             this.ribbonControl.ExpandCollapseItem.Id = 0;
             this.ribbonControl.Images = this.imageCollection1;
-            this.ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { this.ribbonControl.ExpandCollapseItem, this.rgbiSkins, this.barItemExit, this.btnQuit, this.progressBar, this.tool_Settings, this.tool_Dict, this.tool_Security, this.tool_ModifyPass, this.tool_Exit, this.btnHelp, this.btnAbout, this.btnRegister, this.btnBug, this.btnMyWeb, this.menuLogo, this.lblCommandStatus, this.lblCalendar, this.lblCurrentUser, this.btnRelogin, this.popMenuCloseCurrent, this.popMenuCloseAll, this.popMenuCloseOther, this.barButtonItem1, this.tool_CurrentUserInfo, this.barButtonItem2, this.btnModPwd, this.tool_User, this.tool_OU, this.tool_Role, this.tool_Function, this.tool_SysMenu, this.tool_SystemType, this.tool_BlackIP, this.tool_LoginLog, this.tool_OperationLog, this.barButtonItem8, this.barButtonItem9, this.tool_City, this.tool_Code, this.barButtonItem3, this.barButtonItem4 });
+            this.ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl.ExpandCollapseItem,
+            this.rgbiSkins,
+            this.barItemExit,
+            this.btnQuit,
+            this.progressBar,
+            this.tool_Settings,
+            this.tool_Dict,
+            this.tool_Security,
+            this.tool_ModifyPass,
+            this.tool_Exit,
+            this.btnHelp,
+            this.btnAbout,
+            this.btnRegister,
+            this.btnBug,
+            this.btnMyWeb,
+            this.menuLogo,
+            this.lblCommandStatus,
+            this.lblCalendar,
+            this.lblCurrentUser,
+            this.btnRelogin,
+            this.popMenuCloseCurrent,
+            this.popMenuCloseAll,
+            this.popMenuCloseOther,
+            this.barButtonItem1,
+            this.tool_CurrentUserInfo,
+            this.barButtonItem2,
+            this.btnModPwd,
+            this.tool_User,
+            this.tool_OU,
+            this.tool_Role,
+            this.tool_Function,
+            this.tool_SysMenu,
+            this.tool_SystemType,
+            this.tool_BlackIP,
+            this.tool_LoginLog,
+            this.tool_OperationLog,
+            this.barButtonItem8,
+            this.barButtonItem9,
+            this.tool_City,
+            this.tool_Code,
+            this.barButtonItem3,
+            this.barButtonItem4,
+            this.ribbonControl.SearchEditItem});
             this.ribbonControl.LargeImages = this.imageCollection1;
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl.MaxItemId = 2;
@@ -131,10 +174,17 @@
             this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem4);
             this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem2);
             this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem9);
-            this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { this.ribbonOrg, this.ribbonSystem, this.ribbonHelp });
-            this.ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { this.repositoryItemProgressBar1, this.repositoryItemProgressBar2, this.repositoryItemProgressBar3, this.repositoryItemPictureEdit1 });
+            this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonOrg,
+            this.ribbonSystem,
+            this.ribbonHelp});
+            this.ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemProgressBar1,
+            this.repositoryItemProgressBar2,
+            this.repositoryItemProgressBar3,
+            this.repositoryItemPictureEdit1});
             this.ribbonControl.ShowToolbarCustomizeItem = false;
-            this.ribbonControl.Size = new System.Drawing.Size(918, 148);
+            this.ribbonControl.Size = new System.Drawing.Size(932, 202);
             this.ribbonControl.StatusBar = this.ribbonStatusBar1;
             this.ribbonControl.Toolbar.ShowCustomizeItem = false;
             // 
@@ -219,7 +269,8 @@
             // 
             // 
             galleryItemGroup1.Caption = "Group1";
-            this.rgbiSkins.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] { galleryItemGroup1 });
+            this.rgbiSkins.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] {
+            galleryItemGroup1});
             this.rgbiSkins.Id = 21;
             this.rgbiSkins.Name = "rgbiSkins";
             // 
@@ -543,7 +594,10 @@
             // 
             // ribbonOrg
             // 
-            this.ribbonOrg.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { this.ribbonOrgGroup1, this.ribbonPageGroup2, this.ribbonPageGroup3 });
+            this.ribbonOrg.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonOrgGroup1,
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup3});
             this.ribbonOrg.Name = "ribbonOrg";
             this.ribbonOrg.Text = "用户组织权限";
             // 
@@ -571,7 +625,9 @@
             // 
             // ribbonSystem
             // 
-            this.ribbonSystem.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { this.ribbonPageGroup7, this.ribbonPageGroup4 });
+            this.ribbonSystem.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup7,
+            this.ribbonPageGroup4});
             this.ribbonSystem.Name = "ribbonSystem";
             this.ribbonSystem.Text = "系统管理";
             // 
@@ -598,7 +654,8 @@
             // 
             // ribbonHelp
             // 
-            this.ribbonHelp.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { this.ribbonPageGroup6 });
+            this.ribbonHelp.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup6});
             this.ribbonHelp.Name = "ribbonHelp";
             this.ribbonHelp.Text = "帮助";
             // 
@@ -627,10 +684,10 @@
             this.ribbonStatusBar1.ItemLinks.Add(this.lblCurrentUser);
             this.ribbonStatusBar1.ItemLinks.Add(this.lblCalendar);
             this.ribbonStatusBar1.ItemLinks.Add(this.progressBar);
-            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 687);
+            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 682);
             this.ribbonStatusBar1.Name = "ribbonStatusBar1";
             this.ribbonStatusBar1.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar1.Size = new System.Drawing.Size(918, 32);
+            this.ribbonStatusBar1.Size = new System.Drawing.Size(932, 37);
             // 
             // xtraTabbedMdiManager1
             // 
@@ -641,7 +698,7 @@
             // 
             // defaultLookAndFeel1
             // 
-            this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2010 Blue";
+            this.defaultLookAndFeel1.LookAndFeel.SkinName = "WXI";
             // 
             // notifyIcon1
             // 
@@ -655,7 +712,10 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.notifyMenu_Show, this.notifyMenu_About, this.notifyMenu_Exit });
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.notifyMenu_Show,
+            this.notifyMenu_About,
+            this.notifyMenu_Exit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(169, 70);
             // 
@@ -693,17 +753,17 @@
             this.AllowMdiBar = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(918, 719);
+            this.ClientSize = new System.Drawing.Size(932, 719);
             this.Controls.Add(this.ribbonStatusBar1);
             this.Controls.Add(this.ribbonControl);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IconOptions.Icon = ((System.Drawing.Icon)(resources.GetObject("MainForm.IconOptions.Icon")));
             this.IsMdiContainer = true;
             this.Name = "MainForm";
             this.Ribbon = this.ribbonControl;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar1;
             this.Text = "仓库管理软件   ";
-            this.ShowInTaskbar = false;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.MaximizedBoundsChanged += new System.EventHandler(this.MainForm_MaximizedBoundsChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -721,6 +781,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;

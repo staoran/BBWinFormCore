@@ -48,7 +48,7 @@
 #set($listNum = 0)
 #set($listWidth = 0)##表单单元格宽度
 #set($groupWidth = 20)
-#set($groupHeight = 25)
+#set($groupHeight = 26)##16+16-6 上下初始宽度，行距6，单元格28
 #set($frmWidth = 20)##min 550
 #set($frmHeight = 457)##57 + 400
 #if($allCount < 11)
@@ -75,10 +75,10 @@
 #end
 #foreach($j in [1..$allCount])
 #if($j % $listNum == 0)##加一行
-#set($groupHeight = $groupHeight + 24)
+#set($groupHeight = $groupHeight + 34)
 #else##加列
 #if($j == $allCount)##最后一行
-#set($groupHeight = $groupHeight + 24)
+#set($groupHeight = $groupHeight + 34)
 #end
 #end##endif
 #end
@@ -192,7 +192,7 @@
             this.gridView1.ViewCaptionHeight = 100;
 #set($count = 0)
 #set($txtLocationX = 87)
-#set($txtLocationY = 12)
+#set($txtLocationY = 16)
 #set($layLocationX = 0)
 #set($layLocationY = 0)
 #foreach($FieldInfo in $MetadataImports)
@@ -222,7 +222,7 @@
             this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.${FieldInfo.ControlName}.Properties.VistaTimeProperties.Mask.EditMask = "HH:mm";
             this.${FieldInfo.ControlName}.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.TouchUI;
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
 #elseif(${FieldInfo.ControlType}=="TimeEdit")
@@ -241,7 +241,7 @@
             this.${FieldInfo.ControlName}.Properties.TimeEditStyle = DevExpress.XtraEditors.Repository.TimeEditStyle.TouchUI;
             this.${FieldInfo.ControlName}.Properties.TouchUIMaxValue = new System.DateTime(1900, 1, 1, 23, 59, 0, 0);
             this.${FieldInfo.ControlName}.Properties.TouchUIMinValue = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
 #elseif(${FieldInfo.ControlType}=="SpinEdit")
@@ -253,7 +253,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.${FieldInfo.ControlName}.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
             this.${FieldInfo.ControlName}.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
 #elseif(${FieldInfo.ControlType}=="ComboBoxEdit" || ${FieldInfo.ControlType}=="CheckedComboBoxEdit")
@@ -264,7 +264,7 @@
             this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
             this.${FieldInfo.ControlName}.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
 #elseif(${FieldInfo.ControlType}=="CheckEdit")
@@ -276,7 +276,7 @@
             this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
             this.${FieldInfo.ControlName}.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
             this.${FieldInfo.ControlName}.Properties.NullStyle = DevExpress.XtraEditors.Controls.StyleIndeterminate.Unchecked;
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
 #elseif(${FieldInfo.ControlType}=="ToggleSwitch")
@@ -289,7 +289,7 @@
             this.${FieldInfo.ControlName}.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
             this.${FieldInfo.ControlName}.Properties.OffText = "Off";
             this.${FieldInfo.ControlName}.Properties.OnText = "On";
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
 #elseif(${FieldInfo.ControlType}=="SearchLookUpEdit")
@@ -303,7 +303,7 @@
             this.${FieldInfo.ControlName}.Properties.NullText = "";
             this.${FieldInfo.ControlName}.Properties.PopupSizeable = false;
             this.${FieldInfo.ControlName}.Properties.PopupView = this.gv${FieldInfo.CSharpFieldName};
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
             //
@@ -319,7 +319,7 @@
             //
             this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
             this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
-            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 20);
+            this.${FieldInfo.ControlName}.Size = new System.Drawing.Size($txtWidth, 28);
             this.${FieldInfo.ControlName}.StyleController = this.layoutControl1;
             this.${FieldInfo.ControlName}.TabIndex = $count;
 #end
@@ -330,16 +330,16 @@
             this.layout${FieldInfo.CSharpFieldName}.CustomizationFormText = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
             this.layout${FieldInfo.CSharpFieldName}.Location = new System.Drawing.Point($layLocationX, $layLocationY);
             this.layout${FieldInfo.CSharpFieldName}.Name = "layout${FieldInfo.CSharpFieldName}";
-            this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($listWidth, 24);
+            this.layout${FieldInfo.CSharpFieldName}.Size = new System.Drawing.Size($listWidth, 34);
             this.layout${FieldInfo.CSharpFieldName}.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layout${FieldInfo.CSharpFieldName}.Text = "#if(${FieldInfo.ControlLabelName})${FieldInfo.ControlLabelName}#else${FieldInfo.CSharpFieldName}#end";
             this.layout${FieldInfo.CSharpFieldName}.TextSize = new System.Drawing.Size(72, 14);
 #set($count = $count + 1)
 #if($count % $listNum == 0)##换行
     #set($txtLocationX = 87)
-    #set($txtLocationY = $txtLocationY + 24)
+    #set($txtLocationY = $txtLocationY + 34)
     #set($layLocationX = 0)
-    #set($layLocationY = $layLocationY + 24)
+    #set($layLocationY = $layLocationY + 34)
 #else##加列
     #set($txtLocationX = $txtLocationX + $listWidth)
     #set($layLocationX = $layLocationX + $listWidth)

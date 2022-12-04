@@ -238,7 +238,7 @@
             // 
             // defaultLookAndFeel1
             // 
-            this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2010 Blue";
+            this.defaultLookAndFeel1.LookAndFeel.SkinName = "WXI";
             // 
             // MainForm
             // 

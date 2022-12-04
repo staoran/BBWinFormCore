@@ -302,7 +302,7 @@ public partial class MainForm : RibbonForm
             SkinHelper.InitSkinGallery(rgbiSkins, true);
             ribbonControl.Toolbar.ItemLinks.Clear();
             ribbonControl.Toolbar.ItemLinks.Add(rgbiSkins);
-            UserLookAndFeel.Default.SetSkinStyle("Seven Classic");
+            UserLookAndFeel.Default.SetSkinStyle("WXI");
 
             #endregion
 
