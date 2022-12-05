@@ -59,17 +59,17 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
         gridView1.CreateColumn("TableDes", "表说明").Visible = false;
         gridView1.CreateColumn("CSharpFieldFullType", "字段全类型").Visible = false;
         gridView1.CreateColumn("DataBaseFieldName", "DB名", 80);
-        gridView1.CreateColumn("DataBaseFieldType", "DB类型", 55);
-        gridView1.CreateColumn("DataBaseFieldLong", "DB长度", 50).CreateSpinEdit();
+        gridView1.CreateColumn("DataBaseFieldType", "DB类型", 56);
+        gridView1.CreateColumn("DataBaseFieldLong", "DB长度", 56).CreateSpinEdit();
         gridView1.CreateColumn("DataBaseFieldDes", "DB说明", 75);
-        gridView1.CreateColumn("IsKey", "主键", 35);
-        gridView1.CreateColumn("IsIdentity", "自增", 35);
-        gridView1.CreateColumn("IsNull", "可空", 35);
+        gridView1.CreateColumn("IsKey", "主键", 41);
+        gridView1.CreateColumn("IsIdentity", "自增", 41);
+        gridView1.CreateColumn("IsNull", "可空", 41);
         gridView1.CreateColumn("CSharpFieldName", "C#名", 100).CreateTextEdit();
         gridView1.CreateColumn("CSharpFieldDes", "C#说明", 100).CreateTextEdit();
         gridView1.CreateColumn("CSharpFieldType", "C#类型", 75).CreateTextEdit();
-        gridView1.CreateColumn("CSharpFieldLong", "C#长度", 50).CreateSpinEdit();
-        gridView1.CreateColumn("ControlType", "控件", 35).CreateComboBoxEdit()
+        gridView1.CreateColumn("CSharpFieldLong", "C#长度", 57).CreateSpinEdit();
+        gridView1.CreateColumn("ControlType", "控件", 41).CreateComboBoxEdit()
             .BindDictItems(new List<CListItem>
             {
                 new("文本", "TextEdit"),
@@ -104,15 +104,15 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
                 "false",
                 "DateTime.Now",
                 // "GB.LoginUserInfo.ID.ToString()",
-                "*当前用户*",
+                "\"*当前用户*\"",
                 // "GB.LoginUserInfo.CompanyId",
-                "*当前机构*",
+                "\"*当前机构*\"",
                 "0",
                 "\"0\"",
                 // "Snowflake.Instance().GetId().ToString()"
-                "*自动生成*"
+                "\"*自动生成*\""
             });
-        gridView1.CreateColumn("Validation", "验证", 35).CreateComboBoxEdit()
+        gridView1.CreateColumn("Validation", "验证", 41).CreateComboBoxEdit()
             .BindDictItems(new List<CListItem>
             {
                 new("数字", "Numeric"),
@@ -134,25 +134,25 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
                 new("网址", "URL"),
                 new("文件路径", "FilePath"),
             });
-        gridView1.CreateColumn("Sort", "排序", 35).CreateSpinEdit();
-        gridView1.CreateColumn("IsVisible", "可见", 35);
-        gridView1.CreateColumn("IsSearch", "搜索", 35);
-        gridView1.CreateColumn("IsAdvSearch", "高搜", 35);
-        gridView1.CreateColumn("IsColumn", "网格", 35);
-        gridView1.CreateColumn("IsAdd", "新增", 35);
-        gridView1.CreateColumn("IsEdit", "编辑", 35);
-        gridView1.CreateColumn("IsReadonly", "只读", 35);
-        gridView1.CreateColumn("IsCheckNull", "验空", 35);
-        gridView1.CreateColumn("IsCheckLong", "验长", 35);
-        gridView1.CreateColumn("IsCheckDuplicate", "验重", 35);
-        gridView1.CreateColumn("OrderBy", "排序", 35).CreateComboBoxEdit()
+        gridView1.CreateColumn("Sort", "排序", 41).CreateSpinEdit();
+        gridView1.CreateColumn("IsVisible", "可见", 41);
+        gridView1.CreateColumn("IsSearch", "搜索", 41);
+        gridView1.CreateColumn("IsAdvSearch", "高搜", 41);
+        gridView1.CreateColumn("IsColumn", "网格", 41);
+        gridView1.CreateColumn("IsAdd", "新增", 41);
+        gridView1.CreateColumn("IsEdit", "编辑", 41);
+        gridView1.CreateColumn("IsReadonly", "只读", 41);
+        gridView1.CreateColumn("IsCheckNull", "验空", 41);
+        gridView1.CreateColumn("IsCheckLong", "验长", 41);
+        gridView1.CreateColumn("IsCheckDuplicate", "验重", 41);
+        gridView1.CreateColumn("OrderBy", "排序", 41).CreateComboBoxEdit()
             .BindDictItems(new List<CListItem>
             {
                 new("降序", "desc"),
                 new("升序", "asc")
             });
-        gridView1.CreateColumn("OptimisticLock", "锁", 35);
-        gridView1.CreateColumn("SummaryItemType", "汇总方式", 60).CreateComboBoxEdit()
+        gridView1.CreateColumn("OptimisticLock", "锁", 41);
+        gridView1.CreateColumn("SummaryItemType", "汇总方式", 65).CreateComboBoxEdit()
             .BindDictItems(new List<CListItem>
             {
                 new("计数", "Count"),
@@ -163,7 +163,7 @@ public partial class FrmSelectDataBase : XtraForm, ITransient
                 new("手动", "Custom"),
                 new("禁用", "None")
             }, false);
-        gridView1.CreateColumn("SummaryItemDisplayFormat", "汇总格式", 60).CreateComboBoxEdit(TextEditStyles.Standard)
+        gridView1.CreateColumn("SummaryItemDisplayFormat", "汇总格式", 65).CreateComboBoxEdit(TextEditStyles.Standard)
             .BindDictItems(new[]
             {
                 "{0}",
