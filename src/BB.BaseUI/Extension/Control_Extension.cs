@@ -502,7 +502,7 @@ public static class ControlExtension
                     }
                     baseCtrl.Visible = visible;
                     baseCtrl.ReadOnly = permit == 1;
-                    baseCtrl.Enabled = permit == 1;
+                    baseCtrl.Enabled = permit == 0;
                 }
             }
             ctrl.SetControlPermit(permitDict, layoutControl);
