@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 预付金管理
 /// </summary>
+#if DESIGNER
+public partial class FrmEditCostBill : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditCostBill : BaseEditForm<CostBill, CostBillHttpService>
 {
+#endif
     public FrmEditCostBill(CostBillHttpService bll, IValidator<CostBill> validator) : base(bll, validator)
     {
         InitializeComponent();

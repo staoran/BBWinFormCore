@@ -14,8 +14,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 单号规则
 /// </summary>
+#if DESIGNER
+public partial class FrmEditDocNoRule : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditDocNoRule : BaseEditForm<DocNoRule, DocNoRuleHttpService>
 {
+#endif
     public FrmEditDocNoRule(DocNoRuleHttpService bll, IValidator<DocNoRule> validator) : base(bll, validator)
     {
         InitializeComponent();

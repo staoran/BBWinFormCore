@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 区域分组
 /// </summary>
+#if DESIGNER
+public partial class FrmEditBasicGroupList : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditBasicGroupList : BaseEditForm<BasicGroupList, BasicGroupListHttpService>
 {
+#endif
     public FrmEditBasicGroupList(BasicGroupListHttpService bll, IValidator<BasicGroupList> validator) : base(bll, validator)
     {
         InitializeComponent();

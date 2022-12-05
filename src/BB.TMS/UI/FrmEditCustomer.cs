@@ -13,8 +13,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 客户资料
 /// </summary>
+#if DESIGNER
+public partial class FrmEditCustomer : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditCustomer : BaseEditForm<Customer, CustomerHttpService, Customers, CustomersHttpService>
 {
+#endif
     public FrmEditCustomer(CustomerHttpService bll, CustomersHttpService childBll, IValidator<Customer> validator, IValidator<Customers> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();

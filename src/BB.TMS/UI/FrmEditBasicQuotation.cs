@@ -13,8 +13,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 公式报价
 /// </summary>
+#if DESIGNER
+public partial class FrmEditBasicQuotation : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditBasicQuotation : BaseEditForm<BasicQuotation, BasicQuotationHttpService, BasicQuotations, BasicQuotationsHttpService>
 {
+#endif
     public FrmEditBasicQuotation(BasicQuotationHttpService bll, BasicQuotationsHttpService childBll, IValidator<BasicQuotation> validator, IValidator<BasicQuotations> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();

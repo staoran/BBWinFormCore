@@ -20,7 +20,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 车辆档案
 /// </summary>
+#if DESIGNER
+public partial class FrmCar : BaseViewDesigner
+#else
 public partial class FrmCar : BaseViewDock<Car, CarHttpService, FrmEditCar>
+#endif
 {
     public FrmCar(CarHttpService bll, LazilyResolved<FrmEditCar> baseForm) : base(bll, baseForm)
     {

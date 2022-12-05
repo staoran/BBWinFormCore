@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 公式定义
 /// </summary>
+#if DESIGNER
+public partial FrmEditBasicTranslateWords FrmEditCar : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditBasicTranslateWords : BaseEditForm<BasicTranslateWords, BasicTranslateWordsHttpService>
 {
+#endif
     public FrmEditBasicTranslateWords(BasicTranslateWordsHttpService bll, IValidator<BasicTranslateWords> validator) : base(bll, validator)
     {
         InitializeComponent();

@@ -13,8 +13,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 线路管理
 /// </summary>
+#if DESIGNER
+public partial class FrmEditSegment : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditSegment : BaseEditForm<Segment, SegmentHttpService,  Segments, SegmentsHttpService>
 {
+#endif
     public FrmEditSegment(SegmentHttpService bll, SegmentsHttpService childBll, IValidator<Segment> validator, IValidator<Segments> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();

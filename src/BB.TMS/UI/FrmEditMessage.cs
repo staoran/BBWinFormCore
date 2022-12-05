@@ -7,14 +7,22 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using FluentValidation;
+using Message = BB.Entity.TMS.Message;
 
 namespace BB.TMS.UI;
 
 /// <summary>
 /// 问题件
 /// </summary>
+#if DESIGNER
+public partial class FrmEditMessage : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditMessage : BaseEditForm<Message, MessageHttpService, Messages, MessagesHttpService>
 {
+#endif
     public FrmEditMessage(MessageHttpService bll, MessagesHttpService childBll, IValidator<Message> validator, IValidator<Messages> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();

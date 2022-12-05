@@ -20,7 +20,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 客户资料
 /// </summary>
+#if DESIGNER
+public partial class FrmCustomer : BaseViewDesigner
+#else
 public partial class FrmCustomer : BaseViewDock<Customer, CustomerHttpService, FrmEditCustomer, Customers, CustomersHttpService>
+#endif
 {
     public FrmCustomer(CustomerHttpService bll, CustomersHttpService childBll, LazilyResolved<FrmEditCustomer> baseForm) : base(bll, childBll, baseForm)
     {

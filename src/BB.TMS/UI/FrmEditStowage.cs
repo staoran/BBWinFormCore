@@ -14,8 +14,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 送货配载
 /// </summary>
+#if DESIGNER
+public partial class FrmEditStowage : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditStowage : BaseEditForm<Stowage, StowageHttpService, Stowages, StowagesHttpService>
 {
+#endif
     public FrmEditStowage(StowageHttpService bll, StowagesHttpService childBll, IValidator<Stowage> validator, IValidator<Stowages> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();

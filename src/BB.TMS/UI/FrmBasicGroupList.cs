@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 区域分组
 /// </summary>
+#if DESIGNER
+public partial class FrmBasicGroupList : BaseViewDesigner
+#else
 public partial class FrmBasicGroupList : BaseViewDock<BasicGroupList, BasicGroupListHttpService, FrmEditBasicGroupList>
+#endif
 {
     public FrmBasicGroupList(BasicGroupListHttpService bll, LazilyResolved<FrmEditBasicGroupList> baseForm) : base(bll, baseForm)
     {

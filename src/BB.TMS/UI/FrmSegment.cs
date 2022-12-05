@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 线路管理
 /// </summary>
+#if DESIGNER
+public partial class FrmSegment : BaseViewDesigner
+#else
 public partial class FrmSegment : BaseViewDock<Segment, SegmentHttpService, FrmEditSegment, Segments, SegmentsHttpService>
+#endif
 {
     public FrmSegment(SegmentHttpService bll, SegmentsHttpService childBll, LazilyResolved<FrmEditSegment> baseForm) : base(bll, childBll, baseForm)
     {

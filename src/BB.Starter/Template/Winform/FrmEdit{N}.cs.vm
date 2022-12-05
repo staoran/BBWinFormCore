@@ -15,8 +15,15 @@ namespace BB.${NameSpace}.UI;
 /// ${Name}
 #end
 /// </summary>
+#if DESIGNER
+public partial class FrmEdit${Name} : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEdit${Name} : BaseEditForm<${Name}, ${Name}HttpService>
 {
+#endif
     public FrmEdit${Name}(${Name}HttpService bll, IValidator<${Name}> validator) : base(bll, validator)
     {
         InitializeComponent();

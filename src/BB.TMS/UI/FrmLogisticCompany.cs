@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 承运商资料
 /// </summary>
+#if DESIGNER
+public partial class FrmLogisticCompany : BaseViewDesigner
+#else
 public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, LogisticCompanyHttpService, FrmEditLogisticCompany>
+#endif
 {
     public FrmLogisticCompany(LogisticCompanyHttpService bll, LazilyResolved<FrmEditLogisticCompany> baseForm) : base(bll, baseForm)
     {

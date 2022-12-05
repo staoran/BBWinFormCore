@@ -19,8 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 公式报价
 /// </summary>
-// public partial class FrmBasicQuotation : BaseViewDesigner
+#if DESIGNER
+public partial class FrmBasicQuotation : BaseViewDesigner
+#else
 public partial class FrmBasicQuotation : BaseViewDock<BasicQuotation, BasicQuotationHttpService, FrmEditBasicQuotation, BasicQuotations, BasicQuotationsHttpService>
+#endif
 {
     public FrmBasicQuotation(BasicQuotationHttpService bll, BasicQuotationsHttpService childBll, LazilyResolved<FrmEditBasicQuotation> baseForm) : base(bll, childBll, baseForm)
     {

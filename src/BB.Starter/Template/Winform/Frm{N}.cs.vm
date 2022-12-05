@@ -26,7 +26,11 @@ namespace BB.${NameSpace}.UI;
 /// ${Name}
 #end
 /// </summary>
+#if DESIGNER
+public partial class Frm${Name} : BaseViewDesigner
+#else
 public partial class Frm${Name} : BaseViewDock<${Name}, ${Name}HttpService, FrmEdit${Name}>
+#endif
 {
     public Frm${Name}({Name}HttpService bll, LazilyResolved<FrmEdit{Name}> baseForm) : base(bll, baseForm)
     {

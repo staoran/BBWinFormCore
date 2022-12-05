@@ -13,8 +13,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 费用调整
 /// </summary>
+#if DESIGNER
+public partial class FrmEditCostMsg : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditCostMsg : BaseEditForm<CostMsg, CostMsgHttpService, CostMsgs, CostMsgsHttpService>
 {
+#endif
     public FrmEditCostMsg(CostMsgHttpService bll, CostMsgsHttpService childBll, IValidator<CostMsg> validator, IValidator<CostMsgs> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();

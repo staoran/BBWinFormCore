@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 费用类型
 /// </summary>
+#if DESIGNER
+public partial class FrmBasicCostType : BaseViewDesigner
+#else
 public partial class FrmBasicCostType : BaseViewDock<BasicCostType, BasicCostTypeHttpService, FrmEditBasicCostType>
+#endif
 {
     public FrmBasicCostType(BasicCostTypeHttpService bll, LazilyResolved<FrmEditBasicCostType> baseForm) : base(bll, baseForm)
     {

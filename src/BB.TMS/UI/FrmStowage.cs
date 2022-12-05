@@ -22,7 +22,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 送货配载
 /// </summary>
+#if DESIGNER
+public partial class FrmStowage : BaseViewDesigner
+#else
 public partial class FrmStowage : BaseViewDock<Stowage, StowageHttpService, FrmEditStowage, Stowages, StowagesHttpService>
+#endif
 {
     public FrmStowage(StowageHttpService bll, StowagesHttpService childBll, LazilyResolved<FrmEditStowage> baseForm) : base(bll, childBll, baseForm)
     {

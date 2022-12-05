@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 车辆档案
 /// </summary>
+#if DESIGNER
+public partial class FrmEditCar : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditCar : BaseEditForm<Car, CarHttpService>
 {
+#endif
     public FrmEditCar(CarHttpService bll, IValidator<Car> validator) : base(bll, validator)
     {
         InitializeComponent();

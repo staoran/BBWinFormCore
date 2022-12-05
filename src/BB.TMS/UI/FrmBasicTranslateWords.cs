@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 公式定义
 /// </summary>
+#if DESIGNER
+public partial class FrmBasicTranslateWords : BaseViewDesigner
+#else
 public partial class FrmBasicTranslateWords : BaseViewDock<BasicTranslateWords, BasicTranslateWordsHttpService, FrmEditBasicTranslateWords>
+#endif
 {
     public FrmBasicTranslateWords(BasicTranslateWordsHttpService bll, LazilyResolved<FrmEditBasicTranslateWords> baseForm) : base(bll, baseForm)
     {

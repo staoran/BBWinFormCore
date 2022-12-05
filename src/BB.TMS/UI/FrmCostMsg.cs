@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 费用调整
 /// </summary>
+#if DESIGNER
+public partial class FrmCostMsg : BaseViewDesigner
+#else
 public partial class FrmCostMsg : BaseViewDock<CostMsg, CostMsgHttpService, FrmEditCostMsg, CostMsgs, CostMsgsHttpService>
+#endif
 {
     public FrmCostMsg(CostMsgHttpService bll, CostMsgsHttpService childBll, LazilyResolved<FrmEditCostMsg> baseForm) : base(bll, childBll, baseForm)
     {

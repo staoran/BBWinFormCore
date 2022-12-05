@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 预付金操作类型
 /// </summary>
+#if DESIGNER
+public partial class FrmEditBasicCostBillType : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditBasicCostBillType : BaseEditForm<BasicCostBillType, BasicCostBillTypeHttpService>
 {
+#endif
     public FrmEditBasicCostBillType(BasicCostBillTypeHttpService bll, IValidator<BasicCostBillType> validator) : base(bll, validator)
     {
         InitializeComponent();

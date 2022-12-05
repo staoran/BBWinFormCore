@@ -13,9 +13,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 网点资料
 /// </summary>
-// public partial class FrmEditNode : BaseEditDesigner
+#if DESIGNER
+public partial class FrmEditNode : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditNode : BaseEditForm<Node, NodeHttpService,  Nodes, NodesHttpService>
 {
+#endif
     public FrmEditNode(NodeHttpService bll, NodesHttpService childBll, IValidator<Node> validator, IValidator<Nodes> childValidator) : base(bll, childBll, validator, childValidator)
     {
         InitializeComponent();

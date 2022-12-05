@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 承运商资料
 /// </summary>
+#if DESIGNER
+public partial class FrmEditLogisticCompany : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditLogisticCompany : BaseEditForm<LogisticCompany, LogisticCompanyHttpService>
 {
+#endif
     public FrmEditLogisticCompany(LogisticCompanyHttpService bll, IValidator<LogisticCompany> validator) : base(bll, validator)
     {
         InitializeComponent();

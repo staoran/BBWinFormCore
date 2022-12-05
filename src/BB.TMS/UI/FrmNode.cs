@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 网点资料
 /// </summary>
+#if DESIGNER
+public partial class FrmNode : BaseViewDesigner
+#else
 public partial class FrmNode : BaseViewDock<Node, NodeHttpService, FrmEditNode, Nodes, NodesHttpService>
+#endif
 {
     public FrmNode(NodeHttpService bll, NodesHttpService childBll, LazilyResolved<FrmEditNode> baseForm) : base(bll, childBll, baseForm)
     {

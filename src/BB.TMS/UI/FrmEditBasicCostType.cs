@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 费用类型
 /// </summary>
+#if DESIGNER
+public partial class FrmEditBasicCostType : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditBasicCostType : BaseEditForm<BasicCostType, BasicCostTypeHttpService>
 {
+#endif
     public FrmEditBasicCostType(BasicCostTypeHttpService bll, IValidator<BasicCostType> validator) : base(bll, validator)
     {
         InitializeComponent();

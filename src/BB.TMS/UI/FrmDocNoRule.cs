@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 单号规则
 /// </summary>
+#if DESIGNER
+public partial class FrmDocNoRule : BaseViewDesigner
+#else
 public partial class FrmDocNoRule : BaseViewDock<DocNoRule, DocNoRuleHttpService, FrmEditDocNoRule>
+#endif
 {
     public FrmDocNoRule(DocNoRuleHttpService bll, LazilyResolved<FrmEditDocNoRule> baseForm) : base(bll, baseForm)
     {

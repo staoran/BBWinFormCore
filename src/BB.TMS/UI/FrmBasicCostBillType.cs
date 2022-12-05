@@ -19,7 +19,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 预付金操作类型
 /// </summary>
+#if DESIGNER
+public partial class FrmBasicCostBillType : BaseViewDesigner
+#else
 public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, BasicCostBillTypeHttpService, FrmEditBasicCostBillType>
+#endif
 {
     public FrmBasicCostBillType(BasicCostBillTypeHttpService bll, LazilyResolved<FrmEditBasicCostBillType> baseForm) : base(bll, baseForm)
     {

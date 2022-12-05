@@ -22,7 +22,11 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 问题件
 /// </summary>
+#if DESIGNER
+public partial class FrmMessage : BaseViewDesigner
+#else
 public partial class FrmMessage : BaseViewDock<Message, MessageHttpService, FrmEditMessage, Messages, MessagesHttpService>
+#endif
 {
     public FrmMessage(MessageHttpService bll, MessagesHttpService childBll, LazilyResolved<FrmEditMessage> baseForm) : base(bll, childBll, baseForm)
     {

@@ -10,8 +10,15 @@ namespace BB.TMS.UI;
 /// <summary>
 /// 问题件回复
 /// </summary>
+#if DESIGNER
+public partial class FrmEditMessages : BaseEditDesigner
+{
+    protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+    protected DevExpress.XtraLayout.LayoutControl layoutControl1;
+#else
 public partial class FrmEditMessages : BaseEditForm<Messages, MessagesHttpService>
 {
+#endif
     public FrmEditMessages(MessagesHttpService bll, IValidator<Messages> validator) : base(bll, validator)
     {
         InitializeComponent();
