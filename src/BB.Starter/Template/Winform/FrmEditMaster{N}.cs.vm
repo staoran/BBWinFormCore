@@ -18,12 +18,12 @@ namespace BB.${NameSpace}.UI;
 /// ${Name}
 #end
 /// </summary>
-#if DESIGNER
+\#if DESIGNER
 public partial class FrmEdit${Name} : BaseEditDesigner
 {
     protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
     protected DevExpress.XtraLayout.LayoutControl layoutControl1;
-#else
+\#else
 public partial class FrmEdit${Name} : BaseEditForm<${Name}, ${Name}HttpService, ${ChildName}, ${ChildName}HttpService>
 {
 #endif

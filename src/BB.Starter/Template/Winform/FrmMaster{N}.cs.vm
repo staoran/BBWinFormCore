@@ -26,9 +26,9 @@ namespace BB.${NameSpace}.UI;
 /// ${Name}
 #end
 /// </summary>
-#if DESIGNER
+\#if DESIGNER
 public partial class Frm${Name} : BaseViewDesigner
-#else
+\#else
 public partial class Frm${Name} : BaseViewDock<${Name}, ${Name}HttpService, FrmEdit${Name}, ${ChildName}, ${ChildName}HttpService>
 #endif
 {

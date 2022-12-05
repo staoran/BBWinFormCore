@@ -3,6 +3,7 @@ using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.Entity.TMS;
 using BB.HttpServices.TMS;
+
 using FluentValidation;
 
 namespace BB.TMS.UI;
@@ -23,7 +24,7 @@ public partial class FrmEditBasicCostBillType : BaseEditForm<BasicCostBillType, 
     {
         InitializeComponent();
 
-        Load += FrmEditTest1Car_Load;
+        Load += FrmEditBasicCostBillType_Load;
     }
 
     /// <summary>
@@ -31,7 +32,7 @@ public partial class FrmEditBasicCostBillType : BaseEditForm<BasicCostBillType, 
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FrmEditTest1Car_Load(object? sender, EventArgs e)
+    private void FrmEditBasicCostBillType_Load(object? sender, EventArgs e)
     {
     }
 
@@ -41,10 +42,10 @@ public partial class FrmEditBasicCostBillType : BaseEditForm<BasicCostBillType, 
     protected override Task InitDictItem()
     {
         //初始化代码
-        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, "*当前用户*", false, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), false, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, "*当前用户*", false, false);
         return Task.CompletedTask;
     }
 
@@ -70,7 +71,7 @@ public partial class FrmEditBasicCostBillType : BaseEditForm<BasicCostBillType, 
 
         #endregion
 
-         await base.SetPermit();
+        await base.SetPermit();
     }
 
     // /// <summary>

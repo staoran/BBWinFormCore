@@ -1,17 +1,18 @@
 using System.Data;
-using System.Windows.Forms;
 using System.Collections.Specialized;
 using System.Diagnostics;
+
 using BB.BaseUI.BaseUI;
 using BB.BaseUI.DocViewer;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.BaseUI.WinForm;
-using BB.HttpServices.TMS;
 using BB.Tools.Format;
 using BB.Entity.TMS;
+using BB.HttpServices.TMS;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
+
 using Furion.Logging.Extensions;
 
 namespace BB.TMS.UI;
@@ -43,13 +44,11 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
 
         #region 查询表单
 
-        txtCostType1.KeyDown += SpinEdit_KeyDown;
-        txtCostType2.KeyDown += SpinEdit_KeyDown;
-
 
         #endregion
 
         #region 按钮和按钮权限
+
 
         #endregion
     }
@@ -184,8 +183,7 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
         // 如果存在高级查询对象信息，则使用高级查询条件，否则使用主表条件查询
         return (_treeCondition ?? _advanceCondition ?? new NameValueCollection
         {
-            { BasicCostBillType.FieldCostType, txtCostType1.EditValue.ObjToStr() },
-            { BasicCostBillType.FieldCostType, txtCostType2.EditValue.ObjToStr() },
+            { BasicCostBillType.FieldCostType, txtCostType.Text.Trim() },
             { BasicCostBillType.FieldCostDesc, txtCostDesc.Text.Trim() },
             { BasicCostBillType.FieldUseType, txtUseType.GetComboBoxValue() },
             { BasicCostBillType.FieldFlagApp, txtFlagApp.GetComboBoxValue() },
@@ -230,9 +228,11 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
     protected override async Task ExportData()
     {
         string file = FileDialogHelper.SaveExcel($"{moduleName}.xls");
-                if (string.IsNullOrEmpty(file)) return;
+        if (string.IsNullOrEmpty(file)) return;
+
         Dictionary<string,string> condition = GetQueryCondition();
         List<BasicCostBillType> list = await _bll.FindAsync(condition);
+
         DataTable dtNew = DataTableHelper.CreateTable(
             "自增ID,类型编号,类型名称,正负1/-1,备注,适用范围,创建人,创建时间,审核,审批人,审批时间,修改人,修改时间");
         var j = 1;
@@ -273,7 +273,7 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
         }
         catch (Exception ex)
         {
-            ex.ToString().LogError();
+            ex.ToString().LogError();;
             ex.Message.ShowUxError();
         }
     }
@@ -287,18 +287,18 @@ public partial class FrmBasicCostBillType : BaseViewDock<BasicCostBillType, Basi
     /// </summary>
     protected override async Task AdvanceSearch()
     {
-            await base.AdvanceSearch();
+        await base.AdvanceSearch();
 
-            #region 下拉列表数据
+        #region 下拉列表数据
 
-            // _advDlg.AddColumnListItem("UserType", Portal.gc.GetDictData("人员类型"));// 字典列表
-            // _advDlg.AddColumnListItem("Sex", "男,女");// 固定列表
-            // _advDlg.AddColumnListItem("Credit", _bll.GetFieldList("Credit"));// 动态列表
-            AdvDlg?.AddColumnListItem(BasicCostBillType.FieldCreatedBy, GB.AllUserDict);
-            AdvDlg?.AddColumnListItem(BasicCostBillType.FieldAppUser, GB.AllUserDict);
-            AdvDlg?.AddColumnListItem(BasicCostBillType.FieldLastUpdatedBy, GB.AllUserDict);
+        // _advDlg.AddColumnListItem("UserType", Portal.gc.GetDictData("人员类型"));// 字典列表
+        // _advDlg.AddColumnListItem("Sex", "男,女");// 固定列表
+        // _advDlg.AddColumnListItem("Credit", _bll.GetFieldList("Credit"));// 动态列表
+        AdvDlg?.AddColumnListItem(BasicCostBillType.FieldCreatedBy, GB.AllUserDict);
+        AdvDlg?.AddColumnListItem(BasicCostBillType.FieldAppUser, GB.AllUserDict);
+        AdvDlg?.AddColumnListItem(BasicCostBillType.FieldLastUpdatedBy, GB.AllUserDict);
 
-            #endregion
+        #endregion
 
         AdvDlg?.ShowDialog();
     }

@@ -285,7 +285,7 @@
             //
             this.${FieldInfo.ControlName}.Location = new System.Drawing.Point($txtLocationX, $txtLocationY);
             this.${FieldInfo.ControlName}.Name = "${FieldInfo.ControlName}";
-            this.${FieldInfo.ControlName}.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 6F);
+            this.${FieldInfo.ControlName}.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8F);
             this.${FieldInfo.ControlName}.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
             this.${FieldInfo.ControlName}.Properties.OffText = "Off";
             this.${FieldInfo.ControlName}.Properties.OnText = "On";

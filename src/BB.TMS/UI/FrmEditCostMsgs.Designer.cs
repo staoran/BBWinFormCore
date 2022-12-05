@@ -79,25 +79,25 @@ namespace BB.TMS.UI
             // btnOK
             //
             this.btnOK.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.ImageOptions.Image")));
-            this.btnOK.Location = new System.Drawing.Point(341, 258);
+            this.btnOK.Location = new System.Drawing.Point(341, 349);
             //
             // btnCancel
             //
             this.btnCancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.ImageOptions.Image")));
-            this.btnCancel.Location = new System.Drawing.Point(435, 258);
+            this.btnCancel.Location = new System.Drawing.Point(435, 349);
             //
             // btnAdd
             //
             this.btnAdd.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.ImageOptions.Image")));
-            this.btnAdd.Location = new System.Drawing.Point(247, 258);
+            this.btnAdd.Location = new System.Drawing.Point(247, 349);
             //
             // dataNavigator1
             //
-            this.dataNavigator1.Location = new System.Drawing.Point(10, 262);
+            this.dataNavigator1.Location = new System.Drawing.Point(10, 353);
             //
             // picPrint
             //
-            this.picPrint.Location = new System.Drawing.Point(207, 263);
+            this.picPrint.Location = new System.Drawing.Point(207, 354);
             //
             // layoutControl1
             //
@@ -116,7 +116,7 @@ namespace BB.TMS.UI
             this.layoutControl1.Location = new System.Drawing.Point(10, 8);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(515, 241);
+            this.layoutControl1.Size = new System.Drawing.Size(515, 332);
             this.layoutControl1.TabIndex = 200;
             this.layoutControl1.Text = "layoutControl1";
             //
@@ -136,7 +136,7 @@ namespace BB.TMS.UI
             this.layoutLastUpdatedBy,
             });
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(515, 241);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(515, 332);
             this.layoutControlGroup1.TextVisible = false;
             //
             // txtCostMsgNo
@@ -358,7 +358,7 @@ namespace BB.TMS.UI
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 298);
+            this.ClientSize = new System.Drawing.Size(535, 389);
             this.Controls.Add(this.layoutControl1);
             this.Name = "FrmEditCostMsgs";
             this.Text = "费用调整确认";

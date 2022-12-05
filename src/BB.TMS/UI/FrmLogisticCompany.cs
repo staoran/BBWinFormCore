@@ -27,7 +27,7 @@ public partial class FrmLogisticCompany : BaseViewDock<LogisticCompany, Logistic
 {
     public FrmLogisticCompany(LogisticCompanyHttpService bll, LazilyResolved<FrmEditLogisticCompany> baseForm) : base(bll, baseForm)
     {
-        moduleName = "问题件";
+        moduleName = "承运商资料";
 
         InitializeComponent();
     }

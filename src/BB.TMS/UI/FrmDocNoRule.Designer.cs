@@ -96,7 +96,7 @@ namespace BB.TMS.UI
             this.winGridViewPager1.ShowDeleteMenu = true;
             this.winGridViewPager1.ShowEditMenu = true;
             this.winGridViewPager1.ShowExportButton = true;
-            this.winGridViewPager1.Size = new System.Drawing.Size(775, 596);
+            this.winGridViewPager1.Size = new System.Drawing.Size(775, 580);
             this.winGridViewPager1.TabIndex = 11;
             //
             // splitContainerControl1
@@ -104,13 +104,13 @@ namespace BB.TMS.UI
             this.splitContainerControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerControl1.Location = new System.Drawing.Point(12, 81);
+            this.splitContainerControl1.Location = new System.Drawing.Point(12, 97);
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.winGridViewPager1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(980, 596);
+            this.splitContainerControl1.Size = new System.Drawing.Size(980, 580);
             this.splitContainerControl1.SplitterPosition = 200;
             this.splitContainerControl1.TabIndex = 102;
             this.splitContainerControl1.Text = "splitContainerControl1";
@@ -209,7 +209,7 @@ namespace BB.TMS.UI
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(70, 185, 250, 350);
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(980, 44);
+            this.layoutControl1.Size = new System.Drawing.Size(980, 60);
             this.layoutControl1.TabIndex = 12;
             this.layoutControl1.Text = "layoutControl1";
             //
@@ -225,7 +225,7 @@ namespace BB.TMS.UI
             this.layoutFlagLastMillisecond,
             });
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(980, 44);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(980, 60);
             this.layoutControlGroup1.TextVisible = false;
             //
             // layoutDocCode
@@ -234,15 +234,15 @@ namespace BB.TMS.UI
             this.layoutDocCode.CustomizationFormText = "单据编码";
             this.layoutDocCode.Location = new System.Drawing.Point(0, 0);
             this.layoutDocCode.Name = "layoutDocCode";
-            this.layoutDocCode.Size = new System.Drawing.Size(160, 24);
+            this.layoutDocCode.Size = new System.Drawing.Size(160, 34);
             this.layoutDocCode.Text = "单据编码";
             this.layoutDocCode.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtDocCode
             //
-            this.txtDocCode.Location = new System.Drawing.Point(64, 12);
+            this.txtDocCode.Location = new System.Drawing.Point(64, 16);
             this.txtDocCode.Name = "txtDocCode";
-            this.txtDocCode.Size = new System.Drawing.Size(105, 20);
+            this.txtDocCode.Size = new System.Drawing.Size(105, 28);
             this.txtDocCode.StyleController = this.layoutControl1;
             this.txtDocCode.TabIndex = 0;
             //
@@ -252,17 +252,17 @@ namespace BB.TMS.UI
             this.layoutResetZero.CustomizationFormText = "自动归零";
             this.layoutResetZero.Location = new System.Drawing.Point(160, 0);
             this.layoutResetZero.Name = "layoutResetZero";
-            this.layoutResetZero.Size = new System.Drawing.Size(160, 24);
+            this.layoutResetZero.Size = new System.Drawing.Size(160, 34);
             this.layoutResetZero.Text = "自动归零";
             this.layoutResetZero.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtResetZero
             //
-            this.txtResetZero.Location = new System.Drawing.Point(224, 12);
+            this.txtResetZero.Location = new System.Drawing.Point(224, 16);
             this.txtResetZero.Name = "txtResetZero";
             this.txtResetZero.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtResetZero.Size = new System.Drawing.Size(105, 20);
+            this.txtResetZero.Size = new System.Drawing.Size(105, 28);
             this.txtResetZero.StyleController = this.layoutControl1;
             this.txtResetZero.TabIndex = 1;
             //
@@ -272,17 +272,17 @@ namespace BB.TMS.UI
             this.layoutFlagSpilitNo.CustomizationFormText = "包含单据字头";
             this.layoutFlagSpilitNo.Location = new System.Drawing.Point(320, 0);
             this.layoutFlagSpilitNo.Name = "layoutFlagSpilitNo";
-            this.layoutFlagSpilitNo.Size = new System.Drawing.Size(160, 24);
+            this.layoutFlagSpilitNo.Size = new System.Drawing.Size(160, 34);
             this.layoutFlagSpilitNo.Text = "包含单据字头";
             this.layoutFlagSpilitNo.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtFlagSpilitNo
             //
-            this.txtFlagSpilitNo.Location = new System.Drawing.Point(384, 12);
+            this.txtFlagSpilitNo.Location = new System.Drawing.Point(384, 16);
             this.txtFlagSpilitNo.Name = "txtFlagSpilitNo";
             this.txtFlagSpilitNo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtFlagSpilitNo.Size = new System.Drawing.Size(105, 20);
+            this.txtFlagSpilitNo.Size = new System.Drawing.Size(105, 28);
             this.txtFlagSpilitNo.StyleController = this.layoutControl1;
             this.txtFlagSpilitNo.TabIndex = 2;
             //
@@ -292,17 +292,17 @@ namespace BB.TMS.UI
             this.layoutFlagIncludeDocCode.CustomizationFormText = "序号前加间隔符";
             this.layoutFlagIncludeDocCode.Location = new System.Drawing.Point(480, 0);
             this.layoutFlagIncludeDocCode.Name = "layoutFlagIncludeDocCode";
-            this.layoutFlagIncludeDocCode.Size = new System.Drawing.Size(160, 24);
+            this.layoutFlagIncludeDocCode.Size = new System.Drawing.Size(160, 34);
             this.layoutFlagIncludeDocCode.Text = "序号前加间隔符";
             this.layoutFlagIncludeDocCode.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtFlagIncludeDocCode
             //
-            this.txtFlagIncludeDocCode.Location = new System.Drawing.Point(544, 12);
+            this.txtFlagIncludeDocCode.Location = new System.Drawing.Point(544, 16);
             this.txtFlagIncludeDocCode.Name = "txtFlagIncludeDocCode";
             this.txtFlagIncludeDocCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtFlagIncludeDocCode.Size = new System.Drawing.Size(105, 20);
+            this.txtFlagIncludeDocCode.Size = new System.Drawing.Size(105, 28);
             this.txtFlagIncludeDocCode.StyleController = this.layoutControl1;
             this.txtFlagIncludeDocCode.TabIndex = 3;
             //
@@ -312,17 +312,17 @@ namespace BB.TMS.UI
             this.layoutFlagLastMillisecond.CustomizationFormText = "末尾增加毫秒";
             this.layoutFlagLastMillisecond.Location = new System.Drawing.Point(640, 0);
             this.layoutFlagLastMillisecond.Name = "layoutFlagLastMillisecond";
-            this.layoutFlagLastMillisecond.Size = new System.Drawing.Size(320, 24);
+            this.layoutFlagLastMillisecond.Size = new System.Drawing.Size(320, 34);
             this.layoutFlagLastMillisecond.Text = "末尾增加毫秒";
             this.layoutFlagLastMillisecond.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtFlagLastMillisecond
             //
-            this.txtFlagLastMillisecond.Location = new System.Drawing.Point(704, 12);
+            this.txtFlagLastMillisecond.Location = new System.Drawing.Point(704, 16);
             this.txtFlagLastMillisecond.Name = "txtFlagLastMillisecond";
             this.txtFlagLastMillisecond.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtFlagLastMillisecond.Size = new System.Drawing.Size(105, 20);
+            this.txtFlagLastMillisecond.Size = new System.Drawing.Size(105, 28);
             this.txtFlagLastMillisecond.StyleController = this.layoutControl1;
             this.txtFlagLastMillisecond.TabIndex = 4;
             //
@@ -357,7 +357,7 @@ namespace BB.TMS.UI
             this.standaloneBarDockControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.standaloneBarDockControl1.CausesValidation = false;
-            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 52);
+            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 68);
             this.standaloneBarDockControl1.Manager = this.barManager1;
             this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
             this.standaloneBarDockControl1.Size = new System.Drawing.Size(980, 29);

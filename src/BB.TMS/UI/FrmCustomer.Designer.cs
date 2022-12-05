@@ -59,7 +59,7 @@ namespace BB.TMS.UI
             this.layoutNativeName = new DevExpress.XtraLayout.LayoutControlItem();
             this.txtNativeName = new DevExpress.XtraEditors.TextEdit();
             this.layoutAddress = new DevExpress.XtraLayout.LayoutControlItem();
-            this.txtAddress = new DevExpress.XtraEditors.MemoEdit();
+            this.txtAddress = new DevExpress.XtraEditors.TextEdit();
             this.layoutAreaNo = new DevExpress.XtraLayout.LayoutControlItem();
             this.txtAreaNo = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gvAreaNo = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -128,7 +128,7 @@ namespace BB.TMS.UI
             this.winGridViewPager1.ShowDeleteMenu = true;
             this.winGridViewPager1.ShowEditMenu = true;
             this.winGridViewPager1.ShowExportButton = true;
-            this.winGridViewPager1.Size = new System.Drawing.Size(540, 572);
+            this.winGridViewPager1.Size = new System.Drawing.Size(540, 546);
             this.winGridViewPager1.TabIndex = 98;
             //
             // winGridView2
@@ -147,7 +147,7 @@ namespace BB.TMS.UI
             this.winGridView2.ShowDeleteMenu = true;
             this.winGridView2.ShowEditMenu = true;
             this.winGridView2.ShowExportButton = true;
-            this.winGridView2.Size = new System.Drawing.Size(435, 572);
+            this.winGridView2.Size = new System.Drawing.Size(435, 546);
             this.winGridView2.TabIndex = 99;
             //
             // splitContainer1
@@ -163,7 +163,7 @@ namespace BB.TMS.UI
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.winGridView2);
             this.splitContainer1.Panel2.Text = "Panel2";
-            this.splitContainer1.Size = new System.Drawing.Size(980, 572);
+            this.splitContainer1.Size = new System.Drawing.Size(980, 546);
             this.splitContainer1.SplitterPosition = 540;
             this.splitContainer1.TabIndex = 100;
             this.splitContainer1.Text = "splitContainer1";
@@ -173,13 +173,13 @@ namespace BB.TMS.UI
             this.splitContainerControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerControl1.Location = new System.Drawing.Point(12, 105);
+            this.splitContainerControl1.Location = new System.Drawing.Point(12, 131);
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.splitContainer1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1160, 572);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1160, 546);
             this.splitContainerControl1.SplitterPosition = 197;
             this.splitContainerControl1.TabIndex = 102;
             this.splitContainerControl1.Text = "splitContainerControl1";
@@ -284,7 +284,7 @@ namespace BB.TMS.UI
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(70, 185, 250, 350);
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(1160, 68);
+            this.layoutControl1.Size = new System.Drawing.Size(1160, 94);
             this.layoutControl1.TabIndex = 12;
             this.layoutControl1.Text = "layoutControl1";
             //
@@ -306,7 +306,7 @@ namespace BB.TMS.UI
             this.layoutFlagApp,
             });
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1160, 68);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(1160, 94);
             this.layoutControlGroup1.TextVisible = false;
             //
             // barManager1
@@ -340,7 +340,7 @@ namespace BB.TMS.UI
             this.standaloneBarDockControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.standaloneBarDockControl1.CausesValidation = false;
-            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 76);
+            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 102);
             this.standaloneBarDockControl1.Manager = this.barManager1;
             this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
             this.standaloneBarDockControl1.Size = new System.Drawing.Size(1160, 29);
@@ -376,16 +376,16 @@ namespace BB.TMS.UI
             this.layoutCustomerCode.CustomizationFormText = "公司编号";
             this.layoutCustomerCode.Location = new System.Drawing.Point(0, 0);
             this.layoutCustomerCode.Name = "layoutCustomerCode";
-            this.layoutCustomerCode.Size = new System.Drawing.Size(190, 24);
+            this.layoutCustomerCode.Size = new System.Drawing.Size(190, 34);
             this.layoutCustomerCode.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutCustomerCode.Text = "公司编号";
             this.layoutCustomerCode.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtCustomerCode
             //
-            this.txtCustomerCode.Location = new System.Drawing.Point(85, 12);
+            this.txtCustomerCode.Location = new System.Drawing.Point(85, 16);
             this.txtCustomerCode.Name = "txtCustomerCode";
-            this.txtCustomerCode.Size = new System.Drawing.Size(105, 20);
+            this.txtCustomerCode.Size = new System.Drawing.Size(105, 28);
             this.txtCustomerCode.StyleController = this.layoutControl1;
             this.txtCustomerCode.TabIndex = 0;
             //
@@ -395,16 +395,16 @@ namespace BB.TMS.UI
             this.layoutMnemonicCode.CustomizationFormText = "助记码";
             this.layoutMnemonicCode.Location = new System.Drawing.Point(190, 0);
             this.layoutMnemonicCode.Name = "layoutMnemonicCode";
-            this.layoutMnemonicCode.Size = new System.Drawing.Size(190, 24);
+            this.layoutMnemonicCode.Size = new System.Drawing.Size(190, 34);
             this.layoutMnemonicCode.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutMnemonicCode.Text = "助记码";
             this.layoutMnemonicCode.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtMnemonicCode
             //
-            this.txtMnemonicCode.Location = new System.Drawing.Point(275, 12);
+            this.txtMnemonicCode.Location = new System.Drawing.Point(275, 16);
             this.txtMnemonicCode.Name = "txtMnemonicCode";
-            this.txtMnemonicCode.Size = new System.Drawing.Size(105, 20);
+            this.txtMnemonicCode.Size = new System.Drawing.Size(105, 28);
             this.txtMnemonicCode.StyleController = this.layoutControl1;
             this.txtMnemonicCode.TabIndex = 1;
             //
@@ -414,16 +414,16 @@ namespace BB.TMS.UI
             this.layoutContactPerson.CustomizationFormText = "联系人";
             this.layoutContactPerson.Location = new System.Drawing.Point(380, 0);
             this.layoutContactPerson.Name = "layoutContactPerson";
-            this.layoutContactPerson.Size = new System.Drawing.Size(190, 24);
+            this.layoutContactPerson.Size = new System.Drawing.Size(190, 34);
             this.layoutContactPerson.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutContactPerson.Text = "联系人";
             this.layoutContactPerson.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtContactPerson
             //
-            this.txtContactPerson.Location = new System.Drawing.Point(465, 12);
+            this.txtContactPerson.Location = new System.Drawing.Point(465, 16);
             this.txtContactPerson.Name = "txtContactPerson";
-            this.txtContactPerson.Size = new System.Drawing.Size(105, 20);
+            this.txtContactPerson.Size = new System.Drawing.Size(105, 28);
             this.txtContactPerson.StyleController = this.layoutControl1;
             this.txtContactPerson.TabIndex = 2;
             //
@@ -433,16 +433,16 @@ namespace BB.TMS.UI
             this.layoutNativeName.CustomizationFormText = "公司名称";
             this.layoutNativeName.Location = new System.Drawing.Point(570, 0);
             this.layoutNativeName.Name = "layoutNativeName";
-            this.layoutNativeName.Size = new System.Drawing.Size(190, 24);
+            this.layoutNativeName.Size = new System.Drawing.Size(190, 34);
             this.layoutNativeName.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutNativeName.Text = "公司名称";
             this.layoutNativeName.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtNativeName
             //
-            this.txtNativeName.Location = new System.Drawing.Point(655, 12);
+            this.txtNativeName.Location = new System.Drawing.Point(655, 16);
             this.txtNativeName.Name = "txtNativeName";
-            this.txtNativeName.Size = new System.Drawing.Size(105, 20);
+            this.txtNativeName.Size = new System.Drawing.Size(105, 28);
             this.txtNativeName.StyleController = this.layoutControl1;
             this.txtNativeName.TabIndex = 3;
             //
@@ -452,40 +452,40 @@ namespace BB.TMS.UI
             this.layoutAddress.CustomizationFormText = "地址";
             this.layoutAddress.Location = new System.Drawing.Point(760, 0);
             this.layoutAddress.Name = "layoutAddress";
-            this.layoutAddress.Size = new System.Drawing.Size(190, 24);
+            this.layoutAddress.Size = new System.Drawing.Size(190, 34);
             this.layoutAddress.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutAddress.Text = "地址";
             this.layoutAddress.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtAddress
             //
-            this.txtAddress.Location = new System.Drawing.Point(845, 12);
+            this.txtAddress.Location = new System.Drawing.Point(845, 16);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(105, 20);
+            this.txtAddress.Size = new System.Drawing.Size(105, 28);
             this.txtAddress.StyleController = this.layoutControl1;
             this.txtAddress.TabIndex = 4;
             //
             // layoutAreaNo
             //
             this.layoutAreaNo.Control = this.txtAreaNo;
-            this.layoutAreaNo.CustomizationFormText = "省市区";
+            this.layoutAreaNo.CustomizationFormText = "区";
             this.layoutAreaNo.Location = new System.Drawing.Point(950, 0);
             this.layoutAreaNo.Name = "layoutAreaNo";
-            this.layoutAreaNo.Size = new System.Drawing.Size(190, 24);
+            this.layoutAreaNo.Size = new System.Drawing.Size(190, 34);
             this.layoutAreaNo.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
-            this.layoutAreaNo.Text = "省市区";
+            this.layoutAreaNo.Text = "区";
             this.layoutAreaNo.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtAreaNo
             //
-            this.txtAreaNo.Location = new System.Drawing.Point(1035, 12);
+            this.txtAreaNo.Location = new System.Drawing.Point(1035, 16);
             this.txtAreaNo.Name = "txtAreaNo";
             this.txtAreaNo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.txtAreaNo.Properties.NullText = "";
             this.txtAreaNo.Properties.PopupSizeable = false;
             this.txtAreaNo.Properties.PopupView = this.gvAreaNo;
-            this.txtAreaNo.Size = new System.Drawing.Size(343, 20);
+            this.txtAreaNo.Size = new System.Drawing.Size(343, 28);
             this.txtAreaNo.StyleController = this.layoutControl1;
             this.txtAreaNo.TabIndex = 5;
             //
@@ -500,18 +500,18 @@ namespace BB.TMS.UI
             //
             this.layoutTel.Control = this.txtTel;
             this.layoutTel.CustomizationFormText = "电话号码";
-            this.layoutTel.Location = new System.Drawing.Point(0, 24);
+            this.layoutTel.Location = new System.Drawing.Point(0, 34);
             this.layoutTel.Name = "layoutTel";
-            this.layoutTel.Size = new System.Drawing.Size(190, 24);
+            this.layoutTel.Size = new System.Drawing.Size(190, 34);
             this.layoutTel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutTel.Text = "电话号码";
             this.layoutTel.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtTel
             //
-            this.txtTel.Location = new System.Drawing.Point(85, 36);
+            this.txtTel.Location = new System.Drawing.Point(85, 50);
             this.txtTel.Name = "txtTel";
-            this.txtTel.Size = new System.Drawing.Size(105, 20);
+            this.txtTel.Size = new System.Drawing.Size(105, 28);
             this.txtTel.StyleController = this.layoutControl1;
             this.txtTel.TabIndex = 6;
             //
@@ -519,18 +519,18 @@ namespace BB.TMS.UI
             //
             this.layoutMobile.Control = this.txtMobile;
             this.layoutMobile.CustomizationFormText = "手机号";
-            this.layoutMobile.Location = new System.Drawing.Point(190, 24);
+            this.layoutMobile.Location = new System.Drawing.Point(190, 34);
             this.layoutMobile.Name = "layoutMobile";
-            this.layoutMobile.Size = new System.Drawing.Size(190, 24);
+            this.layoutMobile.Size = new System.Drawing.Size(190, 34);
             this.layoutMobile.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutMobile.Text = "手机号";
             this.layoutMobile.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtMobile
             //
-            this.txtMobile.Location = new System.Drawing.Point(275, 36);
+            this.txtMobile.Location = new System.Drawing.Point(275, 50);
             this.txtMobile.Name = "txtMobile";
-            this.txtMobile.Size = new System.Drawing.Size(105, 20);
+            this.txtMobile.Size = new System.Drawing.Size(105, 28);
             this.txtMobile.StyleController = this.layoutControl1;
             this.txtMobile.TabIndex = 7;
             //
@@ -538,9 +538,9 @@ namespace BB.TMS.UI
             //
             this.layoutCreationDate1.Control = this.txtCreationDate1;
             this.layoutCreationDate1.CustomizationFormText = "创建日期1";
-            this.layoutCreationDate1.Location = new System.Drawing.Point(380, 24);
+            this.layoutCreationDate1.Location = new System.Drawing.Point(380, 34);
             this.layoutCreationDate1.Name = "layoutCreationDate";
-            this.layoutCreationDate1.Size = new System.Drawing.Size(190, 24);
+            this.layoutCreationDate1.Size = new System.Drawing.Size(190, 34);
             this.layoutCreationDate1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutCreationDate1.Text = "创建日期 >=";
             this.layoutCreationDate1.TextSize = new System.Drawing.Size(48, 14);
@@ -548,7 +548,7 @@ namespace BB.TMS.UI
             // txtCreationDate1
             //
             this.txtCreationDate1.EditValue = null;
-            this.txtCreationDate1.Location = new System.Drawing.Point(465, 36);
+            this.txtCreationDate1.Location = new System.Drawing.Point(465, 50);
             this.txtCreationDate1.Name = "txtCreationDate1";
             this.txtCreationDate1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -567,7 +567,7 @@ namespace BB.TMS.UI
             this.txtCreationDate1.Properties.VistaTimeProperties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.txtCreationDate1.Properties.VistaTimeProperties.Mask.EditMask = "HH:mm";
             this.txtCreationDate1.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.TouchUI;
-            this.txtCreationDate1.Size = new System.Drawing.Size(105, 20);
+            this.txtCreationDate1.Size = new System.Drawing.Size(105, 28);
             this.txtCreationDate1.StyleController = this.layoutControl1;
             this.txtCreationDate1.TabIndex = 8;
             //
@@ -575,9 +575,9 @@ namespace BB.TMS.UI
             //
             this.layoutCreationDate2.Control = this.txtCreationDate2;
             this.layoutCreationDate2.CustomizationFormText = "创建日期2";
-            this.layoutCreationDate2.Location = new System.Drawing.Point(570, 24);
+            this.layoutCreationDate2.Location = new System.Drawing.Point(570, 34);
             this.layoutCreationDate2.Name = "layoutCreationDate";
-            this.layoutCreationDate2.Size = new System.Drawing.Size(190, 24);
+            this.layoutCreationDate2.Size = new System.Drawing.Size(190, 34);
             this.layoutCreationDate2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutCreationDate2.Text = "创建日期 <=";
             this.layoutCreationDate2.TextSize = new System.Drawing.Size(48, 14);
@@ -585,7 +585,7 @@ namespace BB.TMS.UI
             // txtCreationDate2
             //
             this.txtCreationDate2.EditValue = null;
-            this.txtCreationDate2.Location = new System.Drawing.Point(655, 36);
+            this.txtCreationDate2.Location = new System.Drawing.Point(655, 50);
             this.txtCreationDate2.Name = "txtCreationDate2";
             this.txtCreationDate2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -604,7 +604,7 @@ namespace BB.TMS.UI
             this.txtCreationDate2.Properties.VistaTimeProperties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.txtCreationDate2.Properties.VistaTimeProperties.Mask.EditMask = "HH:mm";
             this.txtCreationDate2.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.TouchUI;
-            this.txtCreationDate2.Size = new System.Drawing.Size(105, 20);
+            this.txtCreationDate2.Size = new System.Drawing.Size(105, 28);
             this.txtCreationDate2.StyleController = this.layoutControl1;
             this.txtCreationDate2.TabIndex = 9;
             //
@@ -612,20 +612,20 @@ namespace BB.TMS.UI
             //
             this.layoutFlagApp.Control = this.txtFlagApp;
             this.layoutFlagApp.CustomizationFormText = "审核";
-            this.layoutFlagApp.Location = new System.Drawing.Point(760, 24);
+            this.layoutFlagApp.Location = new System.Drawing.Point(760, 34);
             this.layoutFlagApp.Name = "layoutFlagApp";
-            this.layoutFlagApp.Size = new System.Drawing.Size(380, 24);
+            this.layoutFlagApp.Size = new System.Drawing.Size(380, 34);
             this.layoutFlagApp.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutFlagApp.Text = "审核";
             this.layoutFlagApp.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtFlagApp
             //
-            this.txtFlagApp.Location = new System.Drawing.Point(845, 36);
+            this.txtFlagApp.Location = new System.Drawing.Point(845, 50);
             this.txtFlagApp.Name = "txtFlagApp";
             this.txtFlagApp.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtFlagApp.Size = new System.Drawing.Size(105, 20);
+            this.txtFlagApp.Size = new System.Drawing.Size(105, 28);
             this.txtFlagApp.StyleController = this.layoutControl1;
             this.txtFlagApp.TabIndex = 10;
             //
@@ -702,7 +702,7 @@ namespace BB.TMS.UI
         private DevExpress.XtraLayout.LayoutControlItem layoutContactPerson;
         private DevExpress.XtraEditors.TextEdit txtNativeName;
         private DevExpress.XtraLayout.LayoutControlItem layoutNativeName;
-        private DevExpress.XtraEditors.MemoEdit txtAddress;
+        private DevExpress.XtraEditors.TextEdit txtAddress;
         private DevExpress.XtraLayout.LayoutControlItem layoutAddress;
         private DevExpress.XtraEditors.SearchLookUpEdit txtAreaNo;
         private DevExpress.XtraLayout.LayoutControlItem layoutAreaNo;

@@ -41,14 +41,12 @@ namespace BB.TMS.UI
             this.menuTree_Clapase = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTree_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.txtCostType1 = new DevExpress.XtraEditors.SpinEdit();
-            this.txtCostType2 = new DevExpress.XtraEditors.SpinEdit();
+            this.txtCostType = new DevExpress.XtraEditors.TextEdit();
             this.txtCostDesc = new DevExpress.XtraEditors.TextEdit();
             this.txtUseType = new DevExpress.XtraEditors.ComboBoxEdit();
             this.txtFlagApp = new DevExpress.XtraEditors.ComboBoxEdit();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutCostType1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutCostType2 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutCostType = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutCostDesc = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutUseType = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutFlagApp = new DevExpress.XtraLayout.LayoutControlItem();
@@ -65,14 +63,12 @@ namespace BB.TMS.UI
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             this.menuTree.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtCostType1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtCostType2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCostType.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCostDesc.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUseType.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFlagApp.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutCostType1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutCostType2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutCostType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutCostDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutUseType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutFlagApp)).BeginInit();
@@ -96,7 +92,7 @@ namespace BB.TMS.UI
             this.winGridViewPager1.ShowDeleteMenu = true;
             this.winGridViewPager1.ShowEditMenu = true;
             this.winGridViewPager1.ShowExportButton = true;
-            this.winGridViewPager1.Size = new System.Drawing.Size(775, 596);
+            this.winGridViewPager1.Size = new System.Drawing.Size(775, 580);
             this.winGridViewPager1.TabIndex = 11;
             //
             // splitContainerControl1
@@ -104,13 +100,13 @@ namespace BB.TMS.UI
             this.splitContainerControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerControl1.Location = new System.Drawing.Point(12, 81);
+            this.splitContainerControl1.Location = new System.Drawing.Point(12, 97);
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.winGridViewPager1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(980, 596);
+            this.splitContainerControl1.Size = new System.Drawing.Size(980, 580);
             this.splitContainerControl1.SplitterPosition = 200;
             this.splitContainerControl1.TabIndex = 102;
             this.splitContainerControl1.Text = "splitContainerControl1";
@@ -200,8 +196,7 @@ namespace BB.TMS.UI
             //
             this.layoutControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.layoutControl1.Controls.Add(this.txtCostType1);
-            this.layoutControl1.Controls.Add(this.txtCostType2);
+            this.layoutControl1.Controls.Add(this.txtCostType);
             this.layoutControl1.Controls.Add(this.txtCostDesc);
             this.layoutControl1.Controls.Add(this.txtUseType);
             this.layoutControl1.Controls.Add(this.txtFlagApp);
@@ -209,7 +204,7 @@ namespace BB.TMS.UI
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(70, 185, 250, 350);
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(980, 44);
+            this.layoutControl1.Size = new System.Drawing.Size(980, 60);
             this.layoutControl1.TabIndex = 12;
             this.layoutControl1.Text = "layoutControl1";
             //
@@ -218,125 +213,90 @@ namespace BB.TMS.UI
             this.layoutControlGroup1.CustomizationFormText = "layoutControlGroup1";
             this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutCostType1,
-            this.layoutCostType2,
+            this.layoutCostType,
             this.layoutCostDesc,
             this.layoutUseType,
             this.layoutFlagApp,
             });
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(980, 44);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(980, 60);
             this.layoutControlGroup1.TextVisible = false;
             //
-            // layoutCostType1
+            // layoutCostType
             //
-            this.layoutCostType1.Control = this.txtCostType1;
-            this.layoutCostType1.CustomizationFormText = "类型编号1";
-            this.layoutCostType1.Location = new System.Drawing.Point(0, 0);
-            this.layoutCostType1.Name = "layoutCostType";
-            this.layoutCostType1.Size = new System.Drawing.Size(160, 24);
-            this.layoutCostType1.Text = "类型编号 >=";
-            this.layoutCostType1.TextSize = new System.Drawing.Size(48, 14);
+            this.layoutCostType.Control = this.txtCostType;
+            this.layoutCostType.CustomizationFormText = "类型编号";
+            this.layoutCostType.Location = new System.Drawing.Point(0, 0);
+            this.layoutCostType.Name = "layoutCostType";
+            this.layoutCostType.Size = new System.Drawing.Size(160, 34);
+            this.layoutCostType.Text = "类型编号";
+            this.layoutCostType.TextSize = new System.Drawing.Size(48, 14);
             //
-            // txtCostType1
+            // txtCostType
             //
-            this.txtCostType1.EditValue = null;
-            this.txtCostType1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtCostType1.Location = new System.Drawing.Point(64, 12);
-            this.txtCostType1.Name = "txtCostType1";
-            this.txtCostType1.Properties.AllowMouseWheel = true;
-            this.txtCostType1.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
-            this.txtCostType1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.txtCostType1.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
-            this.txtCostType1.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
-            this.txtCostType1.Size = new System.Drawing.Size(105, 20);
-            this.txtCostType1.StyleController = this.layoutControl1;
-            this.txtCostType1.TabIndex = 0;
-            //
-            // layoutCostType2
-            //
-            this.layoutCostType2.Control = this.txtCostType2;
-            this.layoutCostType2.CustomizationFormText = "类型编号2";
-            this.layoutCostType2.Location = new System.Drawing.Point(160, 0);
-            this.layoutCostType2.Name = "layoutCostType";
-            this.layoutCostType2.Size = new System.Drawing.Size(160, 24);
-            this.layoutCostType2.Text = "类型编号 <=";
-            this.layoutCostType2.TextSize = new System.Drawing.Size(48, 14);
-            //
-            // txtCostType2
-            //
-            this.txtCostType2.EditValue = null;
-            this.txtCostType2.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtCostType2.Location = new System.Drawing.Point(224, 12);
-            this.txtCostType2.Name = "txtCostType2";
-            this.txtCostType2.Properties.AllowMouseWheel = true;
-            this.txtCostType2.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
-            this.txtCostType2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.txtCostType2.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
-            this.txtCostType2.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
-            this.txtCostType2.Size = new System.Drawing.Size(105, 20);
-            this.txtCostType2.StyleController = this.layoutControl1;
-            this.txtCostType2.TabIndex = 1;
+            this.txtCostType.Location = new System.Drawing.Point(64, 16);
+            this.txtCostType.Name = "txtCostType";
+            this.txtCostType.Size = new System.Drawing.Size(105, 28);
+            this.txtCostType.StyleController = this.layoutControl1;
+            this.txtCostType.TabIndex = 0;
             //
             // layoutCostDesc
             //
             this.layoutCostDesc.Control = this.txtCostDesc;
             this.layoutCostDesc.CustomizationFormText = "类型名称";
-            this.layoutCostDesc.Location = new System.Drawing.Point(320, 0);
+            this.layoutCostDesc.Location = new System.Drawing.Point(160, 0);
             this.layoutCostDesc.Name = "layoutCostDesc";
-            this.layoutCostDesc.Size = new System.Drawing.Size(160, 24);
+            this.layoutCostDesc.Size = new System.Drawing.Size(160, 34);
             this.layoutCostDesc.Text = "类型名称";
             this.layoutCostDesc.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtCostDesc
             //
-            this.txtCostDesc.Location = new System.Drawing.Point(384, 12);
+            this.txtCostDesc.Location = new System.Drawing.Point(224, 16);
             this.txtCostDesc.Name = "txtCostDesc";
-            this.txtCostDesc.Size = new System.Drawing.Size(105, 20);
+            this.txtCostDesc.Size = new System.Drawing.Size(105, 28);
             this.txtCostDesc.StyleController = this.layoutControl1;
-            this.txtCostDesc.TabIndex = 2;
+            this.txtCostDesc.TabIndex = 1;
             //
             // layoutUseType
             //
             this.layoutUseType.Control = this.txtUseType;
             this.layoutUseType.CustomizationFormText = "适用范围";
-            this.layoutUseType.Location = new System.Drawing.Point(480, 0);
+            this.layoutUseType.Location = new System.Drawing.Point(320, 0);
             this.layoutUseType.Name = "layoutUseType";
-            this.layoutUseType.Size = new System.Drawing.Size(160, 24);
+            this.layoutUseType.Size = new System.Drawing.Size(160, 34);
             this.layoutUseType.Text = "适用范围";
             this.layoutUseType.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtUseType
             //
-            this.txtUseType.Location = new System.Drawing.Point(544, 12);
+            this.txtUseType.Location = new System.Drawing.Point(384, 16);
             this.txtUseType.Name = "txtUseType";
             this.txtUseType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtUseType.Size = new System.Drawing.Size(105, 20);
+            this.txtUseType.Size = new System.Drawing.Size(105, 28);
             this.txtUseType.StyleController = this.layoutControl1;
-            this.txtUseType.TabIndex = 3;
+            this.txtUseType.TabIndex = 2;
             //
             // layoutFlagApp
             //
             this.layoutFlagApp.Control = this.txtFlagApp;
             this.layoutFlagApp.CustomizationFormText = "审核";
-            this.layoutFlagApp.Location = new System.Drawing.Point(640, 0);
+            this.layoutFlagApp.Location = new System.Drawing.Point(480, 0);
             this.layoutFlagApp.Name = "layoutFlagApp";
-            this.layoutFlagApp.Size = new System.Drawing.Size(320, 24);
+            this.layoutFlagApp.Size = new System.Drawing.Size(480, 34);
             this.layoutFlagApp.Text = "审核";
             this.layoutFlagApp.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtFlagApp
             //
-            this.txtFlagApp.Location = new System.Drawing.Point(704, 12);
+            this.txtFlagApp.Location = new System.Drawing.Point(544, 16);
             this.txtFlagApp.Name = "txtFlagApp";
             this.txtFlagApp.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtFlagApp.Size = new System.Drawing.Size(105, 20);
+            this.txtFlagApp.Size = new System.Drawing.Size(105, 28);
             this.txtFlagApp.StyleController = this.layoutControl1;
-            this.txtFlagApp.TabIndex = 4;
+            this.txtFlagApp.TabIndex = 3;
             //
             // barManager1
             //
@@ -369,7 +329,7 @@ namespace BB.TMS.UI
             this.standaloneBarDockControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.standaloneBarDockControl1.CausesValidation = false;
-            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 52);
+            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 68);
             this.standaloneBarDockControl1.Manager = this.barManager1;
             this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
             this.standaloneBarDockControl1.Size = new System.Drawing.Size(980, 29);
@@ -420,14 +380,12 @@ namespace BB.TMS.UI
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             this.menuTree.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.txtCostType1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtCostType2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCostType.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCostDesc.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUseType.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFlagApp.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutCostType1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutCostType2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutCostType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutCostDesc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutUseType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutFlagApp)).EndInit();
@@ -453,10 +411,8 @@ namespace BB.TMS.UI
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
 
-        private DevExpress.XtraEditors.SpinEdit txtCostType1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutCostType1;
-        private DevExpress.XtraEditors.SpinEdit txtCostType2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutCostType2;
+        private DevExpress.XtraEditors.TextEdit txtCostType;
+        private DevExpress.XtraLayout.LayoutControlItem layoutCostType;
         private DevExpress.XtraEditors.TextEdit txtCostDesc;
         private DevExpress.XtraLayout.LayoutControlItem layoutCostDesc;
         private DevExpress.XtraEditors.ComboBoxEdit txtUseType;

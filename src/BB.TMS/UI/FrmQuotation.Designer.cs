@@ -100,7 +100,7 @@ namespace BB.TMS.UI
             this.winGridViewPager1.ShowDeleteMenu = true;
             this.winGridViewPager1.ShowEditMenu = true;
             this.winGridViewPager1.ShowExportButton = true;
-            this.winGridViewPager1.Size = new System.Drawing.Size(540, 596);
+            this.winGridViewPager1.Size = new System.Drawing.Size(540, 580);
             this.winGridViewPager1.TabIndex = 98;
             //
             // winGridView2
@@ -119,7 +119,7 @@ namespace BB.TMS.UI
             this.winGridView2.ShowDeleteMenu = true;
             this.winGridView2.ShowEditMenu = true;
             this.winGridView2.ShowExportButton = true;
-            this.winGridView2.Size = new System.Drawing.Size(435, 596);
+            this.winGridView2.Size = new System.Drawing.Size(435, 580);
             this.winGridView2.TabIndex = 99;
             //
             // splitContainer1
@@ -135,7 +135,7 @@ namespace BB.TMS.UI
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.winGridView2);
             this.splitContainer1.Panel2.Text = "Panel2";
-            this.splitContainer1.Size = new System.Drawing.Size(980, 596);
+            this.splitContainer1.Size = new System.Drawing.Size(980, 580);
             this.splitContainer1.SplitterPosition = 540;
             this.splitContainer1.TabIndex = 100;
             this.splitContainer1.Text = "splitContainer1";
@@ -145,13 +145,13 @@ namespace BB.TMS.UI
             this.splitContainerControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerControl1.Location = new System.Drawing.Point(12, 81);
+            this.splitContainerControl1.Location = new System.Drawing.Point(12, 97);
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.groupControl1);
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.splitContainer1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1160, 596);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1160, 580);
             this.splitContainerControl1.SplitterPosition = 197;
             this.splitContainerControl1.TabIndex = 102;
             this.splitContainerControl1.Text = "splitContainerControl1";
@@ -250,7 +250,7 @@ namespace BB.TMS.UI
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(70, 185, 250, 350);
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(1160, 44);
+            this.layoutControl1.Size = new System.Drawing.Size(1160, 60);
             this.layoutControl1.TabIndex = 12;
             this.layoutControl1.Text = "layoutControl1";
             //
@@ -266,7 +266,7 @@ namespace BB.TMS.UI
             this.layoutFlagApp,
             });
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1160, 44);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(1160, 60);
             this.layoutControlGroup1.TextVisible = false;
             //
             // barManager1
@@ -300,7 +300,7 @@ namespace BB.TMS.UI
             this.standaloneBarDockControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.standaloneBarDockControl1.CausesValidation = false;
-            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 52);
+            this.standaloneBarDockControl1.Location = new System.Drawing.Point(12, 68);
             this.standaloneBarDockControl1.Manager = this.barManager1;
             this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
             this.standaloneBarDockControl1.Size = new System.Drawing.Size(1160, 29);
@@ -336,16 +336,16 @@ namespace BB.TMS.UI
             this.layoutQuotationNo.CustomizationFormText = "报价编号";
             this.layoutQuotationNo.Location = new System.Drawing.Point(0, 0);
             this.layoutQuotationNo.Name = "layoutQuotationNo";
-            this.layoutQuotationNo.Size = new System.Drawing.Size(190, 24);
+            this.layoutQuotationNo.Size = new System.Drawing.Size(190, 34);
             this.layoutQuotationNo.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutQuotationNo.Text = "报价编号";
             this.layoutQuotationNo.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtQuotationNo
             //
-            this.txtQuotationNo.Location = new System.Drawing.Point(85, 12);
+            this.txtQuotationNo.Location = new System.Drawing.Point(85, 16);
             this.txtQuotationNo.Name = "txtQuotationNo";
-            this.txtQuotationNo.Size = new System.Drawing.Size(105, 20);
+            this.txtQuotationNo.Size = new System.Drawing.Size(105, 28);
             this.txtQuotationNo.StyleController = this.layoutControl1;
             this.txtQuotationNo.TabIndex = 0;
             //
@@ -355,16 +355,16 @@ namespace BB.TMS.UI
             this.layoutQuotationDesc.CustomizationFormText = "报价名称";
             this.layoutQuotationDesc.Location = new System.Drawing.Point(190, 0);
             this.layoutQuotationDesc.Name = "layoutQuotationDesc";
-            this.layoutQuotationDesc.Size = new System.Drawing.Size(190, 24);
+            this.layoutQuotationDesc.Size = new System.Drawing.Size(190, 34);
             this.layoutQuotationDesc.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutQuotationDesc.Text = "报价名称";
             this.layoutQuotationDesc.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtQuotationDesc
             //
-            this.txtQuotationDesc.Location = new System.Drawing.Point(275, 12);
+            this.txtQuotationDesc.Location = new System.Drawing.Point(275, 16);
             this.txtQuotationDesc.Name = "txtQuotationDesc";
-            this.txtQuotationDesc.Size = new System.Drawing.Size(105, 20);
+            this.txtQuotationDesc.Size = new System.Drawing.Size(105, 28);
             this.txtQuotationDesc.StyleController = this.layoutControl1;
             this.txtQuotationDesc.TabIndex = 1;
             //
@@ -374,18 +374,18 @@ namespace BB.TMS.UI
             this.layoutCostType.CustomizationFormText = "费用类型";
             this.layoutCostType.Location = new System.Drawing.Point(380, 0);
             this.layoutCostType.Name = "layoutCostType";
-            this.layoutCostType.Size = new System.Drawing.Size(190, 24);
+            this.layoutCostType.Size = new System.Drawing.Size(190, 34);
             this.layoutCostType.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutCostType.Text = "费用类型";
             this.layoutCostType.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtCostType
             //
-            this.txtCostType.Location = new System.Drawing.Point(465, 12);
+            this.txtCostType.Location = new System.Drawing.Point(465, 16);
             this.txtCostType.Name = "txtCostType";
             this.txtCostType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtCostType.Size = new System.Drawing.Size(105, 20);
+            this.txtCostType.Size = new System.Drawing.Size(105, 28);
             this.txtCostType.StyleController = this.layoutControl1;
             this.txtCostType.TabIndex = 2;
             //
@@ -395,18 +395,18 @@ namespace BB.TMS.UI
             this.layoutCargoTypePerYN.CustomizationFormText = "支持货物类型加成";
             this.layoutCargoTypePerYN.Location = new System.Drawing.Point(570, 0);
             this.layoutCargoTypePerYN.Name = "layoutCargoTypePerYN";
-            this.layoutCargoTypePerYN.Size = new System.Drawing.Size(190, 24);
+            this.layoutCargoTypePerYN.Size = new System.Drawing.Size(190, 34);
             this.layoutCargoTypePerYN.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutCargoTypePerYN.Text = "支持货物类型加成";
             this.layoutCargoTypePerYN.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtCargoTypePerYN
             //
-            this.txtCargoTypePerYN.Location = new System.Drawing.Point(655, 12);
+            this.txtCargoTypePerYN.Location = new System.Drawing.Point(655, 16);
             this.txtCargoTypePerYN.Name = "txtCargoTypePerYN";
             this.txtCargoTypePerYN.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtCargoTypePerYN.Size = new System.Drawing.Size(105, 20);
+            this.txtCargoTypePerYN.Size = new System.Drawing.Size(105, 28);
             this.txtCargoTypePerYN.StyleController = this.layoutControl1;
             this.txtCargoTypePerYN.TabIndex = 3;
             //
@@ -416,18 +416,18 @@ namespace BB.TMS.UI
             this.layoutFlagApp.CustomizationFormText = "审批";
             this.layoutFlagApp.Location = new System.Drawing.Point(760, 0);
             this.layoutFlagApp.Name = "layoutFlagApp";
-            this.layoutFlagApp.Size = new System.Drawing.Size(380, 24);
+            this.layoutFlagApp.Size = new System.Drawing.Size(380, 34);
             this.layoutFlagApp.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Default;
             this.layoutFlagApp.Text = "审批";
             this.layoutFlagApp.TextSize = new System.Drawing.Size(48, 14);
             //
             // txtFlagApp
             //
-            this.txtFlagApp.Location = new System.Drawing.Point(845, 12);
+            this.txtFlagApp.Location = new System.Drawing.Point(845, 16);
             this.txtFlagApp.Name = "txtFlagApp";
             this.txtFlagApp.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtFlagApp.Size = new System.Drawing.Size(105, 20);
+            this.txtFlagApp.Size = new System.Drawing.Size(105, 28);
             this.txtFlagApp.StyleController = this.layoutControl1;
             this.txtFlagApp.TabIndex = 4;
             //

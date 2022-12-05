@@ -47,8 +47,8 @@ public partial class FrmEditCar : BaseEditForm<Car, CarHttpService>
         txtCarType.BindDictItems("车体状况", null, false, false);
         txtServiceRange.BindDictItems("服务范围", null, false, false);
         txtTrustLevel.BindDictItems("信誉类型", null, false, false);
-        txtCreatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), true, false);
-        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, GB.LoginUserInfo.ID.ToString(), true, false);
+        txtCreatedBy.BindDictItems(GB.AllUserDict, "*当前用户*", true, false);
+        txtLastUpdatedBy.BindDictItems(GB.AllUserDict, "*当前用户*", true, false);
         txtFlagApp.BindDictItems("已审核,未审核", false);
         txtAppUser.BindDictItems(GB.AllUserDict, null, true, false);
         return Task.CompletedTask;
