@@ -56,14 +56,14 @@ public class ${Name}Service : BaseMultiService<${Name}, ${ChildName}>, IDynamicA
         {
 #foreach($ColumnInfo in ${MetadataImports})
 #if(!$ColumnInfo.IsVisible || (!$ColumnInfo.IsAdd && !$ColumnInfo.IsEdit))
-            { ${Name}.Field${ColumnInfo.CSharpFieldName}, 3 },
+            { nameof(${Name}.${ColumnInfo.CSharpFieldName}), 3 },
 #elseif($ColumnInfo.IsReadonly)
-            { ${Name}.Field${ColumnInfo.CSharpFieldName}, 1 },
+            { nameof(${Name}.${ColumnInfo.CSharpFieldName}), 1 },
 #elseif($ColumnInfo.IsAdd && (!$ColumnInfo.IsEdit || $ColumnInfo.IsKey))
 #if($ColumnInfo.IsKey)
             // 主键不为空则只读
 #end
-            { ${Name}.Field${ColumnInfo.CSharpFieldName}, 4 },
+            { nameof(${Name}.${ColumnInfo.CSharpFieldName}), 4 },
 ## #elseif($ColumnInfo.IsAdd && $ColumnInfo.IsEdit)
 ##             { ${Name}.Field${ColumnInfo.CSharpFieldName}, 0 },
 #end

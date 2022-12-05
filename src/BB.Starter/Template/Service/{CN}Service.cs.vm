@@ -55,14 +55,14 @@ public class ${ChildName}Service : BaseService<${ChildName}>, IDynamicApiControl
         {
 #foreach($ColumnInfo in ${ChildMetadataImports})
 #if(!$ColumnInfo.IsVisible || (!$ColumnInfo.IsAdd && !$ColumnInfo.IsEdit))
-            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 3 },
+            { nameof(${ChildName}.${ColumnInfo.CSharpFieldName}), 3 },
 #elseif($ColumnInfo.IsReadonly)
-            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 1 },
+            { nameof(${ChildName}.${ColumnInfo.CSharpFieldName}), 1 },
 #elseif($ColumnInfo.IsAdd && (!$ColumnInfo.IsEdit || $ColumnInfo.IsKey))
 #if($ColumnInfo.IsKey)
             // 主键不为空则只读
 #end
-            { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 4 },
+            { nameof(${ChildName}.${ColumnInfo.CSharpFieldName}), 4 },
 ## #elseif($ColumnInfo.IsAdd && $ColumnInfo.IsEdit)
 ##             { ${ChildName}.Field${ColumnInfo.CSharpFieldName}, 0 },
 #end
