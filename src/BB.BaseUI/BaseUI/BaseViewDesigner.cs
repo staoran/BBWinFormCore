@@ -9,7 +9,7 @@ namespace BB.BaseUI.BaseUI;
 
 public partial class BaseViewDesigner : BaseDock
 {
-    protected readonly string moduleName;
+    protected string moduleName;
     protected readonly dynamic _bll;
     protected BarButtonItem addButton;
     protected BarButtonItem editButton;
@@ -26,7 +26,7 @@ public partial class BaseViewDesigner : BaseDock
     /// <summary>
     /// 高级查询界面
     /// </summary>
-    protected FrmAdvanceSearch _advDlg;
+    protected FrmAdvanceSearch AdvDlg;
 
     /// <summary>
     /// 高级查询条件语句对象
@@ -42,6 +42,12 @@ public partial class BaseViewDesigner : BaseDock
         InitializeComponent();
     }
     public BaseViewDesigner(string name) : this()
+    {
+    }
+    public BaseViewDesigner(object bll, object childBll, object baseForm) : this()
+    {
+    }
+    public BaseViewDesigner(object bll, object baseForm) : this()
     {
     }
 
