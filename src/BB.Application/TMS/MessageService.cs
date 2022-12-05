@@ -38,7 +38,7 @@ public class MessageService : BaseMultiService<Message, Messages>, IDynamicApiCo
         {
             { nameof(Message.ISID), 3 },
             // 主键不为空则只读
-            { nameof(Message.MsgNo), 4 },
+            { nameof(Message.MsgNo), 1 },
             { nameof(Message.RecvMsgNode), 4 },
             { nameof(Message.SendMsgNode), 1 },
             { nameof(Message.DealStatus), 1 },

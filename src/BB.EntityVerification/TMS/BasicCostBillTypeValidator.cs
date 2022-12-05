@@ -26,7 +26,7 @@ public class BasicCostBillTypeValidator : AbstractValidator<BasicCostBillType>
         #region 实体通用验证
 
         // 类型编号
-        RuleFor(x => x.CostType).IsNumber(true, 20).IsGo();
+        RuleFor(x => x.CostType).IsLength(true, 20).IsGo();
         // 类型名称
         RuleFor(x => x.CostDesc).IsLength(true, 50).IsGo();
         // 正负1/-1

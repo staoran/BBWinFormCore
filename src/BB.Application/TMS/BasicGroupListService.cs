@@ -37,10 +37,10 @@ public class BasicGroupListService : BaseService<BasicGroupList>, IDynamicApiCon
         var permitDict = new Dictionary<string, int>
         {
             // 主键不为空则只读
-            { nameof(BasicGroupList.ISID), 4 },
+            { nameof(BasicGroupList.ISID), 3 },
             { nameof(BasicGroupList.GroupName), 4 },
-            { nameof(BasicGroupList.CreationDate), 1 },
-            { nameof(BasicGroupList.CreatedBy), 1 },
+            { nameof(BasicGroupList.CreationDate), 4 },
+            { nameof(BasicGroupList.CreatedBy), 4 },
             { nameof(BasicGroupList.LastUpdateDate), 1 },
             { nameof(BasicGroupList.LastUpdatedBy), 1 },
             { nameof(BasicGroupList.FlagApp), 1 },

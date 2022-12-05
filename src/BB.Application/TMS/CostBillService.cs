@@ -52,7 +52,7 @@ public class CostBillService : BaseService<CostBill>, IDynamicApiController, ITr
             { nameof(CostBill.AppUser), 1 },
             { nameof(CostBill.AppDate), 1 },
             { nameof(CostBill.AttaPath), 3 },
-            { nameof(CostBill.FinancialCenter), 1 },
+            { nameof(CostBill.FinancialCenter), 4 },
         };
         // 后端权限控制
         // var permitDict = BllFactory<FieldPermit>.Instance.GetColumnsPermit(typeof(Test1Car).FullName, LoginUserInfo.ID.ToInt32());
