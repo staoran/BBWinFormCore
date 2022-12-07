@@ -282,7 +282,7 @@ public partial class MainForm : RibbonForm
         {
             Application.DoEvents();
         }
-        GB.Quit();
+        Portal.Exit();
     }
 
     /// <summary>

@@ -12,9 +12,11 @@ using BB.BaseUI.WinForm;
 using BB.HttpServices.Base;
 using BB.Starter.UI.SplashScreen;
 using BB.Starter.UI.SYS;
+using BB.Tools.Cache;
 using BB.Tools.Const;
 using BB.Tools.Encrypt;
 using BB.Tools.Entity;
+using BB.Tools.Extension;
 using BB.Tools.Format;
 using BB.Tools.Utils;
 using BB.Tools.Validation;
@@ -144,25 +146,34 @@ public class Portal
         var dlg = new Logon();
         dlg.StartPosition = FormStartPosition.CenterScreen;
         var result = dlg.ShowDialog();
-        if (DialogResult.OK == result)
-        {
-            if (dlg.BLogin)
-            {
-                Splasher.Show(typeof(FrmSplash));
-
-                GB.MainDialog = new MainForm();
-                GB.MainDialog.StartPosition = FormStartPosition.CenterScreen;
-                Application.Run(GB.MainDialog);
-            }
-
-        }else if(DialogResult.Yes == result)
-        {
-            var form = App.GetService<FrmSelectDataBase>();
-            form.MaximizeBox = true;
-            form.WindowState = FormWindowState.Maximized;
-            Application.Run(form);
-        }
         dlg.Dispose();
+        switch (result)
+        {
+            case DialogResult.OK:
+            {
+                if (dlg.BLogin)
+                {
+                    Splasher.Show(typeof(FrmSplash));
+
+                    GB.MainDialog = new MainForm();
+                    GB.MainDialog.StartPosition = FormStartPosition.CenterScreen;
+                    Application.Run(GB.MainDialog);
+                }
+
+                break;
+            }
+            case DialogResult.Yes:
+            {
+                var form = App.GetService<FrmSelectDataBase>();
+                form.MaximizeBox = true;
+                form.WindowState = FormWindowState.Maximized;
+                Application.Run(form);
+                break;
+            }
+            case DialogResult.Cancel:
+                Exit();
+                break;
+        }
     }
 
     /// <summary>
@@ -216,7 +227,7 @@ public class Portal
         {
             Console.Write(ex.Message);
             Thread.Sleep(1000);
-            Environment.Exit(1);
+            Exit();
         }
 
         // 第一次创建mutex
@@ -229,7 +240,7 @@ public class Portal
         {
             "另一个窗口已在运行，不能重复运行。".ShowUxTips();
             Thread.Sleep(1000);
-            Environment.Exit(1);//退出程序
+            Exit();//退出程序
         }
     }
 
@@ -245,7 +256,7 @@ public class Portal
         string message = $"{ex.Exception.Message}\r\n操作发生错误，您需要退出系统么？";
         if (DialogResult.Yes == message.ShowYesNoAndUxError())
         {
-            Application.ExitThread();
+            Exit();
         }
     }
 
@@ -409,5 +420,22 @@ public class Portal
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// 程序退出
+    /// </summary>
+    public static void Exit()
+    {
+        if (_host != null)
+        {
+            Cache.Instance.FlushAll();
+            // 停止服务并释放
+            _host.StopAsync();
+            _host.Dispose();
+        }
+
+        Application.ExitThread();
+        Application.Exit();
     }
 }

@@ -354,19 +354,6 @@ public static class GB
     }
 
     /// <summary>
-    /// 退出系统
-    /// </summary>
-    public static void Quit()
-    {
-        MainDialog?.Close();
-
-        Cache.Instance.FlushAll();
-
-        Application.ExitThread();
-        Application.Exit();
-    }
-
-    /// <summary>
     /// 重新登陆(此方法目前有异常)
     /// </summary>
     public static void Refresh()
