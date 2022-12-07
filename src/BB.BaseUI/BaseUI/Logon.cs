@@ -312,7 +312,6 @@ public class Logon : XtraForm
 	private void btExit_Click(object? sender, EventArgs e)
 	{
 		DialogResult = DialogResult.Cancel;
-		Application.Exit();
 	}
 
 	private async void btLogin_Click(object? sender, EventArgs e)

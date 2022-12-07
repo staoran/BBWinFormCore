@@ -25,6 +25,7 @@ using FluentValidation;
 using Furion;
 using Furion.Logging.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 // #if DEBUG
 // // 控制台输出，需加入此库
@@ -45,37 +46,39 @@ public class Portal
     
     private static BackgroundWorker? _updateWorker;
 
+    private static IHost? _host;
+
     /// <summary>
     /// 应用程序的主入口点。
     /// </summary>
     [STAThread]
     private static void Main(string[] args)
     {
-        Serve.Run(GenericRunOptions.DefaultSilence.ConfigureBuilder(builder =>
-            builder.ConfigureServices((_, services) => services
-                .AddValidatorsFromAssemblies(App.Assemblies)
-                .AddTransient(typeof(Lazy<>))
-                .AddTransient(typeof(LazilyResolved<>))
-                .AddJsonOptions(options =>
-                    {
-                        // 驼峰命名
-                        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                        // 时间格式化
-                        options.JsonSerializerOptions.Converters.AddDateTimeTypeConverters("yyyy-MM-dd HH:mm:ss.fff");
-                        // 忽略循环引用
-                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                        // 自定义反序列化
-                        options.JsonSerializerOptions.Converters.Add(new ConverterBoolean());
-                        options.JsonSerializerOptions.Converters.Add(new ConverterObject());
-                    })
-                 .AddRemoteRequest()
-                 .AddHttpClient(string.Empty, client =>
-                 {
-                     client.BaseAddress = new Uri("https://localhost:5001/api/");
-                     // client.DefaultRequestHeaders.Add("Accept", "");
-                     // client.DefaultRequestHeaders.Add("User-Agent", "");
-                 })
-            )));
+        SplashScreenHelper.Show();
+        SplashScreenHelper.SetDescription("启动主机服务");
+        Task.Run(() => _host = Serve.RunGeneric(services => services
+            .AddValidatorsFromAssemblies(App.Assemblies)
+            .AddTransient(typeof(Lazy<>))
+            .AddTransient(typeof(LazilyResolved<>))
+            .AddJsonOptions(options =>
+            {
+                // 驼峰命名
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                // 时间格式化
+                options.JsonSerializerOptions.Converters.AddDateTimeTypeConverters("yyyy-MM-dd HH:mm:ss.fff");
+                // 忽略循环引用
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                // 自定义反序列化
+                options.JsonSerializerOptions.Converters.Add(new ConverterBoolean());
+                options.JsonSerializerOptions.Converters.Add(new ConverterObject());
+            })
+            .AddRemoteRequest()
+            .AddHttpClient(string.Empty, client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:5001/api/");
+                // client.DefaultRequestHeaders.Add("Accept", "");
+                // client.DefaultRequestHeaders.Add("User-Agent", "");
+            }), true));
 
         GlobalExceptionCapture(() =>
         {
@@ -94,21 +97,27 @@ public class Portal
             //    return;
             //}
 
+            SplashScreenHelper.SetDescription("查找更新");
             // 设置UI常量，后台检测更新
             SetUiConstants();
             // 全局互斥检测
             GlobalMutex();
-            
-            //界面汉化
+
+            //界面汉化和默认皮肤
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("zh-CN");
             BonusSkins.Register();
             SkinManager.EnableFormSkins();
-        
+
+            SplashScreenHelper.SetDescription("应用初始化，启动登陆页");
             // 配置验证程序
             ValidatorOptions.Global.DisplayNameResolver = CustomValidatorExtensions.DisplayNameResolver;
             // ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
 
             ApplicationConfiguration.Initialize();
+            SplashScreenHelper.SetDescription("等待主机服务加载完成");
+            while (_host == null) { }
+
+            SplashScreenHelper.Close();
 
             if (args.Length >= 1)
             {
