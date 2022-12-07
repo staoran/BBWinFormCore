@@ -21,6 +21,7 @@ using BB.Tools.Format;
 using BB.Tools.Utils;
 using BB.Tools.Validation;
 using BB.Updater.Core;
+using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
 using FluentValidation;
@@ -109,6 +110,7 @@ public class Portal
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("zh-CN");
             BonusSkins.Register();
             SkinManager.EnableFormSkins();
+            UserLookAndFeel.Default.SetSkinStyle("WXI");
 
             SplashScreenHelper.SetDescription("应用初始化，启动登陆页");
             // 配置验证程序

@@ -11,7 +11,6 @@ using BB.Tools.Cache;
 using BB.Tools.Const;
 using BB.Tools.Extension;
 using BB.Tools.Format;
-using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
@@ -302,7 +301,6 @@ public partial class MainForm : RibbonForm
             SkinHelper.InitSkinGallery(rgbiSkins, true);
             ribbonControl.Toolbar.ItemLinks.Clear();
             ribbonControl.Toolbar.ItemLinks.Add(rgbiSkins);
-            UserLookAndFeel.Default.SetSkinStyle("WXI");
 
             #endregion
 
