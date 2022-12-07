@@ -23,7 +23,7 @@ public class Logon : XtraForm
 	private SimpleButton _btExit;
 	private SimpleButton _btLogin;
 	private ComboBoxEdit _cmbzhanhao;
-	private TextBox _tbPass;
+	private TextEdit _tbPass;
 	private Label _lblTitle;
 	private Label _lblCalendar;
 	private LinkLabel _linkHelp;
@@ -138,7 +138,7 @@ public class Logon : XtraForm
 	{
 		ComponentResourceManager resources = new ComponentResourceManager(typeof(Logon));
 		_groupBox1 = new GroupBox();
-		_tbPass = new TextBox();
+		_tbPass = new TextEdit();
 		_cmbzhanhao = new ComboBoxEdit();
 		_label1 = new Label();
 		_label2 = new Label();
@@ -171,7 +171,7 @@ public class Logon : XtraForm
 		// 
 		_tbPass.Location = new Point(96, 86);
 		_tbPass.Name = "_tbPass";
-		_tbPass.PasswordChar = '*';
+		_tbPass.Properties.PasswordChar = '*';
 		_tbPass.Size = new Size(184, 22);
 		_tbPass.TabIndex = 1;
 		_tbPass.KeyDown += tbPass_KeyDown;
@@ -317,35 +317,40 @@ public class Logon : XtraForm
 
 	private async void btLogin_Click(object? sender, EventArgs e)
 	{
-		SplashScreenHelper.Show();
-		#region 检查验证
-		if (GB.EnableRegister && !GB.Registed)
-		{
-			"软件未进行授权注册，不能使用。\r\n请单击左边【软件注册】按钮进行注册。".ShowErrorTip(this);
-			return;
-		}
-
-		if (_cmbzhanhao.Text.Length == 0)
-		{
-			"请输入帐号".ShowErrorTip(_cmbzhanhao);
-			_cmbzhanhao.Focus();
-			return;
-		}
-		#endregion
-
 		try
 		{
+			SplashScreenHelper.Show();
+
+			#region 检查验证
+
+			if (GB.EnableRegister && !GB.Registed)
+			{
+				"软件未进行授权注册，不能使用。\r\n请单击左边【软件注册】按钮进行注册。".ShowErrorTip(this);
+				return;
+			}
+
+			if (_cmbzhanhao.Text.Length == 0)
+			{
+				"请输入帐号".ShowErrorTip(_cmbzhanhao);
+				_cmbzhanhao.Focus();
+				return;
+			}
+
+			#endregion
+
 			string loginName = _cmbzhanhao.Text.Trim();
-			if (! await SecurityHelper.Login(loginName, _tbPass.Text, GB.SystemType)) return;
+			if (!await SecurityHelper.Login(loginName, _tbPass.Text, GB.SystemType)) return;
 			BLogin = true;
 			DialogResult = DialogResult.OK;
 		}
 		catch (Exception err)
 		{
-			SplashScreenHelper.Close();
 			err.Message.ShowUxError();
 		}
-		SplashScreenHelper.Close();
+		finally
+		{
+			SplashScreenHelper.Close();
+		}
 	}
 
 
