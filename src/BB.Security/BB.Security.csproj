@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="DevExpress.Utils.v22.1">
+        <!--<Reference Include="DevExpress.Utils.v22.1">
             <HintPath>..\..\reference\DevExpress.Utils.v22.1.dll</HintPath>
         </Reference>
         <Reference Include="DevExpress.XtraEditors.v22.1">
@@ -40,7 +40,7 @@
         </Reference>
         <Reference Include="DevExpress.Printing.v22.1.Core">
             <HintPath>..\..\reference\DevExpress.Printing.v22.1.Core.dll</HintPath>
-        </Reference>
+        </Reference>-->
     </ItemGroup>
 
 </Project>

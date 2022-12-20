@@ -11,7 +11,7 @@ namespace BB.TMS.UI;
 /// 公式定义
 /// </summary>
 #if DESIGNER
-public partial FrmEditBasicTranslateWords FrmEditCar : BaseEditDesigner
+public partial class FrmEditBasicTranslateWords : BaseEditDesigner
 {
     protected DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
     protected DevExpress.XtraLayout.LayoutControl layoutControl1;

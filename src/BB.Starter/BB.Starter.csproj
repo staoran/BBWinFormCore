@@ -18,9 +18,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Reference Include="DevExpress.BonusSkins.v22.1">
-            <HintPath>..\..\reference\DevExpress.BonusSkins.v22.1.dll</HintPath>
-        </Reference>
+      <PackageReference Include="DevExpress.Win.BonusSkins" Version="22.1.6" />
+        <!--<Reference Include="DevExpress.BonusSkins.v22.1"/>
         <Reference Include="DevExpress.Drawing.v22.1">
             <HintPath>..\..\reference\DevExpress.Drawing.v22.1.dll</HintPath>
         </Reference>
@@ -50,7 +49,7 @@
         </Reference>
         <Reference Include="DevExpress.XtraTreeList.v22.1">
             <HintPath>..\..\reference\DevExpress.XtraTreeList.v22.1.dll</HintPath>
-        </Reference>
+        </Reference>-->
         <Reference Include="SettingsProviderNet">
           <HintPath>..\..\reference\SettingsProviderNet.dll</HintPath>
         </Reference>
@@ -85,6 +84,9 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="UI\SYS\MainToolBarForm.cs">
+        <SubType>Form</SubType>
       </Compile>
     </ItemGroup>
 

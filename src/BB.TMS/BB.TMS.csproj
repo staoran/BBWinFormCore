@@ -13,7 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-		<PackageReference Include="DevExpress.Win" Version="22.1.5" />
         <!--<Reference Include="DevExpress.Utils.v22.1">
             <HintPath>..\..\reference\DevExpress.Utils.v22.1.dll</HintPath>
         </Reference>
