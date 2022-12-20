@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using BB.BaseUI.BaseUI;
 using BB.BaseUI.WinForm;
-using BB.Tools.Cache;
 using BB.Tools.Entity;
 using BB.Tools.Extension;
 using BB.Tools.Utils;
+using DevExpress.Images;
+using DevExpress.Utils.Svg;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using Furion.Logging.Extensions;
@@ -25,12 +26,14 @@ public partial class FrmImageGallery : BaseForm
     /// 图标选择的事件
     /// </summary>
     public event IconSelectHandlerDelegate OnIconSelected;
-    private DxImageGalleryLoader _loader = null;
+    private readonly DxImageResourceCache _loader;
 
     public FrmImageGallery()
     {
         InitializeComponent();
 
+        //加载数据
+        _loader = DxImageResourceCache.Default;
         InitDictItem();//初始化
     }      
 
@@ -50,29 +53,26 @@ public partial class FrmImageGallery : BaseForm
     /// </summary>
     private  void InitDictItem()
     {
-        //加载数据
-        _loader = DxImageGalleryLoader.Default;
-
         //大小
         lstSize.Items.Clear();
-        lstSize.Items.Add(new CListItem("16x16"));
-        lstSize.Items.Add(new CListItem("32x32"), true);
+        lstSize.Items.Add(new CListItem("16x16"), true);
+        lstSize.Items.Add(new CListItem("32x32"));
+        lstSize.Items.Add(new CListItem("无"));
 
         //集合
         lstCollection.Items.Clear();
-        lstCollection.Items.Add(new CListItem("彩色", "images"), true);
+        lstCollection.Items.Add(new CListItem("彩色", "images"));
         lstCollection.Items.Add(new CListItem("灰度", "grayscaleimages"));
         lstCollection.Items.Add(new CListItem("Office 2013", "office2013"));
         lstCollection.Items.Add(new CListItem("DevExpress", "devav"));
+        // lstCollection.Items.Add(new CListItem("SVG", "svgimages"));
 
         //类别
         lstCategory.Items.Clear();
-        int i = 0;
         foreach (var item in _loader.Categories)
         {
             var display = item.Replace("%20", " ").ToProperCase();
-            var check = (i++ == 0) ? CheckState.Checked : CheckState.Unchecked;
-            lstCategory.Items.Add(new CListItem(display, item), check);
+            lstCategory.Items.Add(new CListItem(display, item), CheckState.Checked);
         }
 
         //单击事件触发选择图标
@@ -222,6 +222,8 @@ public class DxImageGalleryLoader
     /// </summary>
     public List<string> Size { get; set; }
 
+    public static DxImageGalleryLoader? Loader { get; set; }
+
     /// <summary>
     /// 使用缓存处理，获得对象实例
     /// </summary>
@@ -229,13 +231,19 @@ public class DxImageGalleryLoader
     {
         get
         {
-            System.Reflection.MethodBase method = System.Reflection.MethodBase.GetCurrentMethod();
-            string keyName = $"{method.DeclaringType.FullName}-{method.Name}";
+            //System.Reflection.MethodBase method = System.Reflection.MethodBase.GetCurrentMethod();
+            //string keyName = $"{method.DeclaringType.FullName}-{method.Name}";
 
-            var result = Cache.Instance.GetOrCreate(keyName,
-                () => new DxImageGalleryLoader().LoadData(),
-                new TimeSpan(0, 30, 0));//30分钟过期
-            return result;
+            //var result = Cache.Instance.GetOrCreate(keyName,
+            //    () => new DxImageGalleryLoader().LoadData(),
+            //    new TimeSpan(0, 30, 0));//30分钟过期
+            //return result;
+
+            if (Loader == null)
+            {
+                Loader = new DxImageGalleryLoader().LoadData();
+            }
+            return Loader;
         }
     }
 
@@ -278,7 +286,7 @@ public class DxImageGalleryLoader
                         Size.Add(sizeItem);
                     }
 
-                    Image image = GetImageFromStream((Stream)dict.Value);
+                    Image? image = GetImageFromStream((Stream?)dict.Value);
                     if (image != null)
                     {
                         var item = new GalleryItem(image, key, key);
@@ -323,9 +331,9 @@ public class DxImageGalleryLoader
             else
             {
                 //如果是集合和列表中包含的，把它们按类别添加到字典里面
-                if (collection.Contains(collectionItem) && 
+                if ((collection.Count == 0 || collection.Contains(collectionItem)) && 
                     categories.Contains(categoryItem) && 
-                    size.Contains(sizeItem))
+                    (size.Count == 0 || size.Contains(sizeItem)))
                 {
                     if (!dict.ContainsKey(categoryItem))
                     {
@@ -354,15 +362,141 @@ public class DxImageGalleryLoader
         }
         return new System.Resources.ResourceReader(imagesAssembly.GetManifestResourceStream(imageResources[0]));
     }
-    private Image GetImageFromStream(Stream stream)
+    private Image? GetImageFromStream(Stream? stream)
     {
-        Image res = null;
+        Image? res = null;
         try
         {
             res = Image.FromStream(stream);
         }
         catch { res = null; }
         return res;
+    }
+}
+
+/// <summary>
+/// 图标库加载处理
+/// </summary>
+public class DxImageResourceCache
+{
+    /// <summary>
+    /// 图标字典类别集合
+    /// </summary>
+    public Dictionary<string, GalleryItem> ImageCollection { get; set; }
+
+    /// <summary>
+    /// 图标分类
+    /// </summary>
+    public List<string> Categories { get; set; }
+
+    public static DxImageResourceCache? Loader { get; set; }
+
+    /// <summary>
+    /// 使用缓存处理，获得对象实例
+    /// </summary>
+    public static DxImageResourceCache Default
+    {
+        get
+        {
+            if (Loader == null)
+            {
+                Loader = new DxImageResourceCache().LoadData();
+            }
+            return Loader;
+        }
+    }
+
+    /// <summary>
+    /// 初始化加载图标资源
+    /// </summary>
+    /// <returns></returns>
+    private DxImageResourceCache LoadData()
+    { 
+        ImageCollection = new Dictionary<string, GalleryItem>();
+        Categories = new List<string>();
+
+        var allResourceKeys = ImageResourceCache.Default.GetAllResourceKeys();
+        var size = new Size(32, 32);
+        var pale = new SvgPalette();
+        foreach (string key in allResourceKeys)
+        {
+            if (key.EndsWith(".svg", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            string reg = @"(?<collection>\S*?)/(?<category>\S*?)/(?<name>\S*)";
+            var categoryItem = CRegex.GetText(key, reg, "category");
+            var name = CRegex.GetText(key, reg, "name");
+
+            if (!Categories.Contains(categoryItem))
+            {
+                Categories.Add(categoryItem);
+            }
+
+            Image image = ImageResourceCache.Default.GetImage(key);
+
+            if (image != null)
+            {
+                var item = new GalleryItem(image, key, key);
+                if (!ImageCollection.ContainsKey(key))
+                {
+                    ImageCollection.Add(key, item);
+                }
+            }
+        }
+        return this;
+    }
+
+    /// <summary>
+    /// 根据条件获取集合
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, GalleryItemCollection> Search(List<string> collection, List<string> categories, List<string> size, string fileName = "")
+    {
+        Dictionary<string, GalleryItemCollection> dict = new Dictionary<string, GalleryItemCollection>();
+
+        GalleryItemCollection list = new GalleryItemCollection();
+        
+        foreach (var key in ImageCollection.Keys)
+        {
+            //使用正则表达式获取图标文件名中的集合、类别、大小等信息
+            string reg = @"(?<collection>\S*?)/(?<category>\S*?)/(?<name>\S*)";
+            var collectionItem = CRegex.GetText(key, reg, "collection");
+            var categoryItem = CRegex.GetText(key, reg, "category");
+            var name = CRegex.GetText(key, reg, "name");
+            var s = name.Contains("16x16") ? "16x16" : name.Contains("32x32") ? "32x32" : "无";
+
+            //如果是查询处理，把记录放到查询结果里面
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                if(key.Contains(fileName))
+                {
+                    list.Add(ImageCollection[key]);
+                }
+                dict["查询结果"] = list;
+            }
+            else
+            {
+                //如果是集合和列表中包含的，把它们按类别添加到字典里面
+                if ((collection.Count == 0 || collection.Contains(collectionItem)) &&
+                    categories.Contains(categoryItem) &&
+                    (size.Count == 0 || size.Contains(s)))
+                {
+                    if (!dict.ContainsKey(categoryItem))
+                    {
+                        var cateList = new GalleryItemCollection { ImageCollection[key] };
+                        dict[categoryItem] = cateList;
+                    }
+                    else
+                    {
+                        GalleryItemCollection cateList = dict[categoryItem];
+                        cateList.Add(ImageCollection[key]);
+                    }
+                }
+            }
+        }
+        return dict;
     }
 }
 
