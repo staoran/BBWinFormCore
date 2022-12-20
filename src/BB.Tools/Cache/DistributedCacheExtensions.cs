@@ -23,14 +23,10 @@ public static class DistributedCacheExtensions
     /// <param name="absoluteTimeSpan">绝对过期时长</param>
     /// <param name="absoluteExpiry">绝对过期时间，absoluteTimeSpan 和 absoluteExpiry 都不为空时以 absoluteExpiry 为主</param>
     /// <typeparam name="T"></typeparam>
-    public static async Task SetAsync<T>(this IDistributedCache cache, string key, T value, TimeSpan? expireTimeSpan = null,
+    public static Task SetAsync<T>(this IDistributedCache cache, string key, T value, TimeSpan? expireTimeSpan = null,
         TimeSpan? absoluteTimeSpan = null, DateTimeOffset? absoluteExpiry = null)
     {
-        await SetAsync(cache, key, value, CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
-        if (AllKeys.All(x => x != key))
-        {
-            AllKeys.Add(key);
-        }
+        return SetAsync(cache, key, value, CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
     }
 
     /// <summary>
@@ -44,9 +40,10 @@ public static class DistributedCacheExtensions
     public static async Task SetAsync<T>(this IDistributedCache cache, string key, T value,
         DistributedCacheEntryOptions options)
     {
-        var json = JsonSerializer.Serialize(value);
-        await cache.SetStringAsync(key, json, options);
-        if (AllKeys.All(x => x != key))
+        using var memoryStream = new MemoryStream();
+        await JsonSerializer.SerializeAsync(memoryStream, value);
+        await cache.SetAsync(key, memoryStream.ToArray(), options);
+        if (!AllKeys.Contains(key))
         {
             AllKeys.Add(key);
         }
@@ -61,15 +58,15 @@ public static class DistributedCacheExtensions
     /// <returns></returns>
     public static async Task<T?> GetAsync<T>(this IDistributedCache cache, string key)
     {
-        var value = await cache.GetStringAsync(key);
+        var value = await cache.GetAsync(key);
 
         if (value is null)
             return default;
 
         try
         {
-            var deserializedValue = JsonSerializer.Deserialize<T>(value);
-            return deserializedValue;
+            using var memoryStream = new MemoryStream(value);
+            return await JsonSerializer.DeserializeAsync<T>(memoryStream);
         }
         catch
         {
@@ -88,10 +85,10 @@ public static class DistributedCacheExtensions
     /// <param name="absoluteExpiry">绝对过期时间，absoluteTimeSpan 和 absoluteExpiry 都不为空时以 absoluteExpiry 为主</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static async Task<T?> GetOrCreateAsync<T>(this IDistributedCache cache, string key, Func<Task<T>> factory,
+    public static Task<T?> GetOrCreateAsync<T>(this IDistributedCache cache, string key, Func<Task<T>> factory,
         TimeSpan? expireTimeSpan = null, TimeSpan? absoluteTimeSpan = null, DateTimeOffset? absoluteExpiry = null)
     {
-        return await cache.GetOrCreateAsync(key, factory,
+        return cache.GetOrCreateAsync(key, factory,
             CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
     }
 
@@ -117,10 +114,6 @@ public static class DistributedCacheExtensions
             return value;
 
         await cache.SetAsync(key, value, options);
-        if (AllKeys.All(x => x != key))
-        {
-            AllKeys.Add(key);
-        }
 
         return value;
     }
@@ -133,7 +126,7 @@ public static class DistributedCacheExtensions
     /// <returns>如果缓存存在，则返回true，否则返回false。</returns>
     public static async Task<bool>ExistsAsync(this IDistributedCache cache, string key)
     {
-        return await GetAsync<object>(cache, key) != null;
+        return await cache.GetAsync(key) != null;
     }
 
     /// <summary>
@@ -164,10 +157,6 @@ public static class DistributedCacheExtensions
         TimeSpan? absoluteTimeSpan = null, DateTimeOffset? absoluteExpiry = null)
     {
         Set(cache, key, value, CreateExpirationConfig(expireTimeSpan, absoluteTimeSpan, absoluteExpiry));
-        if (AllKeys.All(x => x != key))
-        {
-            AllKeys.Add(key);
-        }
     }
 
     /// <summary>
@@ -180,9 +169,10 @@ public static class DistributedCacheExtensions
     /// <typeparam name="T"></typeparam>
     public static void Set<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions options)
     {
-        var json = JsonSerializer.Serialize(value);
-        cache.SetString(key, json, options);
-        if (AllKeys.All(x => x != key))
+        using var memoryStream = new MemoryStream();
+        JsonSerializer.Serialize(memoryStream, value);
+        cache.Set(key, memoryStream.ToArray(), options);
+        if (!AllKeys.Contains(key))
         {
             AllKeys.Add(key);
         }
@@ -197,15 +187,15 @@ public static class DistributedCacheExtensions
     /// <returns></returns>
     public static T? Get<T>(this IDistributedCache cache, string key)
     {
-        var value = cache.GetString(key);
+        var value = cache.Get(key);
 
         if (value is null)
             return default;
 
         try
         {
-            var deserializedValue = JsonSerializer.Deserialize<T>(value);
-            return deserializedValue;
+            using var memoryStream = new MemoryStream(value);
+            return JsonSerializer.Deserialize<T>(memoryStream);
         }
         catch
         {
@@ -252,10 +242,6 @@ public static class DistributedCacheExtensions
             return value;
 
         cache.Set(key, value, options);
-        if (AllKeys.All(x => x != key))
-        {
-            AllKeys.Add(key);
-        }
 
         return value;
     }
@@ -268,7 +254,7 @@ public static class DistributedCacheExtensions
     /// <returns>如果缓存存在，则返回true，否则返回false。</returns>
     public static bool Exists(this IDistributedCache cache, string key)
     {
-        return cache.Get<object>(key) != null;
+        return cache.Get(key) != null;
     }
 
     /// <summary>
