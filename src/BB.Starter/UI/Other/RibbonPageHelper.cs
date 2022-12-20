@@ -1,8 +1,9 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
 using BB.BaseUI.Extension;
 using BB.BaseUI.Other;
 using BB.Entity.Security;
-using BB.Starter.UI.SYS;
+using DevExpress.Images;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using Furion;
@@ -16,10 +17,10 @@ namespace BB.Starter.UI.Other;
 public class RibbonPageHelper
 {
     private readonly RibbonControl _control;
-    private readonly MainForm _mainForm;
+    private readonly RibbonForm _mainForm;
     private int _index;
 
-    public RibbonPageHelper(MainForm mainForm, ref RibbonControl control)
+    public RibbonPageHelper(RibbonForm mainForm, ref RibbonControl control)
     {
         _mainForm = mainForm;
         _control = control;
@@ -119,7 +120,7 @@ public class RibbonPageHelper
     /// <returns></returns>
     private Image LoadIcon(string iconPath)
     {
-        Image result = Resources.menuIcon.ToBitmap();
+        Image? result = null;
         try
         {
             if (!string.IsNullOrEmpty(iconPath))
@@ -129,14 +130,18 @@ public class RibbonPageHelper
                 {
                     result = Image.FromFile(path);
                 }
+                else
+                {
+                    result = ImageResourceCache.Default.GetImage(iconPath);
+                }
             }
         }
         catch
         {
-            $"无法识别图标地址：{iconPath}，请确保该文件存在！".LogError();
+            $"{iconPath}，图标地址识别异常！".LogError();
         }
 
-        return result;
+        return result ?? Resources.menuIcon.ToBitmap();
     }
 
     /// <summary>
