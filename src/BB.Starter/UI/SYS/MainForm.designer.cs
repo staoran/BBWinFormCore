@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup1 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
-            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-            DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup2 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
+            DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.applicationMenu1 = new DevExpress.XtraBars.Ribbon.ApplicationMenu(this.components);
             this.btnQuit = new DevExpress.XtraBars.BarButtonItem();
@@ -122,6 +122,7 @@
             this.ribbonControl.Images = this.imageCollection1;
             this.ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl.ExpandCollapseItem,
+            this.ribbonControl.SearchEditItem,
             this.rgbiSkins,
             this.barItemExit,
             this.btnQuit,
@@ -162,8 +163,7 @@
             this.tool_City,
             this.tool_Code,
             this.barButtonItem3,
-            this.barButtonItem4,
-            this.ribbonControl.SearchEditItem});
+            this.barButtonItem4});
             this.ribbonControl.LargeImages = this.imageCollection1;
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl.MaxItemId = 2;
@@ -268,9 +268,9 @@
             // 
             // 
             // 
-            galleryItemGroup1.Caption = "Group1";
+            galleryItemGroup2.Caption = "Group1";
             this.rgbiSkins.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] {
-            galleryItemGroup1});
+            galleryItemGroup2});
             this.rgbiSkins.Id = 21;
             this.rgbiSkins.Name = "rgbiSkins";
             // 
@@ -415,12 +415,12 @@
             this.lblCurrentUser.Description = "查看/编辑当前用户信息";
             this.lblCurrentUser.Id = 55;
             this.lblCurrentUser.Name = "lblCurrentUser";
-            toolTipTitleItem1.Text = "提示信息";
-            toolTipItem1.LeftIndent = 6;
-            toolTipItem1.Text = "单击该处，可以进行查看/编辑当前用户信息操作。";
-            superToolTip1.Items.Add(toolTipTitleItem1);
-            superToolTip1.Items.Add(toolTipItem1);
-            this.lblCurrentUser.SuperTip = superToolTip1;
+            toolTipTitleItem2.Text = "提示信息";
+            toolTipItem2.LeftIndent = 6;
+            toolTipItem2.Text = "单击该处，可以进行查看/编辑当前用户信息操作。";
+            superToolTip2.Items.Add(toolTipTitleItem2);
+            superToolTip2.Items.Add(toolTipItem2);
+            this.lblCurrentUser.SuperTip = superToolTip2;
             this.lblCurrentUser.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.lblCurrentUser_ItemClick);
             // 
             // popMenuCloseCurrent
@@ -468,6 +468,7 @@
             // 
             this.barButtonItem2.Caption = "刷新缓存";
             this.barButtonItem2.Id = 67;
+            this.barButtonItem2.ImageOptions.ImageIndex = 2;
             this.barButtonItem2.Name = "barButtonItem2";
             this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
             // 

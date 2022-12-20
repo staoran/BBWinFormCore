@@ -293,7 +293,7 @@ public partial class MainForm : RibbonForm
     {
         try
         {
-            #region 加载皮肤
+            #region 加载皮肤选择器
 
             Splasher.Status = "正在展示相关的内容...";
             Thread.Sleep(Const.SLEEP_TIME);
@@ -357,10 +357,10 @@ public partial class MainForm : RibbonForm
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+    private async void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
     {
         SplashScreenHelper.Show();
-        GB.LoadCache();
+        await GB.LoadCache();
         "内存刷新成功".ShowSuccessTip(this);
         SplashScreenHelper.Close();
     }
