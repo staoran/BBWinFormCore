@@ -98,36 +98,44 @@ public partial class BaseViewDock<T, IT, TE> : BaseDock
 
         #region 按钮和按钮权限
 
-        addButton = bar1.AddBarButtonItem("Add", "新增(&N)", "add", btnAddNew_Click, new BarShortcut(Keys.Alt | Keys.N));
-        editButton = bar1.AddBarButtonItem("Edit", "修改", "edit", winGridViewPager1_OnEditSelected, null, true);
-        checkButton = bar1.AddBarButtonItem("Check", "审核", "task", btnCheck_Click, null, true);
-        importButton = bar1.AddBarButtonItem("Import", "导入", "inbox", btnImport_Click, null, true);
-        queryButton = bar1.AddBarButtonItem("Query", "查询(&Q)", "functionslookupandreference", btnSearch_Click,
-            new BarShortcut(Keys.Alt | Keys.Q), false, BarItemLinkAlignment.Right);
-        clearButton = bar1.AddBarButtonItem("Clear", "清空(&C)", "clearall", btnClear_Click,
-            new BarShortcut(Keys.Alt | Keys.C), false, BarItemLinkAlignment.Right, false);
-        advQueryButton = bar1.AddBarButtonItem("AdvQuery", "高级查询", "filter", btnAdvanceSearch_Click, null, false,
-            BarItemLinkAlignment.Right);
-        exportButton = bar1.AddBarButtonItem("Export", "导出", "outbox", btnExport_Click, null, true,
-            BarItemLinkAlignment.Right);
-        hideTreeButton = bar1.AddBarSwitchItem("HideTree", "隐藏快查", "left", chkHideTree_CheckedChanged, null, true,
-            BarItemLinkAlignment.Right, false);
-        tableDirectionButton = bar1.AddBarSwitchItem("TableDirection", "列表横向布局", "chartswitchrowcolumn",
-            chkTableDirection_CheckedChanged, null, true, BarItemLinkAlignment.Right, false);
-        clearButton = bar1.AddBarButtonItem("Close", "关闭", "close", btnClose_Click, null, 
-            true, BarItemLinkAlignment.Right, false);
-
-        // 快查权限
-        string fullName = GetType().FullName ?? Name;
-        if (treeView1 != null && GB.HasFunction($"{fullName}/QuickQuery"))
+        try
         {
-            hideTreeButton.Visibility = BarItemVisibility.Always;
-            splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
+            bar1.BeginUpdate();
+            addButton = bar1.AddBarButtonItem("Add", "新增(&N)", "add", btnAddNew_Click, new BarShortcut(Keys.Alt | Keys.N));
+            editButton = bar1.AddBarButtonItem("Edit", "修改", "edit", winGridViewPager1_OnEditSelected, null, true);
+            checkButton = bar1.AddBarButtonItem("Check", "审核", "task", btnCheck_Click, null, true);
+            importButton = bar1.AddBarButtonItem("Import", "导入", "inbox", btnImport_Click, null, true);
+            queryButton = bar1.AddBarButtonItem("Query", "查询(&Q)", "functionslookupandreference", btnSearch_Click,
+                new BarShortcut(Keys.Alt | Keys.Q), false, BarItemLinkAlignment.Right);
+            clearButton = bar1.AddBarButtonItem("Clear", "清空(&C)", "clearall", btnClear_Click,
+                new BarShortcut(Keys.Alt | Keys.C), false, BarItemLinkAlignment.Right, false);
+            advQueryButton = bar1.AddBarButtonItem("AdvQuery", "高级查询", "filter", btnAdvanceSearch_Click, null, false,
+                BarItemLinkAlignment.Right);
+            exportButton = bar1.AddBarButtonItem("Export", "导出", "outbox", btnExport_Click, null, true,
+                BarItemLinkAlignment.Right);
+            hideTreeButton = bar1.AddBarSwitchItem("HideTree", "隐藏快查", "left", chkHideTree_CheckedChanged, null, true,
+                BarItemLinkAlignment.Right, false);
+            tableDirectionButton = bar1.AddBarSwitchItem("TableDirection", "列表横向布局", "chartswitchrowcolumn",
+                chkTableDirection_CheckedChanged, null, true, BarItemLinkAlignment.Right, false);
+            clearButton = bar1.AddBarButtonItem("Close", "关闭", "close", btnClose_Click, null, 
+                true, BarItemLinkAlignment.Right, false);
+
+            // 快查权限
+            string fullName = GetType().FullName ?? Name;
+            if (treeView1 != null && GB.HasFunction($"{fullName}/QuickQuery"))
+            {
+                hideTreeButton.Visibility = BarItemVisibility.Always;
+                splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
+            }
+
+            if (splitContainer1 == null)
+            {
+                tableDirectionButton.Visibility = BarItemVisibility.Never;
+            }
         }
-
-        if (splitContainer1 == null)
+        finally
         {
-            tableDirectionButton.Visibility = BarItemVisibility.Never;
+            bar1.EndUpdate();
         }
 
         // addButton.Enabled = HasFunction($"{fullName}/addButton");
