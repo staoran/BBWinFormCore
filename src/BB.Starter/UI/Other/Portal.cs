@@ -158,7 +158,7 @@ public class Portal
                 {
                     Splasher.Show(typeof(FrmSplash));
 
-                    GB.MainDialog = new MainForm();
+                    GB.MainDialog = new MainToolBarForm();
                     GB.MainDialog.StartPosition = FormStartPosition.CenterScreen;
                     Application.Run(GB.MainDialog);
                 }
@@ -197,7 +197,7 @@ public class Portal
             {
                 Splasher.Show(typeof(FrmSplash));
 
-                GB.MainDialog = App.GetService<MainForm>();
+                GB.MainDialog = App.GetService<MainToolBarForm>();
                 GB.MainDialog.StartPosition = FormStartPosition.CenterScreen;
                 Application.Run(GB.MainDialog);
             }
