@@ -3,7 +3,6 @@ using BB.Core.Services.Base;
 using BB.Entity.${NameSpace};
 using BB.Tools.Entity;
 using BB.Tools.Extension;
-using BB.Tools.Utils;
 using FluentValidation;
 
 namespace BB.Application.${NameSpace};
@@ -150,21 +149,15 @@ public class ${ChildName}Service : BaseService<${ChildName}>, IDynamicApiControl
     /// <returns></returns>
     public override List<FieldConditionType> GetConditionTypes()
     {
-        return Cache.Instance.GetOrCreate($"{nameof(${ChildName})}ConditionTypes",
-            () => new List<FieldConditionType>
+        return Cache.GetOrAdd($"{nameof(${ChildName})}ConditionTypes",
+            _ => new List<FieldConditionType>
             {
 #foreach($ColumnInfo in ${ChildMetadataImports})
 #if($ColumnInfo.IsSearch || $ColumnInfo.IsAdvSearch)
 #if($ColumnInfo.ControlType=="ComboBoxEdit")
                 new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
 #elseif($ColumnInfo.ControlType=="SearchLookUpEdit" || $ColumnInfo.ControlType=="LookUpEdit" || $ColumnInfo.ControlType=="TreeListLookUpEdit")
-#if($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1)
-                bool areaNoLength = !searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].IsNullOrEmpty() && searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].Length < 6;
-                new(${ChildName}.Field${ColumnInfo.CSharpFieldName}],
-                    areaNoLength ? SqlOperator.LikeStartAt : SqlOperator.Equal);
-#else
                 new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Equal),
-#end
 #elseif($ColumnInfo.ControlType=="SpinEdit")
                 new(${ChildName}.Field${ColumnInfo.CSharpFieldName}, SqlOperator.Between),
 #elseif($ColumnInfo.ControlType=="DateEdit")
@@ -179,5 +172,36 @@ public class ${ChildName}Service : BaseService<${ChildName}>, IDynamicApiControl
 #end
 #end
             });
+    }
+
+    /// <summary>
+    /// 构造查询条件
+    /// </summary>
+    /// <param name="searchInfos">查询参数</param>
+    /// <returns></returns>
+    public override async Task<List<IConditionalModel>> GetConditionExc(Dictionary<string, string> searchInfos)
+    {
+        var condition = await base.GetConditionExc(searchInfos);
+#foreach($ColumnInfo in ${ChildMetadataImports})
+#if($ColumnInfo.IsSearch || $ColumnInfo.IsAdvSearch)
+#if($ColumnInfo.CSharpFieldName.indexOf("AreaNo") != -1 || $ColumnInfo.CSharpFieldName.indexOf("AreaId") != -1)
+        bool ${ColumnInfo.CSharpFieldName}Length =
+            !searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].IsNullOrEmpty() && searchInfos[${ChildName}.Field${ColumnInfo.CSharpFieldName}].Length < 6;
+        if (${ColumnInfo.CSharpFieldName}Length)
+        {
+            condition.ForEach(x =>
+            {
+                if (x is ConditionalModel { FieldName: ${ChildName}.Field${ColumnInfo.CSharpFieldName} } c)
+                {
+                    c.ConditionalType = ConditionalType.LikeLeft;
+                }
+            });
+        }
+        todo 手动优化代码
+#end
+#end
+#end
+
+        return condition;
     }
 }

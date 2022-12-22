@@ -3,7 +3,7 @@ using BB.Tools.Entity;
 using BB.Tools.Validation;
 using FluentValidation;
 
-namespace BB.EntityVerification.${NameSpace};
+namespace BB.EntityVerificationCore.${NameSpace};
 
 /// <summary>
 #if(${Display})
