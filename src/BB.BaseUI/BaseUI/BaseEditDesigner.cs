@@ -22,6 +22,15 @@ public partial class BaseEditDesigner : XtraForm
     {
     }
 
+    public BaseEditDesigner(object bll, object baseForm, object validator, object childValidator) : this()
+    {
+    }
+
+    /// <summary>
+    /// 创建一个临时对象，方便在附件管理中获取存在的GUID
+    /// </summary>
+    protected object TempInfo = new();
+
     /// <summary>
     /// 错误管理器
     /// </summary>
@@ -95,8 +104,9 @@ public partial class BaseEditDesigner : XtraForm
     /// <summary>
     /// 初始化明细表的GridView数据显示
     /// </summary>
-    protected virtual void InitDetailGrid()
+    protected virtual Task InitDetailGrid()
     {
+        return Task.CompletedTask;
     }
 
     /// <summary>
