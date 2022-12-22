@@ -28,7 +28,6 @@ public class BasicGroupListService : BaseService<BasicGroupList>, IDynamicApiCon
     /// <summary>
     /// 获取字段显示权限，0可读写 1只读 2隐藏值 3不显示 4 可新增不可编辑
     /// </summary>
-    /// <param name="isNew"></param>
     /// <returns></returns>
     public override async Task<Dictionary<string, int>> GetPermitDictAsync()
     {

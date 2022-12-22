@@ -91,6 +91,7 @@ public class BlackIPService : BaseService<BlackIpInfo>, IDynamicApiController, I
     /// 检验IP的可访问性(白名单优先于黑名单），如果同时白名单、黑名名单都有同一IP，则也允许访问。
     /// </summary>
     /// <param name="ipAddress"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
     public async Task<bool> ValidateIpAccessAsync(string ipAddress, int userId)
     {

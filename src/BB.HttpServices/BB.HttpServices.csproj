@@ -13,8 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.8.2.7" />
-      <PackageReference Include="Furion.Pure" Version="4.8.2.7" />
+      <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="4.8.3.9" />
     </ItemGroup>
 
 </Project>

@@ -8,10 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="11.4.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\BB.Core\BB.Core.csproj" />
       <ProjectReference Include="..\BB.Entity\BB.Entity.csproj" />
       <ProjectReference Include="..\BB.Tools\BB.Tools.csproj" />

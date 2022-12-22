@@ -279,7 +279,7 @@ public class BaseRepository<T> : SimpleClient<T> where T : BaseEntity, new()
         {
             _db.Open();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false;
         }
