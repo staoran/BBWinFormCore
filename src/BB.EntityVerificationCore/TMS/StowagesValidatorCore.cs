@@ -2,7 +2,7 @@ using BB.Entity.TMS;
 using BB.Tools.Entity;
 using FluentValidation;
 
-namespace BB.EntityVerification.TMS;
+namespace BB.EntityVerificationCore.TMS;
 
 /// <summary>
 /// 配载明细表 验证类
